@@ -1,7 +1,5 @@
 <?php
 
-include_once "config.php";
-
 function getQueryString() {
     $request_uri = explode('/', $_SERVER['REQUEST_URI']);
     $request_uri = array_filter($request_uri, 'strlen' );
