@@ -1,7 +1,7 @@
 <?php
 
 include_once "config/config.php";
-include_once "helpers/helpers.php";
+include_once "back/helpers/helpers.php";
 
 init_app();
 
@@ -30,7 +30,7 @@ function init_app() {
 }
 
 function accessIndex() {
-    echo "helo";
+    include "back/ui_templates/home.php";
 }
 
 function tryUpload($user_qs) {
@@ -75,14 +75,15 @@ function archivePreviousUpload($user_qs, $pathTo) {
     if (!copy($pathTo, $copyDestination)) errorOccured('Error while copying uploaded file to archive directory.');
 }
 
+function accessManualUploadUI($user_qs) {
+    include "back/ui_templates/upload.php";
+}
 
 function accessUserLibrary($user_qs, $skip_auto_redirect = false) {
     $expectedLibrary = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
-    if(!$skip_auto_redirect && !file_exists($expectedLibrary)) return accessManualUploadUI($user_qs); //redirect if no file
 
-    echo file_get_contents($expectedLibrary);
-}
+    //ask to upload if no file
+    if(!$skip_auto_redirect && !file_exists($expectedLibrary)) return accessManualUploadUI($user_qs);
 
-function accessManualUploadUI($user_qs) {
-    include "ui_templates/upload.php";
+    include "front/home.php";
 }

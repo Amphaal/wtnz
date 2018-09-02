@@ -1,1 +1,1 @@
-<?php include_once './app/start.php';
+<?php include_once 'start.php';
