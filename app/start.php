@@ -23,7 +23,7 @@ function init_app() {
 
     //if manual upload
     $action = array_shift($qs);
-    if($action == 'upload') accessManualUploadUI($user_qs);
+    if($action == 'upload') return accessManualUploadUI($user_qs);
 
     //else
     return accessUserLibrary($user_qs);
@@ -42,24 +42,37 @@ function tryUpload($user_qs) {
 
 function processUploadedFile($user_qs) {
 
-    $fileServerName = getCurrentLibraryFileName();
-    $pathTo = formatUserDataFolder($user_qs) . $fileServerName;
+    $pathTo = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
     
     //check for duplicates
     if(isUselessUpload($pathTo)) exit("File identical to current, no upload needed.");
 
-    //move the file to user's directory
+    //archive current file if necessary
+    archivePreviousUpload($user_qs, $pathTo);
+
+    //move the uploaded file to user's directory
     $uploadResult = move_uploaded_file($_FILES['wtnz_file']['tmp_name'], $pathTo);
     if(!$uploadResult) errorOccured('Issue while uploading file.');
+
+    //specific redirect for headless client
+    if(isset($_POST['headless'])) return 'Upload succeded!';
     
+    //redirect to users library...
+    header("Location: " . dirname($_SERVER['REQUEST_URI']));
+    exit();
+}
+
+function archivePreviousUpload($user_qs, $pathTo) {
+    //ignore if current file doesnt exist
+    if(!file_exists($pathTo)) return;
+
     //copy save
-    $archive_dir = time().'_'.rand(0,999);
-    $copyDestination = formatUserDataFolder($user_qs) . $archive_dir . '/' . $fileServerName;
+    $archive_dir = filemtime($pathTo).'_'.rand(0,999);
+    $copyDestination = formatUserDataFolder($user_qs) . $archive_dir . '/' . basename($pathTo);
     
+    //archive...
     if (!mkdir(dirname($copyDestination))) errorOccured('Error while creating archive directory.');
     if (!copy($pathTo, $copyDestination)) errorOccured('Error while copying uploaded file to archive directory.');
-    
-    return accessUserLibrary($user_qs, true);
 }
 
 
