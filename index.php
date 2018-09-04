@@ -85,7 +85,9 @@ function accessUserLibrary($user_qs, $skip_auto_redirect = false) {
     //ask to upload if no file
     if(!$skip_auto_redirect && !file_exists($expectedLibrary)) return accessManualUploadUI($user_qs);
 
+    //Client variables
     $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
+    $latestUpdate = filemtime($expectedLibrary);
 
     include "front/home.php";
 }

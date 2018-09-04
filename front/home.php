@@ -4,6 +4,8 @@
         <link rel="stylesheet" href="front/css/lib/animate.css">
         <link rel="stylesheet" href="front/css/style.css">
         <?php include "front/js/vars.php" ?>
+        <script src="front/js/ui.js"></script>
+        <script src="front/js/data.js"></script>
         <script src="front/js/core.js"></script>
     </head>
     <body>

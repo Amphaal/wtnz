@@ -1,0 +1,66 @@
+/*artistsByGenre*/
+var artistsByGenreList = (lib) => {
+    return lib.reduce((total, currentVal) => {
+        let genre = titleCase(currentVal['Genre']);
+        let artist = currentVal['Album Artist'];
+
+        if (total[genre] == undefined) {
+            total[genre] = new Set();
+        }
+
+        total[genre].add(artist);
+
+        return total;
+    }, {});
+}
+
+/*albumsByArtistsList*/
+var albumsByArtistsList = (lib) => {
+    return lib.reduce((total, currentVal) => {
+        
+        //prepare
+        let artist = currentVal['Album Artist'];
+        let album = currentVal['Album'];
+        let genre = titleCase(currentVal['Genre']);
+        let year = currentVal['Year'];
+        let trackNo = currentVal['Track Number'];
+        let trackName = currentVal['Name'];
+
+        //if first occurence artist
+        if(total[artist] == undefined) {
+            total[artist] = {
+                "Genres" : new Set(),
+                "Albums" : {}
+            }
+        }
+
+        //add genre
+        total[artist]["Genres"].add(genre);
+
+        //if first occurence album
+        if (total[artist]["Albums"][album] == undefined) {
+            total[artist]["Albums"][album] = {
+                "Year" : year,
+                "Genre" : genre,
+                "Tracks" : {}
+            };
+        }
+
+        //add track
+        total[artist]["Albums"][album]["Tracks"][trackNo] = trackName;
+        
+        return total;
+    }, {});
+}
+
+
+function titleCase(str) {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    // Directly return the joined string
+    return splitStr.join(' '); 
+ }
