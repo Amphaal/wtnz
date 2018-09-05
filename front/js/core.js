@@ -1,10 +1,15 @@
 //download library
 function requestUserLib() {
     var request = new XMLHttpRequest(); 
-    request.onprogress=updateProgress;
-    request.onloadend = e => processLibAsJSON(e.target.responseText);
+    request.onprogress = updateProgress;
+    request.onloadend = function(e) {return processLibAsJSON(e.target.responseText)};
     request.open('GET', clientURLLibrary, true);
     request.send(null);
+}
+
+function renderStats(albumsByGenre, artistsByGenre) {
+    renderHCPie(descSortObj(albumsByGenre), 'statsAlbums', 'Albums');
+    renderHCPie(descSortObj(artistsByGenre), 'statsArtists', 'Artists');
 }
 
 //process...
@@ -17,10 +22,12 @@ function processLibAsJSON(JSONText) {
     //bind data
     albumsByArtists = albumsByArtistsList(lib);
     artistsByGenre = artistsByGenreList(lib);
+    albumsByGenre = albumsByGenreCount(lib);
+    renderStats(albumsByGenre, artistsByGenre);
 
     //bind UI elements to document
-    filterByGenreUI = generateFilterByGenreUI(artistsByGenre);
-    document.getElementById('m-list').appendChild(filterByGenreUI);
+    filterByGenreUI = generateFilterByGenreUI(albumsByGenre);
+    document.getElementById('content').appendChild(filterByGenreUI);
 
     //animations...
     hideLoader();
@@ -31,6 +38,3 @@ function processLibAsJSON(JSONText) {
 document.addEventListener("DOMContentLoaded", function() {
     requestUserLib();
 });
-
-
-  

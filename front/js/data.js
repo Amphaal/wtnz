@@ -1,6 +1,6 @@
 /*artistsByGenre*/
-var artistsByGenreList = (lib) => {
-    return lib.reduce((total, currentVal) => {
+function artistsByGenreList(lib) {
+    return lib.reduce(function(total, currentVal) {
         let genre = titleCase(currentVal['Genre']);
         let artist = currentVal['Album Artist'];
 
@@ -14,9 +14,33 @@ var artistsByGenreList = (lib) => {
     }, {});
 }
 
+/*albumsByGenreCount*/
+function albumsByGenreCount(lib) {
+
+    //reduce uniques albums by genres
+    var uniqueAlbumsByGenre = lib.reduce(function(total, currentVal) {
+        let genre = titleCase(currentVal['Genre']);
+        let albumId = currentVal['Album Artist'] + '_' + currentVal['Artist'] + '_' + currentVal['Year'];
+
+        if (total[genre] == undefined) {
+            total[genre] = new Set();
+        }
+
+        total[genre].add(albumId);
+
+        return total;
+    }, {});
+
+    return Object.keys(uniqueAlbumsByGenre).reduce(function(total, currentVal) {
+        total[currentVal] = uniqueAlbumsByGenre[currentVal].size
+        return total;
+    }, {});
+}
+
+
 /*albumsByArtistsList*/
-var albumsByArtistsList = (lib) => {
-    return lib.reduce((total, currentVal) => {
+function albumsByArtistsList(lib) {
+    return lib.reduce(function(total, currentVal) {
         
         //prepare
         let artist = currentVal['Album Artist'];
@@ -53,6 +77,26 @@ var albumsByArtistsList = (lib) => {
     }, {});
 }
 
+//desc sorting of obj
+function descSortObj(objToSort) {
+    
+    //prepare
+    var keys = Object.keys(objToSort);
+
+    //array count for sorting
+    var toArrayForm = keys.reduce(function(total, currentVal) {
+        total.push({
+            name : currentVal,
+            value : objToSort[currentVal].size || objToSort[currentVal]
+        })
+        return total;
+    }, []);
+
+    //descending sort
+    return toArrayForm.sort(function (a, b) {
+        return b.value - a.value;
+    });
+}
 
 function titleCase(str) {
     var splitStr = str.toLowerCase().split(' ');

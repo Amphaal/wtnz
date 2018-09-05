@@ -1,18 +1,3 @@
-//detect when animation ends
-var animationEnd = ((el) => {
-    var animations = {
-      animation: 'animationend',
-      OAnimation: 'oAnimationEnd',
-      MozAnimation: 'mozAnimationEnd',
-      WebkitAnimation: 'webkitAnimationEnd',
-    };
-  
-    for (var t in animations) {
-      if (el.style[t] !== undefined) {
-        return animations[t];
-      }
-    }
-  })(document.createElement('div'));
 
 //hide loader bar
 function hideLoader() {
@@ -37,30 +22,75 @@ function updateProgress(evt){
      } 
 }
 
-function generateFilterByGenreUI(artistsByGenre) {
-  //prepare
-  genres = Object.keys(artistsByGenre);
+function generateFilterByGenreUI(albumsByGenre) {
 
   //return elem
   filterByGenreUI = document.createElement('div');
   filterByGenreUI.id = "filterByGenreUI";
-  
-  //order genres by number of artists
-  //....
 
   //generate filters
-  filterByGenreUI = genres.reduce((total, current) => {
-      let item = document.createElement('div');
-      item.innerHTML = current;
-      total.appendChild(item);
-      return total;
-  }, filterByGenreUI);
+  var items = Object.keys(albumsByGenre)
+    .reduce(function(total, current) {
+        let item = document.createElement('div');
+        item.innerHTML = current;
+        item.dataset.count = albumsByGenre[current];
+        total.push(item);
+        return total;
+    }, [])
+    .sort(function(a, b){return b.dataset.count - a.dataset.count})
+    .forEach(function(item) { filterByGenreUI.appendChild(item)});
 
   //return elem with UI filters
   return filterByGenreUI;
 }
 
-function generateLayoutFromArtists(albumsByArtists) {
-    //prepare
-    genres = Object.keys(artistsByGenre);
+function renderHCPie(data, divId, name) {
+  
+  //format
+  data = data.map(function(val) {
+    val["y"] = val["value"];
+    delete val.value;
+    return val;
+  });
+
+  //instanciate
+  Highcharts.chart(divId, {
+    credits: false,
+    chart: {
+        type: 'pie',
+        backgroundColor: 'rgba(255,255,255,0)'
+    },
+    title: null,
+    tooltip: {
+        pointFormat: '<b>{point.percentage:.1f}%</b> of Total {series.name}'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                style : {
+                    textOutline : null
+                }
+            }
+        }
+    },
+    series: [{
+        name : name,
+        data : data
+    }]
+  });
 }
+
+function switchPanel(event, panelNo) {
+    var statsContainer = document.getElementById('stats');
+    var containerHeight = statsContainer.clientHeight 
+    statsContainer.scrollTop = containerHeight * panelNo;
+}
+
+function toggleStats(event) {
+    var statsContainer = document.getElementById('statsContainer');
+    var heightSwitch = event.target.checked ? statsContainer.scrollHeight + "px" : "0";
+    statsContainer.style.height = heightSwitch;
+}
+  
