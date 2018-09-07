@@ -55,7 +55,7 @@ function processUploadedFile($user_qs) {
     if(!$uploadResult) errorOccured('Issue while uploading file.');
 
     //specific redirect for headless client
-    if(isset($_POST['headless'])) return 'Upload succeded!';
+    if(isset($_POST['headless'])) exit('Bon appétit!');
     
     //redirect to users library...
     header("Location: " . dirname($_SERVER['REQUEST_URI']));

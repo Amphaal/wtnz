@@ -17,6 +17,7 @@
         <div id='content'>
             <?php include "front/ui/head.php" ?>
             <?php include "front/ui/stats.php" ?>
+            <div id='sub-content'></div>
         </div>
     </body>
 </html>

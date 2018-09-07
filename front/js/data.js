@@ -18,9 +18,9 @@ function artistsByGenreList(lib) {
 function albumsByGenreCount(lib) {
 
     //reduce uniques albums by genres
-    var uniqueAlbumsByGenre = lib.reduce(function(total, currentVal) {
+    let uniqueAlbumsByGenre = lib.reduce(function(total, currentVal) {
         let genre = titleCase(currentVal['Genre']);
-        let albumId = currentVal['Album Artist'] + '_' + currentVal['Artist'] + '_' + currentVal['Year'];
+        let albumId = currentVal['Album'] + '_' + currentVal['Album Artist'] + '_' + currentVal['Year'];
 
         if (total[genre] == undefined) {
             total[genre] = new Set();
@@ -81,10 +81,10 @@ function albumsByArtistsList(lib) {
 function descSortObj(objToSort) {
     
     //prepare
-    var keys = Object.keys(objToSort);
+    let keys = Object.keys(objToSort);
 
     //array count for sorting
-    var toArrayForm = keys.reduce(function(total, currentVal) {
+    let toArrayForm = keys.reduce(function(total, currentVal) {
         total.push({
             name : currentVal,
             value : objToSort[currentVal].size || objToSort[currentVal]
@@ -99,8 +99,8 @@ function descSortObj(objToSort) {
 }
 
 function titleCase(str) {
-    var splitStr = str.toLowerCase().split(' ');
-    for (var i = 0; i < splitStr.length; i++) {
+    let splitStr = str.toLowerCase().split(' ');
+    for (let i = 0; i < splitStr.length; i++) {
         // You do not need to check if i is larger than splitStr length, as your for does that for you
         // Assign it back to the array
         splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     

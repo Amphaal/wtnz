@@ -7,6 +7,34 @@ label {
     user-select: none;
 }
 
+.fctr {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#banner {
+    flex-grow:1; 
+    display: flex; 
+    flex-direction: row; 
+    align-items:center;
+}
+
+#banner-desc {
+    flex-grow:1;
+}
+
+#banner-side {
+    display: flex;
+    flex-direction: column;
+    text-align:right;
+}
+
+#banner-side * {
+    vertical-align: middle;
+}
+
 #loader-container {
     position: absolute;
     display:flex; 
@@ -50,6 +78,11 @@ label {
 #content {
     opacity: 0;
     width: 100%;
+}
+
+#sub-content {
+    display: flex;
+    margin: 0.5em;
 }
 
 #stats {
