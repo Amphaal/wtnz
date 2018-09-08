@@ -9,9 +9,47 @@ function requestUserLib() {
     request.send(null);
 }
 
-function renderStats(albumsByGenre, artistsByGenre) {
-    renderHCPie(descSortObj(albumsByGenre), 'statsAlbums', 'Albums');
-    renderHCPie(descSortObj(artistsByGenre), 'statsArtists', 'Artists');
+var filter = {
+    genreUI : null,
+    artistUI : null,
+    albumUI : null
+};
+
+var dataFeed = {
+    genreUI : null, 
+    artistUI : null, 
+    albumUI : null
+};
+
+function applyFilter(toGenerate) {
+
+    let toAlter = Object.keys(dataFeed);
+    if(toGenerate == null) toGenerate = toAlter;
+
+    toGenerate.forEach(function(id) {
+        generateUI(id, dataFeed[id]);
+    });
+
+    toAlter.forEach(function(id) {
+        alterUI(id, filter[id]);
+    });
+
+}
+
+function updateFilter(event) {
+    //update filter
+    let nodeFilter = event.currentTarget.dataset.nFilter;
+    let filterCat = event.currentTarget.parentNode.parentNode.id;
+    nodeFilter == filter[filterCat] ? filter[filterCat] = null : filter[filterCat] = nodeFilter;
+    
+    //clean filters after currently set
+    let uiFiltersToReset = Object.keys(filter);
+    let indexCurrentFilter = uiFiltersToReset.indexOf(filterCat) + 1;
+    uiFiltersToReset = uiFiltersToReset.slice(indexCurrentFilter);
+    uiFiltersToReset.forEach(function(e) {filter[e] = null;});
+
+    //apply filters
+    applyFilter(uiFiltersToReset);
 }
 
 //process...
@@ -19,33 +57,39 @@ function processLibAsJSON(JSONText) {
     //parse
     let lib = JSON.parse(JSONText);
 
-    //bind data
-    let albumsByArtists = albumsByArtistsList(lib);
-    let artistsByGenre = artistsByGenreList(lib);
-    let albumsByGenre = albumsByGenreCount(lib);
-    let albumsList = Object.keys(albumsByArtists).reduce(function(total,current) {
-        let albums = Object.keys(albumsByArtists[current]['Albums']);
-        Array.prototype.push.apply(total,albums);
-        return total;
-    }, []); 
-    
     //stats rendering
-    renderStats(albumsByGenre, artistsByGenre);
+    renderStats(lib);
 
-    //bind UI elements to document
-    let filterByGenreUI = generateFilterByGenreUI(albumsByGenre);
-    document.getElementById('sub-content').appendChild(filterByGenreUI);
+    //data feeding functions binding
+    dataFeed.genreUI = function() {
+        return albumsByGenreCount(lib);
+    };
+    dataFeed.artistUI = function() {
+        let filterCriteria = filter['genreUI'];
+        if(!filterCriteria) return;
 
-    let filterByArtistsUI = generateFilterByArtistsUI(albumsByArtists);
-    document.getElementById('sub-content').appendChild(filterByArtistsUI);
+        let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
+        let apa = albumsByArtistsList(lib);
+        return Array.from(artistsOfGenre).reduce(function(result, current) {
+            result[current] = Object.keys(apa[current]['Albums']).length;
+            return result;
+        }, {});
+    }
 
-    let albumsFilteredUI = generateAlbumsFilteredUI(albumsList);
-    document.getElementById('sub-content').appendChild(albumsFilteredUI);
-    
-    //animations...
+    //prepare UI
+    Object.keys(dataFeed).forEach(function(id) {
+        prepareUIPart(id);
+    });
+
+    //instantiate UI
+    applyFilter();
+
+    //end loading, start animations...
     hideLoader();
     showContent();
 }
+
+
 
 //at startup
 document.addEventListener("DOMContentLoaded", function() {

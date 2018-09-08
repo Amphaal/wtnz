@@ -22,123 +22,66 @@ function updateProgress(evt){
     } 
 }
 
-function generateAlbumsFilteredUI(albumsList) {
-    //return elem
-    let albumsFilteredUI = document.createElement('div');
-    albumsFilteredUI.id = "albumsFilteredUI";
+//generate genres UI
+function generateUI(id, dataFunc) {
 
-    //generate filters
-    albumsList.reduce(function(total, current) {
-        let item = document.createElement('div');
-        item.innerHTML = current;
-        total.push(item);
-        return total;
-    }, [])
-    .sort(function(a, b){return b.dataset.count - a.dataset.count})
-    .forEach(function(item) { albumsFilteredUI.appendChild(item)});
+    let target = document.querySelector('#' + id + ' .list');
+    if (dataFunc == null) return false;
 
+    let data = dataFunc();
 
+    //purge current results
+    while (target.firstChild) {
+        target.removeChild(target.firstChild);
+    }
 
-    //return elem with UI filters
-    return albumsFilteredUI;
+    //if there is any data
+    if (data) {
+        Object.keys(data).reduce(function(result, current) {
+            let item = document.createElement('div');
+            item.innerHTML = current;
+            item.dataset.count = data[current];
+            item.dataset.nFilter = current;
+            item.onclick = updateFilter;
+            result.push(item);
+            return result;
+        }, [])
+        .sort(function(a,b) {return b.dataset.count - a.dataset.count;})
+        .forEach(function(item) { target.appendChild(item);});
+    }
+
+    return true;
 }
 
-function generateFilterByArtistsUI(albumsByArtists) {
-    //return elem
-    let filterByArtistsUI = document.createElement('div');
-    filterByArtistsUI.id = "filterByArtistsUI";
+function prepareUIPart(id) {
+    let target = document.getElementById(id);
+    target.classList.add("filterUI");
+    
+    let ph = document.createElement('div');
+    ph.classList.add("ph");
+    target.appendChild(ph);
 
-    //generate filters
-    Object.keys(albumsByArtists)
-    .reduce(function(total, current) {
-        let item = document.createElement('div');
-        item.innerHTML = current;
-        item.dataset.count = albumsByArtists[current].size;
-        total.push(item);
-        return total;
-    }, [])
-    .sort(function(a, b){return b.dataset.count - a.dataset.count})
-    .forEach(function(item) { filterByArtistsUI.appendChild(item)});
-
-    //return elem with UI filters
-    return filterByArtistsUI;
+    let list = document.createElement('div');
+    list.classList.add("list");
+    target.appendChild(list);
 }
 
-function generateFilterByGenreUI(albumsByGenre) {
-    //return elem
-    let filterByGenreUI = document.createElement('div');
-    filterByGenreUI.id = "filterByGenreUI";
+function alterUI(id, filterCriteria) {
 
-    //generate filters
-    Object.keys(albumsByGenre)
-    .reduce(function(total, current) {
-        let item = document.createElement('div');
-        item.innerHTML = current;
-        item.dataset.genre = current;
-        item.dataset.count = albumsByGenre[current];
-        item.onclick = applyFilterGenre;
-        total.push(item);
-        return total;
-    }, [])
-    .sort(function(a, b){return b.dataset.count - a.dataset.count})
-    .forEach(function(item) { filterByGenreUI.appendChild(item)});
+    let target = document.querySelector('#' + id + ' .list');
 
+    target.childNodes.forEach(function(curr) {
+        let nodefilter = curr.dataset.nFilter;
+        nodefilter == filterCriteria ? curr.classList.add("selected") : curr.classList.remove("selected");
+    });
 
+    let ph = document.querySelector('#' + id + ' .ph');
 
-    //return elem with UI filters
-    return filterByGenreUI;
-}
-
-function renderHCPie(data, divId, name) {
-  
-  //format
-  data = data.map(function(val) {
-    val["y"] = val["value"];
-    delete val.value;
-    return val;
-  });
-
-  //instanciate
-  Highcharts.chart(divId, {
-    credits: false,
-    chart: {
-        type: 'pie',
-        backgroundColor: 'rgba(255,255,255,0)'
-    },
-    title: null,
-    tooltip: {
-        pointFormat: '<b>{point.percentage:.1f}%</b> of Total {series.name}'
-    },
-    plotOptions: {
-        pie: {
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.y}',
-                style : {
-                    textOutline : null
-                }
-            }
-        }
-    },
-    series: [{
-        name : name,
-        data : data
-    }]
-  });
-}
-
-function switchPanel(event, panelNo) {
-    let statsContainer = document.getElementById('stats');
-    let containerHeight = statsContainer.clientHeight 
-    statsContainer.scrollTop = containerHeight * panelNo;
-}
-
-function toggleStats(event) {
-    let statsContainer = document.getElementById('statsContainer');
-    let heightSwitch = event.target.checked ? statsContainer.scrollHeight + "px" : "0";
-    statsContainer.style.height = heightSwitch;
-}
-
-function applyFilterGenre(event) {
-    let genreFilter = event.currentTarget.dataset.genre;
+    if(filterCriteria) {
+        target.classList.add("hasSelection");
+        ph.innerHTML = filterCriteria + ' »';
+    } else {
+        target.classList.remove("hasSelection");
+        ph.innerHTML = "";
+    } 
 }

@@ -1,3 +1,13 @@
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    :root {
+        font-size: 32px;
+    }
+}
+
+:root {
+    font-size: 18px;
+}
+
 body {
     margin:0;
     display:flex; 
@@ -12,6 +22,10 @@ label {
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#content {
+    width: 100%;
 }
 
 #banner {
@@ -75,54 +89,7 @@ label {
     width: 0%;
 }
 
-#content {
-    opacity: 0;
-    width: 100%;
-}
-
 #sub-content {
     display: flex;
     margin: 0.5em;
 }
-
-#stats {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 400px;
-
-    scroll-behavior: smooth;
-    scroll-snap-type: mandatory;
-}
-
-#statsContainer {
-    background-color: beige;
-    position: relative;
-    transition: all 0.3s ease 0s;
-    overflow: hidden;
-}
-
-#statsSwitcher {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding: 0.5em 0;
-}
-
-#statsSwitcher > button {
-    background: #428BCA;
-    color: #fff;
-    font-family: Sans-serif;
-    font-size: 20px;
-    height: 60px;
-    width: 150px;
-    line-height: 60px;
-    text-align: center;
-    border: 0;
-}
-
-#statsSwitcher > button:hover {
-    opacity: 0.75;
-}
-
-

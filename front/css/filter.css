@@ -1,0 +1,47 @@
+.filterUI {
+    max-height: 1em;
+}
+
+.filterUI .ph {
+    position: absolute;
+    z-index: 20;
+}
+
+.filterUI .list > div {
+    color : rgba(0, 0, 0, 1);
+    transition: all 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.filterUI .list.hasSelection > div {
+    color : rgba(0, 0, 0, 0.25);
+}
+
+
+.filterUI .list.hasSelection{
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+    transition:transform 0.3s ease 0s;
+    opacity: 0.15;
+    overflow: hidden;
+}
+
+.filterUI .list.hasSelection .selected {
+    color : rgba(0, 0, 0, 1);
+}
+
+.filterUI .list.hasSelection .selected::after {
+    content: " »";
+}
+
+.filterUI:hover .list.hasSelection{
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.filterUI:hover .ph {
+    color : rgba(0, 0, 0, 0);
+    z-index: -1;
+}
+
