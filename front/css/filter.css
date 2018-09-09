@@ -1,10 +1,12 @@
 .filterUI {
     max-height: 1em;
+    margin-right: 0.5em;
 }
 
 .filterUI .ph {
     position: absolute;
     z-index: 20;
+    background-color: white;
 }
 
 .filterUI .list > div {
@@ -38,6 +40,10 @@
 .filterUI:hover .list.hasSelection{
     transform: scaleY(1);
     opacity: 1;
+}
+
+.filterUI:not(:hover) .list.hasSelection > :not(.selected){
+    width : 0;
 }
 
 .filterUI:hover .ph {

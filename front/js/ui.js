@@ -68,20 +68,24 @@ function prepareUIPart(id) {
 
 function alterUI(id, filterCriteria) {
 
-    let target = document.querySelector('#' + id + ' .list');
-
-    target.childNodes.forEach(function(curr) {
+    //ui filter greying not selected
+    let list = document.querySelector('#' + id + ' .list');
+    list.childNodes.forEach(function(curr) {
         let nodefilter = curr.dataset.nFilter;
         nodefilter == filterCriteria ? curr.classList.add("selected") : curr.classList.remove("selected");
     });
 
+    //ui filter acordeon effect + placeholder filing
     let ph = document.querySelector('#' + id + ' .ph');
-
     if(filterCriteria) {
-        target.classList.add("hasSelection");
+        list.classList.add("hasSelection");
         ph.innerHTML = filterCriteria + ' »';
     } else {
-        target.classList.remove("hasSelection");
+        list.classList.remove("hasSelection");
         ph.innerHTML = "";
     } 
+
+    //ui filter prefix
+    let ui = document.getElementById(id);
+    list.childElementCount || ph.innerHTML ? ui.classList.add("active") :  ui.classList.remove("active");
 }

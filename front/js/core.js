@@ -1,5 +1,3 @@
-'use strict';
-
 //download library
 function requestUserLib() {
     let request = new XMLHttpRequest(); 
@@ -9,6 +7,7 @@ function requestUserLib() {
     request.send(null);
 }
 
+//global
 var filter = {
     genreUI : null,
     artistUI : null,
@@ -21,6 +20,43 @@ var dataFeed = {
     albumUI : null
 };
 
+//data feeding functions binding
+function bindDataFeeds(lib) {
+        
+    //genreUI
+    dataFeed.genreUI = function() {
+        return albumsByGenreCount(lib);
+    };
+
+    //artistUI
+    dataFeed.artistUI = function() {
+        let filterCriteria = filter['genreUI'];
+        if(!filterCriteria) return;
+
+        let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
+        let apa = albumsByArtistsList(lib);
+        return Array.from(artistsOfGenre).reduce(function(result, current) {
+            result[current] = Object.keys(apa[current]['Albums']).length;
+            return result;
+        }, {});
+    };
+
+    //albumUI
+    dataFeed.albumUI = function() {
+        let filterCriteria = filter['artistUI'];
+        if(!filterCriteria) return;
+
+        let apa = albumsByArtistsList(lib);
+        let source = apa[filterCriteria]['Albums'];
+        
+        return Object.keys(source).reduce(function(result, current) {
+            result[current] = source[current]['Year'];
+            return result;
+        }, {});
+    };
+}
+
+//apply filtering and generate / alter UI
 function applyFilter(toGenerate) {
 
     let toAlter = Object.keys(dataFeed);
@@ -36,7 +72,9 @@ function applyFilter(toGenerate) {
 
 }
 
+//update filtering regarding clicked element
 function updateFilter(event) {
+    
     //update filter
     let nodeFilter = event.currentTarget.dataset.nFilter;
     let filterCat = event.currentTarget.parentNode.parentNode.id;
@@ -54,27 +92,15 @@ function updateFilter(event) {
 
 //process...
 function processLibAsJSON(JSONText) {
+    
     //parse
     let lib = JSON.parse(JSONText);
 
     //stats rendering
     renderStats(lib);
 
-    //data feeding functions binding
-    dataFeed.genreUI = function() {
-        return albumsByGenreCount(lib);
-    };
-    dataFeed.artistUI = function() {
-        let filterCriteria = filter['genreUI'];
-        if(!filterCriteria) return;
-
-        let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
-        let apa = albumsByArtistsList(lib);
-        return Array.from(artistsOfGenre).reduce(function(result, current) {
-            result[current] = Object.keys(apa[current]['Albums']).length;
-            return result;
-        }, {});
-    }
+    //bind
+    bindDataFeeds(lib);
 
     //prepare UI
     Object.keys(dataFeed).forEach(function(id) {
@@ -88,8 +114,6 @@ function processLibAsJSON(JSONText) {
     hideLoader();
     showContent();
 }
-
-
 
 //at startup
 document.addEventListener("DOMContentLoaded", function() {

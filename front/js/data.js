@@ -81,10 +81,6 @@ function albumsByArtistsList(lib) {
 
         //add track
         total[artist]["Albums"][album]["Tracks"][trackNo] = trackName;
-        
-        if(artist == undefined) {
-            debugger;
-        }
 
         return total;
     }, {});

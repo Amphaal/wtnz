@@ -93,3 +93,12 @@ label {
     display: flex;
     margin: 0.5em;
 }
+
+#sub-content .filterUI.active::before {
+    content : attr(data-sl);
+    font-size: 0.65em;
+    color : grey;
+    position: relative;
+    top : 0.3em;
+    left : -0.3em;
+}

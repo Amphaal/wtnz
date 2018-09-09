@@ -22,9 +22,9 @@
             <?php include "front/ui/head.php" ?>
             <?php include "front/ui/stats.php" ?>
             <div id='sub-content'>
-                <div id='genreUI'></div>
-                <div id='artistUI'></div>
-                <div id='albumUI'></div>
+                <div data-sl='Genres' id='genreUI'></div>
+                <div data-sl='Artists' id='artistUI'></div>
+                <div data-sl='Albums' id='albumUI'></div>
             </div>
         </div>
     </body>
