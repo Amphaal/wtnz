@@ -1,12 +1,15 @@
 .filterUI {
-    max-height: 1em;
-    margin-right: 0.5em;
+    margin-right: 0.5rem;
+    position: relative; 
+}
+
+.filterUI.hasSelection:not(:hover) {
+    max-height: 1rem;
 }
 
 .filterUI .ph {
     position: absolute;
     z-index: 20;
-    background-color: white;
 }
 
 .filterUI .list > div {
@@ -16,33 +19,33 @@
     cursor: pointer;
 }
 
-.filterUI .list.hasSelection > div {
+.filterUI.hasSelection .list > div {
     color : rgba(0, 0, 0, 0.25);
 }
 
 
-.filterUI .list.hasSelection{
+.filterUI.hasSelection .list{
     transform: scaleY(0);
     transform-origin: 50% 0;
-    transition:transform 0.3s ease 0s;
-    opacity: 0.15;
+    transition:transform 0.5s ease 0s;
+    opacity: 0.1;
     overflow: hidden;
 }
 
-.filterUI .list.hasSelection .selected {
+.filterUI.hasSelection .list .selected {
     color : rgba(0, 0, 0, 1);
 }
 
-.filterUI .list.hasSelection .selected::after {
+.filterUI.hasSelection .list .selected::after {
     content: " »";
 }
 
-.filterUI:hover .list.hasSelection{
+.filterUI.hasSelection:hover .list{
     transform: scaleY(1);
     opacity: 1;
 }
 
-.filterUI:not(:hover) .list.hasSelection > :not(.selected){
+.filterUI.hasSelection:not(:hover) .list > :not(.selected){
     width : 0;
 }
 

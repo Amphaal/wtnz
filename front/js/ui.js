@@ -23,7 +23,7 @@ function updateProgress(evt){
 }
 
 //generate genres UI
-function generateUI(id, dataFunc) {
+function generateFilterUI(id, dataFunc) {
 
     let target = document.querySelector('#' + id + ' .list');
     if (dataFunc == null) return false;
@@ -53,7 +53,8 @@ function generateUI(id, dataFunc) {
     return true;
 }
 
-function prepareUIPart(id) {
+//prepare sub elements of the filter
+function prepareFilterUI(id) {
     let target = document.getElementById(id);
     target.classList.add("filterUI");
     
@@ -66,7 +67,11 @@ function prepareUIPart(id) {
     target.appendChild(list);
 }
 
-function alterUI(id, filterCriteria) {
+function alterFilterUI(id, filterCriteria) {
+
+
+    let ui = document.getElementById(id);
+
 
     //ui filter greying not selected
     let list = document.querySelector('#' + id + ' .list');
@@ -78,14 +83,28 @@ function alterUI(id, filterCriteria) {
     //ui filter acordeon effect + placeholder filing
     let ph = document.querySelector('#' + id + ' .ph');
     if(filterCriteria) {
-        list.classList.add("hasSelection");
+        ui.classList.add("hasSelection");
         ph.innerHTML = filterCriteria + ' »';
     } else {
-        list.classList.remove("hasSelection");
+        ui.classList.remove("hasSelection");
         ph.innerHTML = "";
     } 
-
+    
     //ui filter prefix
-    let ui = document.getElementById(id);
     list.childElementCount || ph.innerHTML ? ui.classList.add("active") :  ui.classList.remove("active");
+}
+
+function displayAlbumInfos(dataFunc) {
+    let data = dataFunc(); 
+
+    let target = document.getElementById('albumInfos');
+
+    //purge current results
+    while (target.firstChild) {
+        target.removeChild(target.firstChild);
+    }
+
+    if(data) {
+        target.innerHTML = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+    }
 }

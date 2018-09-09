@@ -20,12 +20,14 @@
         <?php include "front/ui/loader.php" ?>
         <div id='content'>
             <?php include "front/ui/head.php" ?>
-            <?php include "front/ui/stats.php" ?>
-            <div id='sub-content'>
-                <div data-sl='Genres' id='genreUI'></div>
-                <div data-sl='Artists' id='artistUI'></div>
-                <div data-sl='Albums' id='albumUI'></div>
+            <div id='mainFrame'>
+                <?php include "front/ui/stats.php" ?>
+                <?php include "front/ui/feed.php" ?>
+                <?php include "front/ui/discover.php" ?>
             </div>
         </div>
     </body>
+    <a id='footer' href='https://www.linkedin.com/in/guillaumevara/' target="_blank">
+        Pre-Alpha - 2018 - GV
+    </a>
 </html>

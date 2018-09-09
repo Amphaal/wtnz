@@ -9,17 +9,18 @@
 }
 
 #statsContainer {
-    background-color: beige;
+    background-color: #f9f9f9;
     position: relative;
     transition: all 0.3s ease 0s;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 #statsSwitcher {
     display:flex;
     align-items:center;
     justify-content:center;
-    padding: 0.5em 0;
+    padding: 1rem 0;
 }
 
 #statsSwitcher > button {

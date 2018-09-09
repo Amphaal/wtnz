@@ -1,20 +1,48 @@
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    :root {
-        font-size: 32px;
-    }
+@font-face {
+    font-family: bebasNeueFont;
+    src: url(../fonts/BebasNeue-Regular.otf);
+}
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
+    text-decoration: none;
 }
 
 :root {
-    font-size: 18px;
+    font-size: 24px;
+    font-family: bebasNeueFont;
+}
+
+html {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
 }
 
 body {
     margin:0;
     display:flex; 
+    width : 100%;
 }
 
-label {
+* {
     user-select: none;
+}
+
+#logo {
+    font-size: 2.5rem;
+    background-color: #efefef;
+    position: relative;
+    padding-left: 0.8rem;
+    padding-right: 1.5rem;
+}
+
+#logo::after {
+    content : "©";
+    font-size: 1rem;
+    position : absolute;
+    top : 47%;
+    right : 10%;
 }
 
 .fctr {
@@ -26,6 +54,10 @@ label {
 
 #content {
     width: 100%;
+    opacity: 0;
+    background-color: rgb(239, 238, 238);
+    display: flex;
+    flex-direction: column;
 }
 
 #banner {
@@ -33,16 +65,21 @@ label {
     display: flex; 
     flex-direction: row; 
     align-items:center;
+    padding : 0 .5em;
 }
 
 #banner-desc {
-    flex-grow:1;
+    font-size: 0.8rem;
+    padding-left: 0.5rem; 
 }
 
 #banner-side {
     display: flex;
     flex-direction: column;
     text-align:right;
+    font-family: sans-serif;
+    font-size: 0.5rem;
+    color: white;
 }
 
 #banner-side * {
@@ -59,46 +96,131 @@ label {
     height: 100%;
 }
 
+#mainFrame {
+    padding-top: 2rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subFrame {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 6.5rem; 
+}
+
 #head {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid grey;
-    box-shadow: 0px 0px 15px grey;
+    box-shadow: 0px 0px 0.5rem grey;
     position: relative;
     z-index: 10;
-}
-
-#head > * {
-    padding : 1em;
-}
-
-#head > *:first-child {
-    background-color: #BBBBBB;
-}
-
-#head > *:last-child {
-    background-color: #888888;
-    color: white;
+    flex-shrink: 0;
 }
 
 #loader-bar {
     border-top: 1px solid black;
     height : 1px;
-    flex: 1;
-    box-shadow: 0px 0px 15px grey;
+    flex-grow: 1;
+    box-shadow: 0px 0px 0.5rem #e4e4e4;
     width: 0%;
+    transition: all 1s ease 0s;
 }
 
-#sub-content {
+.sub-content {
     display: flex;
-    margin: 0.5em;
+    position: relative;
 }
 
-#sub-content .filterUI.active::before {
+.sub-content .filterUI.active::before {
     content : attr(data-sl);
     font-size: 0.65em;
     color : grey;
-    position: relative;
-    top : 0.3em;
-    left : -0.3em;
+    position: absolute;
+    top : -.9rem;
+    left : -.3rem;
+    z-index: 30;
+}
+
+#albumInfos {
+    width: 1rem;
+    height: 1rem;
+    background-color: red;
+    transition: all 0.7s ease-in 0s;
+    animation: flickerAnimation 2s infinite;
+}
+
+#albumInfos:not(:empty) {
+    width: max-content;
+    height: max-content;
+    background-color: white;
+    padding: 0.5rem;
+    margin: 1rem 1rem 1rem 0;
+    animation: none;
+}
+
+.anim {
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+	animation: Gradient 30s linear infinite;
+}
+
+@keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+#footer {
+    position: fixed;
+    bottom: -1.3rem;
+    right: 5%;
+    background: white; /* fallback */
+	background: linear-gradient(135deg, transparent 10px, white 0) top left;
+	background-repeat: no-repeat;
+    padding: 0.5rem;
+    font-size: 0.65rem;
+    transition: all 0.3s ease 0s;
+}
+
+#footer:hover {
+    bottom : 0;
+}
+
+#searchBand {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin : 0 1rem;
+}
+
+#searchBand input {
+    padding : 0.5rem;
+    flex : 1;
+    max-width: 400px;
+}
+
+.sub-content::before {
+    content: attr(data-cat) " ||";
+    color: grey;
+    font-size: 1.5em;
+    white-space: nowrap;
+    position: absolute;
+    left:-6.5rem;
 }

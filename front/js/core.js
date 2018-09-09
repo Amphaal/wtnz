@@ -17,7 +17,8 @@ var filter = {
 var dataFeed = {
     genreUI : null, 
     artistUI : null, 
-    albumUI : null
+    albumUI : null,
+    albumInfos : null
 };
 
 //data feeding functions binding
@@ -54,22 +55,32 @@ function bindDataFeeds(lib) {
             return result;
         }, {});
     };
+
+    //albumInfos
+    dataFeed.albumInfos = function() {
+        let fArtist = filter['artistUI'];
+        let fAlbum = filter['albumUI'];
+        if(!fArtist || !fAlbum) return;
+
+        return albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
+    }
 }
 
 //apply filtering and generate / alter UI
 function applyFilter(toGenerate) {
 
-    let toAlter = Object.keys(dataFeed);
+    let toAlter = Object.keys(filter);
     if(toGenerate == null) toGenerate = toAlter;
 
     toGenerate.forEach(function(id) {
-        generateUI(id, dataFeed[id]);
+        generateFilterUI(id, dataFeed[id]);
     });
 
     toAlter.forEach(function(id) {
-        alterUI(id, filter[id]);
+        alterFilterUI(id, filter[id]);
     });
 
+    displayAlbumInfos(dataFeed.albumInfos);
 }
 
 //update filtering regarding clicked element
@@ -103,8 +114,8 @@ function processLibAsJSON(JSONText) {
     bindDataFeeds(lib);
 
     //prepare UI
-    Object.keys(dataFeed).forEach(function(id) {
-        prepareUIPart(id);
+    Object.keys(filter).forEach(function(id) {
+        prepareFilterUI(id);
     });
 
     //instantiate UI
