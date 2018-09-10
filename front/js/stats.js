@@ -7,34 +7,36 @@ function renderHCPie(data, divId, name) {
       delete val.value;
       return val;
     });
-  
+
+    let chart = {
+        credits: false,
+        chart: {
+            type: 'pie',
+            backgroundColor: 'rgba(255,255,255,0)'
+        },
+        title: '',
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b> of Total {series.name}'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style : {
+                        textOutline : null
+                    }
+                }
+            }
+        },
+        series: [{
+            name : name,
+            data : data
+        }]
+    };
+
     //instanciate
-    Highcharts.chart(divId, {
-      credits: false,
-      chart: {
-          type: 'pie',
-          backgroundColor: 'rgba(255,255,255,0)'
-      },
-      title: null,
-      tooltip: {
-          pointFormat: '<b>{point.percentage:.1f}%</b> of Total {series.name}'
-      },
-      plotOptions: {
-          pie: {
-              dataLabels: {
-                  enabled: true,
-                  format: '<b>{point.name}</b>: {point.y}',
-                  style : {
-                      textOutline : null
-                  }
-              }
-          }
-      },
-      series: [{
-          name : name,
-          data : data
-      }]
-    });
+    Highcharts.chart(divId, chart);
   }
   
   function switchPanel(event, panelNo) {

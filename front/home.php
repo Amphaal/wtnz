@@ -9,7 +9,8 @@
         <link rel="stylesheet" href="front/css/style.css">
         <link rel="icon" type="image/png" href="front/img/ico.png" />
         <script src="https://code.highcharts.com/highcharts.js"></script>
-        <?php include "front/js/vars.php" ?>
+        <?php include "front/js-php/vars.php" ?>
+        <?php include "front/js-php/polyfills.php" ?>
         <script src="front/js/helpers.js"></script>
         <script src="front/js/ui.js"></script>
         <script src="front/js/data.js"></script>
@@ -18,16 +19,16 @@
     </head>
     <body>
         <?php include "front/ui/loader.php" ?>
-        <div id='content'>
+        <div id='wtnz'>
             <?php include "front/ui/head.php" ?>
             <div id='mainFrame'>
                 <?php include "front/ui/stats.php" ?>
-                <?php include "front/ui/feed.php" ?>
-                <?php include "front/ui/discover.php" ?>
+                <div id='content'>
+                    <?php //include "front/ui/feed.php" ?>
+                    <?php include "front/ui/discover.php" ?>
+                </div>
             </div>
+            <?php include "front/ui/footer.php" ?>
         </div>
     </body>
-    <a id='footer' href='https://www.linkedin.com/in/guillaumevara/' target="_blank">
-        Pre-Alpha - 2018 - GV
-    </a>
 </html>

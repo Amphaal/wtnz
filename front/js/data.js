@@ -1,6 +1,7 @@
 /*artistsByGenre*/
+var arbgl = null;
 function artistsByGenreList(lib) {
-    return lib.reduce(function(total, currentVal) {
+    if(!arbgl) arbgl = lib.reduce(function(total, currentVal) {
         let genre = titleCase(currentVal['Genre']);
         let artist = currentVal['Album Artist'];
 
@@ -12,13 +13,16 @@ function artistsByGenreList(lib) {
 
         return total;
     }, {});
+
+    return arbgl;
 }
 
 /*albumsByGenreList*/
+var albgl = null;
 function albumsByGenreList(lib) {
 
     //reduce uniques albums by genres
-    return lib.reduce(function(total, currentVal) {
+    if(!albgl) albgl = lib.reduce(function(total, currentVal) {
         let genre = titleCase(currentVal['Genre']);
         let albumId = currentVal['Album'] + '_' + currentVal['Album Artist'] + '_' + currentVal['Year'];
 
@@ -30,24 +34,29 @@ function albumsByGenreList(lib) {
 
         return total;
     }, {});
+
+    return albgl;
 }
 
 /*albumsByGenreCount*/
+var abgc = null;
 function albumsByGenreCount(lib) {
     let base = albumsByGenreList(lib);
     
-    return Object.keys(base)
+    if(!abgc) abgc = Object.keys(base)
     .reduce(function(result, key) {
         let set = base[key];
         result[key] = set.size;
         return result;
     }, {});
+
+    return abgc;
 }
 
-
 /*albumsByArtistsList*/
+var abal = null;
 function albumsByArtistsList(lib) {
-    return lib.reduce(function(total, currentVal) {
+    if(!abal) abal = lib.reduce(function(total, currentVal) {
         
         //prepare
         let artist = currentVal['Album Artist'];
@@ -84,4 +93,6 @@ function albumsByArtistsList(lib) {
 
         return total;
     }, {});
+
+    return abal;
 }

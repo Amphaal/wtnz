@@ -36,7 +36,12 @@ function bindDataFeeds(lib) {
 
         let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
         let apa = albumsByArtistsList(lib);
-        return Array.from(artistsOfGenre).reduce(function(result, current) {
+        
+        //artists array
+        let arrAog = [];
+        artistsOfGenre.forEach(function(val) {arrAog.push(val);});
+        
+        return arrAog.reduce(function(result, current) {
             result[current] = Object.keys(apa[current]['Albums']).length;
             return result;
         }, {});
@@ -64,6 +69,36 @@ function bindDataFeeds(lib) {
 
         return albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
     }
+
+    dataFeed.searchBand = function(filterCriteria) {
+        if(!filterCriteria) return;
+
+        filterCriteria = filterCriteria.toLowerCase();
+        fCritLen = filterCriteria.length;
+
+        let source = albumsByArtistsList(lib);
+        let results = Object.keys(source).reduce(function(total, current) {
+
+            let sIndex = current.toLowerCase().indexOf(filterCriteria);
+            let sIndexEnd = fCritLen + sIndex;
+            if(sIndex > -1)  {
+                total[current] = {
+                    Genres :  source[current]["Genres"],
+                    sIndexRange : [sIndex, sIndexEnd]
+                };
+            }
+
+            return total;
+        }, {});
+
+        return Object.keys(results).length ? results : null;
+    }
+}
+
+function searchBand(event) {
+    let criteria = event.currentTarget.value;
+    let data = dataFeed.searchBand(criteria);
+    renderSearchResults(criteria, data);
 }
 
 //apply filtering and generate / alter UI
@@ -90,7 +125,7 @@ function updateFilter(event) {
     let nodeFilter = event.currentTarget.dataset.nFilter;
     let filterCat = event.currentTarget.parentNode.parentNode.id;
     nodeFilter == filter[filterCat] ? filter[filterCat] = null : filter[filterCat] = nodeFilter;
-    
+
     //clean filters after currently set
     let uiFiltersToReset = Object.keys(filter);
     let indexCurrentFilter = uiFiltersToReset.indexOf(filterCat) + 1;
@@ -122,8 +157,13 @@ function processLibAsJSON(JSONText) {
     applyFilter();
 
     //end loading, start animations...
-    hideLoader();
-    showContent();
+    hideLoader().then(function() {
+        showApp().then(function() {
+            //remove loader
+            let target = document.getElementById("loader-container");
+            target.parentElement.removeChild(target);
+        });
+    });
 }
 
 //at startup

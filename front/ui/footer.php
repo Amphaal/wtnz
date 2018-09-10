@@ -1,0 +1,1 @@
+<a id='footer' href='https://www.linkedin.com/in/guillaumevara/' target="_blank">Pre-Alpha - 2018 - GV</a>

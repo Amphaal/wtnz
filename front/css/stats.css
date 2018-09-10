@@ -23,18 +23,6 @@
     padding: 1rem 0;
 }
 
-#statsSwitcher > button {
-    background: #428BCA;
-    color: #fff;
-    font-family: Sans-serif;
-    font-size: 20px;
-    height: 60px;
-    width: 150px;
-    line-height: 60px;
-    text-align: center;
-    border: 0;
-}
-
-#statsSwitcher > button:hover {
-    opacity: 0.75;
+#statsSwitcher input {
+    margin:0 3px;
 }
