@@ -9,12 +9,13 @@
         <link rel="stylesheet" href="front/css/style.css">
         <link rel="icon" type="image/png" href="front/img/ico.png" />
         <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://momentjs.com/downloads/moment.min.js"></script>
         <?php include "front/js-php/vars.php" ?>
         <?php include "front/js-php/polyfills.php" ?>
-        <script src="front/js/helpers.js"></script>
-        <script src="front/js/ui.js"></script>
-        <script src="front/js/data.js"></script>
-        <script src="front/js/stats.js"></script>
+        <script src="front/js/sub/helpers.js"></script>
+        <script src="front/js/sub/ui.js"></script>
+        <script src="front/js/sub/data.js"></script>
+        <script src="front/js/sub/stats.js"></script>
         <script src="front/js/core.js"></script>
     </head>
     <body>

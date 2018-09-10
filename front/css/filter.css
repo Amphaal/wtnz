@@ -42,7 +42,7 @@
 }
 
 .filterUI.hasSelection .list .selected::after {
-    content: " »";
+    content: " \00BB";
 }
 
 .filterUI.hasSelection:hover .list{

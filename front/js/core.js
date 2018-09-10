@@ -1,12 +1,3 @@
-//download library
-function requestUserLib() {
-    let request = new XMLHttpRequest(); 
-    request.onprogress = updateProgress;
-    request.onloadend = function(e) {return processLibAsJSON(e.target.responseText)};
-    request.open('GET', clientURLLibrary, true);
-    request.send(null);
-}
-
 //global
 var filter = {
     genreUI : null,
@@ -41,6 +32,7 @@ function bindDataFeeds(lib) {
         let arrAog = [];
         artistsOfGenre.forEach(function(val) {arrAog.push(val);});
         
+        //reduce
         return arrAog.reduce(function(result, current) {
             result[current] = Object.keys(apa[current]['Albums']).length;
             return result;
@@ -95,19 +87,89 @@ function bindDataFeeds(lib) {
     }
 }
 
+//search band through head input
 function searchBand(event) {
     let criteria = event.currentTarget.value;
     let data = dataFeed.searchBand(criteria);
     renderSearchResults(criteria, data);
 }
 
+//update filtering regarding clicked element
+function updateFilter(event) {
+    
+    //prepare
+    let dataFilters = event.currentTarget.dataset.nFilter;
+    let filterUIBound = event.currentTarget.parentNode.parentNode;
+
+    //handle single arg with primitive data, essentially from button click
+    if (!IsJsonString(dataFilters) && filterUIBound.classList.contains('filterUI')) {
+        
+        //preapre
+        let dFilter = dataFilters;
+        let filterCat = filterUIBound.id;
+        purgeFilterUntilEnd = true; // we purge remaining filters all the way to the right (index-wise)
+        
+        //if dest filter is equal to current, it means that the user wants to remove it
+        if(dFilter && filter[filterCat] == dFilter) dFilter = null;
+
+        //update dataFilters obj
+        dataFilters = {};
+        dataFilters[filterCat] = dFilter;
+
+    } else {
+        //parse filter string to Obj
+        dataFilters = JSON.parse(dataFilters);
+    }
+
+    let toUpdate = alterFilter(dataFilters);;
+
+    //apply filters
+    applyFilter(toUpdate);
+}
+
+function alterFilter(dataFilters) {
+
+    let updatedIDs = [];
+
+    //define method to use by number of filters applied
+    if (Object.keys(dataFilters).length > 1) {
+
+        //search-like
+        Object.keys(filter).forEach(function(id) {
+            if(filter[id] != dataFilters[id]) updatedIDs.push(id);
+            filter[id] = dataFilters[id] || null;
+        });
+
+    } else {
+
+        //nav-like
+        let resetFilter = 0;
+        Object.keys(filter).forEach(function(id) {
+            let w = dataFilters[id];
+
+            if (typeof w === 'undefined') {
+                if (resetFilter) filter[id] = null;
+                return;
+            }
+
+            //next filters will be reset
+            if(filter[id] != w) resetFilter = 1;
+
+            //set
+            filter[id] = w;
+            updatedIDs.push(id);
+        });
+
+    }
+}
+
+
 //apply filtering and generate / alter UI
 function applyFilter(toGenerate) {
 
     let toAlter = Object.keys(filter);
-    if(toGenerate == null) toGenerate = toAlter;
 
-    toGenerate.forEach(function(id) {
+    toAlter.forEach(function(id) {
         generateFilterUI(id, dataFeed[id]);
     });
 
@@ -118,22 +180,15 @@ function applyFilter(toGenerate) {
     displayAlbumInfos(dataFeed.albumInfos);
 }
 
-//update filtering regarding clicked element
-function updateFilter(event) {
-    
-    //update filter
-    let nodeFilter = event.currentTarget.dataset.nFilter;
-    let filterCat = event.currentTarget.parentNode.parentNode.id;
-    nodeFilter == filter[filterCat] ? filter[filterCat] = null : filter[filterCat] = nodeFilter;
-
-    //clean filters after currently set
-    let uiFiltersToReset = Object.keys(filter);
-    let indexCurrentFilter = uiFiltersToReset.indexOf(filterCat) + 1;
-    uiFiltersToReset = uiFiltersToReset.slice(indexCurrentFilter);
-    uiFiltersToReset.forEach(function(e) {filter[e] = null;});
-
-    //apply filters
-    applyFilter(uiFiltersToReset);
+//download library
+function requestUserLib() {
+    let request = new XMLHttpRequest(); 
+    request.onprogress = updateProgress;
+    request.onloadend = function(e) {
+        return processLibAsJSON(e.target.responseText);
+    };
+    request.open('GET', clientURLLibrary, true);
+    request.send(null);
 }
 
 //process...
@@ -153,8 +208,8 @@ function processLibAsJSON(JSONText) {
         prepareFilterUI(id);
     });
 
-    //instantiate UI
-    applyFilter();
+    //instantiate all filterUIs
+    applyFilter(Object.keys(filter));
 
     //end loading, start animations...
     hideLoader().then(function() {

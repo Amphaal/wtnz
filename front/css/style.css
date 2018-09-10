@@ -39,7 +39,7 @@ body {
 }
 
 #logo::after {
-    content : "©";
+    content : "\00A9";
     font-size: 1rem;
     position : absolute;
     top : 47%;
@@ -104,6 +104,7 @@ body {
 #content {
     padding-top: 2rem;
     padding-left: 1rem;
+    z-index: 0;
 }
 
 #head {
@@ -114,12 +115,6 @@ body {
     position: relative;
     z-index: 10;
     flex-shrink: 0;
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    #loader-container {
-        height: 98% !important;
-    }
 }
 
 #loader-container {
@@ -159,18 +154,51 @@ body {
 #albumInfos {
     width: 1rem;
     height: 1rem;
-    background-color: red;
-    transition: all 0.7s ease-in 0s;
-    animation: flickerAnimation 2s infinite;
+    background-color: rgb(248, 248, 248);
+    transition: all 0.4s ease-in 0s;
+
 }
 
-#albumInfos:not(:empty) {
+#albumInfos:not(.show) {
+    animation: flickerAnimation 2s infinite ease;
+}
+
+#albumInfos.show {
     width: inherit;
     height: inherit;
     background-color: white;
-    padding: .5rem;
-    margin: .5rem .5rem 0 0;
-    animation: none;
+    padding: 1rem;
+    flex-grow: 1;
+    margin: 0 60% 3rem 0;
+    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+#albumInfos label{
+    color : white;
+    font-size: 0.8rem;
+}
+
+#albumInfos #aImage {
+    width: 150px;
+    height: 150px;
+    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    background-color: white;
+}
+
+#albumInfos .aiContent {
+    display: none;
+}
+
+
+#albumInfos.show .aiContent {
+    display: flex;
+    flex-direction: column;
+}
+
+#albumInfos .aiContent .hInfos{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
 }
 
 .anim {
@@ -181,7 +209,7 @@ body {
 
 @keyframes flickerAnimation {
     0%   { opacity:1; }
-    50%  { opacity:0; }
+    50%  { opacity:0.5; }
     100% { opacity:1; }
   }
 
@@ -228,6 +256,10 @@ body {
     border : none;
     width: 100%;
     box-sizing: border-box;
+}
+
+#searchBand input::-ms-clear {
+    display: none;
 }
 
 #searchBand input:hover, #searchBand input:focus, .searchResults {
