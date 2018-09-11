@@ -1,0 +1,75 @@
+
+#albumInfos {
+    width: 1rem;
+    height: 1rem;
+    background-color: rgb(248, 248, 248);
+    transition: all 0.4s ease-in 0s;
+
+}
+
+#albumInfos:not(.show) {
+    animation: flickerAnimation 2s infinite ease;
+}
+
+#albumInfos.show {
+    width: inherit;
+    height: inherit;
+    background-color: white;
+    padding: 1rem;
+    flex-grow: 1;
+    margin: 0 3rem 3rem 0;
+    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+#albumInfos label{
+    color : white;
+    font-size: 0.8rem;
+}
+
+#albumInfos #aImage {
+    width: 250px;
+    height: 250px;
+    box-shadow : rgba(0, 0, 0, 0.75) 0px 0px 13px 1px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+}
+
+#albumInfos #aImage.noImgFound::before {
+    content : ":'(";
+    position: absolute;
+    color : grey;
+    width: 100%;
+    height: 100%;
+    background-color : white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#albumInfos .aiContent {
+    display: none;
+}
+
+#albumInfos.show .aiContent {
+    display: flex;
+    flex-direction: column;
+}
+
+#albumInfos .aiContent .hInfos{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+}
+
+#albumInfos .aiContent .hMisc {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0.5; }
+    100% { opacity:1; }
+  }

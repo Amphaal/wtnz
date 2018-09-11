@@ -96,3 +96,44 @@ function albumsByArtistsList(lib) {
 
     return abal;
 }
+
+var request_qmbfac = null;
+function queryMusicBrainzForAlbumCover() {
+    return new Promise(function(resolve, reject){
+
+        let urlBase =  'http://musicbrainz.org/ws/2/release/?limit=1&fmt=json&query=';
+        let queryObj = {
+            release : filter["albumUI"],
+            artist :  filter["artistUI"]
+        };
+    
+        //if elements missing, abort
+        if (!queryObj.release || !queryObj.artist) reject();
+    
+        //join and make request query
+        let queryArr = Object.keys(queryObj).map(function(e) {
+            return e.toLowerCase() + ':' + queryObj[e].toLowerCase();
+        });
+        let query = encodeURI(queryArr.join(" AND "));
+        query = urlBase + query;
+        
+        //begin request and terminate non-finished previous request
+        if(request_qmbfac) request_qmbfac.abort();
+        request_qmbfac = new XMLHttpRequest();
+
+        request_qmbfac.onloadend = function(e) {
+            let text = e.target.responseText;
+            let obj = JSON.parse(text);
+            let imgUrl = mbQueryCoverArtAPI(obj.releases);
+            imgUrl ? resolve(imgUrl) : reject();
+        };
+        request_qmbfac.open('GET', query, true);
+        request_qmbfac.send(null);
+    });
+}
+
+function mbQueryCoverArtAPI(mbReleasesArray) {
+    if (!mbReleasesArray.length) return;
+    let urlBase = 'http://coverartarchive.org/release/{mbid}/front-250';
+    return urlBase.replace('{mbid}',mbReleasesArray[0].id);
+}

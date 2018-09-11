@@ -1,0 +1,90 @@
+
+#searchBand {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin : 0 1rem;
+}
+
+#searchBand input {
+    padding : 0.5rem;
+    flex : 1;
+    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    border : none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#searchBand input::-ms-clear {
+    display: none;
+}
+
+#searchBand input:hover, #searchBand input:focus, .searchResults {
+    box-shadow : 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    outline: none;
+}
+
+#searchBand .search {
+    position : relative;
+    min-width: 15rem;
+    width: 40%;
+}
+
+#searchBand .search[data-ef]::after {
+    content: attr(data-ef) " found";
+    position: absolute;
+    right : .2rem;
+    top : .2rem;
+    font-family: Arial;
+    font-size: .5rem;
+    color : grey;
+}
+
+#searchBand .searchResults {
+    width : 100%;
+    width : -moz-available;          /* WebKit-based browsers will ignore this. */
+    width : -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width : fill-available;
+    background-color : white; 
+    position : absolute; 
+    top : 1.7rem;
+    z-index: 50;
+    display: none;
+    transition: all 0.3s ease 0s;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: Arial;
+    padding: 0.5rem;
+    max-height: 10rem;
+}
+
+/*no results*/
+#searchBand .searchResults .nr {
+    color: grey;
+    text-align: center;
+}
+
+#searchBand .searchResults .result {
+    cursor : pointer;
+    transition: transform .2s;
+}
+
+#searchBand .searchResults .result:hover {
+    transform: translate(.25rem, 0);
+}
+
+/**/
+#searchBand .searchResults span {
+    color: grey;
+    font-size: 0.75rem;
+}
+
+/*found part*/
+#searchBand .searchResults span.f{
+    color: black;
+    font-weight: bold;
+}
+
+#searchBand .searchResults.show {
+    display:block;
+}

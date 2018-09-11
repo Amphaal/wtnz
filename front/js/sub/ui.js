@@ -12,6 +12,12 @@ function hideLoader() {
     });
 }
 
+//remove loader from layout
+function removeLoader() {
+    let target = document.getElementById("loader-container");
+    target.parentElement.removeChild(target);
+}
+
 //show content
 function showApp() {
     return new Promise(function(resolve, reject) {
@@ -35,6 +41,16 @@ function updateProgress(evt){
     } 
 }
 
+function applyCompareDateBulk() {
+    //update date to compared and humanized
+    let dateElems = document.querySelectorAll('[data-date]');
+    dateElems.forEach(function(dateElem) {
+        let dateHum = compareDateFromNomHumanized(dateElem.dataset.date);
+        dateElem.innerHTML = dateElem.innerHTML.replace('${date}', dateHum);
+    });
+}
+
+//toggle search results panel beneath the search input
 function toggleSearchResults(event) {
     let target = document.querySelector("#searchBand .searchResults");
     event.type == "focus" && event.target.value ? target.classList.add('show') : target.classList.remove('show');
@@ -188,33 +204,50 @@ function alterFilterUI(id, filterCriteria) {
     list.childElementCount || ph.innerHTML ? ui.classList.add("active") :  ui.classList.remove("active");
 }
 
+//handle album infos rendering
 function displayAlbumInfos(dataFunc) {
+    
     let data = dataFunc(); 
 
     let target = document.getElementById('albumInfos');
+    
     let aYear = document.getElementById('aYear');
     let aGenre = document.getElementById('aGenre');
     let aDateAdded = document.getElementById('aDateAdded');
     let aTracks = document.getElementById('aTracks');
+    let aImage = document.getElementById('aImage');
 
     //purge
-    [aYear, aGenre, aDateAdded, aTracks].forEach(function(e) {
+    [aYear, aGenre, aDateAdded, aTracks, aImage].forEach(function(e) {
         e.innerHTML = '';
+        e.removeAttribute('title');
+        e.removeAttribute('src');
+        e.classList.remove('noImgFound');
     });
     target.classList.remove('show');
 
     //then fill
     if(data) {
 
+        queryMusicBrainzForAlbumCover().then(function(imgUrl) {
+            aImage.setAttribute('src', imgUrl);
+        });
+
         aYear.innerHTML = data['Year'];
         aGenre.innerHTML = data['Genre'];
-        aDateAdded.innerHTML =data['DateAdded'];
+
+        aDateAdded.innerHTML = compareDateFromNomHumanized(data['DateAdded']);
+        aDateAdded.setAttribute('title', data['DateAdded']);
         
         Object.keys(data['Tracks']).forEach(function(trackId) {
             aTracks.innerHTML += '<li>' + data['Tracks'][trackId] + '</li>';
         });
         
         target.classList.add('show');
-
     }
+}
+
+function brokenImg(event) {
+    event.target.classList.add('noImgFound');
+    event.target.removeAttribute('src');
 }

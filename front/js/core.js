@@ -211,12 +211,12 @@ function processLibAsJSON(JSONText) {
     //instantiate all filterUIs
     applyFilter(Object.keys(filter));
 
+    applyCompareDateBulk();
+
     //end loading, start animations...
     hideLoader().then(function() {
         showApp().then(function() {
-            //remove loader
-            let target = document.getElementById("loader-container");
-            target.parentElement.removeChild(target);
+            removeLoader();
         });
     });
 }

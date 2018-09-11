@@ -1,4 +1,4 @@
-<div id='statsContainer' style="height:0">
+<div id='statsContainer' style="height:0" data-cat="STATS">
     <div id='stats'>
         <div id='statsAlbums'></div>
         <div id='statsArtists'></div>

@@ -4,9 +4,11 @@
         <meta charset="UTF-8" />
         <title>WTNZ - <?php echo $user_qs ?>'s Library</title>
         <link rel="stylesheet" href="front/css/lib/animate.css">
+        <link rel="stylesheet" href="front/css/style.css">
         <link rel="stylesheet" href="front/css/stats.css">
         <link rel="stylesheet" href="front/css/filter.css">
-        <link rel="stylesheet" href="front/css/style.css">
+        <link rel="stylesheet" href="front/css/searchBand.css">
+        <link rel="stylesheet" href="front/css/albumInfos.css">
         <link rel="icon" type="image/png" href="front/img/ico.png" />
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://momentjs.com/downloads/moment.min.js"></script>

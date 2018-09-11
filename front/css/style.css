@@ -125,6 +125,7 @@ body {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    z-index: 100;
 }
 
 #loader-bar {
@@ -151,55 +152,6 @@ body {
     z-index: 30;
 }
 
-#albumInfos {
-    width: 1rem;
-    height: 1rem;
-    background-color: rgb(248, 248, 248);
-    transition: all 0.4s ease-in 0s;
-
-}
-
-#albumInfos:not(.show) {
-    animation: flickerAnimation 2s infinite ease;
-}
-
-#albumInfos.show {
-    width: inherit;
-    height: inherit;
-    background-color: white;
-    padding: 1rem;
-    flex-grow: 1;
-    margin: 0 60% 3rem 0;
-    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-}
-
-#albumInfos label{
-    color : white;
-    font-size: 0.8rem;
-}
-
-#albumInfos #aImage {
-    width: 150px;
-    height: 150px;
-    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-    background-color: white;
-}
-
-#albumInfos .aiContent {
-    display: none;
-}
-
-
-#albumInfos.show .aiContent {
-    display: flex;
-    flex-direction: column;
-}
-
-#albumInfos .aiContent .hInfos{
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1.5rem;
-}
 
 .anim {
     background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
@@ -207,11 +159,6 @@ body {
 	animation: Gradient 30s linear infinite;
 }
 
-@keyframes flickerAnimation {
-    0%   { opacity:1; }
-    50%  { opacity:0.5; }
-    100% { opacity:1; }
-  }
 
 
 @keyframes Gradient {
@@ -236,101 +183,13 @@ body {
     padding: 0.5rem;
     font-size: 0.65rem;
     transition: all 0.3s ease 0s;
+    color : #525252;
 }
 
 #footer:hover {
     bottom : 0;
 }
 
-#searchBand {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    margin : 0 1rem;
-}
-
-#searchBand input {
-    padding : 0.5rem;
-    flex : 1;
-    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-    border : none;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#searchBand input::-ms-clear {
-    display: none;
-}
-
-#searchBand input:hover, #searchBand input:focus, .searchResults {
-    box-shadow : 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
-    outline: none;
-}
-
-#searchBand .search {
-    position : relative;
-    min-width: 15rem;
-    width: 40%;
-}
-
-#searchBand .search[data-ef]::after {
-    content: attr(data-ef) " found";
-    position: absolute;
-    right : .2rem;
-    top : .2rem;
-    font-family: Arial;
-    font-size: .5rem;
-    color : grey;
-}
-
-#searchBand .searchResults {
-    width : 100%;
-    width : -moz-available;          /* WebKit-based browsers will ignore this. */
-    width : -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-    width : fill-available;
-    background-color : white; 
-    position : absolute; 
-    top : 1.7rem;
-    z-index: 50;
-    display: none;
-    transition: all 0.3s ease 0s;
-    overflow-y: auto;
-    overflow-x: hidden;
-    font-family: Arial;
-    padding: 0.5rem;
-    max-height: 10rem;
-}
-
-/*no results*/
-#searchBand .searchResults .nr {
-    color: grey;
-    text-align: center;
-}
-
-#searchBand .searchResults .result {
-    cursor : pointer;
-    transition: transform .2s;
-}
-
-#searchBand .searchResults .result:hover {
-    transform: translate(.25rem, 0);
-}
-
-/**/
-#searchBand .searchResults span {
-    color: grey;
-    font-size: 0.75rem;
-}
-
-/*found part*/
-#searchBand .searchResults span.f{
-    color: black;
-    font-weight: bold;
-}
-
-#searchBand .searchResults.show {
-    display:block;
-}
 
 .subContent::before {
     content : attr(data-cat) " ||";
@@ -339,4 +198,19 @@ body {
     white-space : nowrap;
     position : absolute;
     left : -6.5rem;
+}
+
+#useChrome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading-text {
+    font-size:2em;margin-bottom:10px;
+}
+
+#useChrome img{
+    width : 5rem;
+    height: 5rem;
 }

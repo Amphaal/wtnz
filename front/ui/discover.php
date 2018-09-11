@@ -7,7 +7,6 @@
     <div id='albumInfos' class='anim'>
         <div class='aiContent'>
             <div class='hInfos'>
-                <div id='aImage'></div>
                 <div>
                     <label for="aYear">Year</label>
                     <div id="aYear"></div>
@@ -21,7 +20,8 @@
                     <div id="aDateAdded"></div>
                 </div>
             </div>
-            <div>
+            <div class='hMisc'>
+                <img id='aImage' onerror="brokenImg(event)" />
                 <div>
                     <label for="aTracks">Tracks</label>
                     <ol id="aTracks"></ol>

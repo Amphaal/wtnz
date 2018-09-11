@@ -26,3 +26,13 @@
 #statsSwitcher input {
     margin:0 3px;
 }
+
+#statsContainer::before {
+    content : attr(data-cat) " ||";
+    color : grey;
+    font-size : 1.5em;
+    white-space : nowrap;
+    position : absolute;
+    top : 2rem;
+    left : 2.7rem;
+}

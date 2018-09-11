@@ -14,7 +14,7 @@
             </div>
         </div>
         <div id='banner-side'>
-            <div title='Last updated : <?php echo date ("d/m/Y H:i", $latestUpdate)?>'><?php echo date ("d/m/Y H:i", $latestUpdate)?></div> 
+
             <div>
                 <label for='showStats'>Statistics</label>
                 <input id='showStats' type='checkbox' onclick="toggleStats(event)" style='margin:0;margin-left:0.25rem;'>

@@ -72,3 +72,10 @@ function IsJsonString(str) {
     }
     return true;
 }
+
+function compareDateFromNomHumanized(strISO8601) {
+    let dateNow = new moment();
+    let dateThen = moment(strISO8601);
+    let duration = moment.duration(dateNow.diff(dateThen));
+    return duration.humanize() + ' ago';
+}
