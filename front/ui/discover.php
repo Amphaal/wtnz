@@ -21,7 +21,13 @@
                 </div>
             </div>
             <div class='hMisc'>
-                <img id='aImage' onerror="brokenImg(event)" />
+                <div class='imgContainer'>
+                    <div>   
+                        <label for="aTitle">Album</label>
+                        <div id="aTitle"></div>
+                    </div>
+                    <div id='aImage'><img onerror="brokenImg(event)" /></div>
+                </div>
                 <div>
                     <label for="aTracks">Tracks</label>
                     <ol id="aTracks"></ol>

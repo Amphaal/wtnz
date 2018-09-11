@@ -23,7 +23,6 @@ function showApp() {
     return new Promise(function(resolve, reject) {
         let content = document.getElementById("wtnz");
         content.classList.add("animated");
-        content.classList.add("delay-1s");
         content.classList.add("fadeIn");
 
         return content.addEventListener(whichAnimationEvent(), function lele2(e) {
@@ -215,26 +214,37 @@ function displayAlbumInfos(dataFunc) {
     let aGenre = document.getElementById('aGenre');
     let aDateAdded = document.getElementById('aDateAdded');
     let aTracks = document.getElementById('aTracks');
-    let aImage = document.getElementById('aImage');
-
+    let aTitle = document.getElementById('aTitle');
+    
     //purge
-    [aYear, aGenre, aDateAdded, aTracks, aImage].forEach(function(e) {
-        e.innerHTML = '';
-        e.removeAttribute('title');
-        e.removeAttribute('src');
-        e.classList.remove('noImgFound');
+    [aYear, aGenre, aDateAdded, aTracks].forEach(function(e) {
+            e.innerHTML = '';
+            e.removeAttribute('title');
     });
+
+    //specific image purge
+    let aImage = document.getElementById('aImage');
+    aImage.firstChild.removeAttribute('src');
+    aImage.classList.remove('noImgFound');
+    aImage.classList.add('searchingCover');
+
     target.classList.remove('show');
 
     //then fill
     if(data) {
 
+        //specific async image handler
+        aImage.classList.add('searchingCover');
         queryMusicBrainzForAlbumCover().then(function(imgUrl) {
-            aImage.setAttribute('src', imgUrl);
+            aImage.classList.remove('searchingCover');
+            aImage.firstChild.setAttribute('src', imgUrl);
+        }, function() {
+            brokenImgFr(aImage.firstChild, aImage);
         });
 
         aYear.innerHTML = data['Year'];
         aGenre.innerHTML = data['Genre'];
+        aTitle.innerHTML = data['Album'];
 
         aDateAdded.innerHTML = compareDateFromNomHumanized(data['DateAdded']);
         aDateAdded.setAttribute('title', data['DateAdded']);
@@ -247,7 +257,13 @@ function displayAlbumInfos(dataFunc) {
     }
 }
 
+
+function brokenImgFr(eImg, eContainer) {
+    eContainer.classList.remove('searchingCover');
+    eContainer.classList.add('noImgFound');
+    eImg.removeAttribute('src');
+}
+
 function brokenImg(event) {
-    event.target.classList.add('noImgFound');
-    event.target.removeAttribute('src');
+    brokenImgFr(event.target, event.target.parentElement);
 }

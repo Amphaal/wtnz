@@ -4,7 +4,7 @@
     </div>
     <div id='banner' class='anim'>
         <div id='banner-desc'>
-            <span style='color : white'><?php echo $user_qs ?></span><span style='color : #313030'> Library</span>
+            <span style='color : white'><?php echo $user_qs ?></span><span style='color : rgba(0, 0, 0, 0.65)'> Library</span>
         </div>
         <div id='searchBand'>
             <div class='search' >
@@ -17,7 +17,7 @@
 
             <div>
                 <label for='showStats'>Statistics</label>
-                <input id='showStats' type='checkbox' onclick="toggleStats(event)" style='margin:0;margin-left:0.25rem;'>
+                <input id='showStats' type='checkbox' onclick="toggleStats(event)">
             </div>
         </div>
     </div>

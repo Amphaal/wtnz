@@ -59,7 +59,9 @@ function bindDataFeeds(lib) {
         let fAlbum = filter['albumUI'];
         if(!fArtist || !fAlbum) return;
 
-        return albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
+        let obj = albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
+        obj['Album'] = fAlbum;
+        return obj;
     }
 
     dataFeed.searchBand = function(filterCriteria) {
