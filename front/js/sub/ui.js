@@ -180,6 +180,7 @@ function prepareFilterUI(id) {
 
 function alterFilterUI(id, filterCriteria) {
 
+    //filterUI
     let ui = document.getElementById(id);
 
     //ui filter greying not selected
@@ -189,14 +190,31 @@ function alterFilterUI(id, filterCriteria) {
         nodefilter == filterCriteria ? curr.classList.add("selected") : curr.classList.remove("selected");
     });
 
+    //reset manual widths for animations
+    let mWidthQuery = 'style[data-ct="'+id+'"]';
+    let mWidth = document.querySelector(mWidthQuery);
+    if(mWidth) mWidth.parentElement.removeChild(mWidth);
+
     //ui filter acordeon effect + placeholder filing
     let ph = document.querySelector('#' + id + ' .ph');
     if(filterCriteria) {
+
         ui.classList.add("hasSelection");
-        ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB);
+        ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB); //fill placeholder
+        
+        //set manual widths for animations 
+        let min = (ph.clientWidth / getRootElementFontSize()) + 'rem';
+        let max = (list.clientWidth / getRootElementFontSize()) + 'rem';
+        let styleCarrier = document.createElement('style');
+        styleCarrier.dataset.ct = id;
+        styleCarrier.innerHTML += '#' + id + ':hover {width : ' + max + ' !important;}';
+        styleCarrier.innerHTML += '#' + id + '{width : ' + min + ';}';
+        document.body.appendChild(styleCarrier);
+
     } else {
         ui.classList.remove("hasSelection");
-        ph.innerHTML = "";
+        ph.innerHTML = ""; //resets placeholder
+
     } 
     
     //ui filter prefix

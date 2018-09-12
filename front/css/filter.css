@@ -1,7 +1,9 @@
 .filterUI {
     margin-right: 0.5rem;
     position: relative; 
+    transition: all .5s ease;
 }
+
 
 .filterUI.hasSelection:not(:hover) {
     max-height: 1rem;
@@ -10,6 +12,7 @@
 .filterUI .ph {
     position: absolute;
     z-index: 20;
+    white-space: nowrap;
 }
 
 .filterUI .list > div {
@@ -46,7 +49,7 @@
 }
 
 .filterUI.hasSelection:hover .list{
-    transform: scaleY(1);
+    transform: scale(1);
     opacity: 1;
 }
 

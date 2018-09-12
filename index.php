@@ -10,6 +10,7 @@ function init_app() {
     checkUserSpecificFolders(); 
     
     $qs = getQueryString();
+
     $user_qs = array_shift($qs);
 
     //if no user directory is being accessed
@@ -24,8 +25,9 @@ function init_app() {
     //if manual upload
     $action = array_shift($qs);
     if($action == 'upload') return accessManualUploadUI($user_qs);
+    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/' ) header('Location: /wtnz/'.$user_qs);
 
-    //else
+    //else redirect to user library
     return accessUserLibrary($user_qs);
 }
 

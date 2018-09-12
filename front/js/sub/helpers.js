@@ -79,3 +79,14 @@ function compareDateFromNomHumanized(strISO8601) {
     let duration = moment.duration(dateNow.diff(dateThen));
     return duration.humanize() + ' ago';
 }
+
+function getRootElementFontSize() {
+    // Returns a number
+    return parseFloat(
+      // of the computed font-size, so in px
+      getComputedStyle(
+        // for the root <html> element
+        document.documentElement
+      ).fontSize
+    );
+  }

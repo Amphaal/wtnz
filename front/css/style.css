@@ -25,7 +25,7 @@ body {
     width : 100%;
 }
 
-* {
+span, div {
     user-select : none;
     -ms-user-select : none;
 }
