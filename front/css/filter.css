@@ -1,8 +1,9 @@
 .filterUI {
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
     position: relative; 
     transition: all .3s ease;
     flex-shrink: 0;
+    margin-top:1.3rem;
 }
 
 
@@ -28,7 +29,7 @@
 }
 
 .filterUI .list > div:hover {
-    transform: translate(.25rem, 0);
+    transform: translate(.35rem, 0);
 }
 
 

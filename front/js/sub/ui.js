@@ -205,12 +205,12 @@ function alterFilterUI(id, filterCriteria) {
         ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB); //fill placeholder
         
         //set manual widths for animations 
-        let min = (ph.clientWidth / getRootElementFontSize()) + 'rem';
-        let max = (list.dataset.maxWidth / getRootElementFontSize()) + 'rem';
+        let min = (ph.clientWidth / getRootElementFontSize());
+        let max = (list.dataset.maxWidth / getRootElementFontSize());
         let styleCarrier = document.createElement('style');
         styleCarrier.dataset.ct = id;
-        styleCarrier.innerHTML += '#' + id + ':hover {width : ' + max + ' !important;}';
-        styleCarrier.innerHTML += '#' + id + '{width : ' + min + ';}';
+        styleCarrier.innerHTML += '#' + id + ':hover {width : ' + Math.max(min, max) + 'rem !important;}';
+        styleCarrier.innerHTML += '#' + id + '{width : ' + Math.min(min, max) + 'rem;}';
         document.body.appendChild(styleCarrier);
 
     } else {

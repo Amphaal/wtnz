@@ -29,13 +29,14 @@
     flex-grow: 1;
     display: flex;
     max-width: 20rem;
+    padding : .35rem 0;
 }
 
 #searchBand .search[data-ef]::after {
     content: attr(data-ef) " found";
     position: absolute;
     right : .2rem;
-    top : .2rem;
+    top : .5rem;
     font-family: Arial;
     font-size: .5rem;
     color : grey;

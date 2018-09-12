@@ -124,7 +124,7 @@ function updateFilter(event) {
     }
 
     let toUpdate = alterFilter(dataFilters);
-
+ 
     //apply filters
     applyFilter(toUpdate);
 }
@@ -133,9 +133,10 @@ function alterFilter(dataFilters) {
 
     let updatedIDs = [];
     let allFiltersArr = Object.keys(filter);
+    let filtersArr = Object.keys(dataFilters);
 
     //define method to use by number of filters applied
-    if (Object.keys(dataFilters).length > 1) {
+    if (filtersArr.length > 1) {
 
         //search-like
         allFiltersArr.forEach(function(id) {
@@ -143,16 +144,21 @@ function alterFilter(dataFilters) {
             filter[id] = dataFilters[id] || null;
         });
 
-    } else {
+    } else if (dataFilters[filtersArr[0]] == null) {
+        filter[filtersArr[0]] = null;
+        let cc = allFiltersArr.indexOf(filtersArr[0]);
+        let vv = allFiltersArr[cc + 1];
+        return vv ?  [vv] : [];
 
+    } else {
         //nav-like
         let resetFilter = 0;
         allFiltersArr.forEach(function(id) {
             let w = dataFilters[id];
-
-            if (typeof w === 'undefined') {
-                if (resetFilter) filter[id] = null;
-                return;
+            
+            if (typeof w === 'undefined' && ! resetFilter) {
+                if (resetFilter) w = null;
+                else return;
             }
 
             //next filters will be reset
@@ -168,7 +174,7 @@ function alterFilter(dataFilters) {
     let toRegenerate = allFiltersArr.filter(function(val, index){
         let previousFilter = allFiltersArr[index-1];
         let previousFilterValue = previousFilter ? filter[previousFilter] : null;
-        return index > firstChainedFilterIndex && previousFilterValue != null;
+        return index > firstChainedFilterIndex;
     });
 
     return toRegenerate;
