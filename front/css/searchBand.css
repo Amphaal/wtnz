@@ -3,7 +3,7 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    margin : 0 1rem;
+    margin-right : 10%;
 }
 
 #searchBand input {
@@ -26,8 +26,9 @@
 
 #searchBand .search {
     position : relative;
-    min-width: 15rem;
-    width: 40%;
+    flex-grow: 1;
+    display: flex;
+    max-width: 20rem;
 }
 
 #searchBand .search[data-ef]::after {

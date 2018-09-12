@@ -159,6 +159,8 @@ function generateFilterUI(id, dataFunc) {
         }, [])
         .sort(function(a,b) {return b.dataset.count - a.dataset.count;})
         .forEach(function(item) { target.appendChild(item);});
+
+        target.dataset.maxWidth = target.clientWidth;
     }
 
     return true;
@@ -204,7 +206,7 @@ function alterFilterUI(id, filterCriteria) {
         
         //set manual widths for animations 
         let min = (ph.clientWidth / getRootElementFontSize()) + 'rem';
-        let max = (list.clientWidth / getRootElementFontSize()) + 'rem';
+        let max = (list.dataset.maxWidth / getRootElementFontSize()) + 'rem';
         let styleCarrier = document.createElement('style');
         styleCarrier.dataset.ct = id;
         styleCarrier.innerHTML += '#' + id + ':hover {width : ' + max + ' !important;}';

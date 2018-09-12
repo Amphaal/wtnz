@@ -1,7 +1,8 @@
 .filterUI {
     margin-right: 0.5rem;
     position: relative; 
-    transition: all .5s ease;
+    transition: all .3s ease;
+    flex-shrink: 0;
 }
 
 

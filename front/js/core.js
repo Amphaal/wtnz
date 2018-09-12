@@ -123,7 +123,7 @@ function updateFilter(event) {
         dataFilters = JSON.parse(dataFilters);
     }
 
-    let toUpdate = alterFilter(dataFilters);;
+    let toUpdate = alterFilter(dataFilters);
 
     //apply filters
     applyFilter(toUpdate);
@@ -132,12 +132,13 @@ function updateFilter(event) {
 function alterFilter(dataFilters) {
 
     let updatedIDs = [];
+    let allFiltersArr = Object.keys(filter);
 
     //define method to use by number of filters applied
     if (Object.keys(dataFilters).length > 1) {
 
         //search-like
-        Object.keys(filter).forEach(function(id) {
+        allFiltersArr.forEach(function(id) {
             if(filter[id] != dataFilters[id]) updatedIDs.push(id);
             filter[id] = dataFilters[id] || null;
         });
@@ -146,7 +147,7 @@ function alterFilter(dataFilters) {
 
         //nav-like
         let resetFilter = 0;
-        Object.keys(filter).forEach(function(id) {
+        allFiltersArr.forEach(function(id) {
             let w = dataFilters[id];
 
             if (typeof w === 'undefined') {
@@ -161,21 +162,27 @@ function alterFilter(dataFilters) {
             filter[id] = w;
             updatedIDs.push(id);
         });
-
     }
+
+    let firstChainedFilterIndex = allFiltersArr.indexOf(updatedIDs.shift());
+    let toRegenerate = allFiltersArr.filter(function(val, index){
+        let previousFilter = allFiltersArr[index-1];
+        let previousFilterValue = previousFilter ? filter[previousFilter] : null;
+        return index > firstChainedFilterIndex && previousFilterValue != null;
+    });
+
+    return toRegenerate;
 }
 
 
 //apply filtering and generate / alter UI
 function applyFilter(toGenerate) {
 
-    let toAlter = Object.keys(filter);
-
-    toAlter.forEach(function(id) {
+    toGenerate.forEach(function(id) {
         generateFilterUI(id, dataFeed[id]);
     });
 
-    toAlter.forEach(function(id) {
+    Object.keys(filter).forEach(function(id) {
         alterFilterUI(id, filter[id]);
     });
 
@@ -210,8 +217,8 @@ function processLibAsJSON(JSONText) {
         prepareFilterUI(id);
     });
 
-    //instantiate all filterUIs
-    applyFilter(Object.keys(filter));
+    //instantiate initial filterUi
+    applyFilter(['genreUI']);
 
     applyCompareDateBulk();
 
