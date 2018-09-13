@@ -6,19 +6,16 @@
         <div id='banner-desc'>
             <span style='color : white'><?php echo $user_qs ?></span><span style='color : rgba(0, 0, 0, 0.65)'> Library</span>
         </div>
-        <div id='searchBand'>
-            <div class='search' >
-                <input spellcheck="false" type='text' placeholder="Search a band name..." 
-                onkeyup="searchBand(event)" onfocus="toggleSearchResults(event)" onblur="toggleSearchResults(event)">
-                <div class='searchResults'></div>
-            </div>
-        </div>
+        <?php include 'front/ui/searchBand.php' ?>
         <div id='banner-side'>
-
-            <div>
-                <label for='showStats'>Statistics</label>
+            <label title="Feed">
+                <input id='showFeed' type='checkbox' onclick="toggleFeed(event)">
+                <i class="fas fa-bell"></i>
+            </label>
+            <label title="Statistics">
                 <input id='showStats' type='checkbox' onclick="toggleStats(event)">
-            </div>
+                <i class="fas fa-chart-pie"></i>
+            </label>   
         </div>
     </div>
 </div>

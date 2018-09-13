@@ -19,10 +19,8 @@
             <?php include "front/ui/head.php" ?>
             <div id='mainFrame'>
                 <?php include "front/ui/stats.php" ?>
-                <div id='content'>
-                    <?php include "front/ui/feed.php" ?>
-                    <?php include "front/ui/discover.php" ?>
-                </div>
+                <?php include "front/ui/feed.php" ?>
+                <?php include "front/ui/discover.php" ?>
             </div>
             <?php include "front/ui/footer.php" ?>
         </div>

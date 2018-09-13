@@ -64,3 +64,12 @@
     z-index: -1;
 }
 
+.filterUI.active::before {
+    content : attr(data-sl);
+    font-size: 0.65em;
+    color : grey;
+    position: absolute;
+    top : -.9rem;
+    left : -.3rem;
+    z-index: 30;
+}

@@ -1,0 +1,69 @@
+
+#logo {
+    font-size: 2.5rem;
+    background-color: #efefef;
+    position: relative;
+    padding-left: 0.8rem;
+    padding-right: 1.5rem;
+}
+
+#logo::after {
+    content : "\00A9";
+    font-size: 1rem;
+    position : absolute;
+    top : 47%;
+    right : 10%;
+}
+
+.fctr {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#banner {
+    flex-grow:1; 
+    display: flex; 
+    flex-direction: row; 
+    align-items:center;
+    padding : .35rem 1rem;
+    flex-wrap: wrap;
+}
+
+#banner-desc {
+    font-size: 0.8rem;
+    margin-right: 10%;
+}
+
+#banner-side {
+    display: flex;
+    text-align:right;
+    font-family: sans-serif;
+    font-size: 0.5rem;
+    color: white;
+}
+
+#banner-side > * {margin : 0 .25rem;}
+#banner-side > *:first-child {margin-left : 0;}
+#banner-side > *:last-child {margin-right : 0;}
+
+#banner-side * {
+    vertical-align: middle;
+}
+
+
+#banner-side i {
+    font-size: 1rem;
+}
+
+#head {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid grey;
+    box-shadow: 0px 0px 0.5rem grey;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+}

@@ -6,3 +6,9 @@ function applyCompareDateBulk() {
         dateElem.innerHTML = dateElem.innerHTML.replace('${date}', dateHum);
     });
 }
+
+function toggleFeed(event) {
+    let feedContainer = document.getElementById('feedContainer');
+    let heightSwitch = event.target.checked ? feedContainer.scrollHeight + "px" : "0";
+    feedContainer.style.height = heightSwitch;
+}

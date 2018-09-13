@@ -5,12 +5,18 @@
     </div>
     <div id='statsSwitcher'>
         <div>
-            <input id='rAlbums' data-phid='0' type='radio' name='statsS' onclick="switchPanel(event)" checked>
-            <label for="rAlbums">Albums</label>
+            <label title="Albums">
+                <input id='rAlbums' data-phid='0' type='radio' name='statsS' onclick="switchPanel(event)" checked>
+                <i class="fas fa-compact-disc"></i>
+                <span>Albums</span>
+            </label>
         </div>
         <div>
-            <input id='rArtists' data-phid='1' type='radio' name='statsS' onclick="switchPanel(event)">
-            <label for="rArtists">Artists</label>
+            <label title='Artists'>
+                <input id='rArtists' data-phid='1' type='radio' name='statsS' onclick="switchPanel(event)">
+                <i class="fas fa-users"></i>
+                <span>Artists</span>
+            </label>
         </div>
     </div>
 </div>

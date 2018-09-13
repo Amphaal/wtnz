@@ -3,7 +3,7 @@
     flex-direction: column;
     overflow: hidden;
     height: 400px;
-
+    margin-top: 1rem;
     scroll-behavior: smooth;
     scroll-snap-type: mandatory;
 }
@@ -20,11 +20,16 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
 }
 
-#statsSwitcher:first-child {
-    margin-right:.5rem;
+#statsSwitcher > :first-child {
+    margin-right:1.5rem;
+}
+
+#statsSwitcher > * {
+    display: flex;
+    align-items: center;
 }
 
 #statsSwitcher input {
