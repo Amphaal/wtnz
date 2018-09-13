@@ -23,6 +23,10 @@
     padding: 1rem 0;
 }
 
+#statsSwitcher:first-child {
+    margin-right:.5rem;
+}
+
 #statsSwitcher input {
     margin:0 3px;
 }

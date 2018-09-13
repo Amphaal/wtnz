@@ -1,13 +1,27 @@
+///
+///ENTRYPOINT
+///
+
+function renderStats() {
+    renderHCPie(dataFeeds.statsAlbums(), 'statsAlbums', 'Albums');
+    renderHCPie(dataFeeds.statsArtists(), 'statsArtists', 'Artists');
+}
+
+///
+///HELPERS UI
+///
+
 //render a single chart
 function renderHCPie(data, divId, name) {
-  
-    //format
+
+    //format to highcharts specifics
     data = data.map(function(val) {
       val["y"] = val["value"];
       delete val.value;
       return val;
     });
 
+    //define chart
     let chart = {
         credits: false,
         chart: {
@@ -39,8 +53,9 @@ function renderHCPie(data, divId, name) {
     Highcharts.chart(divId, chart);
   }
   
-  function switchPanel(event, panelNo) {
+  function switchPanel(event) {
       let statsContainer = document.getElementById('stats');
+      let panelNo = event.target.dataset.phid;
       let containerHeight = statsContainer.clientHeight 
       statsContainer.scrollTop = containerHeight * panelNo;
   }
@@ -50,11 +65,3 @@ function renderHCPie(data, divId, name) {
       let heightSwitch = event.target.checked ? statsContainer.scrollHeight + "px" : "0";
       statsContainer.style.height = heightSwitch;
   }
-
-
-function renderStats(lib) {
-    let artistsByGenre = artistsByGenreList(lib);
-    let albumsByGenre = albumsByGenreList(lib);
-    renderHCPie(descSortObj(albumsByGenre), 'statsAlbums', 'Albums');
-    renderHCPie(descSortObj(artistsByGenre), 'statsArtists', 'Artists');
-}

@@ -1,10 +1,16 @@
 <div id='statsContainer' style="height:0" data-cat="STATS">
     <div id='stats'>
-        <div id='statsAlbums'></div>
-        <div id='statsArtists'></div>
+        <div class='statsPh' id='statsAlbums' data-phid='0'></div>
+        <div class='statsPh' id='statsArtists' data-phid='1'></div>
     </div>
     <div id='statsSwitcher'>
-        <div style="margin-right:.5rem"><input type='radio' id='rAlbums' name='statsS' onclick="switchPanel(event, 0)" checked><label for="rAlbums">Albums</label></div>
-        <div><input type='radio' id='rArtists' name='statsS' onclick="switchPanel(event, 1)"><label for="rArtists">Artists</label></div>
+        <div>
+            <input id='rAlbums' data-phid='0' type='radio' name='statsS' onclick="switchPanel(event)" checked>
+            <label for="rAlbums">Albums</label>
+        </div>
+        <div>
+            <input id='rArtists' data-phid='1' type='radio' name='statsS' onclick="switchPanel(event)">
+            <label for="rArtists">Artists</label>
+        </div>
     </div>
 </div>

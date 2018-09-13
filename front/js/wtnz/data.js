@@ -1,3 +1,121 @@
+////
+////DATA FEED
+////
+function generateDataFeeds(lib) {  
+    return {
+        genreUI : getGenreUIDataFeed(lib),
+        artistUI : getArtistUIDataFeed(lib),
+        albumUI : getAlbumUIDataFeed(lib),
+        albumInfos : getAlbumInfosDataFeed(lib),
+        searchBand : getSearchBandDataFeed(lib),
+        statsAlbums : getStatsAlbumsDataFeed(lib),
+        statsArtists : getStatsArtistsDataFeed(lib)
+    };
+}
+
+//genreUI
+function getGenreUIDataFeed(lib) {
+    return function() {
+        return albumsByGenreCount(lib);
+    };
+}
+
+//artistUI
+function getArtistUIDataFeed(lib) {
+    return function() {
+        let filterCriteria = filter['genreUI'];
+        if(!filterCriteria) return;
+
+        let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
+        let apa = albumsByArtistsList(lib);
+        
+        //artists array
+        let arrAog = [];
+        artistsOfGenre.forEach(function(val) {arrAog.push(val);});
+        
+        //reduce
+        return arrAog.reduce(function(result, current) {
+            result[current] = Object.keys(apa[current]['Albums']).length;
+            return result;
+        }, {});
+    };
+}
+
+//albumUI
+function getAlbumUIDataFeed(lib){
+    return function() {
+        let filterCriteria = filter['artistUI'];
+        if(!filterCriteria) return;
+    
+        let apa = albumsByArtistsList(lib);
+        let source = apa[filterCriteria]['Albums'];
+        
+        return Object.keys(source).reduce(function(result, current) {
+            result[current] = source[current]['Year'];
+            return result;
+        }, {});
+    };
+}
+
+//albumInfos
+function getAlbumInfosDataFeed(lib) {
+    return function() {
+        let fArtist = filter['artistUI'];
+        let fAlbum = filter['albumUI'];
+        if(!fArtist || !fAlbum) return;
+    
+        let obj = albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
+        obj['Album'] = fAlbum;
+        return obj;
+    };
+}
+
+//searchBand
+function getSearchBandDataFeed(lib){
+    return function(filterCriteria) {
+        if(!filterCriteria) return;
+    
+        filterCriteria = filterCriteria.toLowerCase();
+        fCritLen = filterCriteria.length;
+    
+        let source = albumsByArtistsList(lib);
+        let results = Object.keys(source).reduce(function(total, current) {
+    
+            let sIndex = current.toLowerCase().indexOf(filterCriteria);
+            let sIndexEnd = fCritLen + sIndex;
+            if(sIndex > -1)  {
+                total[current] = {
+                    Genres :  source[current]["Genres"],
+                    sIndexRange : [sIndex, sIndexEnd]
+                };
+            }
+    
+            return total;
+        }, {});
+    
+        return Object.keys(results).length ? results : null;
+    };
+}
+
+//statsAlbums
+function getStatsAlbumsDataFeed(lib) {
+    return function () {
+        return descSortObj(albumsByGenreList(lib));
+    };
+}
+
+//statsArtists
+function getStatsArtistsDataFeed(lib) {
+    return function () {
+        return descSortObj(artistsByGenreList(lib));
+    };
+}
+
+
+///
+/// data processing functions
+///
+
 /*artistsByGenre*/
 var arbgl = null;
 function artistsByGenreList(lib) {
@@ -96,6 +214,10 @@ function albumsByArtistsList(lib) {
 
     return abal;
 }
+
+///
+/// MusicBrainz Integration
+/// 
 
 var request_qmbfac = null;
 function queryMusicBrainzForAlbumCover() {
