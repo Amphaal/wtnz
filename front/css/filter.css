@@ -1,9 +1,9 @@
 .filterUI {
-    margin-right: 0.75rem;
+    margin-right: .75rem;
     position: relative; 
     transition: all .3s ease;
     flex-shrink: 0;
-    margin-top:1.3rem;
+    margin-top: .9rem;
 }
 
 
@@ -25,21 +25,18 @@
 }
 
 .filterUI.hasSelection .list > div {
-    color : rgba(0, 0, 0, 0.25);
+    color : rgba(0, 0, 0, .25);
 }
 
 .filterUI .list > div:hover {
     transform: translate(.35rem, 0);
 }
 
-
-
 .filterUI.hasSelection .list{
     transform: scaleY(0);
     transform-origin: 50% 0;
-    transition:transform 0.5s ease 0s;
-    opacity: 0.1;
-    overflow: hidden;
+    transition:transform .5s ease 0s;
+    opacity: .1;
 }
 
 .filterUI.hasSelection .list .selected {
@@ -55,10 +52,6 @@
     opacity: 1;
 }
 
-.filterUI.hasSelection:not(:hover) .list > :not(.selected){
-    width : 0;
-}
-
 .filterUI:hover .ph {
     color : rgba(0, 0, 0, 0);
     z-index: -1;
@@ -66,7 +59,7 @@
 
 .filterUI.active::before {
     content : attr(data-sl);
-    font-size: 0.65em;
+    font-size: .65em;
     color : grey;
     position: absolute;
     top : -.9rem;

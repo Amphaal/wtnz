@@ -9,7 +9,7 @@
 #searchBand input {
     padding : 0.5rem;
     flex : 1;
-    box-shadow : 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow : 0 2px 2px 0 rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
     border : none;
     width: 100%;
     box-sizing: border-box;
@@ -20,7 +20,7 @@
 }
 
 #searchBand input:hover, #searchBand input:focus, .searchResults {
-    box-shadow : 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow : 0 3px 8px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.08);
     outline: none;
 }
 
@@ -52,11 +52,11 @@
     top : 1.7rem;
     z-index: 50;
     display: none;
-    transition: all 0.3s ease 0s;
+    transition: all .3s ease 0s;
     overflow-y: auto;
     overflow-x: hidden;
     font-family: Arial;
-    padding: 0.5rem;
+    padding: .5rem;
     max-height: 10rem;
 }
 
@@ -78,7 +78,7 @@
 /**/
 #searchBand .searchResults span {
     color: grey;
-    font-size: 0.75rem;
+    font-size: .75rem;
 }
 
 /*found part*/

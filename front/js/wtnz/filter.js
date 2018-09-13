@@ -129,9 +129,7 @@ function generateFilterUI(id, dataFunc) {
             return result;
         }, [])
         .sort(function(a,b) {return b.dataset.count - a.dataset.count;})
-        .forEach(function(item) { target.appendChild(item);});
-
-        target.dataset.maxWidth = target.scrollWidth;
+        .forEach(function(item) {target.appendChild(item);});
     }
 
     return true;
@@ -140,43 +138,41 @@ function generateFilterUI(id, dataFunc) {
 //alter
 function alterFilterUI(id, filterCriteria) {
 
-    //filterUI
+    //prepare
     let ui = document.getElementById(id);
+    let list = document.querySelector('#' + id + ' .list');
+    let ph = document.querySelector('#' + id + ' .ph');
 
     //ui filter greying not selected
-    let list = document.querySelector('#' + id + ' .list');
     list.childNodes.forEach(function(curr) {
         let nodefilter = curr.dataset.nFilter;
         nodefilter == filterCriteria ? curr.classList.add("selected") : curr.classList.remove("selected");
     });
+
+    //ui filter acordeon effect + placeholder filing
+    if(filterCriteria) {
+        ui.classList.add("hasSelection");
+        ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB); //fill placeholder
+    } else {
+        ui.classList.remove("hasSelection");
+        ph.innerHTML = ""; //resets placeholder
+    } 
+    
+    //ui filter prefix
+    list.childElementCount || ph.innerHTML ? ui.classList.add("active") :  ui.classList.remove("active");
 
     //reset manual widths for animations
     let mWidthQuery = 'style[data-ct="'+id+'"]';
     let mWidth = document.querySelector(mWidthQuery);
     if(mWidth) mWidth.parentElement.removeChild(mWidth);
 
-    //ui filter acordeon effect + placeholder filing
-    let ph = document.querySelector('#' + id + ' .ph');
-    if(filterCriteria) {
+    //set manual widths for animations 
+    let min = ((ph.scrollWidth || list.scrollWidth + 1) / getRootElementFontSize());
+    let max = ((list.scrollWidth + 1)  / getRootElementFontSize());
+    let styleCarrier = document.createElement('style');
+    styleCarrier.dataset.ct = id;
+    styleCarrier.innerHTML += '#' + id + ':hover {width : ' +  max + 'rem !important;}';
+    styleCarrier.innerHTML += '#' + id + '{width : ' + min + 'rem;}';
+    document.body.appendChild(styleCarrier);
 
-        ui.classList.add("hasSelection");
-        ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB); //fill placeholder
-        
-        //set manual widths for animations 
-        let min = (ph.clientWidth / getRootElementFontSize());
-        let max = (list.dataset.maxWidth / getRootElementFontSize());
-        let styleCarrier = document.createElement('style');
-        styleCarrier.dataset.ct = id;
-        styleCarrier.innerHTML += '#' + id + ':hover {width : ' + Math.max(min, max) + 'rem !important;}';
-        styleCarrier.innerHTML += '#' + id + '{width : ' + Math.min(min, max) + 'rem;}';
-        document.body.appendChild(styleCarrier);
-
-    } else {
-        ui.classList.remove("hasSelection");
-        ph.innerHTML = ""; //resets placeholder
-
-    } 
-    
-    //ui filter prefix
-    list.childElementCount || ph.innerHTML ? ui.classList.add("active") :  ui.classList.remove("active");
 }

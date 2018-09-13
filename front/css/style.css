@@ -91,9 +91,9 @@ a, a:visited, a:hover, a:active {
     background: white; /* fallback */
 	background: linear-gradient(135deg, transparent 10px, white 0) top left;
 	background-repeat: no-repeat;
-    padding: 0.5rem;
-    font-size: 0.65rem;
-    transition: all 0.3s ease 0s;
+    padding: .5rem;
+    font-size: .65rem;
+    transition: all .3s ease 0s;
     color : #525252;
 }
 
@@ -116,5 +116,5 @@ input[type="checkbox"]:not(:checked) + i,
 input[type="radio"]:not(:checked) + i,
 input[type="radio"]:not(:checked) + i + span
  {
-    color : rgba(0, 0, 0, 0.5);
+    color : rgba(0, 0, 0, .5);
 }
