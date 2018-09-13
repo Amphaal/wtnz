@@ -18,8 +18,8 @@ function updateFilter(event) {
 function getNewFiltersFromUI(event) {
     
     //prepare
-    let dataFilters = event.target.dataset.nFilter;
-    let filterUIBound = event.target.parentNode.parentNode;
+    let dataFilters = event.currentTarget.dataset.nFilter;
+    let filterUIBound = event.currentTarget.parentNode.parentNode;
 
     //handle single arg with primitive data, essentially from button click
     if (!IsJsonString(dataFilters) && filterUIBound.classList.contains('filterUI')) {
@@ -131,7 +131,7 @@ function generateFilterUI(id, dataFunc) {
         .sort(function(a,b) {return b.dataset.count - a.dataset.count;})
         .forEach(function(item) { target.appendChild(item);});
 
-        target.dataset.maxWidth = target.clientWidth;
+        target.dataset.maxWidth = target.scrollWidth;
     }
 
     return true;

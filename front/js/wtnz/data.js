@@ -244,7 +244,7 @@ function queryMusicBrainzForAlbumCover() {
         request_qmbfac = new XMLHttpRequest();
 
         request_qmbfac.onloadend = function(e) {
-            let text = e.target.responseText;
+            let text = e.currentTarget.responseText;
             let obj = JSON.parse(text);
             let imgUrl = mbQueryCoverArtAPI(obj.releases);
             imgUrl ? resolve(imgUrl) : reject();

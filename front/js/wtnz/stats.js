@@ -55,13 +55,13 @@ function renderHCPie(data, divId, name) {
   
   function switchPanel(event) {
       let statsContainer = document.getElementById('stats');
-      let panelNo = event.target.dataset.phid;
+      let panelNo = event.currentTarget.dataset.phid;
       let containerHeight = statsContainer.clientHeight 
       statsContainer.scrollTop = containerHeight * panelNo;
   }
   
   function toggleStats(event) {
       let statsContainer = document.getElementById('statsContainer');
-      let heightSwitch = event.target.checked ? statsContainer.scrollHeight + "px" : "0";
+      let heightSwitch = event.currentTarget.checked ? statsContainer.scrollHeight + "px" : "0";
       statsContainer.style.height = heightSwitch;
   }

@@ -59,5 +59,5 @@ function brokenImgFr(eImg, eContainer) {
 }
 
 function brokenImg(event) {
-    brokenImgFr(event.target, event.target.parentElement);
+    brokenImgFr(event.currentTarget, event.currentTarget.parentElement);
 }

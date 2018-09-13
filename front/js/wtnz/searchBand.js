@@ -16,7 +16,7 @@ function searchBand(event) {
 //toggle search results panel beneath the search input
 function toggleSearchResults(event) {
     let target = document.querySelector("#searchBand .searchResults");
-    event.type == "focus" && event.target.value ? target.classList.add('show') : target.classList.remove('show');
+    event.type == "focus" && event.currentTarget.value ? target.classList.add('show') : target.classList.remove('show');
 }
 
 //render
