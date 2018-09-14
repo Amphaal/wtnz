@@ -1,3 +1,9 @@
+#discoverContainer {
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all .3s ease;
+}
+
 #discoverContainer .subContent::before{
     margin-right: 0;
 }
@@ -5,12 +11,9 @@
 .filterUI {
     position: relative; 
     transition: all .3s ease;
-    margin: .9rem .75rem 0 .3rem;
+    margin: .9rem 0 0 .7rem;
     display: flex;
-}
-
-.filterUI.hasSelection:not(:hover) .list {
-    max-height: 1rem;
+    flex-direction: column;
 }
 
 .filterUI:first-child {
@@ -23,8 +26,10 @@
 }
 
 .filterUI .list {
+    position: relative;
     display: flex;
     flex-direction: column;
+    width: fit-content;
 }
 
 .filterUI .list > * {
@@ -34,19 +39,21 @@
     cursor: pointer;
 }
 
-.filterUI.hasSelection .list > * {
-    color : rgba(0, 0, 0, .25);
-}
-
 .filterUI .list > *:hover {
     transform: translate(.35rem, 0);
 }
 
 .filterUI.hasSelection .list{
+    position: absolute;
     transform: scaleY(0);
     transform-origin: 50% 0;
     transition:transform .5s ease 0s;
     opacity: .1;
+}
+
+.filterUI.hasSelection .ph {
+    position: relative;
+    width:fit-content;
 }
 
 .filterUI.hasSelection .list .selected {
@@ -58,9 +65,19 @@
 }
 
 .filterUI.hasSelection:hover .list{
+    position: relative;
     transform: scale(1);
     opacity: 1;
 }
+
+.filterUI.hasSelection:hover .ph{
+    position: absolute;
+}
+
+.filterUI.hasSelection .list > * {
+    color : rgba(0, 0, 0, .25);
+}
+
 
 .filterUI:hover .ph {
     color : rgba(0, 0, 0, 0);

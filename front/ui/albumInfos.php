@@ -1,31 +1,16 @@
 <div id='albumInfos' class='anim'>
     <div class='aiContent'>
         <div class='hInfos'>
-            <div>
-                <label for="aYear">Year</label>
-                <div id="aYear"></div>
-            </div>
-            <div>
-                <label for="aGenre">Genre</label>
-                <div id="aGenre"></div>
-            </div>
-            <div>
-                <label for="aDateAdded">Date of addition</label>
-                <div id="aDateAdded"></div>
-            </div>
+                <label>Year<div id="aYear"></div></label>
+                <label>Genre<div id="aGenre"></div></label>
+                <label>Date of addition<div id="aDateAdded"></div></label>
         </div>
         <div class='hMisc'>
             <div class='imgContainer'>
-                <div>   
-                    <label for="aTitle">Album</label>
-                    <div id="aTitle"></div>
-                </div>
+                <label>Album<div id="aTitle"></div></label>
                 <div id='aImage'><img onerror="brokenImg(event)" /></div>
             </div>
-            <div style='margin: 1rem 0 1rem 2rem'>
-                <label for="aTracks">Tracks</label>
-                <ol id="aTracks"></ol>
-            </div>
+            <label style='margin: 1rem 0 1rem 2rem' >Tracks<ol id="aTracks"></ol></label>
         </div>
     </div>
 </div>

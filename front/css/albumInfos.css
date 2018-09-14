@@ -21,9 +21,15 @@
     box-shadow : 0 2px 2px 0 rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
 }
 
-#albumInfos label{
+#albumInfos label {
     color : rgba(0, 0, 0, 0.6);
     font-size: .8rem;
+}
+
+#albumInfos label > *{
+    color : white;
+    font-size: 1rem;
+    margin-bottom: 1rem;
 }
 
 #albumInfos #aImage {
@@ -33,6 +39,10 @@
     background-color: white;
     border-radius: 5px;
     position: relative;
+}
+
+#albumInfos #aImage img {
+    width: 100%;
 }
 
 #albumInfos #aImage.noImgFound::before {
@@ -73,7 +83,7 @@
 #albumInfos .hInfos{
     display: flex;
     justify-content: space-around;
-    margin-bottom: 1.5rem;
+    margin-bottom: .5rem;
 }
 
 #albumInfos .hMisc {

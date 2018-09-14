@@ -17,7 +17,8 @@ var sourceHeight = window.innerHeight;
 var sourceWidth = window.innerWidth;
 var resizeFunctions = {
     height : [],
-    width : []
+    width : [],
+    any : []
 };
 
 //event listener with throtte
@@ -32,6 +33,11 @@ function resizeManualHeightsAndWidths(event) {
     let newHeight = window.innerHeight;
     let newWidth = window.innerWidth;
     
+    //height or width...
+    resizeFunctions.any.forEach(function(func) {
+        func();
+    });
+
     //height...
     if(newHeight != sourceHeight) {
         sourceHeight = newHeight;

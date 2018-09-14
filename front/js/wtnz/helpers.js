@@ -32,7 +32,7 @@ function descSortObj(objToSort) {
 }
 
 //detect transition handler
-function whichTransitionEvent() {
+function whichTransitionEndEvent() {
 	var el = document.createElement('fakeelement');
 	var transitions = {
 		'transition': 'transitionend',
@@ -47,6 +47,23 @@ function whichTransitionEvent() {
 		}
 	}
 }
+
+function whichTransitionStartEvent() {
+	var el = document.createElement('fakeelement');
+	var transitions = {
+		'transition': 'transitionstar',
+		'OTransition': 'oTransitionStart',
+		'MozTransition': 'transitionstart',
+		'WebkitTransition': 'webkitTransitionStart'
+	}
+
+	for (var t in transitions) {
+		if (el.style[t] !== undefined) {
+			return transitions[t];
+		}
+	}
+}
+
 
 function whichAnimationEvent() {
     var t,
