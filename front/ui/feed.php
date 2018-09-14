@@ -1,7 +1,7 @@
 <div id='feedContainer' style='max-height:0'>   
     <div class='subFrame'>
-        <div class='subContent' data-cat="WHAT'S NEW" style='font-size:0.82rem; width:100%'>
-            <div style="width:100%;background-color:white; padding:.5rem; border-radius:5px; box-shadow:0px 0px 10px 1px #c7c7c7; font-family: Arial;font-size:0.5rem;box-sizing:border-box; margin-bottom:2rem">
+        <div class='subContent' data-cat="WHAT'S NEW" style='flex-grow:1;display:flex;'>
+            <div class='feedWrapper'>
                 Quicky check fresh albums and artists : PRE ALPHA, COMING SOON !<br/><br/>
                 Register and upload with <b>feedTNZ©</b> companion app : BETA<br/>
                 Mobile interface : BETA<br/>

@@ -26,16 +26,19 @@ function renderHCPie(data, divId, name) {
         credits: false,
         chart: {
             type: 'pie',
-            backgroundColor: 'rgba(255,255,255,0)'
+            backgroundColor: 'rgba(255,255,255,0)',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
         },
         title: '',
         tooltip: {
-            pointFormat: '<b>{point.percentage:.1f}%</b> of Total {series.name}'
+            pointFormat: '<b>{point.y}</b> or <b>{point.percentage:.1f}%</b> of {series.name}'
         },
         plotOptions: {
             pie: {
+                allowPointSelect: true,
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     format: '<b>{point.name}</b>: {point.y}',
                     style : {
                         textOutline : null

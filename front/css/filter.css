@@ -1,34 +1,44 @@
-.filterUI {
-    margin-right: .75rem;
-    position: relative; 
-    transition: all .3s ease;
-    flex-shrink: 0;
-    margin-top: .9rem;
+#discoverContainer .subContent::before{
+    margin-right: 0;
 }
 
+.filterUI {
+    position: relative; 
+    transition: all .3s ease;
+    margin: .9rem .75rem 0 .3rem;
+    display: flex;
+}
 
-.filterUI.hasSelection:not(:hover) {
+.filterUI.hasSelection:not(:hover) .list {
     max-height: 1rem;
+}
+
+.filterUI:first-child {
+    margin-left:1rem;
 }
 
 .filterUI .ph {
     position: absolute;
     z-index: 20;
-    white-space: nowrap;
 }
 
-.filterUI .list > div {
+.filterUI .list {
+    display: flex;
+    flex-direction: column;
+}
+
+.filterUI .list > * {
     color : rgba(0, 0, 0, 1);
     transition: all 0.3s;
     position: relative;
     cursor: pointer;
 }
 
-.filterUI.hasSelection .list > div {
+.filterUI.hasSelection .list > * {
     color : rgba(0, 0, 0, .25);
 }
 
-.filterUI .list > div:hover {
+.filterUI .list > *:hover {
     transform: translate(.35rem, 0);
 }
 
@@ -43,7 +53,7 @@
     color : rgba(0, 0, 0, 1);
 }
 
-.filterUI.hasSelection .list .selected::after {
+.filterUI.hasSelection .list .selected::after, .filterUI.hasSelection .ph::after  {
     content: " \00BB";
 }
 
@@ -65,4 +75,9 @@
     top : -.9rem;
     left : -.3rem;
     z-index: 30;
+}
+
+.filterWrapper {
+    display: flex;
+    margin:0;
 }

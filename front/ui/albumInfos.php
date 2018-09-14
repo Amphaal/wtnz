@@ -22,7 +22,7 @@
                 </div>
                 <div id='aImage'><img onerror="brokenImg(event)" /></div>
             </div>
-            <div>
+            <div style='margin: 1rem 0 1rem 2rem'>
                 <label for="aTracks">Tracks</label>
                 <ol id="aTracks"></ol>
             </div>

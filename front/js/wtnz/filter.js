@@ -83,7 +83,7 @@ function prepareFilterUIs(IDs) {
         let target = document.getElementById(id);
         target.classList.add("filterUI");
         
-        let ph = document.createElement('div');
+        let ph = document.createElement('span');
         ph.classList.add("ph");
         target.appendChild(ph);
     
@@ -120,7 +120,7 @@ function generateFilterUI(id, dataFunc) {
     //if there is any data
     if (data) {
         Object.keys(data).reduce(function(result, current) {
-            let item = document.createElement('div');
+            let item = document.createElement('span');
             item.innerHTML = current;
             item.dataset.count = data[current];
             item.dataset.nFilter = current;
@@ -152,7 +152,7 @@ function alterFilterUI(id, filterCriteria) {
     //ui filter acordeon effect + placeholder filing
     if(filterCriteria) {
         ui.classList.add("hasSelection");
-        ph.innerHTML = filterCriteria + ' ' + String.fromCharCode(0x00BB); //fill placeholder
+        ph.innerHTML = filterCriteria ;
     } else {
         ui.classList.remove("hasSelection");
         ph.innerHTML = ""; //resets placeholder
@@ -169,10 +169,11 @@ function alterFilterUI(id, filterCriteria) {
     //set manual widths for animations 
     let min = ((ph.scrollWidth || list.scrollWidth + 1) / getRootElementFontSize());
     let max = ((list.scrollWidth + 1)  / getRootElementFontSize());
+    
     let styleCarrier = document.createElement('style');
     styleCarrier.dataset.ct = id;
-    styleCarrier.innerHTML += '#' + id + ':hover {width : ' +  max + 'rem !important;}';
-    styleCarrier.innerHTML += '#' + id + '{width : ' + min + 'rem;}';
+    styleCarrier.innerHTML += '#' + id + ':hover {width : ' +  Math.ceil(max*10)/10 + 'rem;}';
+    styleCarrier.innerHTML += '#' + id + '{width : ' + Math.ceil(min*10)/10 + 'rem;}';
     document.body.appendChild(styleCarrier);
 
 }
