@@ -28,16 +28,17 @@ input {
 :root {
     font-size: 24px;
     font-family: bebasNeueFont, Arial, Helvetica, sans-serif;
+    background-color: rgb(239, 238, 238);
 }
+
 
 * {
     box-sizing: border-box;
 }
 
 html {
-    height: 100%;
+    scroll-behavior: smooth;    
     display: flex;
-    overflow: hidden;
 }
 
 body {
@@ -59,19 +60,16 @@ a, a:visited, a:hover, a:active {
 #wtnz {
     width: 100%;
     opacity: 0;
-    background-color: rgb(239, 238, 238);
     display: flex;
     flex-direction: column;
 }
 
 #mainFrame {
-    overflow-y: auto;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     z-index: 0;
-    scroll-behavior : smooth;
-    padding: 14px; /*padding for scroll integration*/
+
 }
 
 .subFrame {
@@ -95,11 +93,11 @@ a, a:visited, a:hover, a:active {
 	background-repeat: no-repeat;
     padding: .5rem;
     font-size: .65rem;
-    transition: all .3s ease 0s;
     color : #525252;
+    transition: bottom .3s ease 0s, right .3s ease 0s;
 }
 
-#footer:hover {
+#footer.hover {
     bottom : 0;
 }
 
@@ -131,90 +129,5 @@ input[type="radio"]:not(:checked) + i + span
     width: 7.5rem;
     text-align: right;
 }
-
-
-/*responsiveness*/
-@media (max-aspect-ratio: 800/1000) {
-
-    [data-cat]::before {
-        width: auto;
-        text-align: left;
-    }
-
-    #head {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #logo {
-        display: none;
-    }
-
-    #banner {
-        width: 100%;
-    }
-
-    .subFrame {
-        margin-top: 1rem;
-    }
-
-    .subContent {
-        flex-direction : column;
-    }
-
-    .subContent > * {
-        margin-top:1rem;
-        margin-left: 1rem;
-    }
-
-    .filterUI {
-        margin-top:1.3rem;
-    }
-
-    .filterUI:first-child {
-        margin-left: .7rem;
-    }
-
-    .filterWrapper {
-        flex-direction: column;
-        margin-top: 0 !important;
-    }
-
-    #albumInfos .imgContainer + div {
-        margin-left : 0;
-    }
-
-    #albumInfos .hInfos > * {
-        margin: 0 0.1rem;
-    }
-
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2) and (max-aspect-ratio: 800/1000), 
-(min-resolution: 192dpi) and (max-aspect-ratio: 800/1000) { 
-    :root {
-        font-size: calc(24px * 2);
-    }
-    #albumInfos #aImage {
-        width : calc(250px * 2);
-        height: calc(250px * 2);
-    }
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 3) and (max-aspect-ratio: 800/1000), 
-(min-resolution: 288dpi) and (max-aspect-ratio: 800/1000) { 
-    :root {
-        font-size: calc(24px * 3);
-    }
-    #albumInfos #aImage {
-        width : calc(250px * 3);
-        height: calc(250px * 3);
-    }
-}
-
-
-
 
 

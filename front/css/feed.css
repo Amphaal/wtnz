@@ -1,7 +1,7 @@
 #feedContainer {
     overflow: hidden;
     flex-shrink: 0;
-    transition: all .3s ease;
+    transition: max-height .3s ease;
     background-color: #eaeaea;
     box-shadow: 0px 0px .05rem #b7b7b7;
 }

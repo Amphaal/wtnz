@@ -67,4 +67,12 @@ function renderHCPie(data, divId, name) {
       let statsContainer = document.getElementById('statsContainer');
       let heightSwitch = event.currentTarget.checked ? statsContainer.scrollHeight + "px" : "0";
       statsContainer.style.height = heightSwitch;
+      //if expended
+      if(heightSwitch) {
+            //wait for the transition to end to scroll
+            statsContainer.addEventListener(whichTransitionEndEvent(), function eee(e) {
+                statsContainer.removeEventListener(whichTransitionEndEvent(), eee, false);
+                wtnzScroll(statsContainer);
+            }, false);
+        }
   }

@@ -7,6 +7,15 @@ function applyCompareDateBulk() {
     });
 }
 
+//scrolls to element, taking in account the sticky header
+function wtnzScroll(elem) {
+    if(!elem) return;
+    let sticky = document.querySelector('header');
+    let relativeDocumentOffset = elem.getBoundingClientRect().top + window.scrollY;
+    let elemPos = relativeDocumentOffset - sticky.clientHeight;
+    window.scroll(0, elemPos);
+}
+
 ///
 /// resize handling
 ///
@@ -24,10 +33,14 @@ var resizeFunctions = {
 //event listener with throtte
 window.addEventListener('resize', function(event) {
     clearTimeout(timeoutResize);
-    timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize, event);
+    timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize);
 });
+window.addEventListener('orientationchange', function() {
+    //debugger;
+    //resizeManualHeightsAndWidths();
+})
 
-function resizeManualHeightsAndWidths(event) {
+function resizeManualHeightsAndWidths() {
     
     //prepare
     let newHeight = window.innerHeight;

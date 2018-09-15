@@ -4,9 +4,24 @@
 
 //update filter from UI action
 function updateFilter(event) {
+    
+    event.stopPropagation(); 
+    event.preventDefault(); 
+
+    console.log(event.type);
+    if(event.type == 'mousedown') {
+        //debugger;
+    }
+
+    //update FilterUIs by required values
     let newFilters = getNewFiltersFromUI(event);
     let IDsToReload = applyNewFilters(newFilters);
     updateFilterUIs(IDsToReload);
+
+    //
+    if(IDsToReload.length) wtnzScroll(document.querySelector('.filterUI.active:not(.hasSelection)'));
+
+    //dynamically generate albums infos and scrolls to it if necessary
     displayAlbumInfos(dataFeeds.albumInfos).then(transitionToAlbumInfos);
 }
 
@@ -91,6 +106,14 @@ function prepareFilterUIs(IDs) {
         let list = document.createElement('div');
         list.classList.add("list");
         target.appendChild(list);
+
+        target.onmousedown = function(e) {
+            if (e.currentTarget.classList.contains('hasSelection')) {
+                //debugger;
+                //e.stopPropagation();
+            }
+        };
+
     });
 }
 
@@ -125,7 +148,8 @@ function generateFilterUI(id, dataFunc) {
             let item = document.createElement('span');
             item.innerHTML = current;
             item.dataset.count = data[current];
-            item.dataset.nFilter = current;
+            item.dataset.nFilter = current
+            item.ontouchstart = updateFilter;
             item.onmousedown = updateFilter;
             result.push(item);
             return result;
@@ -164,7 +188,7 @@ function alterFilterUI(id, filterCriteria) {
     list.childElementCount || ph.innerHTML ? ui.classList.add("active") : ui.classList.remove("active");
 
     //apply for animations
-    applyManualHeightsAndWidths(id)();
+    applyManualSizesFilterUIs(id)();
 }
 
 
@@ -180,7 +204,7 @@ function transitionToAlbumInfos(aiElem) {
         c.style.pointerEvents = null;
 
         //scroll to albumInfos...
-        aiElem.scrollIntoView();
+        wtnzScroll(aiElem);
 
     }, false);
 
@@ -192,11 +216,13 @@ function transitionToAlbumInfos(aiElem) {
 /// resize functions
 ///
 
-function applyManualHeightsAndWidths(id) {
+function applyManualSizesFilterUIs(id) {
     return function () {
 
         let list = document.querySelector('#' + id + ' .list');
         let ph = document.querySelector('#' + id + ' .ph');
+
+        if(!list || !ph) return;
 
         //reset manual widths for animations
         let mWidthQuery = 'style[data-ct="' + id + '"]';

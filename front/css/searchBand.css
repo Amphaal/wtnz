@@ -3,7 +3,7 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    margin-right : 10%;
+    margin : 0 5%;
 }
 
 #searchBand input {
@@ -49,7 +49,7 @@
     width : fill-available;
     background-color : white; 
     position : absolute; 
-    top : 1.7rem;
+    top : 2rem;
     z-index: 50;
     display: none;
     transition: all .3s ease 0s;
@@ -71,7 +71,9 @@
     transition: transform .2s;
 }
 
-#searchBand .searchResults .result:hover {
+#searchBand .searchResults .result:hover,
+#searchBand .searchResults .result:focus
+ {
     transform: translate(.25rem, 0);
 }
 

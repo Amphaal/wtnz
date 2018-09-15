@@ -37,7 +37,7 @@ function removeLoader() {
 
 //show content
 function showApp() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
         let content = document.getElementById("wtnz");
         content.classList.add("animated");
         content.classList.add("fadeIn");

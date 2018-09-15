@@ -34,7 +34,6 @@
 
 #banner-desc {
     font-size: .8rem;
-    margin-right: 1rem;
 }
 
 #banner-side {
@@ -58,7 +57,7 @@
     font-size: 1rem;
 }
 
-#head {
+header {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid grey;
@@ -66,4 +65,7 @@
     position: relative;
     z-index: 10;
     flex-shrink: 0;
+    position: sticky;
+    top : 0;
+    width: 100%;
 }

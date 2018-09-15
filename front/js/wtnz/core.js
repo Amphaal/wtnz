@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function bindResizeFunctions() {
     resizeFunctions.width.push(resizeFeed(document.getElementById('showFeed')));
     Object.keys(filter).forEach(function(id) {
-        resizeFunctions.any.push(applyManualHeightsAndWidths(id));
+        resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })
 }
 

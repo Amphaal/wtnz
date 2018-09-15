@@ -1,0 +1,74 @@
+ @media (orientation : portrait) {
+
+    [data-cat]::before {
+        width: auto;
+        text-align: left;
+    }
+
+    header {
+        align-items: center;
+    }
+
+    #logo {
+        display: none;
+    }
+
+    #banner {
+        width: 100%;
+    }
+
+    #footer {
+        bottom : 5%;
+        right:-5rem;
+    }
+
+    #footer.hover {
+        bottom : 5%;
+        right:0;
+    }
+
+    .subFrame {
+        margin-top: 1rem;
+    }
+
+    .subContent {
+        flex-direction : column;
+    }
+
+    .subContent > * {
+        margin-top:1rem;
+        margin-left: 1rem;
+    }
+
+    .filterUI {
+        margin-top:1.3rem;
+    }
+
+    .filterUI:first-child {
+        margin-left: .7rem;
+    }
+
+    .filterWrapper {
+        flex-direction: column;
+        margin-top: 0 !important;
+    }
+
+    #albumInfos .imgContainer + div {
+        margin-left : 0;
+    }
+
+    #albumInfos .hInfos > * {
+        margin: 0 .5rem;
+    }
+
+}
+
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi){ 
+    :root {
+        font-size: 18px;
+    }
+}
+
