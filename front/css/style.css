@@ -97,7 +97,7 @@ a, a:visited, a:hover, a:active {
     transition: bottom .3s ease 0s, right .3s ease 0s;
 }
 
-#footer.hover {
+#footer.open {
     bottom : 0;
 }
 

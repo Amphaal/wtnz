@@ -9,7 +9,7 @@
 
 .filterUI {
     position: relative; 
-    transition: width .3s ease, height .3s ease;
+    transition: all .3s ease;
     margin: .9rem 0 0 .7rem;
     display: flex;
     flex-direction: column;
@@ -22,6 +22,8 @@
 .filterUI .ph {
     position: absolute;
     z-index: 20;
+    transition: transform .3s ease;
+    cursor: pointer;
 }
 
 .filterUI .list {
@@ -35,9 +37,10 @@
     color : rgba(0, 0, 0, 1);
     position: relative;
     cursor: pointer;
+    transition: transform .3s ease;
 }
 
-.filterUI .list > *:hover {
+.filterUI .list > *:hover, .filterUI .ph:hover {
     transform: translate(.35rem, 0);
 }
 
@@ -63,13 +66,13 @@
     content: "\00BB";
 }
 
-.filterUI.hasSelection.hover .list {
+.filterUI.hasSelection.open .list {
     position: relative;
     transform: scale(1);
     opacity: 1;
 }
 
-.filterUI.hasSelection.hover .ph {
+.filterUI.hasSelection.open .ph {
     position: absolute;
 }
 
@@ -78,7 +81,7 @@
 }
 
 
-.filterUI.hover .ph {
+.filterUI.open .ph {
     color : rgba(0, 0, 0, 0);
     z-index: -1;
 }

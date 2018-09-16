@@ -5,24 +5,22 @@
 //update filter from UI action
 function updateFilter(event) {
     
+    //prevent bubbling to .filterUI level event
     event.stopPropagation(); 
-    event.preventDefault(); 
-
-    console.log(event.type);
-    if(event.type == 'mousedown') {
-        //debugger;
-    }
 
     //update FilterUIs by required values
     let newFilters = getNewFiltersFromUI(event);
     let IDsToReload = applyNewFilters(newFilters);
     updateFilterUIs(IDsToReload);
 
-    //
-    if(IDsToReload.length) wtnzScroll(document.querySelector('.filterUI.active:not(.hasSelection)'));
-
     //dynamically generate albums infos and scrolls to it if necessary
     displayAlbumInfos(dataFeeds.albumInfos).then(transitionToAlbumInfos);
+
+    //if must reload something, scroll to this last something
+    if(IDsToReload.length) {
+        let target = document.querySelector('.filterUI.active:not(.hasSelection)');
+        wtnzScroll(target, -30); //add margin-top for ::before tag element
+    }
 }
 
 
@@ -107,11 +105,9 @@ function prepareFilterUIs(IDs) {
         list.classList.add("list");
         target.appendChild(list);
 
+        //permit to open the list when something has already been selected on the filter
         target.onmousedown = function(e) {
-            if (e.currentTarget.classList.contains('hasSelection')) {
-                //debugger;
-                //e.stopPropagation();
-            }
+            target.classList.contains('open') ? target.classList.remove('open') : target.classList.add('open');
         };
 
     });
@@ -149,7 +145,6 @@ function generateFilterUI(id, dataFunc) {
             item.innerHTML = current;
             item.dataset.count = data[current];
             item.dataset.nFilter = current
-            item.ontouchstart = updateFilter;
             item.onmousedown = updateFilter;
             result.push(item);
             return result;
@@ -178,6 +173,7 @@ function alterFilterUI(id, filterCriteria) {
     //ui filter acordeon effect + placeholder filing
     if (filterCriteria) {
         ui.classList.add("hasSelection");
+        ui.classList.remove("open");
         ph.innerHTML = filterCriteria;
     } else {
         ui.classList.remove("hasSelection");
@@ -199,17 +195,11 @@ function transitionToAlbumInfos(aiElem) {
     let c = document.getElementById('albumUI');
     c.addEventListener(whichTransitionEndEvent(), function scda(e) {
         c.removeEventListener(whichTransitionEndEvent(), scda, false);
-        
-        // remove forced blur
-        c.style.pointerEvents = null;
 
         //scroll to albumInfos...
-        wtnzScroll(aiElem);
+        wtnzScroll(aiElem, -10);
 
     }, false);
-
-    //start blur
-    c.style.pointerEvents = "none";
 }
 
 ///
@@ -218,10 +208,10 @@ function transitionToAlbumInfos(aiElem) {
 
 function applyManualSizesFilterUIs(id) {
     return function () {
-
+        
+        //prepare
         let list = document.querySelector('#' + id + ' .list');
         let ph = document.querySelector('#' + id + ' .ph');
-
         if(!list || !ph) return;
 
         //reset manual widths for animations
@@ -244,9 +234,12 @@ function applyManualSizesFilterUIs(id) {
                     return '#' + id + '{' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
                 case "max":
                     val = ceil(((list[prop] + 1) / getRootElementFontSize()));
-                    return '#' + id + ':hover {' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
+                    return '#' + id + '.open {' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
             }
         }
+
+        //force relative positionning to get true height / width of list
+        list.style.position = "relative"; 
 
         //set manual widths and heights for animations 
         let styleCarrier = document.createElement('style');
@@ -255,6 +248,8 @@ function applyManualSizesFilterUIs(id) {
         styleCarrier.innerHTML += genCss("max", "Width");
         styleCarrier.innerHTML += genCss("min", "Height");
         styleCarrier.innerHTML += genCss("max", "Height");
+
+        list.style.position = null; //unforce
 
         document.body.appendChild(styleCarrier);
     }
