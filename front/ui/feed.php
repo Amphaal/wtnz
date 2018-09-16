@@ -4,7 +4,6 @@
             <div class='feedWrapper'>
                 Quicky check fresh albums and artists : PRE ALPHA, COMING SOON !<br/><br/>
                 Register and upload with <b>feedTNZ©</b> companion app : BETA<br/>
-                Mobile interface : BETA<br/>
                 Compare libraries between friends : BETA<br/>
                 Add comments on bands / albums : BETA <br/>
                 See what the user is currently listening to ! : WP

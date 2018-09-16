@@ -15,6 +15,10 @@
     flex-direction: column;
 }
 
+.filterUI:not(.active) {
+    display: none;
+}
+
 .filterUI:last-child {
     margin-right:1rem;
 }

@@ -15,14 +15,14 @@
     </head>
     <body>
         <?php include "front/ui/loader.php" ?>
-        <main id='wtnz'>
+        <div id='wtnz'>
             <?php include "front/ui/header.php" ?>
-            <div id='mainFrame'>
+            <main id='mainFrame'>
                 <?php include "front/ui/stats.php" ?>
                 <?php include "front/ui/feed.php" ?>
                 <?php include "front/ui/discover.php" ?>
-            </div>
+            </main>
             <?php include "front/ui/footer.php" ?>
-        </main>
+        </div>
     </body>
 </html>
