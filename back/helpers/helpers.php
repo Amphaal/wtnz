@@ -49,25 +49,30 @@ function comparePasswords($user) {
     if($passwd != WTNZ_CONFIG['users'][$user]) errorOccured('Password missmatch, upload is impossible.');
 }
 
-function testUploadedFile(){
-    $fileToUpload = isset($_FILES['wtnz_file']) ? $_FILES['wtnz_file'] : NULL;
+function testUploadedFile($expectedFilename){
+    $fileToUpload = isset($_FILES[$expectedFilename]) ? $_FILES[$expectedFilename] : NULL;
     if(empty($fileToUpload)) errorOccured('Cannot localizate library file in the upload.');
     if($fileToUpload['error'] == 4 ) errorOccured('No file have been uploaded.');
     if($fileToUpload['error'] > 0 ) errorOccured('An issue has occured during the upload.');
 }
 
-function testFileCompatibility() {
-    $fileContent = file_get_contents($_FILES['wtnz_file']['tmp_name']);
+function uploadFile($pathTo, $expectedFilename) {
+        $uploadResult = move_uploaded_file($_FILES[$expectedFilename]['tmp_name'], $pathTo);
+        if(!$uploadResult) errorOccured('Issue while uploading file.');
+}
+
+function testFileCompatibility($expectedFilename) {
+    $fileContent = file_get_contents($_FILES[$expectedFilename]['tmp_name']);
     
     //check if JSON compliant
     $result = json_decode($fileContent);
     if (json_last_error() !== JSON_ERROR_NONE) errorOccured('The uploaded file is not JSON compliant.');
 }
 
-function isUselessUpload($targetPath) {
+function isUselessUpload($targetPath, $expectedFilename) {
     //check for duplicate in current / uploaded file
     if (!file_exists($targetPath)) return false;
-    $hash_uploaded = hash_file('sha1',$_FILES['wtnz_file']['tmp_name']);
+    $hash_uploaded = hash_file('sha1',$_FILES[$expectedFilename]['tmp_name']);
     $hash_current = hash_file('sha1', $targetPath);
     return $hash_uploaded == $hash_current ? true : false;
 }
