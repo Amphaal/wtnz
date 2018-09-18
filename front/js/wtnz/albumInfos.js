@@ -11,7 +11,7 @@ function displayAlbumInfos(dataFunc) {
         let aDateAdded = document.getElementById('aDateAdded');
         let aTracks = document.getElementById('aTracks');
         let aTitle = document.getElementById('aTitle');
-        
+
         //purge
         [aYear, aGenre, aDateAdded, aTracks].forEach(function(e) {
                 e.innerHTML = '';
@@ -24,6 +24,10 @@ function displayAlbumInfos(dataFunc) {
         aImage.classList.remove('noImgFound');
         aImage.classList.add('searchingCover');
     
+        //clean link to YT
+        let link = document.querySelector('#albumInfos .listen a');
+        link.setAttribute('href', null);
+
         let bypass = false;
         if(target.classList.contains("show")) {
             target.classList.remove('show');
@@ -52,7 +56,12 @@ function displayAlbumInfos(dataFunc) {
             Object.keys(data['Tracks']).forEach(function(trackId) {
                 aTracks.innerHTML += '<li>' + data['Tracks'][trackId] + '</li>';
             });
-            
+
+            //link to YT
+            let yt_query = 'https://www.youtube.com/results?search_query=';
+            let album_query =  (data['Artist'] + ' ' + data['Album']).replace('  ', ' ').replace(' ', '+').toLowerCase();
+            link.setAttribute('href', yt_query + album_query);
+
             //should wait for animation to end
             if (!bypass) {
                 target.addEventListener(whichTransitionEndEvent(), function scd(e) {

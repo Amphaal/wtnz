@@ -66,6 +66,7 @@ function getAlbumInfosDataFeed(lib) {
     
         let obj = albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
         obj['Album'] = fAlbum;
+        obj['Artist'] = fArtist;
         return obj;
     };
 }
