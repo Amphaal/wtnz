@@ -18,6 +18,7 @@
         <div id='wtnz'>
             <?php include "front/ui/header.php" ?>
             <main id='mainFrame'>
+                <?php include "front/ui/shout.php" ?>
                 <?php include "front/ui/stats.php" ?>
                 <?php include "front/ui/feed.php" ?>
                 <?php include "front/ui/discover.php" ?>

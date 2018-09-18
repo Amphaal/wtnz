@@ -1,7 +1,13 @@
 footer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+#credits {
+    display: flex;
+    align-items: center;
     background-color : white;
     padding: .35rem;
     font-size: .65rem;
@@ -12,7 +18,7 @@ footer {
     margin-right: 5%;
 }
 
-footer a, footer img {
+#credits a, #credits img {
     width: .75rem;
     height: .75rem;
 }

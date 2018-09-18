@@ -46,7 +46,7 @@
 }
 
 #albumInfos #aImage.noImgFound::before {
-    content : ":'(";
+    content : ":'( \A\A no cover found";
     position: absolute;
     color : grey;
     width: 100%;
@@ -55,6 +55,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: pre;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: .6rem;
 }
 
 
@@ -125,12 +128,13 @@
     align-items: center;
     justify-content: center;
     user-select: auto;
-    padding: 0.5rem;
+    padding: .5rem;
+    padding-top: 2rem; 
 }
 
 #albumInfos .listen > a {
     background-color: #efefef;
-    padding : 0.5rem;
+    padding : .5rem;
     box-shadow : 0px 0px 5px 0px #afafaf;
     color : grey;
     transition: all .2s;

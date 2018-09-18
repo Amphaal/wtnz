@@ -1,0 +1,11 @@
+#shout {
+    background-color: #e0e0e0; 
+    padding: .5rem;
+    z-index: 500;
+}
+
+#shout .cover {
+    width:2rem;
+    height:2rem; 
+    background-color:white;
+}
