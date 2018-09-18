@@ -42,5 +42,7 @@ function processLib(libAsJSONText) {
     updateFilterUIs(['genreUI']);
 
     //finally, display the app to the user
-    displayApp();
+    displayApp().then(function(){
+        requestShout();
+    });
 }

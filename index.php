@@ -14,6 +14,7 @@ function init_app() {
     checkUserSpecificFolders(); 
     $user_qs = array_shift($qs);
     if(!isset($user_qs)) return accessIndex(); //if no user directory is being accessed
+    if($user_qs == 'users_data') return;
     checkUserExists($user_qs); //check if user exists
 
     //extract action
@@ -38,9 +39,11 @@ function accessIndex() {
 function accessUserLibrary($user_qs) {
 
     $expectedLibrary = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
+    $expectedShout = formatUserDataFolder($user_qs) . getCurrentShoutFileName();
 
     //Client variables
     $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
+    $clientURLShout = dirname($_SERVER['REQUEST_URI']) . substr($expectedShout, 1);
     $latestUpdate = filemtime($expectedLibrary);
 
     include "front/home.php";

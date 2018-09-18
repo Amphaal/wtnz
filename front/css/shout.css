@@ -1,10 +1,15 @@
-#shout {
+#shoutContainer {
     background-color: #e0e0e0; 
-    padding: .5rem;
     z-index: 500;
+    transition: max-height .3s ease;
+    overflow: hidden;
 }
 
-#shout .cover {
+#shoutContainer .shout {
+    padding: .5rem;
+}
+
+#shoutContainer .cover {
     width:2rem;
     height:2rem; 
     background-color:white;

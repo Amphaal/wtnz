@@ -3,10 +3,13 @@
 ///
 
 function displayApp() {
-    //end loading, start animations...
-    hideLoader().then(function() {
-        showApp().then(function() {
-            removeLoader();
+    return new Promise(function(resolve){
+        //end loading, start animations...
+        hideLoader().then(function() {
+            showApp().then(function() {
+                removeLoader();
+                resolve();
+            });
         });
     });
 }

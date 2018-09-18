@@ -9,7 +9,7 @@ function uploadShout($user_qs) {
     testFileCompatibility($expectedFilename);
     
     //move file
-    uploadFile(formatUserDataFolder($user_qs) . 'shout.json', $expectedFilename);
+    uploadFile(formatUserDataFolder($user_qs) . getCurrentShoutFileName(), $expectedFilename);
     
     exit('Shouted !');
 }
