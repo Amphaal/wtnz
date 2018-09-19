@@ -34,11 +34,59 @@ function isWorthDisplayingShout(shoutData) {
         return (remaining - secondsElapsed) > 0;
     }
 
+var notificationShoutSound = new Audio('front/sound/long-expected.mp3');
+notificationShoutSound.volume = .05;
+var lastNotifShoutId = '';
 function notificateShout() {
-    let shout = document.querySelector('#shoutContainer .shout');
-    if(!isVisible(shout)) {
-        alert('CACA');
+    //preapre
+    let shoutElem = document.querySelector('#shoutContainer .shout');
+    let notifShoutId = [shout.name, shout.album, shout.artist].join('_');
+    let isShoutContainerVisible = isVisible(shoutElem);
+    let isShoutDisplayed = shoutElem.scrollHeight;
+    let isNewShout = notifShoutId !== lastNotifShoutId;
+
+    if(isShoutDisplayed && isNewShout) {
+        //prepare
+        let notif = document.getElementById('shoutNotification');
+
+        let fadeAnim = function() {
+            notif.classList.add('fade');
+        };
+
+        //animation
+        let fd = function() {
+            setTimeout(fadeAnim, 1000);
+        } 
+
+        //animation
+        if(notif.classList.contains('fade')) {
+            notif.classList.remove('fade');
+            notif.addEventListener(whichTransitionEndEvent(), function lelel(e) {
+                notif.removeEventListener(whichTransitionEndEvent(), lelel, false);
+                fd();           
+            }, false);
+        } else {
+            fd();
+        }
+
+        //notif if scrolled
+        if(!isShoutContainerVisible) {
+
+            //force refresh anim
+            let out = document.getElementById('shoutNotificationOut');
+            out.classList.remove('show');
+            void out.offsetWidth;
+            out.classList.add('show');
+        }
+
+        //play sound
+        notificationShoutSound.play();
+
+        //update shoutid
+        lastNotifShoutId = notifShoutId;
     }
+
+
 }
 
 function displayShout(shoutData) {
@@ -59,6 +107,13 @@ function displayShout(shoutData) {
     let album = shoutData['album'];
     let duration = shoutData['duration'];
     let state = shoutData['playerState'];
+
+
+    //update shout loader
+    if (changes.includes('album') || changes.includes('artist') || changes.includes('name')) {
+        let aNotif = document.getElementById('shoutNotification');
+        aNotif.classList.remove('fade');
+    }
 
     //update image
     if (changes.includes('album')) {
@@ -116,8 +171,9 @@ function displayShout(shoutData) {
     shout = shoutData;
 
     //display/hide
-    resizeShout()();
-    notificateShout();
+    resizeShout()().then(function() {
+        notificateShout();
+    });
 }
 
 ///
@@ -126,9 +182,25 @@ function displayShout(shoutData) {
 
 function resizeShout() {
     return function() {
-        let shoutContainer = document.getElementById('shoutContainer');
-        let heightSwitch = isWorthDisplayingShout(shout) ? shoutContainer.scrollHeight + "px" : "0";
-        shoutContainer.style.maxHeight = heightSwitch;
-        return heightSwitch;
+            return new Promise(function(resolve) {
+        
+            let shoutContainer = document.getElementById('shoutContainer');
+            let isWorth = isWorthDisplayingShout(shout);
+            let heightSwitch = isWorth ? shoutContainer.scrollHeight + "px" : "0px";
+            let animOpen = shoutContainer.style.maxHeight === "0px";
+            shoutContainer.style.maxHeight = heightSwitch;
+
+            let resolving = function() {resolve(heightSwitch);}
+
+            if (animOpen) {
+                shoutContainer.addEventListener(whichTransitionEndEvent(), function ww(e) {
+                    shoutContainer.removeEventListener(whichTransitionEndEvent(), ww, false);
+                    resolving();        
+                }, false);
+            } else {
+                resolving();
+            }
+            
+        });
     }
 }

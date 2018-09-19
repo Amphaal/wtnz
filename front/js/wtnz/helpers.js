@@ -51,7 +51,7 @@ function whichTransitionEndEvent() {
 function whichTransitionStartEvent() {
 	var el = document.createElement('fakeelement');
 	var transitions = {
-		'transition': 'transitionstar',
+		'transition': 'transitionstart',
 		'OTransition': 'oTransitionStart',
 		'MozTransition': 'transitionstart',
 		'WebkitTransition': 'webkitTransitionStart'

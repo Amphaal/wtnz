@@ -1,4 +1,10 @@
 <div id='shoutContainer' style='max-height:0'>
+    <div id='shoutNotification'>
+        Now Playing...
+    </div>
+    <div id='shoutNotificationOut'>
+        <i class="fas fa-forward"></i>
+    </div>
     <div class='shout'>
         <a title='Play on Youtube' target='_blank'>
             <div class='imgLoader cover'>
@@ -12,6 +18,6 @@
                 <div class='meta'></div>
             </div>
         </div>
-        <div class='timeline'></div> 
+        <div class='timeline'></div>
     </div>
 </div>
