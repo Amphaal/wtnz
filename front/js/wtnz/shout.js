@@ -36,6 +36,20 @@ function isWorthDisplayingShout(shoutData) {
 
 var notificationShoutSound = new Audio('front/sound/long-expected.mp3');
 notificationShoutSound.volume = .05;
+function toggleShoutSound(event) {
+    let icon = event.currentTarget.nextElementSibling;
+    if (icon.classList.contains('fa-bell')) {
+        icon.classList.remove('fa-bell');
+        icon.classList.add('fa-bell-slash');
+        notificationShoutSound.volume = 0;
+    } else {
+        icon.classList.remove('fa-bell-slash');
+        icon.classList.add('fa-bell');
+        notificationShoutSound.volume = .05
+    }
+
+}
+
 var lastNotifShoutId = '';
 function notificateShout() {
     //preapre

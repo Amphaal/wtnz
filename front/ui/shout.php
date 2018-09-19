@@ -19,5 +19,9 @@
             </div>
         </div>
         <div class='timeline'></div>
+        <label class='mute'>
+            <input id='muzzleShout' type='checkbox' onclick="toggleShoutSound(event)">
+            <i class="fas fa-bell"></i>
+        </label>
     </div>
 </div>

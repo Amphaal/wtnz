@@ -111,6 +111,19 @@
     animation-duration: 2s;
 }
 
+#shoutContainer .mute{
+    opacity: 0;
+    transition: all .3s ease;
+    position: absolute;
+    right: 0;
+    margin-right: 1rem;
+    font-size: .7rem;
+}
+
+#shoutContainer:hover .mute{
+    opacity: 1;
+}
+
 @keyframes progress {
     0% {
         width : 0%;

@@ -10,10 +10,10 @@
         <div id='banner-side'>
             <label title="Feed">
                 <input id='showFeed' type='checkbox' onclick="toggleFeed(event)">
-                <i class="fas fa-bell"></i>
+                <i class="far fa-newspaper"></i>
             </label>
             <label title="Statistics">
-                <input id='showStats' type='checkbox' onclick="toggleStats(event)">
+                <input id='showStats' type='checkbox' onclick="muteShout(event)">
                 <i class="fas fa-chart-pie"></i>
             </label>   
         </div>
