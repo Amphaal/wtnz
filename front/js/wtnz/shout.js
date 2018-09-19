@@ -16,42 +16,52 @@ function requestShout() {
 }
 
 
-function calculateSecondsElapsed(dateFrom) {
-    let dateNow = new moment();
-    let dateThen = moment(dateFrom);
-    return moment.duration(dateNow.diff(dateThen)).asSeconds();
-}
-
 //check if worth displaying
 function isWorthDisplayingShout(shoutData) {
         
-        if ((!shoutData['duration'] || !shoutData['date'])) return 0; //if is no data
-        if (!shoutData['playerState']) return 1; // if is paused
+    if ((!shoutData['duration'] || !shoutData['date'])) return 0; //if is no data
+    if (!shoutData['playerState']) return 1; // if is paused
 
-        //if is playing and remaning time comparing dates
-        let remaining = (shoutData['duration'] || 0) - (shoutData['playerPosition'] || 0);
-        let secondsElapsed = calculateSecondsElapsed(shoutData['date']);
-        return (remaining - secondsElapsed) > 0;
-    }
-
-var notificationShoutSound = new Audio('front/sound/long-expected.mp3');
-notificationShoutSound.volume = .05;
-function toggleShoutSound(event) {
-    let icon = event.currentTarget.nextElementSibling;
-    if (icon.classList.contains('fa-bell')) {
-        icon.classList.remove('fa-bell');
-        icon.classList.add('fa-bell-slash');
-        notificationShoutSound.volume = 0;
-        icon.setAttribute('title', 'Play sound on new music');
-    } else {
-        icon.classList.remove('fa-bell-slash');
-        icon.classList.add('fa-bell');
-        notificationShoutSound.volume = .05
-        icon.setAttribute('title', 'Mute notifications');
-    }
-
+    //if is playing and remaning time comparing dates
+    let remaining = (shoutData['duration'] || 0) - (shoutData['playerPosition'] || 0);
+    let secondsElapsed = calculateSecondsElapsed(shoutData['date']);
+    return (remaining - secondsElapsed) > 0;
 }
 
+//sound handling
+var notificationShoutSound = null;
+var msnStorageKey = 'muteShoutNotification';
+function instShoutMuteButton() {
+    
+    //prepare
+    let mustMute = localStorage.getItem(msnStorageKey);
+    let icon = document.querySelector('#shoutContainer .mute i');
+    
+    //instantiate sound
+    if(notificationShoutSound == null) notificationShoutSound = new Audio('front/sound/long-expected.mp3')
+
+    //generate on state change
+    if (mustMute == "1") {
+        notificationShoutSound.volume = 0;
+        icon.classList.remove('fa-bell');
+        icon.classList.add('fa-bell-slash');
+        icon.setAttribute('title', 'Play sound on new music');
+    } else {
+        notificationShoutSound.volume = .05;
+        icon.classList.remove('fa-bell-slash');
+        icon.classList.add('fa-bell');
+        icon.setAttribute('title', 'Mute notifications');
+    }
+}
+
+//click toogle from UI
+function toggleShoutSound(event) {
+    let mustMute = localStorage.getItem(msnStorageKey);
+    localStorage.setItem(msnStorageKey, mustMute == "1" ? "0" : "1");
+    instShoutMuteButton();
+}
+
+//notification on music change
 var lastNotifShoutId = '';
 function notificateShout() {
     //preapre
@@ -96,7 +106,7 @@ function notificateShout() {
         }
 
         //play sound
-        notificationShoutSound.play();
+        if(notificationShoutSound) notificationShoutSound.play();
 
         //update shoutid
         lastNotifShoutId = notifShoutId;
@@ -105,6 +115,7 @@ function notificateShout() {
 
 }
 
+//display shout
 function displayShout(shoutData) {
     
     //list changes between states

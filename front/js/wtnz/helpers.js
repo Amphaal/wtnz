@@ -97,6 +97,13 @@ function compareDateFromNomHumanized(strISO8601) {
     return duration.humanize() + ' ago';
 }
 
+
+function calculateSecondsElapsed(dateFrom) {
+    let dateNow = new moment();
+    let dateThen = moment(dateFrom);
+    return moment.duration(dateNow.diff(dateThen)).asSeconds();
+}
+
 function getRootElementFontSize() {
     // Returns a number
     return parseFloat(

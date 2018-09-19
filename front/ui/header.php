@@ -13,7 +13,7 @@
                 <i class="far fa-newspaper"></i>
             </label>
             <label title="Statistics">
-                <input id='showStats' type='checkbox' onclick="muteShout(event)">
+                <input id='showStats' type='checkbox' onclick="toggleStats(event)">
                 <i class="fas fa-chart-pie"></i>
             </label>   
         </div>
