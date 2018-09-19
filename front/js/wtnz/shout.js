@@ -1,11 +1,15 @@
 //download library
+var shoutAsString = "";
 function requestShout() {
     let request = new XMLHttpRequest(); 
     request.onloadend = function(e) {
         let text = e.currentTarget.responseText;
-        let shoutData = (!text.length) ? {} : JSON.parse(text);
-        shout = shoutData;
-        return displayShout(shoutData);
+        if(shoutAsString !== text) {
+            shoutAsString = text;
+            let newShout = (!text.length) ? {} : JSON.parse(text);
+            displayShout(newShout);
+        }
+        setTimeout(requestShout, 1000);
     };
     request.open('GET', clientURLShout, true);
     request.send();
@@ -39,54 +43,77 @@ function notificateShout() {
 
 function displayShout(shoutData) {
     
-    //prepare
-    let aImage = document.querySelector('#shoutContainer .cover');
-    let aLink = document.querySelector('#shoutContainer a');
-    let aDescr = document.querySelector('#shoutContainer .albumDesc .name');
-    let aMeta = document.querySelector('#shoutContainer .albumDesc .meta');
-    let aTimeline = document.querySelector('#shoutContainer .timeline');
+    //list changes between states
+    a = Object.keys(shout);
+    b = Object.keys(shoutData);
+    c = new Set(a.concat(b));
+    d = [];
+    c.forEach(v => d.push(v));
+    let changes = d.filter(function(id){
+        return shoutData[id] !== shout[id];
+    });
 
-    //reset values
-    resetImgLoader(aImage);
-    aLink.removeAttribute('href');
-    aDescr.innerHTML = '';
-    aMeta.innerHTML = '';
-    aTimeline.style.animationDuration = null;
-    aTimeline.style.animationDelay = null;
-    aTimeline.style.animationPlayState = null;
+    //prepare data helpers
+    let artist = shoutData['artist'];
+    let name = shoutData['name'];
+    let album = shoutData['album'];
+    let duration = shoutData['duration'];
+    let state = shoutData['playerState'];
 
-    //check if worth
-    if (isWorthDisplayingShout(shoutData)) {
-
-        //prepare data
-        let artist = shoutData['artist'];
-        let name = shoutData['name'];
-        let album = shoutData['album'];
-        let duration = shoutData['duration'];
-        let state = shoutData['playerState'];
-
-        //update cover
-        queryMusicBrainzForAlbumCover('shout', album, artist).then(
+    //update image
+    if (changes.includes('album')) {
+        let aImage = document.querySelector('#shoutContainer .cover');
+        resetImgLoader(aImage);
+        if(album && artist) queryMusicBrainzForAlbumCover('shout', album, artist).then(
             function(imgUrl) {
                 updateImgLoader(aImage, imgUrl);
             },function() {
                 brokenImgFr(aImage);
             }
         );
+    }
 
-        //update link
-        aLink.setAttribute('href', linkToYoutube(artist, name));
+    //update link
+    if (changes.includes('artist') || changes.includes('name')) {
+        let aLink = document.querySelector('#shoutContainer a');
+        aLink.removeAttribute('href');
+        if(artist && name) aLink.setAttribute('href', linkToYoutube(artist, name));
+    }
 
-        //album descr
-        aDescr.innerHTML = name;
-        aMeta.innerHTML = [artist, album].join(" - ");
+    //update track name
+    if (changes.includes('name')) {
+        let aDescr = document.querySelector('#shoutContainer .albumDesc .name');
+        aDescr.innerHTML = '';
+        if(name) aDescr.innerHTML = name;
+    }
+
+    //update meta 
+    if (changes.includes('artist') || changes.includes('album')) {
+        let aMeta = document.querySelector('#shoutContainer .albumDesc .meta');
+        aMeta.innerHTML = '';
+        if(artist && album) aMeta.innerHTML = [artist, album].join(" - ");
+    }
+
+    //update timeline
+    if(changes.includes('duration') || changes.includes('playerPosition') || changes.includes('playerState')) {
+        let aTimeline = document.querySelector('#shoutContainer .timeline');
+        
+        //reset animation
+        aTimeline.style.animationDuration = null;
+        aTimeline.style.animationDelay = null;
+        aTimeline.style.animationPlayState = null;
+        aTimeline.classList.remove('animTimeline');
 
         //progress bar
-        aTimeline.style.animationDuration = duration + 's';
+        void aTimeline.offsetWidth;
         let position = shoutData['playerPosition'] + (state ? calculateSecondsElapsed(shoutData['date']) : 0);
+        aTimeline.style.animationDuration = duration + 's';
         aTimeline.style.animationDelay = -position + 's';
         if(!state) aTimeline.style.animationPlayState = 'paused';
+        aTimeline.classList.add('animTimeline');          
     }
+
+    shout = shoutData;
 
     //display/hide
     resizeShout()();
