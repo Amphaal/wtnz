@@ -11,7 +11,7 @@ function requestShout() {
         }
         setTimeout(requestShout, 1000);
     };
-    request.open('GET', clientURLShout, true);
+    request.open('GET', clientURLShout + '?' + Math.random(), true);
     request.send();
 }
 
