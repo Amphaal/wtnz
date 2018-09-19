@@ -42,10 +42,12 @@ function toggleShoutSound(event) {
         icon.classList.remove('fa-bell');
         icon.classList.add('fa-bell-slash');
         notificationShoutSound.volume = 0;
+        icon.setAttribute('title', 'Play sound on new music');
     } else {
         icon.classList.remove('fa-bell-slash');
         icon.classList.add('fa-bell');
         notificationShoutSound.volume = .05
+        icon.setAttribute('title', 'Mute notifications');
     }
 
 }
