@@ -16,6 +16,10 @@ function wtnzScroll(elem, correct) {
     window.scroll(0, elemPos + (correct || 0));
 }
 
+function isVisible(elem) {
+    return elem.getBoundingClientRect().top > window.scrollY;
+}
+
 ///
 /// resize handling
 ///
@@ -67,4 +71,32 @@ function resizeManualHeightsAndWidths() {
         });
     }
 
+}
+
+///
+/// Img loading
+///
+
+function brokenImgFr(elem) {
+    elem.classList.remove('searchingCover');
+    elem.classList.add('noImgFound');
+    elem.firstElementChild.removeAttribute('src');
+}
+
+function brokenImg(event) {
+    brokenImgFr(event.currentTarget.parentElement);
+}
+
+function imgLoaded(event) {
+    event.currentTarget.parentElement.classList.remove('searchingCover');
+}
+
+function resetImgLoader(elem) {
+    elem.firstElementChild.removeAttribute('src');
+    elem.classList.remove('noImgFound');
+    elem.classList.add('searchingCover');
+}
+
+function updateImgLoader(elem, imgUrl) {
+    elem.firstElementChild.setAttribute('src', imgUrl);
 }

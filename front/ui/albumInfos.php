@@ -8,7 +8,7 @@
         <div class='hMisc'>
             <div class='imgContainer'>
                 <label>Album<div id="aTitle"></div></label>
-                <div id='aImage'><img onerror="brokenImg(event)" /></div>
+                <div id='aImage' class='imgLoader'><img onload="imgLoaded(event)" onerror="brokenImg(event)" /></div>
             </div>
             <label style='margin: 1rem 0 1rem 2rem' >Tracks<ol id="aTracks"></ol></label>
         </div>

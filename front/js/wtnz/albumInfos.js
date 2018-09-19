@@ -20,9 +20,7 @@ function displayAlbumInfos(dataFunc) {
     
         //specific image purge
         let aImage = document.getElementById('aImage');
-        aImage.firstChild.removeAttribute('src');
-        aImage.classList.remove('noImgFound');
-        aImage.classList.add('searchingCover');
+        resetImgLoader(aImage);
     
         //clean link to YT
         let link = document.querySelector('#albumInfos .listen a');
@@ -39,12 +37,13 @@ function displayAlbumInfos(dataFunc) {
     
             //specific async image handler
             aImage.classList.add('searchingCover');
-            queryMusicBrainzForAlbumCover().then(function(imgUrl) {
-                aImage.classList.remove('searchingCover');
-                aImage.firstChild.setAttribute('src', imgUrl);
-            }, function() {
-                brokenImgFr(aImage.firstChild, aImage);
-            });
+            queryMusicBrainzForAlbumCover().then(
+                function(imgUrl) {
+                    updateImgLoader(aImage, imgUrl);
+                }, function() {
+                    brokenImgFr(aImage);
+                }
+            );
     
             aYear.innerHTML = data['Year'];
             aGenre.innerHTML = data['Genre'];
@@ -58,9 +57,7 @@ function displayAlbumInfos(dataFunc) {
             });
 
             //link to YT
-            let yt_query = 'https://www.youtube.com/results?search_query=';
-            let album_query =  (data['Artist'] + ' ' + data['Album']).replace('  ', ' ').replace(' ', '+').toLowerCase();
-            link.setAttribute('href', yt_query + album_query);
+            link.setAttribute('href', linkToYoutube(data['Artist'], data['Album']));
 
             //should wait for animation to end
             if (!bypass) {
@@ -77,14 +74,4 @@ function displayAlbumInfos(dataFunc) {
 
         }
     });
-}
-
-function brokenImgFr(eImg, eContainer) {
-    eContainer.classList.remove('searchingCover');
-    eContainer.classList.add('noImgFound');
-    eImg.removeAttribute('src');
-}
-
-function brokenImg(event) {
-    brokenImgFr(event.currentTarget, event.currentTarget.parentElement);
 }

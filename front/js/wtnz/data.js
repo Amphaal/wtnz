@@ -220,14 +220,16 @@ function albumsByArtistsList(lib) {
 /// MusicBrainz Integration
 /// 
 
-var request_qmbfac = null;
-function queryMusicBrainzForAlbumCover() {
+var request_qmbfac = {};
+function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
+    if (!idProcess) idProcess = 'albumInfos';
+
     return new Promise(function(resolve, reject){
 
         let urlBase =  'http://musicbrainz.org/ws/2/release/?limit=1&fmt=json&query=';
         let queryObj = {
-            release : filter["albumUI"],
-            artist :  filter["artistUI"]
+            release : album || filter["albumUI"],
+            artist :  artist || filter["artistUI"]
         };
     
         //if elements missing, abort
@@ -241,17 +243,17 @@ function queryMusicBrainzForAlbumCover() {
         query = urlBase + query;
         
         //begin request and terminate non-finished previous request
-        if(request_qmbfac) request_qmbfac.abort();
-        request_qmbfac = new XMLHttpRequest();
+        if(request_qmbfac[idProcess]) request_qmbfac[idProcess].abort();
+        request_qmbfac[idProcess] = new XMLHttpRequest();
 
-        request_qmbfac.onloadend = function(e) {
+        request_qmbfac[idProcess].onloadend = function(e) {
             let text = e.currentTarget.responseText;
             let obj = JSON.parse(text);
             let imgUrl = mbQueryCoverArtAPI(obj.releases);
             imgUrl ? resolve(imgUrl) : reject();
         };
-        request_qmbfac.open('GET', query, true);
-        request_qmbfac.send(null);
+        request_qmbfac[idProcess].open('GET', query, true);
+        request_qmbfac[idProcess].send(null);
     });
 }
 
@@ -259,4 +261,11 @@ function mbQueryCoverArtAPI(mbReleasesArray) {
     if (!mbReleasesArray.length) return;
     let urlBase = 'http://coverartarchive.org/release/{mbid}/front-250';
     return urlBase.replace('{mbid}',mbReleasesArray[0].id);
+}
+
+function linkToYoutube(artist, albumOrTitle) {
+    //link to YT
+    let yt_query = 'https://www.youtube.com/results?search_query=';
+    let album_query =  (artist+ ' ' + albumOrTitle).replace('  ', ' ').replace(' ', '+').toLowerCase();
+    return yt_query + album_query;
 }

@@ -11,4 +11,5 @@
 
         var dataFeeds = {};
         var lib = {};
+        var shout = {};
         </script>

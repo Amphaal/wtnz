@@ -116,3 +116,37 @@ input[type="radio"]:not(:checked) + i + span
 }
 
 
+
+.imgLoader {
+    transition: all .5s ease;
+}
+
+.imgLoader.noImgFound::before {
+    content : ":'(";
+    position: absolute;
+    color : grey;
+    width: 100%;
+    height: 100%;
+    background-color : white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.imgLoader.searchingCover::before {
+    content : "...";
+    position: absolute;
+    color : grey;
+    width: 100%;
+    height: 100%;
+    background-color : white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

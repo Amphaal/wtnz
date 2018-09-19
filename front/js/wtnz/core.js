@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //resize functions
 function bindResizeFunctions() {
     resizeFunctions.width.push(resizeFeed(document.getElementById('showFeed')));
+    resizeFunctions.width.push(resizeShout());
     Object.keys(filter).forEach(function(id) {
         resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })
@@ -22,7 +23,7 @@ function requestUserLib() {
         return processLib(e.currentTarget.responseText);
     };
     request.open('GET', clientURLLibrary, true);
-    request.send(null);
+    request.send();
 }
 
 //process...

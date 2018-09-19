@@ -39,38 +39,15 @@
     background-color: white;
     border-radius: 5px;
     position: relative;
+    font-size: .6rem;
+}
+
+#albumInfos .imgLoader.noImgFound::before {
+    content : ":'( \A\A no cover found";
 }
 
 #albumInfos #aImage img {
     width: 100%;
-}
-
-#albumInfos #aImage.noImgFound::before {
-    content : ":'( \A\A no cover found";
-    position: absolute;
-    color : grey;
-    width: 100%;
-    height: 100%;
-    background-color : white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    white-space: pre;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: .6rem;
-}
-
-
-#albumInfos #aImage.searchingCover::before {
-    content : "Searching cover...";
-    position: absolute;
-    color : grey;
-    width: 100%;
-    height: 100%;
-    background-color : white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #albumInfos .aiContent {
