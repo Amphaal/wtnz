@@ -137,7 +137,7 @@ input[type="radio"]:not(:checked) + i + span
 
 
 .imgLoader.searchingCover::before {
-    content : "...";
+    content : ". . .";
     position: absolute;
     color : grey;
     width: 100%;

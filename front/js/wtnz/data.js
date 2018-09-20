@@ -226,7 +226,7 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 
     return new Promise(function(resolve, reject){
 
-        let urlBase =  'http://musicbrainz.org/ws/2/release/?limit=1&fmt=json&query=';
+        let urlBase =  'http://musicbrainz.org/ws/2/release-group/?limit=1&fmt=json&query=';
         let queryObj = {
             release : album || filter["albumUI"],
             artist :  artist || filter["artistUI"]
@@ -249,7 +249,7 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
         request_qmbfac[idProcess].onloadend = function(e) {
             let text = e.currentTarget.responseText;
             let obj = JSON.parse(text);
-            let imgUrl = mbQueryCoverArtAPI(obj.releases);
+            let imgUrl = mbQueryCoverArtAPI(obj['release-groups']);
             imgUrl ? resolve(imgUrl) : reject();
         };
         request_qmbfac[idProcess].open('GET', query, true);
@@ -259,7 +259,7 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 
 function mbQueryCoverArtAPI(mbReleasesArray) {
     if (!mbReleasesArray.length) return;
-    let urlBase = 'http://coverartarchive.org/release/{mbid}/front-250';
+    let urlBase = 'http://coverartarchive.org/release-group/{mbid}/front-250';
     return urlBase.replace('{mbid}',mbReleasesArray[0].id);
 }
 
