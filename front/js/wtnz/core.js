@@ -42,6 +42,9 @@ function processLib(libAsJSONText) {
 
     //instantiate initial filterUI
     updateFilterUIs(['genreUI']);
+    
+    //generate feed
+    generateFreshUploads(); 
 
     //finally, display the app to the user
     displayApp().then(function(){

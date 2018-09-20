@@ -3,3 +3,4 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script type="text/javascript" src="front/php-helpers/polyfills.php"></script>
+<script type="text/javascript" src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>

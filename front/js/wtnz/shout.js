@@ -11,7 +11,7 @@ function requestShout() {
         }
         setTimeout(requestShout, 1000);
     };
-    request.open('GET', clientURLShout + '?' + Math.random(), true);
+    request.open('GET', clientURLShout, true);
     request.send();
 }
 
@@ -65,10 +65,10 @@ function toggleShoutSound(event) {
 var lastNotifShoutId = '';
 function notificateShout() {
     //preapre
-    let shoutElem = document.querySelector('#shoutContainer .shout');
+    let shoutElem = document.getElementById('shoutContainer');
     let notifShoutId = [shout.name, shout.album, shout.artist].join('_');
     let isShoutContainerVisible = isVisible(shoutElem);
-    let isShoutDisplayed = shoutElem.scrollHeight;
+    let isShoutDisplayed = shoutElem.clientHeight;
     let isNewShout = notifShoutId !== lastNotifShoutId;
 
     if(isShoutDisplayed && isNewShout) {
@@ -118,83 +118,88 @@ function notificateShout() {
 //display shout
 function displayShout(shoutData) {
     
-    //list changes between states
-    a = Object.keys(shout);
-    b = Object.keys(shoutData);
-    c = new Set(a.concat(b));
-    d = [];
-    c.forEach(v => d.push(v));
-    let changes = d.filter(function(id){
-        return shoutData[id] !== shout[id];
-    });
+    //check if must refresh
+    let isWorth = isWorthDisplayingShout(shoutData);
+    if (isWorth) {
 
-    //prepare data helpers
-    let artist = shoutData['artist'];
-    let name = shoutData['name'];
-    let album = shoutData['album'];
-    let duration = shoutData['duration'];
-    let state = shoutData['playerState'];
+        //list changes between states
+        a = Object.keys(shout);
+        b = Object.keys(shoutData);
+        c = new Set(a.concat(b));
+        d = [];
+        c.forEach(v => d.push(v));
+        let changes = d.filter(function(id){
+            return shoutData[id] !== shout[id];
+        });
 
+        //prepare data helpers
+        let artist = shoutData['artist'];
+        let name = shoutData['name'];
+        let album = shoutData['album'];
+        let duration = shoutData['duration'];
+        let state = shoutData['playerState'];
 
-    //update shout loader
-    if (changes.includes('album') || changes.includes('artist') || changes.includes('name')) {
-        let aNotif = document.getElementById('shoutNotification');
-        aNotif.classList.remove('fade');
+        //update shout loader
+        if (changes.includes('album') || changes.includes('artist') || changes.includes('name')) {
+            let aNotif = document.getElementById('shoutNotification');
+            aNotif.classList.remove('fade');
+        }
+
+        //update image
+        if (changes.includes('album')) {
+            let aImage = document.querySelector('#shoutContainer .cover');
+            resetImgLoader(aImage);
+            if(album && artist) queryMusicBrainzForAlbumCover('shout', album, artist).then(
+                function(imgUrl) {
+                    updateImgLoader(aImage, imgUrl);
+                },function() {
+                    brokenImgFr(aImage);
+                }
+            );
+        }
+
+        //update link
+        if (changes.includes('artist') || changes.includes('name')) {
+            let aLink = document.querySelector('#shoutContainer a');
+            aLink.removeAttribute('href');
+            if(artist && name) aLink.setAttribute('href', linkToYoutube(artist, name));
+        }
+
+        //update track name
+        if (changes.includes('name')) {
+            let aDescr = document.querySelector('#shoutContainer .albumDesc .name');
+            aDescr.innerHTML = '';
+            if(name) aDescr.innerHTML = name;
+        }
+
+        //update meta 
+        if (changes.includes('artist') || changes.includes('album')) {
+            let aMeta = document.querySelector('#shoutContainer .albumDesc .meta');
+            aMeta.innerHTML = '';
+            if(artist && album) aMeta.innerHTML = [artist, album].join(" - ");
+        }
+
+        //update timeline
+        if(changes.includes('duration') || changes.includes('playerPosition') || changes.includes('playerState')) {
+            let aTimeline = document.querySelector('#shoutContainer .timeline');
+            
+            //reset animation
+            aTimeline.style.animationDuration = null;
+            aTimeline.style.animationDelay = null;
+            aTimeline.style.animationPlayState = null;
+            aTimeline.classList.remove('animTimeline');
+
+            //progress bar
+            void aTimeline.offsetWidth;
+            let position = shoutData['playerPosition'] + (state ? calculateSecondsElapsed(shoutData['date']) : 0);
+            aTimeline.style.animationDuration = duration + 's';
+            aTimeline.style.animationDelay = -position + 's';
+            if(!state) aTimeline.style.animationPlayState = 'paused';
+            aTimeline.classList.add('animTimeline');          
+        }
     }
 
-    //update image
-    if (changes.includes('album')) {
-        let aImage = document.querySelector('#shoutContainer .cover');
-        resetImgLoader(aImage);
-        if(album && artist) queryMusicBrainzForAlbumCover('shout', album, artist).then(
-            function(imgUrl) {
-                updateImgLoader(aImage, imgUrl);
-            },function() {
-                brokenImgFr(aImage);
-            }
-        );
-    }
-
-    //update link
-    if (changes.includes('artist') || changes.includes('name')) {
-        let aLink = document.querySelector('#shoutContainer a');
-        aLink.removeAttribute('href');
-        if(artist && name) aLink.setAttribute('href', linkToYoutube(artist, name));
-    }
-
-    //update track name
-    if (changes.includes('name')) {
-        let aDescr = document.querySelector('#shoutContainer .albumDesc .name');
-        aDescr.innerHTML = '';
-        if(name) aDescr.innerHTML = name;
-    }
-
-    //update meta 
-    if (changes.includes('artist') || changes.includes('album')) {
-        let aMeta = document.querySelector('#shoutContainer .albumDesc .meta');
-        aMeta.innerHTML = '';
-        if(artist && album) aMeta.innerHTML = [artist, album].join(" - ");
-    }
-
-    //update timeline
-    if(changes.includes('duration') || changes.includes('playerPosition') || changes.includes('playerState')) {
-        let aTimeline = document.querySelector('#shoutContainer .timeline');
-        
-        //reset animation
-        aTimeline.style.animationDuration = null;
-        aTimeline.style.animationDelay = null;
-        aTimeline.style.animationPlayState = null;
-        aTimeline.classList.remove('animTimeline');
-
-        //progress bar
-        void aTimeline.offsetWidth;
-        let position = shoutData['playerPosition'] + (state ? calculateSecondsElapsed(shoutData['date']) : 0);
-        aTimeline.style.animationDuration = duration + 's';
-        aTimeline.style.animationDelay = -position + 's';
-        if(!state) aTimeline.style.animationPlayState = 'paused';
-        aTimeline.classList.add('animTimeline');          
-    }
-
+    //update current shout
     shout = shoutData;
 
     //display/hide

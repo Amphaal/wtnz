@@ -9,7 +9,8 @@ function generateDataFeeds(lib) {
         albumInfos : getAlbumInfosDataFeed(lib),
         searchBand : getSearchBandDataFeed(lib),
         statsAlbums : getStatsAlbumsDataFeed(lib),
-        statsArtists : getStatsArtistsDataFeed(lib)
+        statsArtists : getStatsArtistsDataFeed(lib),
+        feedUploads : getLatestUploadsList(lib)
     };
 }
 
@@ -109,6 +110,41 @@ function getStatsAlbumsDataFeed(lib) {
 function getStatsArtistsDataFeed(lib) {
     return function () {
         return descSortObj(artistsByGenreList(lib));
+    };
+}
+
+//feedUploads
+function getLatestUploadsList(lib) {
+    return function () {
+        
+        //prepare
+        let data = albumsByIdList(lib);
+        let toarr = Object.keys(data).map(function(id) {
+            return [id, data[id]];
+        });
+
+        //desc sort
+        toarr = toarr.sort(function(a,b) {
+            let aDate = a[1]['DateAdded'];
+            let bDate = b[1]['DateAdded']
+            return (bDate < aDate) ? -1 : ((bDate > aDate) ? 1 : 0);
+        });
+
+        //limit
+        toarr = toarr.slice(0, 50);
+
+        //insert intervals
+        let dateNow = new moment();
+        toarr = toarr.reduce(function(total, curr){
+            let interval = compareDateFromNomHumanized(curr[1]['DateAdded'], dateNow);
+            
+            if(!total[interval]) total[interval] = []
+            total[interval].push(curr[1]);
+
+            return total;
+        }, {});    
+
+        return toarr;
     };
 }
 
@@ -214,6 +250,33 @@ function albumsByArtistsList(lib) {
     }, {});
 
     return abal;
+}
+
+/*latestUploadsList*/
+var glul = null;
+function albumsByIdList(lib) {
+    if(!glul) glul = lib.reduce(function(total, currentVal, index, arr){
+       
+        // prepare
+        let albumId = currentVal['Album'] + '_' + currentVal['Album Artist'] + '_' + currentVal['Year'];
+        let newDate = currentVal['Date Added'];
+        
+        if(!total[albumId]) {
+            total[albumId] = {
+                "Album" : currentVal['Album'],
+                "Artist" : currentVal['Album Artist'],
+                "Year" : currentVal['Year'],
+                "DateAdded" : newDate,
+                "Genre" : titleCase(currentVal['Genre'])
+            };
+        } else {
+            let oldDate = total[albumId]['DateAdded'];
+            if (newDate > oldDate) total[albumId]['DateAdded'] = newDate;
+        }
+
+        return total;
+    }, {});
+    return glul;
 }
 
 ///
