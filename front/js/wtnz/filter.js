@@ -14,10 +14,12 @@ function updateFilter(event) {
     updateFilterUIs(IDsToReload);
 
     //dynamically generate albums infos and scrolls to it if necessary
-    displayAlbumInfos(dataFeeds.albumInfos).then(transitionToAlbumInfos);
+    displayAlbumInfos(dataFeeds.albumInfos).then(function(albumInfosElem) {
+        if(newFilters["albumUI"]) transitionToAlbumInfos(albumInfosElem);
+    });
 
     //if must reload something, scroll to this last something
-    if(IDsToReload.length) {
+    if (!newFilters["albumUI"]) {
         let target = document.querySelector('.filterUI.active:not(.hasSelection)');
         wtnzScroll(target, -30); //add margin-top for ::before tag element
     }
@@ -190,16 +192,8 @@ function alterFilterUI(id, filterCriteria) {
 
 //animation scroll
 function transitionToAlbumInfos(aiElem) {
-
-    //detect transition from albumInfos
-    let c = document.getElementById('albumUI');
-    c.addEventListener(whichTransitionEndEvent(), function scda(e) {
-        c.removeEventListener(whichTransitionEndEvent(), scda, false);
-
-        //scroll to albumInfos...
-        wtnzScroll(aiElem, -10);
-
-    }, false);
+    //scroll to albumInfos...
+    wtnzScroll(aiElem, -10);
 }
 
 ///

@@ -59,6 +59,9 @@ function displayAlbumInfos(dataFunc) {
             //link to YT
             link.setAttribute('href', linkToYoutube(data['Artist'], data['Album']));
 
+            //show, start animation
+            target.classList.add('show');
+
             //should wait for animation to end
             if (!bypass) {
                 target.addEventListener(whichTransitionEndEvent(), function scd(e) {
@@ -68,10 +71,6 @@ function displayAlbumInfos(dataFunc) {
             } else {
                 resolve(target);
             }
-
-            //show, start animation
-            target.classList.add('show');
-
         }
     });
 }

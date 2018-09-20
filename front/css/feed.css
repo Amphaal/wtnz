@@ -57,6 +57,14 @@
     padding: .3rem;
 }
 
+#feedContainer table td[data-n-filter] {
+    cursor: pointer;
+}
+
+#feedContainer table td[data-n-filter]:hover {
+    font-weight: bold;
+}
+
 #feedContainer table tr td:first-child {
     padding-left: .5rem;
 }

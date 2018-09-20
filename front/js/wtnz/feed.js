@@ -36,11 +36,12 @@ function generateFreshUploads() {
         table.classList.add('sortable');
         let title = document.createElement('h1');
         title.innerHTML = interval;
+        let columns = ['Year', 'Genre', 'Artist', 'Album'];
 
         //head
         let tHead = document.createElement('thead');
         let headerRow = document.createElement('tr');
-        ['Year', 'Genre', 'Artist', 'Album'].forEach(function(head) {
+        columns.forEach(function(head) {
             let thElem = document.createElement('th');
             thElem.innerHTML = head;
             headerRow.appendChild(thElem);
@@ -53,11 +54,19 @@ function generateFreshUploads() {
         data[interval].forEach(function(album) {
 
             let albumElem = document.createElement('tr');
-            let cellVals = [album['Year'], album['Genre'], album['Artist'],album['Album']];
             
-            cellVals.forEach(function(cellVal){
+            columns.forEach(function(columnName){
+                let cellVal = album[columnName];
                 let cellElem = document.createElement('td');
+                let calculatedFilter = genFilterFromFeed(album, columnName);
+                
                 cellElem.innerHTML = cellVal;
+                if(calculatedFilter)  {
+                    cellElem.dataset.nFilter = calculatedFilter;
+                    cellElem.onmousedown = updateFilter;
+                    albumElem.setAttribute('title', "Access to " + columnName);
+                }
+                
                 albumElem.appendChild(cellElem);
             });
             
@@ -72,4 +81,24 @@ function generateFreshUploads() {
         sorttable.makeSortable(table);
         target.appendChild(section);
     });
+}
+
+function genFilterFromFeed(data, index) {
+    let newfilter = {};
+    
+    if (index == "Genre") {
+        newfilter['genreUI'] = data["Genre"];
+        newfilter['artistUI'] = null;
+        newfilter['albumUI'] = null;
+    } else if (index == "Artist") {
+        newfilter['genreUI'] = data["Genre"];
+        newfilter['artistUI'] = data["Artist"];
+        newfilter['albumUI'] = null;
+    } else if (index == "Album") {
+        newfilter['genreUI'] = data["Genre"];
+        newfilter['artistUI'] = data["Artist"];
+        newfilter['albumUI'] = data["Album"];
+    }
+
+    return Object.keys(newfilter).length ? JSON.stringify(newfilter) : null;
 }
