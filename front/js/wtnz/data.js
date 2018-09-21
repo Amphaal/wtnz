@@ -221,6 +221,7 @@ function albumsByArtistsList(lib) {
         let trackNo = currentVal['Track Number'];
         let trackName = currentVal['Name'];
         let dateAdded = currentVal['Date Added'];
+        let discNumber = currentVal['Disc Number'];
 
         //if first occurence artist
         if(total[artist] == undefined) {
@@ -244,7 +245,7 @@ function albumsByArtistsList(lib) {
         }
 
         //add track
-        total[artist]["Albums"][album]["Tracks"][trackNo] = trackName;
+        total[artist]["Albums"][album]["Tracks"][discNumber + '.' + trackNo] = trackName;
 
         return total;
     }, {});
