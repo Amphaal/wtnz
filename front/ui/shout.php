@@ -20,7 +20,7 @@
         </div>
         <div class='timeline'></div>
         <label class='mute'>
-            <input id='muzzleShout' type='checkbox' onclick="toggleShoutSound(event)">
+            <input id='muzzleShout' type='checkbox' onclick="toggleShoutSound(event)" autocomplete="off">
             <i class="fas fa-bell" title='Play sound on new music'></i>
         </label>
     </div>

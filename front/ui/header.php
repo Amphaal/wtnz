@@ -9,11 +9,11 @@
         <?php include 'front/ui/searchBand.php' ?>
         <div id='banner-side'>
             <label title="Feed">
-                <input id='showFeed' type='checkbox' onclick="toggleFeed(event)">
+                <input id='showFeed' type='checkbox' onclick="toggleFeed(event)" autocomplete="off">
                 <i class="far fa-newspaper"></i>
             </label>
             <label title="Statistics">
-                <input id='showStats' type='checkbox' onclick="toggleStats(event)">
+                <input id='showStats' type='checkbox' onclick="toggleStats(event)" autocomplete="off">
                 <i class="fas fa-chart-pie"></i>
             </label>   
         </div>
