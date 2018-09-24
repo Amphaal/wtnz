@@ -1,5 +1,6 @@
 //download library
 var shoutAsString = "";
+var shoutRefreshSeconds = 15
 function requestShout() {
     let request = new XMLHttpRequest(); 
     request.onloadend = function(e) {
@@ -9,9 +10,9 @@ function requestShout() {
             let newShout = (!text.length) ? {} : JSON.parse(text);
             displayShout(newShout);
         }
-        setTimeout(requestShout, 1000);
+        setTimeout(requestShout, shoutRefreshSeconds * 1000);
     };
-    request.open('GET', clientURLShout, true);
+    request.open('GET', clientURLShout + '?' + Math.random(), true);
     request.send();
 }
 
