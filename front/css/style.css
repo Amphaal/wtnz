@@ -5,20 +5,36 @@
 
 @keyframes Gradient {
 	0% {
-		background-position: 0% 50%
+		transform: translateX(25%) translateY(25%);
 	}
 	50% {
-		background-position: 100% 50%
+        transform: translateX(-25%) translateY(-25%);
 	}
 	100% {
-		background-position: 0% 50%
+        transform: translateX(25%) translateY(25%);
 	}
 }
 
 .anim {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.anim::after {
     background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-    background-size: 400% 400%;
-	animation: Gradient 30s linear infinite;
+    background-repeat: repeat;
+    animation: Gradient 60s ease-in infinite;
+    animation-fill-mode: both;
+    position: absolute;
+    content: "";
+    width: 400%;
+    height: 400%;
+    z-index: -1;
+    transform: translate3d(0, 0, 0);
+    animation-play-state: running;
 }
 
 input {

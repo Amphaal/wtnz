@@ -1,4 +1,7 @@
 
+#loader {
+    overflow: hidden;
+}
 
 #loader-container {
     position: absolute;
@@ -12,12 +15,14 @@
 }
 
 #loader-bar {
+    position: relative;
     background-color : black;
     height : .05rem;
     flex-grow: 1;
     box-shadow: 0px 0px .5rem #e4e4e4;
-    width: 0%;
+    width: 100%;
     transition: all .3s ease 0s;
+    transform: translateX(-100%);
 }
 
 #useChrome {

@@ -55,7 +55,7 @@ function showApp() {
 //update loader bar
 function updateProgress(evt){
     if (evt.lengthComputable){
-        let percentComplete = (evt.loaded / evt.total) * 100;  
-        document.getElementById("loader-bar").style.width = percentComplete + "%";
+        let percentComplete = (evt.loaded / evt.total) * 100 - 100;  
+        document.getElementById("loader-bar").style.transform = "translateX(" + percentComplete + "%)";
     } 
 }
