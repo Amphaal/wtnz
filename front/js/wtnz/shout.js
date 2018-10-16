@@ -1,19 +1,11 @@
 //download library
-var shoutAsString = "";
-var shoutRefreshSeconds = 15
 function requestShout() {
-    let request = new XMLHttpRequest(); 
-    request.onloadend = function(e) {
-        let text = e.currentTarget.responseText;
-        if(shoutAsString !== text) {
-            shoutAsString = text;
-            let newShout = (!text.length) ? {} : JSON.parse(text);
-            displayShout(newShout);
-        }
-        setTimeout(requestShout, shoutRefreshSeconds * 1000);
-    };
-    request.open('GET', clientURLShout + '?' + Math.random(), true);
-    request.send();
+    let socketServer = window.location.origin + ":3000";
+    var socket = io(socketServer, { query : { userToWatch : libraryUser }});
+    socket.on("newShout", function(newShout) {
+        newShout = JSON.parse(newShout);
+        displayShout(newShout);
+    });
 }
 
 

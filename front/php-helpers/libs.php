@@ -4,3 +4,4 @@
 <script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script type="text/javascript" src="front/php-helpers/polyfills.php"></script>
 <script type="text/javascript" src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>

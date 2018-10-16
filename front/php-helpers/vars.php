@@ -3,6 +3,8 @@
 
         var clientURLLibrary = <?php echo json_encode($clientURLLibrary)?>;
         var clientURLShout = <?php echo json_encode($clientURLShout)?>;
+        var libraryUser = <?php echo json_encode($user_qs)?>;
+
         var filter = {
                 genreUI : null,
                 artistUI : null,
