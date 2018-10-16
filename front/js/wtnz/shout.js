@@ -120,7 +120,7 @@ function displayShout(shoutData) {
         b = Object.keys(shoutData);
         c = new Set(a.concat(b));
         d = [];
-        c.forEach(v => d.push(v));
+        c.forEach(function(v){d.push(v);});
         let changes = d.filter(function(id){
             return shoutData[id] !== shout[id];
         });
