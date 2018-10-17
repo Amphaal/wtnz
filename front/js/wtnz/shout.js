@@ -1,7 +1,11 @@
 //download library
 function requestShout() {
     let socketServer = window.location.origin + ":3000";
-    var socket = io(socketServer, { query : { userToWatch : libraryUser }});
+    var socket = io(socketServer, {
+        query : { 
+            userToWatch : libraryUser 
+        }
+    });
     socket.on("newShout", function(newShout) {
         newShout = JSON.parse(newShout);
         displayShout(newShout);
