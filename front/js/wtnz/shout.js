@@ -22,7 +22,8 @@ function isWorthDisplayingShout(shoutData) {
     //if is playing and remaning time comparing dates
     let remaining = (shoutData['duration'] || 0) - (shoutData['playerPosition'] || 0);
     let secondsElapsed = calculateSecondsElapsed(shoutData['date']);
-    return (remaining - secondsElapsed) > 0;
+    let isWorth = (remaining - secondsElapsed) > 0;
+    return isWorth;
 }
 
 //sound handling
@@ -177,7 +178,7 @@ function displayShout(shoutData) {
         }
 
         //update timeline
-        if(changes.includes('duration') || changes.includes('playerPosition') || changes.includes('playerState')) {
+        if(changes.includes('duration') || changes.includes('playerPosition') || changes.includes('playerState') || changes.includes('date')) {
             let aTimeline = document.querySelector('#shoutContainer .timeline');
             
             //reset animation
