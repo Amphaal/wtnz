@@ -2,7 +2,7 @@
     <div class='fctr' id='logo'>
         <span>WTNZ</span>
     </div>
-    <div id='banner' class='anim'>
+    <div id='banner'>
         <div id='banner-desc'>
             <span style='color : white'><?php echo $user_qs ?></span><span style='color : rgba(0, 0, 0, 0.65)'> Library</span>
         </div>
@@ -17,5 +17,6 @@
                 <i class="fas fa-chart-pie"></i>
             </label>   
         </div>
+        <div class='anim'></div>
     </div>
 </header>

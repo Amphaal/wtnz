@@ -1,4 +1,4 @@
-<div id='albumInfos' class='anim'>
+<div id='albumInfos'>
     <div class='aiContent'>
         <div class='hInfos'>
                 <label>Year<div id="aYear"></div></label>
@@ -19,4 +19,5 @@
             </a>
         </div>
     </div>
+    <div class='anim'></div>
 </div>
