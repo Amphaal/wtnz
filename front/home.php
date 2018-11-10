@@ -1,5 +1,5 @@
 <?php 
-    $title = "WTNZ - " . $user_qs . "'s Library";
+    $title = "WTNZ - " . i18n('libraryOf', $user_qs);
     $icon = "front/img/ico.png";
 ?>
 <!DOCTYPE html>

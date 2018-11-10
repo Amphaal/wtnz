@@ -43,7 +43,7 @@ function generateFreshUploads() {
         let headerRow = document.createElement('tr');
         columns.forEach(function(head) {
             let thElem = document.createElement('th');
-            thElem.innerHTML = head;
+            thElem.innerHTML = i18n[head.toLowerCase()] || head;
             headerRow.appendChild(thElem);
         });
         tHead.appendChild(headerRow);
@@ -64,7 +64,7 @@ function generateFreshUploads() {
                 if(calculatedFilter)  {
                     cellElem.dataset.nFilter = calculatedFilter;
                     cellElem.onmousedown = updateFilter;
-                    albumElem.setAttribute('title', "Access to " + columnName);
+                    albumElem.setAttribute('title', i18n['access']);
                 }
                 
                 albumElem.appendChild(cellElem);

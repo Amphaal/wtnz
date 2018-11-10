@@ -3,8 +3,8 @@
         <div class='subContent' data-cat="STATS" style="flex:1">
             <div class='statsWrapper'>
                 <div id='stats'>
-                    <div class='statsPh' id='statsAlbums' data-phid='0'></div>
-                    <div class='statsPh' id='statsArtists' data-phid='1'></div>
+                    <div class='statsPh' id='statsAlbums' data-phid='0' data-def="Albums"></div>
+                    <div class='statsPh' id='statsArtists' data-phid='1' data-def="<?php echo i18n("artists") ?>"></div>
                 </div>
                 <div id='statsSwitcher'>
                     <div>
@@ -15,10 +15,10 @@
                         </label>
                     </div>
                     <div>
-                        <label title='Artists'>
+                        <label title='<?php echo i18n("artists") ?>'>
                             <input id='rArtists' data-phid='1' type='radio' name='statsS' onclick="switchPanel(event)" autocomplete="off">
                             <i class="fas fa-users"></i>
-                            <span>Artists</span>
+                            <span><?php echo i18n("artists") ?></span>
                         </label>
                     </div>
                 </div>

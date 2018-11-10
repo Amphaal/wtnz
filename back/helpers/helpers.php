@@ -20,7 +20,7 @@ function mayCreateUserDirectory($directory) {
     $result = mkdir($directory, 0777, true);
     if (!$result) 
     {
-        errorOccured('Cannot write directory "' . $directory .'" for the specified user.');
+        errorOccured(i18n("e_wdu", $directory));
     }
 }
 
@@ -40,25 +40,25 @@ function formatUserDataFolder($user) {
 
 function checkUserExists($user) {
     $do_exist = isset(WTNZ_CONFIG['users'][$user]) && file_exists(formatUserDataFolder($user));
-    if(!$do_exist) errorOccured('User "' . $user . '" is not set up properly or does not exist');
+    if(!$do_exist) errorOccured(i18n("e_unsu"));
 }
 
 function comparePasswords($user) {
     $passwd = isset($_POST['password']) ? $_POST['password'] : NULL;
-    if(empty($passwd)) errorOccured('No password provided, upload is impossible.');
-    if($passwd != WTNZ_CONFIG['users'][$user]) errorOccured('Password missmatch, upload is impossible.');
+    if(empty($passwd)) errorOccured(i18n("e_nopass"));
+    if($passwd != WTNZ_CONFIG['users'][$user]) errorOccured(i18n("e_pmm"));
 }
 
 function testUploadedFile($expectedFilename){
     $fileToUpload = isset($_FILES[$expectedFilename]) ? $_FILES[$expectedFilename] : NULL;
-    if(empty($fileToUpload)) errorOccured('Cannot localizate library file in the upload.');
-    if($fileToUpload['error'] == 4 ) errorOccured('No file have been uploaded.');
-    if($fileToUpload['error'] > 0 ) errorOccured('An issue has occured during the upload.');
+    if(empty($fileToUpload)) errorOccured(i18n("e_upLibMiss"));
+    if($fileToUpload['error'] == 4 ) errorOccured(i18n("e_noFUp"));
+    if($fileToUpload['error'] > 0 ) errorOccured(i18n("e_upErr"));
 }
 
 function uploadFile($pathTo, $expectedFilename) {
         $uploadResult = move_uploaded_file($_FILES[$expectedFilename]['tmp_name'], $pathTo);
-        if(!$uploadResult) errorOccured('Issue while uploading file.');
+        if(!$uploadResult) errorOccured(i18n("e_upErr"));
 }
 
 function testFileCompatibility($expectedFilename) {
@@ -66,7 +66,7 @@ function testFileCompatibility($expectedFilename) {
     
     //check if JSON compliant
     $result = json_decode($fileContent);
-    if (json_last_error() !== JSON_ERROR_NONE) errorOccured('The uploaded file is not JSON compliant.');
+    if (json_last_error() !== JSON_ERROR_NONE) errorOccured(i18n("e_ucJSON"));
 }
 
 function isUselessUpload($targetPath, $expectedFilename) {

@@ -25,7 +25,7 @@ function init_app() {
     routerUploadShout($user_qs, $action);
 
     //else redirect on misformated/unhandled URI
-    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/' ) header('Location: /wtnz/'.$user_qs);
+    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') header('Location: /wtnz/' . $user_qs);
 
     //redirect to user library in last resort
     return accessUserLibrary($user_qs);

@@ -3,8 +3,8 @@
 ///
 
 function renderStats() {
-    renderHCPie(dataFeeds.statsAlbums(), 'statsAlbums', 'Albums');
-    renderHCPie(dataFeeds.statsArtists(), 'statsArtists', 'Artists');
+    renderHCPie(dataFeeds.statsAlbums(), 'statsAlbums');
+    renderHCPie(dataFeeds.statsArtists(), 'statsArtists');
 }
 
 ///
@@ -12,7 +12,7 @@ function renderStats() {
 ///
 
 //render a single chart
-function renderHCPie(data, divId, name) {
+function renderHCPie(data, divId) {
 
     //format to highcharts specifics
     data = data.map(function(val) {
@@ -20,6 +20,8 @@ function renderHCPie(data, divId, name) {
       delete val.value;
       return val;
     });
+
+    var name = document.getElementById(divId).getAttribute('data-def');
 
     //define chart
     let chart = {
@@ -32,7 +34,7 @@ function renderHCPie(data, divId, name) {
         },
         title: '',
         tooltip: {
-            pointFormat: '<b>{point.y}</b> or <b>{point.percentage:.1f}%</b> of {series.name}'
+            pointFormat: i18n["statsPointFormat"]
         },
         plotOptions: {
             pie: {

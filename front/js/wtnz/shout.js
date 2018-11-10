@@ -43,12 +43,12 @@ function instShoutMuteButton() {
         notificationShoutSound.volume = 0;
         icon.classList.remove('fa-bell');
         icon.classList.add('fa-bell-slash');
-        icon.setAttribute('title', 'Play sound on new music');
+        icon.setAttribute('title', icon.getAttribute("title-on"));
     } else {
         notificationShoutSound.volume = .05;
         icon.classList.remove('fa-bell-slash');
         icon.classList.add('fa-bell');
-        icon.setAttribute('title', 'Mute notifications');
+        icon.setAttribute('title', icon.getAttribute("title-off"));
     }
 }
 

@@ -14,7 +14,7 @@ function processUploadedLib($user_qs, $expectedFilename) {
     $pathTo = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
     
     //check for duplicates
-    if(isUselessUpload($pathTo, $expectedFilename)) exit("File identical to current, no upload needed.");
+    if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
 
     //archive current file if necessary
     archivePreviousUpload($user_qs, $pathTo);
@@ -39,8 +39,8 @@ function archivePreviousUpload($user_qs, $pathTo) {
     $copyDestination = formatUserDataFolder($user_qs) . $archive_dir . '/' . basename($pathTo);
     
     //archive...
-    if (!mkdir(dirname($copyDestination))) errorOccured('Error while creating archive directory.');
-    if (!copy($pathTo, $copyDestination)) errorOccured('Error while copying uploaded file to archive directory.');
+    if (!mkdir(dirname($copyDestination))) errorOccured(i18n("e_cad"));
+    if (!copy($pathTo, $copyDestination)) errorOccured(i18n("e_cufad"));
 }
 
 ///
@@ -64,7 +64,7 @@ function routerUploadLib($user_qs, $action) {
         return uploadLib($user_qs);  
     // if from UI 
     } elseif($isAPICall) {
-        errorOccured('Missing arguments');
+        errorOccured(i18n("missingArgs"));
     } else {
         return accessManualUploadUI($user_qs);
     }

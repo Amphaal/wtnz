@@ -36,6 +36,14 @@
     font-size: .8rem;
 }
 
+#banner-desc .username {
+    color : white;
+}
+
+#banner-desc .library {
+    color : rgba(0, 0, 0, 0.65);
+}
+
 #banner-side {
     display: flex;
     text-align:right;

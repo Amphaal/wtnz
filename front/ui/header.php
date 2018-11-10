@@ -4,15 +4,15 @@
     </div>
     <div id='banner'>
         <div id='banner-desc'>
-            <span style='color : white'><?php echo $user_qs ?></span><span style='color : rgba(0, 0, 0, 0.65)'> Library</span>
+            <?php echo i18n('libraryOfHead', $user_qs)?>
         </div>
         <?php include 'front/ui/searchBand.php' ?>
         <div id='banner-side'>
-            <label title="Feed">
+            <label title="<?php echo i18n("feed")?>">
                 <input id='showFeed' type='checkbox' onclick="toggleFeed(event)" autocomplete="off">
                 <i class="far fa-newspaper"></i>
             </label>
-            <label title="Statistics">
+            <label title="<?php echo i18n("stats")?>">
                 <input id='showStats' type='checkbox' onclick="toggleStats(event)" autocomplete="off">
                 <i class="fas fa-chart-pie"></i>
             </label>   

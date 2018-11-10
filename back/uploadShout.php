@@ -11,7 +11,7 @@ function uploadShout($user_qs) {
     //move file
     uploadFile(formatUserDataFolder($user_qs) . getCurrentShoutFileName(), $expectedFilename);
     
-    exit('Shouted !');
+    exit(i18n("shouted"));
 }
 
 function routerUploadShout($user_qs, $action) {
@@ -24,6 +24,6 @@ function routerUploadShout($user_qs, $action) {
     if(!empty($_POST) && !empty($_FILES)) {
         return uploadShout($user_qs);  
     } else {
-        errorOccured('Missing arguments');
+        errorOccured(i18n("missingArgs"));
     }
 }
