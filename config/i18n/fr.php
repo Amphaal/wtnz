@@ -35,5 +35,8 @@
     "e_ucJSON" => "Le fichier téléversé n'est pas un fichier JSON.",
     "e_upErr" => 'Problème durant le téléversement.',
     "e_upLibMiss" => 'Impossible de trouver le fichier de bibliothèque dans le téléversement.',
-    "e_noFUp" => 'Aucun fichier de librairie n\'a été téléversé.'
+    "e_noFUp" => 'Aucun fichier de librairie n\'a été téléversé.',
+    "found" => 'trouvé(s)',
+    "no_found" => 'Aucun résultat trouvé',
+    "no_cover_found" => 'Aucune couverture trouvée'
 );

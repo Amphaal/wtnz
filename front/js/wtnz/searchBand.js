@@ -129,7 +129,7 @@ function renderSearchResults(criteria, data) {
         //no results
         let noResultDiv = document.createElement('div');
         noResultDiv.classList.add("nr");
-        noResultDiv.innerHTML = 'No results found';
+        noResultDiv.innerHTML = i18n['no_found'];
         target.appendChild(noResultDiv);
     }
 }

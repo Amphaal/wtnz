@@ -33,7 +33,7 @@
 }
 
 #searchBand .search[data-ef]::after {
-    content: attr(data-ef) " found";
+    content: attr(data-ef) ' ' attr(data-found);
     position: absolute;
     right : .2rem;
     top : .5rem;

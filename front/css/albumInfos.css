@@ -45,7 +45,7 @@
 }
 
 #albumInfos .imgLoader.noImgFound::before {
-    content : ":'( \A\A no cover found";
+    content : ":'( \A\A " attr(data-no-cover-found);
 }
 
 #albumInfos #aImage img {

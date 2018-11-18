@@ -35,5 +35,8 @@
     "e_ucJSON" => "The uploaded file is not JSON compliant.",
     "e_upErr" => 'Issue while uploading file.',
     "e_upLibMiss" => 'Cannot locate library file in the upload.',
-    "e_noFUp" => 'No file have been uploaded.'
+    "e_noFUp" => 'No file have been uploaded.',
+    "found" => 'found',
+    "no_found" => 'No results found',
+    "no_cover_found" => 'no cover found'
 );
