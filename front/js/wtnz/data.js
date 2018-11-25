@@ -290,7 +290,7 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 
     return new Promise(function(resolve, reject){
 
-        let urlBase =  'http://musicbrainz.org/ws/2/release-group/?limit=1&fmt=json&query=';
+        let urlBase =  'https://musicbrainz.org/ws/2/release-group/?limit=1&fmt=json&query=';
         let queryObj = {
             release : album || filter["albumUI"],
             artist :  artist || filter["artistUI"]
