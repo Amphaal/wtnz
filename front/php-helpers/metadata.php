@@ -1,5 +1,5 @@
 <?php 
-            $root = "http://zonme.to2x.ovh/wtnz/";
+            $root = "https://zonme.to2x.ovh/wtnz/";
             $descr = "The freshest music from the finest people.";
         ?><meta charset="UTF-8" >
         <meta name="theme-color" content="#efefef">
