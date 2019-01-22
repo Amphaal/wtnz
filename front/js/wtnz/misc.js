@@ -100,3 +100,65 @@ function resetImgLoader(elem) {
 function updateImgLoader(elem, imgUrl) {
     elem.firstElementChild.setAttribute('src', imgUrl);
 }
+
+/////////////////////////
+//scroll event handling//
+/////////////////////////
+
+var sueh_last_scroll_pos = 0;
+var sueh_ticking = false;
+function scrollUiEventHandling() {
+
+    //declare event listener
+    window.addEventListener('scroll', function(e) {
+        
+        // find direction based on last position
+        // null = not moved
+        // true = going down
+        // false = going up
+        let currentDirection = null;
+        let newPos = window.scrollY;
+        if(newPos != sueh_last_scroll_pos) 
+        {
+            currentDirection = newPos > sueh_last_scroll_pos;
+            sueh_last_scroll_pos = newPos;
+        }
+
+        //if no animation on run...
+        if (!sueh_ticking && mustHeaderUpdateAnimation(currentDirection)) {
+            
+            //lock
+            sueh_ticking = true;
+
+            //cpu optimisation for execution
+            window.requestAnimationFrame(function() {
+
+                //animate
+                switchHeaderAnimationState();
+
+                //release
+                sueh_ticking = false;
+            });
+        }
+      });
+}
+
+//find if Header should be animated
+function mustHeaderUpdateAnimation(directionToCompute) {
+    if (directionToCompute == null) return false;
+
+    let isSRUsed = document.querySelectorAll("header .searchResults.show").length; //if is beeing used...
+    let headerDirectionState = document.getElementsByTagName("header")[0].classList.contains("toHide");
+    let directionMismatch = headerDirectionState != directionToCompute;
+
+    return (!isSRUsed && directionMismatch);
+}
+
+function switchHeaderAnimationState() {
+    let header = document.getElementsByTagName("header")[0];
+    if (header.classList.contains("toHide")) {
+        header.classList.remove("toHide");
+    } else {
+        header.classList.add("toHide");
+    }
+}

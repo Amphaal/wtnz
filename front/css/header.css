@@ -70,10 +70,14 @@ header {
     flex-direction: row;
     border-bottom: 1px solid grey;
     box-shadow: 0px 0px .5rem grey;
-    position: relative;
     z-index: 10;
     flex-shrink: 0;
     position: sticky;
     top : 0;
     width: 100%;
+    transition: all .3s ease;
+}
+
+header.toHide {
+    top : -4rem;
 }
