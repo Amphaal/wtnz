@@ -36,7 +36,11 @@ function instShoutMuteButton() {
     let icon = document.querySelector('#shoutContainer .mute i');
     
     //instantiate sound
-    if(notificationShoutSound == null) notificationShoutSound = new Audio('front/sound/long-expected.mp3')
+    if(notificationShoutSound == null) {
+        notificationShoutSound = new Audio('front/sound/long-expected.mp3');
+        notificationShoutSound.autoplay = false;
+        notificationShoutSound.muted = false;
+    }
 
     //generate on state change
     if (mustMute == "1") {
@@ -104,7 +108,9 @@ function notificateShout() {
         }
 
         //play sound
-        if(notificationShoutSound) notificationShoutSound.play();
+        if(notificationShoutSound) {
+            notificationShoutSound.play();
+        }
 
         //update shoutid
         lastNotifShoutId = notifShoutId;

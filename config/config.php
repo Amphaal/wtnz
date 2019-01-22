@@ -10,7 +10,9 @@ $config = array(
 define('WTNZ_CONFIG', $config);
 
 //get lang for i18n
-define('LANG', Locale::getPrimaryLanguage(Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? "en_US"));
+$prob_loc = "en_US";
+if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $prob_loc = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+define('LANG', Locale::getPrimaryLanguage(Locale::acceptFromHttp($prob_loc)));
 define('I18N', include( __DIR__ . "/i18n/" . LANG . ".php"));
 
 function i18n($key, $args = NULL) {

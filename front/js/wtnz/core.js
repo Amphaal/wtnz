@@ -24,7 +24,7 @@ function requestUserLib() {
         return processLib(e.currentTarget.responseText);
     };
     request.open('GET', clientURLLibrary + '?' + Math.random(), true);
-    request.send();
+    request.send(null);
 }
 
 //process...
