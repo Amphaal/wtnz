@@ -51,5 +51,7 @@
     "e_log_retype" => "Retype to confirm",
     "e_log_rule" => "(between %d and %d characters)",
     "welcome" => "Welcome back, %s",
-    "downloadFeeder" => "Download for %s"
+    "downloadFeeder" => "Download for %s",
+    "obtainApp" => "Obtain the companion app",
+    "e_noDownloadFound" => "Downloadable file cannot be found"
 );

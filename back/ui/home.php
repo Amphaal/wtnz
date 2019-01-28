@@ -6,16 +6,19 @@
         <?php } ?>
         <div style='margin:1rem'>
             <?php if(!empty($_SESSION['loggedAs'])) {?>
-                <div>
-                    <button onclick="location.href='/wtnz/download/osx'"><?php echo i18n("downloadFeeder", "Mac")?></button>
-                    <button onclick="location.href='/wtnz/download/win'"><?php echo i18n("downloadFeeder", "Windows")?></button>
-                </div>
                 <button onclick="location.href='<?php echo $_SESSION['loggedAs'] ?>'"><?php echo i18n("log_accessMyLib")?></button>
                 <button onclick="location.href='/wtnz/manage/disconnect'"><?php echo i18n("log_disconnect")?></button>
             <?php } else { ?>
                 <button onclick="location.href='/wtnz/manage/create'"><?php echo i18n("log_createAccount")?></button>
                 <button onclick="location.href='/wtnz/manage/connect'"><?php echo i18n("e_log_connect")?></button>
             <?php } ?>
+            <br/><br/>
+            <div>
+                <span><?php echo i18n("obtainApp")?></span>
+                <br/>
+                <button onclick="location.href='/wtnz/download/osx'"><?php echo i18n("downloadFeeder", "MacOS")?></button>
+                <button onclick="location.href='/wtnz/download/win'"><?php echo i18n("downloadFeeder", "Windows")?></button>
+            </div>
         </div>
     </body>
 </html>

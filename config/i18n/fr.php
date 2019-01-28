@@ -51,5 +51,7 @@
     "e_log_retype" => "Confirmer en ressaisissant",
     "e_log_rule" => "(entre %d et %d caractères)",
     "welcome" => "Bon retour à toi, %s.",
-    "downloadFeeder" => "Télécharger pour %s"
+    "downloadFeeder" => "Télécharger pour %s",
+    "obtainApp" => "Récupérer le logiciel compagnon",
+    "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger"
 );

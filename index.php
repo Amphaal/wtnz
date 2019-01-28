@@ -5,6 +5,7 @@ include_once "back/helpers/helpers.php";
 include_once "back/controllers/uploadLib.php";
 include_once "back/controllers/uploadShout.php";
 include_once "back/controllers/manage.php";
+include_once "back/controllers/downloadApp.php";
 
 function init_app() {
 
@@ -22,8 +23,9 @@ function init_app() {
     //if no user directory is being accessed
     if(!isset($user_qs)) return accessIndex(); 
     
-    //check if manage query
+    //check if special queries
     if($user_qs == 'manage') return routerManage($action);
+    if($user_qs == 'download') return routerDownload($action);
 
     //else check if user exists
     checkUserExists($user_qs); 

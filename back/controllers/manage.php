@@ -32,7 +32,7 @@ function accountCreation() {
 function disconnect() {
     session_unset();
     session_destroy();
-    header('location: /wtnz/');
+    header('location: '. $_SERVER['HTTP_REFERER']);
 }
 
 function login() {
