@@ -72,6 +72,6 @@ function routerUploadLib($user_qs, $action) {
 }
 
 function accessManualUploadUI($user_qs) {
-    include "back/ui_templates/upload.php";
+    include "back/ui/upload.php";
     exit;
 }

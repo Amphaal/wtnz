@@ -2,23 +2,31 @@
 
 include_once "config/config.php";
 include_once "back/helpers/helpers.php";
-include_once "back/uploadLib.php";
-include_once "back/uploadShout.php";
+include_once "back/controllers/uploadLib.php";
+include_once "back/controllers/uploadShout.php";
+include_once "back/controllers/manage.php";
 
 function init_app() {
+
+    //start session
+    session_start();
 
     // get URI elements
     $qs = getQueryString();
     
-    //user specific
+    //generate folders if non existing
     checkUserSpecificFolders(); 
     $user_qs = array_shift($qs);
-    if(!isset($user_qs)) return accessIndex(); //if no user directory is being accessed
-    if($user_qs == 'users_data') return;
-    checkUserExists($user_qs); //check if user exists
-
-    //extract action
     $action = array_shift($qs);
+
+    //if no user directory is being accessed
+    if(!isset($user_qs)) return accessIndex(); 
+    
+    //check if manage query
+    if($user_qs == 'manage') return routerManage($action);
+
+    //else check if user exists
+    checkUserExists($user_qs); 
 
     //router stack
     routerUploadLib($user_qs, $action);
@@ -32,7 +40,7 @@ function init_app() {
 }
 
 function accessIndex() {
-    include "back/ui_templates/home.php";
+    include "back/ui/home.php";
     exit;
 }
 

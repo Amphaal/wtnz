@@ -38,5 +38,18 @@
     "e_noFUp" => 'No file have been uploaded.',
     "found" => 'found',
     "no_found" => 'No results found',
-    "no_cover_found" => 'no cover found'
+    "no_cover_found" => 'no cover found',
+    "log_accessMyLib" => 'go to my library',
+    "log_createAccount" => 'create an account',
+    "log_disconnect" => "Disconnect",
+    "e_log_identical" => "Login attempt identical to logged user",
+    "e_log_nouser" => "No username provided",
+    "e_log_connect" => "Connect",
+    "e_log_username" => "Username",
+    "e_log_email" => "Email address",
+    "e_log_createAccount" => "Create account",
+    "e_log_retype" => "Retype to confirm",
+    "e_log_rule" => "(between %d and %d characters)",
+    "welcome" => "Welcome back, %s",
+    "downloadFeeder" => "Download for %s"
 );

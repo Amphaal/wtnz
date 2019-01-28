@@ -15,8 +15,8 @@ if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $prob_loc = $_SERVER['HTTP_ACCEPT_L
 define('LANG', Locale::getPrimaryLanguage(Locale::acceptFromHttp($prob_loc)));
 define('I18N', include( __DIR__ . "/i18n/" . LANG . ".php"));
 
-function i18n($key, $args = NULL) {
-    return sprintf(I18N[$key], $args);
+function i18n($key, ...$args) {
+    return sprintf(I18N[$key], ...$args);
 }
 
 return $config;

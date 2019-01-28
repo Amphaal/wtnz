@@ -40,13 +40,13 @@ function formatUserDataFolder($user) {
 
 function checkUserExists($user) {
     $do_exist = isset(WTNZ_CONFIG['users'][$user]) && file_exists(formatUserDataFolder($user));
-    if(!$do_exist) errorOccured(i18n("e_unsu"));
+    if(!$do_exist) errorOccured(i18n("e_unsu", $user));
 }
 
 function comparePasswords($user) {
     $passwd = isset($_POST['password']) ? $_POST['password'] : NULL;
     if(empty($passwd)) errorOccured(i18n("e_nopass"));
-    if($passwd != WTNZ_CONFIG['users'][$user]) errorOccured(i18n("e_pmm"));
+    if($passwd != WTNZ_CONFIG['users'][$user]["password"]) errorOccured(i18n("e_pmm"));
 }
 
 function testUploadedFile($expectedFilename){
@@ -102,3 +102,31 @@ function getFilesInFolder($path_to) {
     }
     return $ret;
 }
+
+//
+//conectivity
+//
+
+function connectAs($user, $passwd) {
+    $ret = array("isError" => true, "description" => null);
+    
+    if(empty($user)) {
+        $ret["description"] = i18n("e_log_nouser");
+    }
+    elseif(empty($passwd))  {
+        $ret["description"] = i18n("e_nopass");
+    }
+    if(isset($_SESSION["loggedAs"]) && $_SESSION["loggedAs"] == $user) {
+        $ret["isError"] = false;
+        $ret["description"] = i18n("e_log_identical");
+    }
+    elseif($passwd != WTNZ_CONFIG['users'][$user]["password"]) {
+        $ret["description"] = i18n("e_pmm");
+    }
+    else {
+        $ret["isError"] = false;
+        $_SESSION["loggedAs"] = $user;
+    }
+    
+    return $ret;
+} 

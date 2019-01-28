@@ -21,7 +21,7 @@
     "muteNotif" => "Couper les notifications",
     "access" => "Naviguer vers...",
     "statsPointFormat" => "<b>{point.y}</b>, ou <b>{point.percentage:.1f}%</b> de la catégorie {series.name}",
-    "userPwd" => "Mot de passe utilisateur",
+    "userPwd" => "Mot de passe",
     "sendFile" => "Envoyer le fichier",
     "missingArgs" => "Paramètres manquants",
     "shouted" => "Diffusé !",
@@ -38,5 +38,18 @@
     "e_noFUp" => 'Aucun fichier de librairie n\'a été téléversé.',
     "found" => 'trouvé(s)',
     "no_found" => 'Aucun résultat trouvé',
-    "no_cover_found" => 'Aucune couverture trouvée'
+    "no_cover_found" => 'Aucune couverture trouvée',
+    "log_accessMyLib" => 'Accèder à ma librarie',
+    "log_createAccount" => 'Créer un compte',
+    "log_disconnect" => "Me déconnecter",
+    "e_log_identical" => "Tentative de connexion identique à l'utilisateur connecté",
+    "e_log_nouser" => "Nom d'utilisateur non fourni",
+    "e_log_connect" => "Se connecter",
+    "e_log_username" => "Nom d'utilisateur",
+    "e_log_email" => "Adresse e-mail de contact",
+    "e_log_createAccount" => "Création du compte",
+    "e_log_retype" => "Confirmer en ressaisissant",
+    "e_log_rule" => "(entre %d et %d caractères)",
+    "welcome" => "Bon retour à toi, %s.",
+    "downloadFeeder" => "Télécharger pour %s"
 );
