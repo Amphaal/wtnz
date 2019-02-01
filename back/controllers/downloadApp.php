@@ -6,7 +6,6 @@ function routerDownload($action) {
     $latestInFolder = scandir($initialPath, SCANDIR_SORT_DESCENDING)[0];
     $filepath = $initialPath . "/" . $latestInFolder;
 
-    header('Content-Type: '. $contentType);
     header('Content-Disposition: attachment; filename="'.$latestInFolder.'"');
     readfile($filepath);
 }
