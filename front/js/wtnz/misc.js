@@ -10,9 +10,9 @@ function applyCompareDateBulk() {
 //scrolls to element, taking in account the sticky header
 function wtnzScroll(elem, correct) {
     if(!elem) return;
-    let sticky = document.querySelector('header');
+    //let sticky = document.querySelector('header');
     let relativeDocumentOffset = elem.getBoundingClientRect().top + window.scrollY;
-    let elemPos = relativeDocumentOffset - sticky.clientHeight;
+    let elemPos = relativeDocumentOffset;// - sticky.clientHeight;
     window.scroll(0, elemPos + (correct || 0));
 }
 

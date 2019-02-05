@@ -1,7 +1,7 @@
 @font-face {
     font-family: bebasNeueFont;
     src: url(front/fonts/BebasNeue-Regular.otf);
-    font-display: auto;
+    font-display: swap;
 }
 
 @keyframes Gradient {
