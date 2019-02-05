@@ -53,5 +53,8 @@
     "welcome" => "Welcome back, %s",
     "downloadFeeder" => "Download for %s",
     "obtainApp" => "Obtain the companion app",
-    "e_noDownloadFound" => "Downloadable file cannot be found"
+    "e_noDownloadFound" => "Downloadable file cannot be found",
+    "wtnz_descr" => "The freshest music from the finest people.",
+    "profile" => "My Profile",
+    "curAlCo" => "Current Album Cover"
 );

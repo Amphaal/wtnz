@@ -3,7 +3,8 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    margin : 0 5%;
+    margin-top: .35rem;
+    margin-bottom: .35rem;
 }
 
 #searchBand input {
@@ -28,8 +29,6 @@
     position : relative;
     flex-grow: 1;
     display: flex;
-    max-width: 20rem;
-    padding : .35rem 0;
 }
 
 #searchBand .search[data-ef]::after {
@@ -49,7 +48,7 @@
     width : fill-available;
     background-color : white; 
     position : absolute; 
-    top : 2rem;
+    top : 1.65rem;
     z-index: 50;
     display: none;
     transition: all .3s ease 0s;

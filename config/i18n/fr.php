@@ -1,9 +1,9 @@
 <?php return array(
     'worksBest' => 'Fonctionne mieux avec',
-    'libraryOf' => 'Bibliothèque de %s',
+    'libraryOf' => 'Bibliothèque | %s',
     'whatsnew' => "QUOI DE NEUF",
     'discover' => "DECOUVRIR",
-    'libraryOfHead' => "<span class='library'>Bibliothèque de </span><span class='username'>%s</span>",
+    'libraryOfHead' => "<span class='library'>Bibliothèque | </span><span class='username'>%s</span>",
     "phSearch" => "Rechercher un nom de groupe...",
     "artists" => "Artistes",
     "artist" => "Artiste",
@@ -53,5 +53,8 @@
     "welcome" => "Bon retour à toi, %s.",
     "downloadFeeder" => "Télécharger pour %s",
     "obtainApp" => "Récupérer le logiciel compagnon",
-    "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger"
+    "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
+    "wtnz_descr" => "Ta Musique qui Claque",
+    "profile" => "Mon profil",
+    "curAlCo" => "Couverture de l'album selectionné"
 );

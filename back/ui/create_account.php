@@ -1,6 +1,6 @@
 <style>
  input {
-    min-width: 10rem;
+    min-width: 15rem;
  }
  span {
      font-size: 0.8rem;
@@ -26,13 +26,6 @@
                 placeholder="<?php echo i18n("userPwd")?>" 
                 required 
             />
-            <input 
-                pattern=".{<?php echo $minlen_password . "," . $maxlen_password;?>}" 
-                name="password_r" 
-                type="password" 
-                placeholder="<?php echo i18n("e_log_retype")?>" 
-                required 
-            />
             <span><?php echo i18n("e_log_rule", $minlen_password, $maxlen_password);?></span> 
         </div>
         <div>
@@ -43,13 +36,6 @@
                 required 
                 value="<?php echo isset($_POST['email']) ? $_POST['email'] : ""; ?>"
             /> 
-            <input 
-                name="email_r" 
-                type="email" 
-                placeholder="<?php echo i18n("e_log_retype")?>" 
-                required 
-                value="<?php echo isset($_POST['email']) ? $_POST['email'] : ""; ?>"
-            />
         </div> 
         <br/>
         <input 

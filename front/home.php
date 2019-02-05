@@ -3,7 +3,7 @@
     $icon = "front/img/ico.png";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo LANG;?>">
     <head>
         <title><?php echo $title;?></title>
         <link rel="icon" type="image/png" href="<?php echo $icon;?>" />

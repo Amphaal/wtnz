@@ -25,6 +25,7 @@ function displayAlbumInfos(dataFunc) {
         //clean link to YT
         let link = document.querySelector('#albumInfos .listen a');
         link.setAttribute('href', null);
+        link.setAttribute('target', null);
 
         let bypass = false;
         if(target.classList.contains("show")) {
@@ -58,6 +59,7 @@ function displayAlbumInfos(dataFunc) {
 
             //link to YT
             link.setAttribute('href', linkToYoutube(data['Artist'], data['Album']));
+            link.setAttribute('target', "_blank");
 
             //show, start animation
             target.classList.add('show');

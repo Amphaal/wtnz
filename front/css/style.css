@@ -1,6 +1,7 @@
 @font-face {
     font-family: bebasNeueFont;
-    src: url(../fonts/BebasNeue-Regular.otf);
+    src: url(front/fonts/BebasNeue-Regular.otf);
+    font-display: auto;
 }
 
 @keyframes Gradient {
@@ -26,6 +27,7 @@
     top: 0;
     left: 0;
     z-index: -50;
+    margin : 0 !important;
 }
 
 .anim::after {

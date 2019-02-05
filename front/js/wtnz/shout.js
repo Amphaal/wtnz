@@ -109,7 +109,9 @@ function notificateShout() {
 
         //play sound
         if(notificationShoutSound) {
-            notificationShoutSound.play();
+            notificationShoutSound.play().then(null, function(e) {
+                /* expected on Chrome */
+            });
         }
 
         //update shoutid
@@ -166,7 +168,11 @@ function displayShout(shoutData) {
         if (changes.includes('artist') || changes.includes('name')) {
             let aLink = document.querySelector('#shoutContainer a');
             aLink.removeAttribute('href');
-            if(artist && name) aLink.setAttribute('href', linkToYoutube(artist, name));
+            aLink.removeAttribute('target');
+            if(artist && name) {
+                aLink.setAttribute('href', linkToYoutube(artist, name));
+                aLink.setAttribute('target','_blank');
+            }
         }
 
         //update track name

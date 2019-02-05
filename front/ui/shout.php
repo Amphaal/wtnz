@@ -6,9 +6,9 @@
         <i class="fas fa-forward"></i>
     </div>
     <div class='shout'>
-        <a title='<?php echo i18n("playOnYT")?>' target='_blank'>
+        <a title='<?php echo i18n("playOnYT")?>' rel="noopener">
             <div class='imgLoader cover'>
-                <img onload="imgLoaded(event)" onerror="brokenImg(event)"/>
+                <img onload="imgLoaded(event)" onerror="brokenImg(event)" alt=""/>
                 <i class="fab fa-youtube"></i>
             </div>
         </a>

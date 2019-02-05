@@ -1,3 +1,9 @@
-<?php foreach(getFilesInFolder('front/css') as $path) { ?>
-    <link rel="stylesheet" href="<?php echo $path; ?>?ts=<?php echo time(); ?>">
-<?php } ?>
+<style>
+<?php
+
+foreach(getFilesInFolder('front/css') as $file) { 
+    echo file_get_contents($file);
+} 
+
+?>
+</style>
