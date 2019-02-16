@@ -2,6 +2,10 @@
 ////DATA FEED
 ////
 function generateDataFeeds(lib) {  
+
+    //preload
+    slugifiedArtists(lib);
+
     return {
         genreUI : getGenreUIDataFeed(lib),
         artistUI : getArtistUIDataFeed(lib),
@@ -76,16 +80,18 @@ function getAlbumInfosDataFeed(lib) {
 function getSearchBandDataFeed(lib){
     return function(filterCriteria) {
         if(!filterCriteria) return;
-    
-        filterCriteria = filterCriteria.toLowerCase();
-        fCritLen = filterCriteria.length;
+        
+        slug_fc = slugify(filterCriteria);
     
         let source = albumsByArtistsList(lib);
+        let slugs = slugifiedArtists(lib);
+
         let results = Object.keys(source).reduce(function(total, current) {
-    
-            let sIndex = current.toLowerCase().indexOf(filterCriteria);
-            let sIndexEnd = fCritLen + sIndex;
+            
+            let sIndex = slugs[current].indexOf(slug_fc);
             if(sIndex > -1)  {
+                let fCritLen = filterCriteria.length;
+                let sIndexEnd = fCritLen + sIndex;
                 total[current] = {
                     Genres :  source[current]["Genres"],
                     sIndexRange : [sIndex, sIndexEnd]
@@ -252,6 +258,20 @@ function albumsByArtistsList(lib) {
 
     return abal;
 }
+
+var slug_a = null;
+function slugifiedArtists(lib) {
+    let base = albumsByArtistsList(lib);
+
+    if(!slug_a) slug_a = lib.reduce(function(total, currentVal) {
+        let artist = currentVal["Album Artist"];
+        total[artist] = slugify(artist);
+        return total;
+    }, {});
+
+    return slug_a;
+}
+
 
 /*latestUploadsList*/
 var glul = null;

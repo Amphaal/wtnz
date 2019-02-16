@@ -73,7 +73,7 @@ header {
     position: sticky;
     top : 0;
     width: 100%;
-    transition: all .3s ease;
+    transition: top 400ms ease 0s, opacity 200ms ease 0s;
 }
 
 header.toHide {
