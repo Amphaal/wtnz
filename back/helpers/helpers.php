@@ -24,29 +24,94 @@ function mayCreateUserDirectory($directory) {
     }
 }
 
+function tryCreatingUser($rules) {
+
+    $ret = array("errDescr" => null);
+
+    $user = $_POST['username'];
+    $passwd = $_POST['password'];
+    $end_checks = false;
+
+    //checks...
+    while(!$end_checks && empty($ret["errDescr"])) {
+
+        //fields filed
+        foreach($rules as $field => $f_rules) {
+            if(empty($field)) {
+                $ret["errDescr"] = i18n("crea_miss_p_u", i18n($field));
+                continue;
+            }
+        }
+
+        // is user already logged
+        if (isUserLogged()) {
+            $ret["errDescr"] = i18n("err_nocreate_onlog");
+            continue;
+        }
+        
+        //check user asked to create exists
+        if (checkUserExists($user, true)) {
+            $ret["errDescr"] = i18n("user_already_exist", $user);
+            continue;
+        }
+
+        //check if min/max length on fields
+        foreach($rules as $field => $f_rules) {
+
+            $len = strlen($_POST[$field]);
+            $min = $f_rules['min'];
+            $max = $f_rules['max'];
+
+            if($len < $min || $len > $max) {
+                $ret["errDescr"] = i18n("field_nc_pattern", i18n($field), 
+                                        $min, $max);
+                continue;
+            }
+        }
+
+        //checks OK
+        $end_checks = true;
+    }
+
+    //check if return
+    $ret["isError"] = !empty($ret["errDescr"]);
+    if($ret["isError"]) return $ret;
+
+    //else create account
+    $users = getUserDb();
+    $users[$user] =  array(
+        "password" => $passwd,
+        "email" => $_POST['email']
+    );
+    updateUserDb($users);
+    Config::forceUpdate();
+    return $ret;
+
+}
+
 function checkUserSpecificFolders() {
     //for each user
-    foreach(WTNZ_CONFIG['users'] as $user => $pass) {
+    $p = getConfig()['users'];
+    foreach($p as $user => $pass) {
         $path = formatUserDataFolder($user);
         mayCreateUserDirectory($path);
     }
 }  
 
 function formatUserDataFolder($user) {
-    $usersFolder = WTNZ_CONFIG['path_to_users_data_folder'];
-    $path = $usersFolder . $user . '/';
-    return $path;
+    return USERS_DATA_PATH . '/' . $user . '/';
 }
 
-function checkUserExists($user) {
-    $do_exist = isset(WTNZ_CONFIG['users'][$user]) && file_exists(formatUserDataFolder($user));
-    if(!$do_exist) errorOccured(i18n("e_unsu", $user));
+function checkUserExists($user, $non_fatal_check = false) {
+    $do_exist = isset(getConfig()['users'][$user]) && file_exists(formatUserDataFolder($user));
+    if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
+    return $do_exist;
 }
 
 function comparePasswords($user) {
     $passwd = isset($_POST['password']) ? $_POST['password'] : NULL;
     if(empty($passwd)) errorOccured(i18n("e_nopass"));
-    if($passwd != WTNZ_CONFIG['users'][$user]["password"]) errorOccured(i18n("e_pmm"));
+    if($passwd != getConfig()['users'][$user]["password"]) errorOccured(i18n("e_pmm"));
 }
 
 function testUploadedFile($expectedFilename){
@@ -119,14 +184,36 @@ function connectAs($user, $passwd) {
     if(isset($_SESSION["loggedAs"]) && $_SESSION["loggedAs"] == $user) {
         $ret["isError"] = false;
         $ret["description"] = i18n("e_log_identical");
-    }
-    elseif($passwd != WTNZ_CONFIG['users'][$user]["password"]) {
+    } elseif(!isset(getConfig()['users'][$user])) {
+        $ret["description"] = i18n("e_unsu", $user);
+    } elseif($passwd != getConfig()['users'][$user]["password"]) {
         $ret["description"] = i18n("e_pmm");
-    }
-    else {
+    } else {
         $ret["isError"] = false;
         $_SESSION["loggedAs"] = $user;
     }
     
     return $ret;
 } 
+
+function getCurrentUserLogged() {
+    return empty($_SESSION["loggedAs"]) ? "" : $_SESSION["loggedAs"];
+}
+
+function isUserLogged() {
+    return !empty(getCurrentUserLogged());
+}
+
+function goToSelfLibrary() {
+    header('Location: /wtnz/' . getCurrentUserLogged());
+}
+
+//Render HTTP pattern from values
+function renHpat($rules) {
+    return ".{". $rules['min'] . "," . $rules['max'] . "}";
+}
+
+//POST remember
+function PRem($post_val) {
+    return isset($_POST[$post_val]) ? $_POST[$post_val] : "";
+}

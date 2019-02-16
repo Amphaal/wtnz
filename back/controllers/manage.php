@@ -16,17 +16,19 @@ function routerManage($action) {
 }
 
 function accountCreation() {
-    $minlen_username = 6;
-    $maxlen_username = 20;
-
-    $minlen_password = 8;
-    $maxlen_password = 20;
+    $rules = [
+        "username" => ["min" => 6, "max" => 20],
+        "password" => ["min" => 8, "max" => 20],
+    ];
+    
+    if($_POST){
+        $acr = tryCreatingUser($rules);
+        if(!$acr["isError"]) {
+            login();
+        }
+    } 
 
     include "back/ui/create_account.php";
-
-    if($_POST){
-        var_dump($_POST);
-    } 
 }
 
 function disconnect() {
@@ -36,13 +38,14 @@ function disconnect() {
 }
 
 function login() {
-    include "back/ui/login.php";
-
+    
     if($_POST) {
         $login_result = connectAs($_POST['username'], $_POST['password']);
         if(!$login_result['isError']) {
-            header('Location: /wtnz/' . $_SESSION["loggedAs"]);
+            goToSelfLibrary();
         }
     }
+
+    include "back/ui/login.php";
 
 }

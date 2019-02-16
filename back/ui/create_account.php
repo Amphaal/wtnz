@@ -7,26 +7,30 @@
  }
 </style>
 
+<?php if(!empty($acr)) {var_dump($acr);}?>
+
 <div style="display: flex; flex-direction:column;align-items:center;">
     <h1><?php echo i18n("e_log_createAccount")?></h1>
     <form method="post" autocomplete="nope">
-        <input 
-            pattern=".{<?php echo $minlen_username . "," . $maxlen_username;?>}" 
+        <div>
+            <input 
+            pattern="<?php echo renHpat($rules['username'])?>" 
             name="username" 
             placeholder="<?php echo i18n("e_log_username")?>" 
             required 
-            value="<?php echo isset($_POST['username']) ? $_POST['username'] : ""; ?>"
-        />
-        <span><?php echo i18n("e_log_rule", $minlen_username, $maxlen_username);?></span> 
+            value="<?php echo PRem('username') ?>"
+            />
+            <span><?php echo i18n("e_log_rule", $rules['username']["min"], $rules['username']["max"]);?></span> 
+        </div>
         <div>
             <input 
-                pattern=".{<?php echo $minlen_password . "," . $maxlen_password;?>}" 
+                pattern="<?php echo renHpat($rules['password'])?>" 
                 name="password" 
                 type="password" 
                 placeholder="<?php echo i18n("userPwd")?>" 
                 required 
             />
-            <span><?php echo i18n("e_log_rule", $minlen_password, $maxlen_password);?></span> 
+            <span><?php echo i18n("e_log_rule", $rules['password']["min"], $rules['password']["max"]);?></span> 
         </div>
         <div>
             <input 
@@ -34,7 +38,7 @@
                 type="email" 
                 placeholder="<?php echo i18n("e_log_email")?>" 
                 required 
-                value="<?php echo isset($_POST['email']) ? $_POST['email'] : ""; ?>"
+                value="<?php echo PRem('email') ?>"
             /> 
         </div> 
         <br/>

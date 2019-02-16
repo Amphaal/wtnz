@@ -7,6 +7,8 @@
  }
 </style>
 
+<?php if(!empty($login_result)) {var_dump($login_result);}?>
+
 <div style="display: flex; flex-direction:column;align-items:center;">
     <h1><?php echo i18n("e_log_connect")?></h1>
     <form method="post">

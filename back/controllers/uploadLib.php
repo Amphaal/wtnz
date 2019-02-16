@@ -17,7 +17,7 @@ function processUploadedLib($user_qs, $expectedFilename) {
     if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
 
     //archive current file if necessary
-    archivePreviousUpload($user_qs, $pathTo);
+    //archivePreviousUpload($user_qs, $pathTo);
 
     //move the uploaded file to user's directory
     uploadFile($pathTo, $expectedFilename);

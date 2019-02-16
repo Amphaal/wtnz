@@ -56,5 +56,11 @@
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
     "wtnz_descr" => "Ta Musique qui Claque",
     "profile" => "Mon profil",
-    "curAlCo" => "Couverture de l'album selectionné"
+    "curAlCo" => "Couverture de l'album selectionné",
+    "crea_miss_p_u" => '"%s" manquant pour la création de compte',
+    "err_nocreate_onlog" => "Impossible de créer un compte lorsque vous êtes déjà connecté à un autre compte",
+    "user_already_exist" => 'L\'utilisateur "%s" existe déjà',
+    "username" => "Nom d'utilisateur",
+    "password" => "Mot de passe",
+    "field_nc_pattern" => '"%s" doit comporter entre %d et %d caractères'
 );
