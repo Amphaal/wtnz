@@ -1,7 +1,8 @@
 <?php 
 
 define('USER_DB_PATH', dirname(__DIR__) . "/data/users.json");
-define('USERS_DATA_PATH', dirname(__DIR__) . "/data/users");
+define('USERS_DATA_RPATH', "/data/users");
+define('USERS_DATA_PATH', dirname(__DIR__) . USERS_DATA_RPATH);
 
 function updateUserDb($new_file) {
     mkdir(dirname(USER_DB_PATH));   

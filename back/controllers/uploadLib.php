@@ -11,7 +11,7 @@ function uploadLib($user_qs) {
 
 function processUploadedLib($user_qs, $expectedFilename) {
 
-    $pathTo = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
+    $pathTo = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
     
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
@@ -36,7 +36,7 @@ function archivePreviousUpload($user_qs, $pathTo) {
 
     //copy save
     $archive_dir = filemtime($pathTo).'_'.rand(0,999);
-    $copyDestination = formatUserDataFolder($user_qs) . $archive_dir . '/' . basename($pathTo);
+    $copyDestination = getInternalUserFolder($user_qs) . $archive_dir . '/' . basename($pathTo);
     
     //archive...
     if (!mkdir(dirname($copyDestination))) errorOccured(i18n("e_cad"));
@@ -52,7 +52,7 @@ function routerUploadLib($user_qs, $action) {
     $isAPICall = isset($_POST['headless']);
     if(!$isAPICall) {
         //redirect to upload UI if no library for the user
-        $expectedLibrary = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
+        $expectedLibrary = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
         if(!file_exists($expectedLibrary)) return accessManualUploadUI($user_qs);
     }
 

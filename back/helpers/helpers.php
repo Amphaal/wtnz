@@ -93,17 +93,23 @@ function checkUserSpecificFolders() {
     //for each user
     $p = getConfig()['users'];
     foreach($p as $user => $pass) {
-        $path = formatUserDataFolder($user);
+        $path = getInternalUserFolder($user);
         mayCreateUserDirectory($path);
     }
 }  
 
-function formatUserDataFolder($user) {
-    return USERS_DATA_PATH . '/' . $user . '/';
+function getInternalUserFolder($user) {
+    $path = USERS_DATA_PATH . '/' . $user . '/';
+    return $path;
+}
+
+function getPublicUserFolder($user) {
+    $path = "./" . USERS_DATA_RPATH . '/' . $user . '/';
+    return $path;
 }
 
 function checkUserExists($user, $non_fatal_check = false) {
-    $do_exist = isset(getConfig()['users'][$user]) && file_exists(formatUserDataFolder($user));
+    $do_exist = isset(getConfig()['users'][$user]) && file_exists(getInternalUserFolder($user));
     if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
     return $do_exist;
 }

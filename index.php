@@ -48,8 +48,8 @@ function accessIndex() {
 
 function accessUserLibrary($user_qs) {
 
-    $expectedLibrary = formatUserDataFolder($user_qs) . getCurrentLibraryFileName();
-    $expectedShout = formatUserDataFolder($user_qs) . getCurrentShoutFileName();
+    $expectedLibrary = getPublicUserFolder($user_qs) . getCurrentLibraryFileName();
+    $expectedShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
 
     //Client variables
     $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
