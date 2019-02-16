@@ -114,6 +114,17 @@ function renderSearchResults(criteria, data) {
             spanElems.forEach(function(e) {
                 resultDiv.appendChild(e);
             });
+            
+            //add genres
+            var genresElem = document.createElement('span');
+            genresElem.innerHTML += "&nbsp;&nbsp;&nbsp;(";
+            data[current]["Genres"].forEach(function(val) {
+                genresElem.innerHTML += val + ", ";
+            });
+            genresElem.innerHTML = genresElem.innerHTML.slice(0, -2);
+            genresElem.innerHTML += ")";
+            genresElem.classList.add('g');
+            resultDiv.appendChild(genresElem);
 
             //return div
             total.push(resultDiv);

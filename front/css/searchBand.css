@@ -93,6 +93,11 @@
     font-weight: bold;
 }
 
+/**/
+#searchBand .searchResults span.g{
+    font-size: 0.5rem;
+}
+
 #searchBand .searchResults.show {
     display:block;
 }
