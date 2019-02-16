@@ -60,7 +60,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     font-family: Arial;
-    padding: .5rem;
     max-height: 10rem;
 }
 
@@ -68,17 +67,20 @@
 #searchBand .searchResults .nr {
     color: grey;
     text-align: center;
+    padding: .5rem
 }
 
 #searchBand .searchResults .result {
+    padding: 0 .5rem 0 .5rem;
     cursor : pointer;
-    transition: transform .2s;
+    transition: all .2s;
 }
 
 #searchBand .searchResults .result:hover,
 #searchBand .searchResults .result:focus
  {
-    transform: translate(.25rem, 0);
+    transform: translate(.15rem, 0);
+    background-color: rgba(128, 128, 128, 0.05); 
 }
 
 /**/
@@ -89,7 +91,7 @@
 
 /*found part*/
 #searchBand .searchResults span.f{
-    color: black;
+    color: #666666;
     font-weight: bold;
 }
 
