@@ -1,6 +1,6 @@
 //download library
 function requestShout() {
-    let socketServer = window.location.origin + ":3000/shout";
+    let socketServer = sioURL + "/shout";
     var socket = io(socketServer, {
         query : { 
             userToWatch : libraryUser 

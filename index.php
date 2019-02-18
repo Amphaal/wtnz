@@ -55,6 +55,10 @@ function accessUserLibrary($user_qs) {
     $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
     $clientURLShout = dirname($_SERVER['REQUEST_URI']) . substr($expectedShout, 1);
     $latestUpdate = filemtime($expectedLibrary);
+    
+    //url based variables
+    $root = "https://zonme.to2x.ovh/wtnz/";
+    $sio_url = "wss://zonme.to2x.ovh:3000";
 
     include "front/home.php";
     exit;

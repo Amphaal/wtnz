@@ -4,6 +4,7 @@
         var clientURLLibrary = <?php echo json_encode($clientURLLibrary)?>;
         var clientURLShout = <?php echo json_encode($clientURLShout)?>;
         var libraryUser = <?php echo json_encode($user_qs)?>;
+        var sioURL = <?php echo json_encode($sio_url)?>;
         var i18n = <?php echo json_encode(I18N)?>;
         var lang = <?php echo json_encode(LANG)?>;
 
