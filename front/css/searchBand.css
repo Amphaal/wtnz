@@ -61,13 +61,13 @@
     overflow-x: hidden;
     font-family: Arial;
     max-height: 10rem;
+    padding: .5rem
 }
 
 /*no results*/
 #searchBand .searchResults .nr {
     color: grey;
     text-align: center;
-    padding: .5rem
 }
 
 #searchBand .searchResults .result {
