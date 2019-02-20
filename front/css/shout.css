@@ -29,6 +29,7 @@
     width:2rem;
     height:2rem; 
     background-color:white;
+    transition: all .3s ease;
 }
 
 #shoutContainer .cover i {
@@ -44,6 +45,10 @@
 
 #shoutContainer .cover:hover i {
     opacity: 1;
+}
+
+#shoutContainer .cover:hover img {
+    opacity: .5;
 }
 
 #shoutContainer .cover {

@@ -144,6 +144,8 @@ function displayShout(shoutData) {
         let album = shoutData['album'];
         let duration = shoutData['duration'];
         let state = shoutData['playerState'];
+        let genre = shoutData['genre'];
+        let year = shoutData['year'];
 
         //update shout loader
         if (changes.includes('album') || changes.includes('artist') || changes.includes('name')) {
@@ -187,6 +189,11 @@ function displayShout(shoutData) {
             let aMeta = document.querySelector('#shoutContainer .albumDesc .meta');
             aMeta.innerHTML = '';
             if(artist && album) aMeta.innerHTML = [artist, album].join(" - ");
+            if(year) aMeta.innerHTML += " (" + year + ")";
+            if(genre) {
+                aMeta.innerHTML = "<span>" + aMeta.innerHTML + "</span>";
+                aMeta.innerHTML += "<span style='color:grey'>&nbsp;//&nbsp;" + genre + "</span>";
+            }
         }
 
         //update timeline
