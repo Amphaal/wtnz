@@ -86,15 +86,33 @@ function tryCreatingUser($rules) {
     if($ret["isError"]) return $ret;
 
     //else create account
-    $users = getUserDb();
-    $users[$user] =  array(
+    updateUsersConfig(array(
         "password" => $passwd,
-        "email" => $_POST['email']
-    );
-    updateUserDb($users);
-    Config::forceUpdate();
+        "email" => $_POST['email'],
+        "customColors" => randomizeBannerColors()
+    ), $user);
+
     return $ret;
 
+}
+
+function randomizeBannerColors() {
+    $getRandColorHex = function() {
+        $getRandColorGroup = function() {
+            return str_pad(strtoupper(dechex(rand(0, 255))), 2, "0", STR_PAD_LEFT);
+        };
+        return "#" . $getRandColorGroup() . $getRandColorGroup() . $getRandColorGroup();
+    };
+    return array($getRandColorHex(), $getRandColorHex(), $getRandColorHex(), $getRandColorHex());
+}
+
+function updateUsersConfig($myNewConfig, $user = null) {
+    if($user == null) $user = getCurrentUserLogged();
+    
+    $users = getUserDb();
+    $users[$user] =  $myNewConfig;
+    updateUserDb($users);
+    Config::forceUpdate();
 }
 
 function checkUserSpecificFolders() {
@@ -226,6 +244,17 @@ function goToSelfLibrary() {
 function renHpat($rules) {
     return ".{". $rules['min'] . "," . $rules['max'] . "}";
 }
+
+
+function getMyConfig() {
+   if(isUserLogged()) {
+        return getUsersConfig(getCurrentUserLogged());
+    }
+}
+
+function getUsersConfig($user) {
+    return getConfig()['users'][$user];
+ }
 
 //POST remember
 function PRem($post_val) {

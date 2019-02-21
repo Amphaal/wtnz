@@ -6,6 +6,7 @@ include_once "back/controllers/uploadLib.php";
 include_once "back/controllers/uploadShout.php";
 include_once "back/controllers/manage.php";
 include_once "back/controllers/downloadApp.php";
+include_once "back/controllers/accessUserLib.php";
 
 function init_app() {
 
@@ -39,29 +40,11 @@ function init_app() {
     if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') header('Location: /wtnz/' . $user_qs);
 
     //redirect to user library in last resort
-    return accessUserLibrary($user_qs);
+    return routerAccessUserLib($user_qs);
 }
 
 function accessIndex() {
     include "back/ui/home.php";
-    exit;
-}
-
-function accessUserLibrary($user_qs) {
-
-    $expectedLibrary = getPublicUserFolder($user_qs) . getCurrentLibraryFileName();
-    $expectedShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
-
-    //Client variables
-    $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
-    $clientURLShout = dirname($_SERVER['REQUEST_URI']) . substr($expectedShout, 1);
-    $latestUpdate = filemtime($expectedLibrary);
-    
-    //url based variables
-    $root = "https://zonme.to2x.ovh/wtnz/";
-    $sio_url = "wss://zonme.to2x.ovh:3000";
-
-    include "front/home.php";
     exit;
 }
 

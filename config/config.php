@@ -71,6 +71,5 @@ function getConfig() {
     return Config::get()->config();
 }
 
-
 ?>
 
