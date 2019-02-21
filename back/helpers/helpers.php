@@ -54,6 +54,14 @@ function tryCreatingUser($rules) {
             $ret["errDescr"] = i18n("user_already_exist", $user);
             continue;
         }
+        
+        //check username over regex
+        $isUNOk;
+        preg_match('/^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/', $user, $isUNOk);
+        if (count($isUNOk) == 0) {
+            $ret["errDescr"] = i18n("username_invalid", $user);
+            continue;
+        }
 
         //check if min/max length on fields
         foreach($rules as $field => $f_rules) {

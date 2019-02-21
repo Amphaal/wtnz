@@ -28,7 +28,7 @@
     "fiNu" => "Fichier identique à l'actuel, aucune modification nécessaire.",
     "e_cad" => "Erreur durant la création du dossier d'archivage.",
     "e_cufad" => "Erreur durant la copie du fichier téléversé vers le dossier d'archivage.",
-    "e_wdu" => 'Cannot write directory "%s" for the specified user.',
+    "e_wdu" => 'Impossible de créer le répertoire "%s" pour l\'utilisateur spécifié.',
     "e_unsu" => 'L\'utilisateur "%s" n\'est pas configuré correctement ou n\'existe pas.',
     "e_nopass" => "Aucun mot de passe fourni, impossible de téléverser.",
     "e_pmm" => "Le mot de passe de correspond pas à celui attendu, impossible de téléverser.",
@@ -62,5 +62,6 @@
     "user_already_exist" => 'L\'utilisateur "%s" existe déjà',
     "username" => "Nom d'utilisateur",
     "password" => "Mot de passe",
-    "field_nc_pattern" => '"%s" doit comporter entre %d et %d caractères'
+    "field_nc_pattern" => '"%s" doit comporter entre %d et %d caractères',
+    "username_invalid" => "\"%s\" n'est pas un nom d'utilisateur valide, merci de vérifier les caractères spéciaux"
 );

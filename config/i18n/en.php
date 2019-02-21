@@ -28,7 +28,7 @@
     "fiNu" => "File identical to current, no upload needed.",
     "e_cad" => 'Error while creating archive directory.',
     "e_cufad" => 'Error while copying uploaded file to archive directory.',
-    "e_wdu" => 'Impossible de créer le répertoire "%s" pour l\'utilisateur spécifié.',
+    "e_wdu" => 'Cannot write directory "%s" for the specified user.',
     "e_unsu" => 'User "%s" is not set up properly or does not exist.',
     "e_nopass" => "No password provided, upload is impossible.",
     "e_pmm" => "Password missmatch, upload is impossible.",
@@ -62,5 +62,6 @@
     "user_already_exist" => 'The user "%s" already exist',
     "username" => "Usernane",
     "password" => "Password",
-    "field_nc_pattern" => '"%s" must have between %d and %d characters'
+    "field_nc_pattern" => '"%s" must have between %d and %d characters',
+    "username_invalid" => '"%s" is not a safe username, please check for special characters'
 );
