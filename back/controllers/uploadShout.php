@@ -15,7 +15,7 @@ function uploadShout($user_qs) {
 }
 
 function routerUploadShout($user_qs, $action) {
-    if($action != 'uploadShout') return;
+    if($action != 'uploadshout') return;
 
     $isAPICall = isset($_POST['headless']);
     if(!$isAPICall) return;

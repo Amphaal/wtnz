@@ -57,7 +57,7 @@ function routerUploadLib($user_qs, $action) {
     }
 
     //if not asking lib upload, skip for next router
-    if($action != 'uploadLib') return;
+    if($action != 'uploadlib') return;
     
     //check prerequisites
     if(!empty($_POST) && !empty($_FILES)) {
