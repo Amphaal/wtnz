@@ -1,7 +1,7 @@
 <?php
 
 function getQueryString() {
-    $request_uri = explode('/', $_SERVER['REQUEST_URI']);
+    $request_uri = explode('/', strtolower($_SERVER['REQUEST_URI']));
     $request_uri = array_filter($request_uri, 'strlen' );
     array_shift($request_uri);
     return $request_uri;

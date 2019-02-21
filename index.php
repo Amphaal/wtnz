@@ -13,8 +13,8 @@ function init_app() {
     session_start();
 
     // get URI elements
-    $qs = strtolower(getQueryString());
-    if($_POST['username']) $_POST['username'] = strtolower($_POST['username']);
+    $qs = getQueryString();
+    if(array_key_exists('username', $_POST)) $_POST['username'] = trim(strtolower($_POST['username']));
     
     //generate folders if non existing
     checkUserSpecificFolders(); 
