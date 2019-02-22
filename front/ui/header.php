@@ -11,6 +11,6 @@
             <?php include 'front/ui/searchBand.php' ?>
         </div>
     </div>
-    <!--<div style="width:100%; border-top: 1px solid rgba(0,0,0,.1);transition: .2s all; min-height:0"></div>-->
+    <?php include "front/ui/profile.php" ?>
     <div class='anim'></div>
 </header>

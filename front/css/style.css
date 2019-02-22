@@ -108,22 +108,29 @@ a, a:visited, a:hover, a:active {
 }
 
 
-input[type="checkbox"], input[type="radio"]{
+label input[type="checkbox"], input[type="radio"]{
     display: none;
 }
 
-input[type="checkbox"] + i, 
-input[type="radio"] + i,
-input[type="radio"] + i + span{
+label input[type="checkbox"] + i,
+label input[type="checkbox"] + img, 
+label input[type="radio"] + i,
+label input[type="radio"] + i + span{
     transition: all .3s ease;
     cursor: pointer;
 }
 
-input[type="checkbox"]:not(:checked) + i,
-input[type="radio"]:not(:checked) + i,
-input[type="radio"]:not(:checked) + i + span
+label:hover > * {
+    opacity: .8 !important;
+}
+
+label input[type="checkbox"]:not(:checked) + i,
+label input[type="checkbox"]:not(:checked) + img,
+label input[type="radio"]:not(:checked) + i,
+label input[type="radio"]:not(:checked) + i + span
  {
-    color : rgba(0, 0, 0, .5);
+    color : rgba(0, 0, 0, .8);
+    opacity: .6;
 }
 
 [data-cat]::before {
@@ -157,6 +164,13 @@ input[type="radio"]:not(:checked) + i + span
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.profilepic {
+    width:1rem; 
+    background-color:#f7f7f7; 
+    box-sizing:content-box; 
+    padding:.2rem; 
+    border-radius:25%;
+}
 
 .imgLoader.searchingCover::before {
     content : ". . .";

@@ -55,7 +55,7 @@
     "obtainApp" => "Récupérer le logiciel compagnon",
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
     "wtnz_descr" => "Ta Musique qui Claque",
-    "profile" => "Mon profil",
+    "my_profile" => "Mon profil",
     "curAlCo" => "Couverture de l'album selectionné",
     "crea_miss_p_u" => '"%s" manquant pour la création de compte',
     "err_nocreate_onlog" => "Impossible de créer un compte lorsque vous êtes déjà connecté à un autre compte",
@@ -63,5 +63,6 @@
     "username" => "Nom d'utilisateur",
     "password" => "Mot de passe",
     "field_nc_pattern" => '"%s" doit comporter entre %d et %d caractères',
-    "username_invalid" => "\"%s\" n'est pas un nom d'utilisateur valide, merci de vérifier les caractères spéciaux"
+    "username_invalid" => "\"%s\" n'est pas un nom d'utilisateur valide, merci de vérifier les caractères spéciaux",
+    "profile" => "profil"
 );

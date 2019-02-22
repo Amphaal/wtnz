@@ -55,7 +55,7 @@
     "obtainApp" => "Obtain the companion app",
     "e_noDownloadFound" => "Downloadable file cannot be found",
     "wtnz_descr" => "The freshest music from the finest people.",
-    "profile" => "My Profile",
+    "my_profile" => "My Profile",
     "curAlCo" => "Current Album Cover",
     "crea_miss_p_u" => 'Missing "%s" for account creation',
     "err_nocreate_onlog" => "Cannot create an account when already logged",
@@ -63,5 +63,6 @@
     "username" => "Usernane",
     "password" => "Password",
     "field_nc_pattern" => '"%s" must have between %d and %d characters',
-    "username_invalid" => '"%s" is not a safe username, please check for special characters'
+    "username_invalid" => '"%s" is not a safe username, please check for special characters',
+    "profile" => "profile"
 );

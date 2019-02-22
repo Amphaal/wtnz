@@ -105,17 +105,12 @@ function updateImgLoader(elem, imgUrl) {
 //scroll event handling//
 /////////////////////////
 
+// find direction based on last position
+// null = not moved
+// true = going down
+// false = going up
 var sueh_last_scroll_pos = 0;
-var sueh_ticking = false;
-function scrollUiEventHandling() {
-
-    //declare event listener
-    window.addEventListener('scroll', function(e) {
-        
-        // find direction based on last position
-        // null = not moved
-        // true = going down
-        // false = going up
+function findScrollingDirection() {
         let currentDirection = null;
         let newPos = window.scrollY;
         if(newPos != sueh_last_scroll_pos) 
@@ -123,9 +118,18 @@ function scrollUiEventHandling() {
             currentDirection = newPos > sueh_last_scroll_pos;
             sueh_last_scroll_pos = newPos;
         }
+        return currentDirection ? "down" : "up";
+}
+
+var sueh_ticking = false;
+function scrollUiEventHandling() {
+
+    //declare event listener
+    window.addEventListener('scroll', function(e) {
 
         //if no animation on run...
-        if (!sueh_ticking && mustHeaderUpdateAnimation(currentDirection)) {
+        let updateCl = mustHeaderUpdateAnimation(findScrollingDirection());
+        if (!sueh_ticking && updateCl !== false) {
             
             //lock
             sueh_ticking = true;
@@ -134,7 +138,7 @@ function scrollUiEventHandling() {
             window.requestAnimationFrame(function() {
 
                 //animate
-                switchHeaderAnimationState();
+                updateHeaderClasses(updateCl);
 
                 //release
                 sueh_ticking = false;
@@ -147,18 +151,39 @@ function scrollUiEventHandling() {
 function mustHeaderUpdateAnimation(directionToCompute) {
     if (directionToCompute == null) return false;
 
-    let isSRUsed = document.querySelectorAll("header .searchResults.show").length; //if is beeing used...
-    let headerDirectionState = document.getElementsByTagName("header")[0].classList.contains("toHide");
-    let directionMismatch = headerDirectionState != directionToCompute;
+    //prepare
+    let header = document.getElementsByTagName("header")[0];
+    let isHidden = header.classList.contains("toHide");
+    let isSticky = header.classList.contains("sticky");
+    let ooR = isHeaderOutOfReach();
+    let mustSticky = "";
+    let mustHide = "";
 
-    return (!isSRUsed && directionMismatch);
+    //if user is searching
+    let isSRUsed = document.querySelectorAll("header .searchResults.show").length; 
+    
+    //rules...
+    if (isSRUsed || directionToCompute == "up") {
+        mustSticky = "sticky";
+    } else if (directionToCompute == "down" && ooR) {
+        mustHide = "toHide";
+        if(isSticky) {
+            mustSticky = "sticky";
+        }
+    }
+
+    //compute and compare new and old classes
+    let newClasses = [mustSticky, mustHide].join(" ").trim();
+    return newClasses == header.getAttribute("class") ? false : newClasses;
 }
 
-function switchHeaderAnimationState() {
+function updateHeaderClasses(updateCl) {
+    document.getElementsByTagName("header")[0].setAttribute("class", updateCl);
+}
+
+function isHeaderOutOfReach() {
     let header = document.getElementsByTagName("header")[0];
-    if (header.classList.contains("toHide")) {
-        header.classList.remove("toHide");
-    } else {
-        header.classList.add("toHide");
-    }
+    let headerHeight = header.clientHeight;
+    let scrollHeight = window.scrollY;
+    return scrollHeight > headerHeight;
 }

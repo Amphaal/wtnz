@@ -1,8 +1,6 @@
 <footer>
     <div id='credits'>
-        <img src='front/img/amphaal.svg' alt="<?php echo i18n("devLinkedin")?>"/>
-        <span>&nbsp;&nbsp;</span>
-        <span>2018-2019</span>
+        <span>LVWL 2018-2019</span>
         <span>&nbsp;-&nbsp;</span>
         <span style="color:black">0.2 Alpha</span>
         <span>&nbsp;-&nbsp;</span>
