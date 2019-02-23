@@ -25,6 +25,7 @@
 #menu {
     flex-direction:row; 
     display:flex;
+    width: 100%;
 }
 
 #banner {

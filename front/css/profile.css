@@ -3,6 +3,7 @@
     flex-shrink: 0;
     transition: max-height .3s ease;
     box-shadow: 1px 0.5rem 0.5rem rgb(0,0,0,0.05);
+    width: 100%;
 }
 
 #profileContainer [data-cat]::before {

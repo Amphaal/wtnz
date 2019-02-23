@@ -34,6 +34,7 @@
     position : relative;
     flex-grow: 1;
     display: flex;
+    min-width: 12rem;
 }
 
 #searchBand .search[data-ef]::after {
