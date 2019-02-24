@@ -81,20 +81,23 @@ function getSearchBandDataFeed(lib){
     return function(filterCriteria) {
         if(!filterCriteria) return;
         
-        slug_fc = slugify(filterCriteria);
+        slugFc = slugify(filterCriteria);
     
         let source = albumsByArtistsList(lib);
         let slugs = slugifiedArtists(lib);
 
         let results = Object.keys(source).reduce(function(total, current) {
             
-            let sIndex = slugs[current].indexOf(slug_fc);
-            if(sIndex > -1)  {
-                let fCritLen = filterCriteria.length;
-                let sIndexEnd = fCritLen + sIndex;
+            let searchIndex = slugs[current].indexOf(slugFc);
+            
+            if(searchIndex > -1)  {
                 total[current] = {
                     Genres :  source[current]["Genres"],
-                    sIndexRange : [sIndex, sIndexEnd]
+                    sIndexRange : searchBand_foundRange(
+                        current,
+                        slugFc,
+                        searchIndex
+                    )
                 };
             }
     

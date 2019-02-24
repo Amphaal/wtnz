@@ -107,23 +107,44 @@ function calculateSecondsElapsed(dateFrom) {
 function getRootElementFontSize() {
     // Returns a number
     return parseFloat(
-      // of the computed font-size, so in px
-      getComputedStyle(
+        // of the computed font-size, so in px
+        getComputedStyle(
         // for the root <html> element
         document.documentElement
-      ).fontSize
+        ).fontSize
     );
-  }
+}
 
-function slugify(string) {
+function slugify(string, keepOriginalLength) {
+    
+    keepOriginalLength = keepOriginalLength ? "-" : '';
+
     const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;'
     const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------'
     const p = new RegExp(a.split('').join('|'), 'g')
     return string.toString().toLowerCase()
-      .replace(/\s+/g, '-') // Replace spaces with
-      .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-      .replace(/&/g, '-and-') // Replace & with ‘and’
-      .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-      .replace(/\-\-+/g, '-') // Replace multiple — with single -
-      .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
-  }
+        .replace(/\s+/g, '-') // Replace spaces with
+        .replace(p, function(c) { 
+            return b.charAt(a.indexOf(c));
+        }) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with ‘and’
+        .replace(/[^\w\-]+/g, keepOriginalLength) // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple — with single -
+        .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+}
+
+function searchBand_foundRange(displayedName, slugFc, searchIndex) {
+    let begin = searchIndex;
+    let slugCurrent = slugify(displayedName, true);
+    slugCurrent = slugCurrent.substring(searchIndex);
+    searchIndex = 0;
+    fcIndex = 0;
+    
+    for(searchIndex; fcIndex < slugFc.length; searchIndex++) {
+        if(slugCurrent[searchIndex] == slugFc[fcIndex]) {
+            fcIndex++;
+        }
+    }
+
+    return [begin, begin + searchIndex];
+}
