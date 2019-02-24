@@ -21,7 +21,7 @@ function updateFilter(event) {
     //if must reload something, scroll to this last something
     if (!newFilters["albumUI"]) {
         let target = document.querySelector('.filterUI.active:not(.hasSelection)');
-        wtnzScroll(target, -30); //add margin-top for ::before tag element
+        scrollTo(target, -30); //add margin-top for ::before tag element
     }
 }
 
@@ -193,7 +193,7 @@ function alterFilterUI(id, filterCriteria) {
 //animation scroll
 function transitionToAlbumInfos(aiElem) {
     //scroll to albumInfos...
-    wtnzScroll(aiElem, -10);
+    scrollTo(aiElem, -10);
 }
 
 ///
@@ -245,6 +245,6 @@ function applyManualSizesFilterUIs(id) {
 
         list.style.position = null; //unforce
 
-        document.body.appendChild(styleCarrier);
+        document.head.appendChild(styleCarrier);
     }
 }

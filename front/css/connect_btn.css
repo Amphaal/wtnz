@@ -1,0 +1,41 @@
+@media (orientation : portrait) {
+
+    #menu > .connect-side {
+        display: none !important;
+    }
+
+    #banner-side > .connect-side {
+        display: inherit !important;
+    }
+}
+
+@media (orientation : landscape) {
+
+    #menu > .connect-side {
+        display: inherit !important;
+    }
+
+    #banner-side > .connect-side {
+        display: none !important;
+    }
+}
+
+.connect-side {
+    color : white;
+    background-color: rgba(255,255,255,.3);
+    padding: .25rem;
+}
+
+.connect-side i {
+    font-size: 1.2rem;
+}
+
+#menu > .connect-side {
+    margin-right: .75rem;
+}
+
+.connect-side:hover {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: rubberBand;
+}

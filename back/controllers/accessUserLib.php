@@ -36,6 +36,6 @@
         $root = "https://zonme.to2x.ovh/wtnz/";
         $sio_url = "wss://zonme.to2x.ovh:3000";
 
-        include __DIR__ . "/../../front/home.php";
+        include __DIR__ . "/../../front/front.php";
         exit;
     }

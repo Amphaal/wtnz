@@ -41,7 +41,7 @@ function removeLoader() {
 //show content
 function showApp() {
     return new Promise(function(resolve) {
-        let content = document.getElementById("wtnz");
+        let content = document.getElementById("wtnz-library");
         content.classList.add("animated");
         content.classList.add("fadeIn");
 

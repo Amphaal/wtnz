@@ -55,7 +55,7 @@
     "obtainApp" => "Obtain the companion app",
     "e_noDownloadFound" => "Downloadable file cannot be found",
     "wtnz_descr" => "The freshest music from the finest people.",
-    "my_profile" => "My Profile",
+    "users_profile" => "%s | Profile",
     "curAlCo" => "Current Album Cover",
     "crea_miss_p_u" => 'Missing "%s" for account creation',
     "err_nocreate_onlog" => "Cannot create an account when already logged",

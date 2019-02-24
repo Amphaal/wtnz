@@ -80,7 +80,7 @@ a, a:visited, a:hover, a:active {
     text-decoration: none;
 }
 
-#wtnz {
+#wtnz-library {
     width: 100%;
     opacity: 0;
     display: flex;
@@ -108,26 +108,26 @@ a, a:visited, a:hover, a:active {
 }
 
 
-label input[type="checkbox"], input[type="radio"]{
+label.clickable input[type="checkbox"], input[type="radio"]{
     display: none;
 }
 
-label input[type="checkbox"] + i,
-label input[type="checkbox"] + img, 
-label input[type="radio"] + i,
-label input[type="radio"] + i + span{
+label.clickable input[type="checkbox"] + i,
+label.clickable input[type="checkbox"] + img, 
+label.clickable input[type="radio"] + i,
+label.clickable input[type="radio"] + i + span{
     transition: all .3s ease;
     cursor: pointer;
 }
 
-label:hover > * {
+label.clickable:hover > * {
     opacity: .8 !important;
 }
 
-label input[type="checkbox"]:not(:checked) + i,
-label input[type="checkbox"]:not(:checked) + img,
-label input[type="radio"]:not(:checked) + i,
-label input[type="radio"]:not(:checked) + i + span
+label.clickable input[type="checkbox"]:not(:checked) + i,
+label.clickable input[type="checkbox"]:not(:checked) + img,
+label.clickable input[type="radio"]:not(:checked) + i,
+label.clickable input[type="radio"]:not(:checked) + i + span
  {
     color : rgba(0, 0, 0, .8);
     opacity: .6;
@@ -139,7 +139,7 @@ label input[type="radio"]:not(:checked) + i + span
     font-size : 1.5em;
     white-space : nowrap;
     position : relative;
-    margin: 0 1rem .5rem 1rem;
+    margin: 0 1rem .5rem 1.3rem;
     width: 7.5rem;
     text-align: right;
 }
