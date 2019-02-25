@@ -5,7 +5,7 @@ function toggleFeed(event) {
         let feedContainer = document.getElementById('feedContainer');
         feedContainer.addEventListener(whichTransitionEndEvent(), function ecee(e) {
             feedContainer.removeEventListener(whichTransitionEndEvent(), ecee, false);
-            scrollTo(feedContainer);
+            hNavigate(feedContainer);
         }, false);
     }
 }

@@ -36,8 +36,8 @@ function hideLoader() {
 //remove loader from layout
 function removeLoader() {
     return new Promise(function(resolve){
-        //let target = document.getElementById("loader-container");
-        //target.parentElement.removeChild(target);
+        let target = document.getElementById("loader-container");
+        target.parentElement.removeChild(target);
     });
 }
 

@@ -8,7 +8,7 @@ function applyCompareDateBulk() {
 }
 
 //scrolls to element, taking in account the sticky header
-function scrollTo(elem, correct) {
+function hNavigate(elem, correct) {
     if(!elem) return;
     //let sticky = document.querySelector('header');
     let relativeDocumentOffset = elem.getBoundingClientRect().top + window.scrollY;
@@ -189,8 +189,30 @@ function isHeaderOutOfReach() {
 }
 
 function vNavigate() {
-    let initial = "translateX(0px)";
+    let initial = "";
     let newPos = "translateX(-100%)";
     let target = document.getElementsByTagName('main')[0];
-    target.style.transform = target.style.transform == initial ? newPos : initial;
+    let indexFocused = null;
+
+    if(target.style.transform == initial) {
+        target.style.transform = newPos;
+        indexFocused = 1;
+        document.body.classList.add("lock");
+    } else {
+        target.style.transform = initial;
+        indexFocused = 0;
+        document.body.classList.remove("lock");
+        window.scrollTo({
+            top : 0
+        });
+    }
+
+    //move focus flag
+    for(let i = 0; i < target.childElementCount; i++) {
+        if(i == indexFocused) {
+            target.children[i].classList.add('focused');
+        } else {
+            target.children[i].classList.remove('focused');
+        }
+    }
 }

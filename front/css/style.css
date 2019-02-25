@@ -4,51 +4,6 @@
     font-display: swap;
 }
 
-@keyframes Gradient {
-	0% {
-		transform: translateX(25%) translateY(25%);
-	}
-	50% {
-        transform: translateX(-25%) translateY(-25%);
-	}
-	100% {
-        transform: translateX(25%) translateY(25%);
-	}
-}
-
-.wAnim {
-    position: absolute;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: -50;
-    margin : 0 !important;
-}
-
-/*pause animations to prevent useless CPU consumption*/
-main > *:not(.focused) .wAnim,
-main > *:not(.focused) .animTimeline {
-    animation-play-state: paused;
-}
-
-.wAnim::after {
-    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-    background-repeat: repeat;
-    animation: Gradient 60s ease-in infinite;
-    animation-fill-mode: both;
-    position: absolute;
-    content: "";
-    width: 400%;
-    height: 400%;
-    z-index: -1;
-    transform: translate3d(0, 0, 0);
-    animation-play-state: running;
-}
 
 input {
     font-size: 0.55rem;
@@ -77,13 +32,9 @@ body {
     overflow-x: hidden;
 }
 
-main {
-    min-width : 100%;
-    position: relative;
-    transition: all .5s linear;
-    display:flex; 
+body.lock {
+    overflow-y:hidden;
 }
-
 
 span, div {
     user-select : none;
@@ -95,23 +46,31 @@ a, a:visited, a:hover, a:active {
     text-decoration: none;
 }
 
-#wtnz-library {
+
+main {
+    min-width : 100%;
+    position: relative;
+    transition: all .25s ease-in;
+    display:flex; 
+    transform:translateX(0px);
+}
+
+main > * {
     width: 100%;
-    opacity: 0;
     display: flex;
     flex-direction: column;
     min-height: 0;
     flex-shrink: 0;
 }
 
+
+#wtnz-library {
+    opacity: 0;
+}
+
 #wtnz-connect {
-    width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     background-color: red;
-    min-height: 0;
-    flex-shrink: 0;
 }
 
 #mainFrame {
