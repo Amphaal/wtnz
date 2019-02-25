@@ -15,5 +15,5 @@
         </div>
     </div>
     <?php include "front/ui/library/parts/profile.php" ?>
-    <div class='anim'></div>
+    <div class='wAnim'></div>
 </header>

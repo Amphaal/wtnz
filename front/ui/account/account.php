@@ -1,2 +1,1 @@
-<div>
-<div>
+<div id='wtnz-connect'></div>

@@ -15,7 +15,10 @@
     </head>
     <body>
         <?php include "front/ui/_components/loader.php" ?>
-        <?php include "front/ui/library/library.php" ?>
-        <?php include "front/ui/account/account.php" ?>
+        <?php include "front/ui/library/parts/shoutWidget.php" ?>
+        <main style="transform:translateX(0px)">
+            <?php include "front/ui/library/library.php" ?>
+            <?php include "front/ui/account/account.php" ?>
+        </main>
     </body>
 </html>

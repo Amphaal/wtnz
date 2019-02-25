@@ -16,7 +16,7 @@
 	}
 }
 
-.anim {
+.wAnim {
     position: absolute;
     overflow: hidden;
     display: flex;
@@ -30,7 +30,13 @@
     margin : 0 !important;
 }
 
-.anim::after {
+/*pause animations to prevent useless CPU consumption*/
+main > *:not(.focused) .wAnim,
+main > *:not(.focused) .animTimeline {
+    animation-play-state: paused;
+}
+
+.wAnim::after {
     background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
     background-repeat: repeat;
     animation: Gradient 60s ease-in infinite;
@@ -66,9 +72,18 @@ html {
 
 body {
     margin:0;
-    display:flex; 
-    width : 100%;
+    min-width : 100%;
+    display: flex;
+    overflow-x: hidden;
 }
+
+main {
+    min-width : 100%;
+    position: relative;
+    transition: all .5s linear;
+    display:flex; 
+}
+
 
 span, div {
     user-select : none;
@@ -85,6 +100,18 @@ a, a:visited, a:hover, a:active {
     opacity: 0;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    flex-shrink: 0;
+}
+
+#wtnz-connect {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    min-height: 0;
+    flex-shrink: 0;
 }
 
 #mainFrame {

@@ -19,5 +19,5 @@
             </a>
         </div>
     </div>
-    <div class='anim'></div>
+    <div class='wAnim'></div>
 </div>

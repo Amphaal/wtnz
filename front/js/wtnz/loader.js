@@ -5,12 +5,9 @@
 function displayApp() {
     return new Promise(function(resolve){
         //end loading, start animations...
-        hideLoader().then(function() {
-            showApp().then(function() {
-                removeLoader();
-                resolve();
-            });
-        });
+        hideLoader().then(showApp)
+                    .then(removeLoader)
+                    .then(resolve);
     });
 }
 
@@ -21,9 +18,13 @@ function displayApp() {
 //hide loader bar
 function hideLoader() {
     return new Promise(function(resolve, reject) {
+        //fade-in
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeIn");
         loader.classList.add("fadeOut");
+
+        //permit underlying interactions
+        document.getElementById("loader-container").style.pointerEvents = "none";
 
         return loader.addEventListener(whichAnimationEvent(), function lele(e) {
             loader.removeEventListener(whichAnimationEvent(), lele, false);
@@ -34,8 +35,10 @@ function hideLoader() {
 
 //remove loader from layout
 function removeLoader() {
-    let target = document.getElementById("loader-container");
-    target.parentElement.removeChild(target);
+    return new Promise(function(resolve){
+        //let target = document.getElementById("loader-container");
+        //target.parentElement.removeChild(target);
+    });
 }
 
 //show content

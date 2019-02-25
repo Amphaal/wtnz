@@ -2,11 +2,17 @@
 /// STARTUP
 ///
 document.addEventListener("DOMContentLoaded", function() {
+
+    if (history && history['scrollRestoration'] !== undefined) {
+        history.scrollRestoration = 'manual';
+    }
+
     bindResizeFunctions();
     scrollUiEventHandling();
     instShoutMuteButton();
     requestUserLib();
 });
+
 
 //resize functions
 function bindResizeFunctions() {

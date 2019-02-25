@@ -2,9 +2,6 @@
     <div id='shoutNotification'>
         <?php echo i18n("nowPlaying")?>
     </div>
-    <div id='shoutNotificationOut'>
-        <i class="fas fa-forward"></i>
-    </div>
     <div class='shout'>
         <a title='<?php echo i18n("playOnYT")?>' rel="noopener">
             <div class='imgLoader cover'>

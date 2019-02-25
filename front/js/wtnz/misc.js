@@ -187,3 +187,10 @@ function isHeaderOutOfReach() {
     let scrollHeight = window.scrollY;
     return scrollHeight > headerHeight;
 }
+
+function vNavigate() {
+    let initial = "translateX(0px)";
+    let newPos = "translateX(-100%)";
+    let target = document.getElementsByTagName('main')[0];
+    target.style.transform = target.style.transform == initial ? newPos : initial;
+}
