@@ -11,8 +11,16 @@ document.addEventListener("DOMContentLoaded", function() {
     scrollUiEventHandling();
     instShoutMuteButton();
     requestUserLib();
+    registerSwipeEvents();
 });
 
+function registerSwipeEvents() {
+    var hammertime = new Hammer(document.body);
+    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+    hammertime.on('swipe', function(ev) {
+        vNavigate(ev.direction);
+    });
+}
 
 //resize functions
 function bindResizeFunctions() {

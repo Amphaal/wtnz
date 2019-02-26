@@ -188,28 +188,37 @@ function isHeaderOutOfReach() {
     return scrollHeight > headerHeight;
 }
 
-function vNavigate() {
-    let initial = "";
-    let newPos = "translateX(-100%)";
+function vNavigate(direction) {
     let target = document.getElementsByTagName('main')[0];
-    let indexFocused = null;
+    let maxChildren = target.childElementCount;
+    let maxIndex = maxChildren - 1;
+    let actualIndex = target.getAttribute("data-index") || 0;
+    let targetIndex = null;
 
-    if(target.style.transform == initial) {
-        target.style.transform = newPos;
-        indexFocused = 1;
-        document.body.classList.add("lock");
-    } else {
-        target.style.transform = initial;
-        indexFocused = 0;
-        document.body.classList.remove("lock");
-        window.scrollTo({
-            top : 0
-        });
+    //direction to go
+    if(direction == null) { //automatic switch
+        targetIndex = Number(actualIndex) ? 0 : 1;
+    } else if (direction == 2){
+        targetIndex = actualIndex + 1;
+    } else if (direction == 4) {
+        targetIndex = actualIndex - 1;
     }
 
-    //move focus flag
-    for(let i = 0; i < target.childElementCount; i++) {
-        if(i == indexFocused) {
+    //so dont move
+    if(targetIndex == actualIndex || targetIndex == null) return;
+    if(targetIndex > maxIndex || targetIndex < 0) return;
+
+    //specific to target
+    if(targetIndex == 0) window.scrollTo({top : 0}); //scroll back to top
+    if(targetIndex == 1) { document.body.classList.add("lock"); } else { document.body.classList.remove("lock"); } //remove Vscroll on connect
+    
+    //move...
+    target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
+    target.setAttribute("data-index", targetIndex);
+
+    //reset focus flag
+    for(let i = 0; i < maxChildren; i++) {
+        if(i == targetIndex) {
             target.children[i].classList.add('focused');
         } else {
             target.children[i].classList.remove('focused');
