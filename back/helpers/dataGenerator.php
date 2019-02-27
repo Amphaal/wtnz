@@ -1,11 +1,14 @@
 <?php 
 
+include_once "back/helpers/Slugifier.php";
+
 class DataGenerator {
 
     public function __construct($username, &$lib = null) {  
 
         $this->_username = $username;
         $this->_iTargetPath = getInternalUserFolder($username) . "/";
+
 
         if($lib != null) {
             $this->_lib = $lib;
@@ -15,34 +18,48 @@ class DataGenerator {
         }
     }
 
-    public function generateFiles() {
+    public function generateFiles($prettyPrint = false) {
         foreach(self::$_outputTargets as $target) {
             $data = $this->$target($this->_lib);
-            $this->_saveData($target, $data);
+            $this->_saveData($target, $data, $prettyPrint);
         }
     }
 
-    ///// private
+    
+    //CACHING !
+    public function __call($method, $arguments) {
 
+        //caching...
+        if(!array_key_exists($method, $this->_cache)) {
+            $method = "_" . $method;
+            $this->_cache[$method] = $this->$method();
+        }
+
+        return $this->_cache[$method];
+    }
+
+    ///// private
     private $_iTargetPath;
     private $_lib;
     private $_username;
+    private $_cache = array();
 
     private static $_outputTargets = array(
-        "_albgl", "_albgc",
-        "_arbgl", "_arbgc",
-        "_glul",
-        "_abal",
+        //"albgc",
+        //"arbgl", "arbgc",
+        //"glul",
+        //"abal",
+        "slug"
     );
 
-    private function _saveData($target, &$data) {
-        $data = json_encode($data, JSON_PRETTY_PRINT);
+    private function _saveData($target, &$data, $pp) {
+        $data = json_encode($data, $pp ? JSON_PRETTY_PRINT : null);
         file_put_contents($this->_iTargetPath . $target . ".json", $data);
     }
 
-    /////////////
-    // helpers //
-    /////////////
+    //////////////////////
+    // databits helpers //
+    //////////////////////
 
     private function _getMixedTrackNoFactory(&$currentVal) {
         return $currentVal['Disc Number'] . '.' . $currentVal['Track Number'];
@@ -78,6 +95,10 @@ class DataGenerator {
         return ucwords($currentVal["Genre"]);
     }
 
+    ////////////////////////////
+    // dataprocessing helpers //
+    ////////////////////////////
+
     private function _GenreStats(&$lib, $idFactory = null) {
         $data = array_reduce($lib, function($total, $currentVal) use ($idFactory) {
             $genre = $this->_getGenreFactory($currentVal);
@@ -94,6 +115,7 @@ class DataGenerator {
         }, array());
 
         $data = array_map("array_unique", $data);
+        $data = array_map("array_values", $data);
 
         return $data;
     } 
@@ -111,14 +133,14 @@ class DataGenerator {
     /*albumsByGenreCount*/
     private function _albgc() {
         return $this->_StatsCount(
-            $this->_albgl()
+            $this->albgl()
         );
     } 
 
     /*artistsByGenreCount*/
     private function _arbgc() {
         return $this->_StatsCount(
-            $this->_arbgl()
+            $this->arbgl()
         );
     } 
 
@@ -175,10 +197,12 @@ class DataGenerator {
 
         }, array());
         
-        //TODO uniques GENRES! 
+        //uniques GENRES! 
         foreach($data as $key => $value)
         {
-            $data[$key]['Genres'] = array_unique($data[$key]['Genres']);
+            $data[$key]['Genres'] = array_values(
+                array_unique($data[$key]['Genres'])
+            );
         }
 
         return $data;
@@ -210,4 +234,13 @@ class DataGenerator {
         }, array());
     }
 
+    private function _slug() {
+        $slgfr = new Slugifier;
+        $data = $this->abal();
+        $total = array();
+        foreach($data as $key => $value) {
+            $total[$key] = $slgfr($key);
+        }
+        return $total;
+    }
 }

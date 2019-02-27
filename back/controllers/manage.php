@@ -1,6 +1,6 @@
 <?php 
 
-include_once "dataGenerate.php";
+include_once "back/helpers/dataGenerator.php";
 
 function routerManage($action) {
     switch($action) {
@@ -57,5 +57,5 @@ function login() {
 
 function compute() {
     $dg = new DataGenerator("amphaal");
-    $dg->generateFiles();
+    $dg->generateFiles(true);
 }

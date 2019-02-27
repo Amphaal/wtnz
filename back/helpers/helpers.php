@@ -182,10 +182,6 @@ function getCurrentShoutFileName() {
     return 'shout.json';
 }
 
-function slugify() {
-    
-}
-
 function getFileUploadLimit(){
     $max_upload = (int)(ini_get('upload_max_filesize'));
     $max_post = (int)(ini_get('post_max_size'));

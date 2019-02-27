@@ -119,9 +119,9 @@ function slugify(string, keepOriginalLength) {
     
     keepOriginalLength = keepOriginalLength ? "-" : '';
 
-    const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;'
-    const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------'
-    const p = new RegExp(a.split('').join('|'), 'g')
+    const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;';
+    const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------';
+    const p = new RegExp(a.split('').join('|'), 'g');
     return string.toString().toLowerCase()
         .replace(/\s+/g, '-') // Replace spaces with
         .replace(p, function(c) { 
@@ -130,7 +130,7 @@ function slugify(string, keepOriginalLength) {
         .replace(/&/g, '-and-') // Replace & with ‘and’
         .replace(/[^\w\-]+/g, keepOriginalLength) // Remove all non-word characters
         .replace(/\-\-+/g, '-') // Replace multiple — with single -
-        .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+        .replace(/^-+/, ''); // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
 }
 
 function searchBand_foundRange(displayedName, slugFc, searchIndex) {
