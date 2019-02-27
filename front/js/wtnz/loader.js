@@ -4,6 +4,10 @@
 
 function displayApp() {
     return new Promise(function(resolve){
+        
+        //force loader bar to max
+        _updateLoaderBar(100);
+
         //end loading, start animations...
         hideLoader().then(showApp)
                     .then(removeLoader)
@@ -53,7 +57,12 @@ function showApp() {
 function updateProgress(evt){
     var total = evt.srcElement.getResponseHeader("x-original-content-length") || evt.total; //bypass chrome compression proxy
     if (total) {
-        let percentComplete = (evt.loaded / total) * 100 - 100;  
-        document.getElementById("loader-bar").style.transform = "translateX(" + percentComplete + "%)";
+        let percentComplete = (evt.loaded / total) * 100;  
+        _updateLoaderBar(percentComplete);
     } 
+}
+
+function _updateLoaderBar(newPercent) {
+    newPercent = newPercent - 100;
+    document.getElementById("loader-bar").style.transform = "translateX(" + newPercent + "%)";
 }

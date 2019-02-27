@@ -37,6 +37,18 @@
     width: fit-content;
 }
 
+.filterUI .list span[data-count]::after {
+    content: " " attr(data-count);
+    font-size: .6rem;
+    color: grey;
+    vertical-align: middle;
+}
+
+#albumUI.filterUI .list span[data-count]::after {
+    content: " - " attr(data-count);
+    font-size: .8rem;
+}
+
 .filterUI .list > * {
     color : rgba(29, 29, 29, 1);
     position: relative;

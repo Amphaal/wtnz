@@ -98,10 +98,9 @@ label.clickable input[type="checkbox"], input[type="radio"]{
     display: none;
 }
 
-label.clickable input[type="checkbox"] + i,
-label.clickable input[type="checkbox"] + img, 
-label.clickable input[type="radio"] + i,
-label.clickable input[type="radio"] + i + span{
+label.clickable i,
+label.clickable img, 
+label.clickable i + span{
     transition: all .3s ease;
     cursor: pointer;
 }

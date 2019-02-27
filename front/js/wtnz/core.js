@@ -66,7 +66,7 @@ function processUnifiedLib(unifiedAsJSONText) {
     
     //generate feed
     generateFreshUploads(); 
-
+    
     //finally, display the app to the user
     displayApp().then(function(){
         requestShout();
