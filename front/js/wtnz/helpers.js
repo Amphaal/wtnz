@@ -8,27 +8,6 @@ function titleCase(str) {
     }
     // Directly return the joined string
     return splitStr.join(' '); 
- }
-
- //desc sorting of obj
-function descSortObj(objToSort) {
-    
-    //prepare
-    let keys = Object.keys(objToSort);
-
-    //array count for sorting
-    let toArrayForm = keys.reduce(function(total, currentVal) {
-        total.push({
-            name : currentVal,
-            value : objToSort[currentVal].size || objToSort[currentVal]
-        })
-        return total;
-    }, []);
-
-    //descending sort
-    return toArrayForm.sort(function (a, b) {
-        return b.value - a.value;
-    });
 }
 
 //detect transition handler

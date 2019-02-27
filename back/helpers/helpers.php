@@ -178,6 +178,10 @@ function getCurrentLibraryFileName() {
     return 'current.json';
 }
 
+function getUnifiedLibraryFileName() {
+    return 'unified.json';
+}
+
 function getCurrentShoutFileName() {
     return 'shout.json';
 }

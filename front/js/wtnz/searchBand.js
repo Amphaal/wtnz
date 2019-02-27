@@ -100,20 +100,27 @@ function renderSearchResults(criteria, data) {
 
             //range display 
             let range = data[current].sIndexRange;
-            let b = current.substring(0, range[0]);
-            let c = current.substring(range[0], range[1]);
-            let a = current.substring(range[1], current.length); 
-
-            //bind to spans
-            let spanElems = [b,c,a].map(function(curr) {
+            if(range) {
+                let b = current.substring(0, range[0]);
+                let c = current.substring(range[0], range[1]);
+                let a = current.substring(range[1], current.length); 
+    
+                //bind to spans
+                let spanElems = [b,c,a].map(function(curr) {
+                    let elem = document.createElement('span');
+                    elem.innerHTML = curr;
+                    return elem;
+                });
+                spanElems[1].classList.add('f');
+                spanElems.forEach(function(e) {
+                    resultDiv.appendChild(e);
+                });
+            } else {
                 let elem = document.createElement('span');
-                elem.innerHTML = curr;
-                return elem;
-            });
-            spanElems[1].classList.add('f');
-            spanElems.forEach(function(e) {
-                resultDiv.appendChild(e);
-            });
+                elem.innerHTML = current;
+                resultDiv.appendChild(elem);
+            }
+
             
             //add genres
             var genresElem = document.createElement('span');

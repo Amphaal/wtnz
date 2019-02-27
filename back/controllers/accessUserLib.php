@@ -23,11 +23,13 @@
     function routerAccessUserLib($user_qs) {
 
         $expectedLibrary = getPublicUserFolder($user_qs) . getCurrentLibraryFileName();
+        $expectedUnified = getPublicUserFolder($user_qs) . getUnifiedLibraryFileName();
         $expectedShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
         $expectedProfilePic = getProfilePicture($user_qs);
         
 
         //Client variables
+        $clientURLUnified = dirname($_SERVER['REQUEST_URI']) . substr($expectedUnified, 1);
         $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
         $clientURLShout = dirname($_SERVER['REQUEST_URI']) . substr($expectedShout, 1);
         $latestUpdate = filemtime($expectedLibrary);

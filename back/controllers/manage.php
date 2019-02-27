@@ -1,6 +1,6 @@
 <?php 
 
-include_once "back/helpers/dataGenerator.php";
+include_once "back/helpers/DataGenerator.php";
 
 function routerManage($action) {
     switch($action) {
@@ -9,9 +9,6 @@ function routerManage($action) {
             break;
         case "disconnect":
             return disconnect();
-            break;
-        case "compute":
-            return compute();
             break;
         case "connect";
         default;
@@ -53,9 +50,4 @@ function login() {
 
     include "back/ui/login.php";
 
-}
-
-function compute() {
-    $dg = new DataGenerator("amphaal");
-    $dg->generateFiles(true);
 }

@@ -22,6 +22,10 @@ function processUploadedLib($user_qs, $expectedFilename) {
     //move the uploaded file to user's directory
     uploadFile($pathTo, $expectedFilename);
 
+    //generate data from upload
+    $dg = new DataGenerator($user_qs);
+    $dg->generateUnifiedFile();
+
     //specific redirect for headless client
     if(isset($_POST['headless'])) exit('Bon appétit!');
     

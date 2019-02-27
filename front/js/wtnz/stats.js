@@ -15,10 +15,11 @@ function renderStats() {
 function renderHCPie(data, divId) {
 
     //format to highcharts specifics
-    data = data.map(function(val) {
-      val["y"] = val["value"];
-      delete val.value;
-      return val;
+    data = Object.keys(data).map(function(genreName) {
+      return {
+          "name" : genreName,
+          "y" : data[genreName]
+      };
     });
 
     var name = document.getElementById(divId).getAttribute('data-def');

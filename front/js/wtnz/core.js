@@ -3,16 +3,22 @@
 ///
 document.addEventListener("DOMContentLoaded", function() {
 
-    if (history && history['scrollRestoration'] !== undefined) {
-        history.scrollRestoration = 'manual';
-    }
-
+    //instantiation
+    navigatorSpecificParameterization();
     bindResizeFunctions();
     scrollUiEventHandling();
     instShoutMuteButton();
-    requestUserLib();
     registerSwipeEvents();
+
+    //download user file
+    requestUserUnifiedLib();
 });
+
+function navigatorSpecificParameterization() {
+    if (history && history['scrollRestoration'] !== undefined) {
+        history.scrollRestoration = 'manual';
+    }
+}
 
 function registerSwipeEvents() {
     var hammertime = new Hammer(document.body);
@@ -32,24 +38,24 @@ function bindResizeFunctions() {
 }
 
 //download library
-function requestUserLib() {
+function requestUserUnifiedLib() {
     let request = new XMLHttpRequest(); 
     request.onprogress = updateProgress;
     request.onloadend = function(e) {
-        return processLib(e.currentTarget.responseText);
+        return processUnifiedLib(e.currentTarget.responseText);
     };
-    request.open('GET', clientURLLibrary, true);
+    request.open('GET', clientURLUnified, true);
     request.send(null);
 }
 
 //process...
-function processLib(libAsJSONText) {
+function processUnifiedLib(unifiedAsJSONText) {
     
-    lib = JSON.parse(libAsJSONText); //parse
-    dataFeeds = generateDataFeeds(lib); //bind lib to data functions
+    unified = JSON.parse(unifiedAsJSONText); //parse
+    dataFeeds = generateDataFeeds(unified); //bind lib to data functions
     
     //stats rendering
-    renderStats(lib); 
+    renderStats(unified); 
 
     //prepare UI
     prepareFilterUIs(Object.keys(filter));

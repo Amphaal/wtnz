@@ -19,10 +19,19 @@ class DataGenerator {
     }
 
     public function generateFiles($prettyPrint = false) {
+        $this->_generateData();
         foreach(self::$_outputTargets as $target) {
-            $data = $this->$target($this->_lib);
-            $this->_saveData($target, $data, $prettyPrint);
+            $this->_saveData($target, $this->_cache[$target], $prettyPrint);
         }
+    }
+
+    public function generateUnifiedFile($prettyPrint = false) {
+        $this->_generateData();
+        $package = array();
+        foreach(self::$_outputTargets as $target) {
+            $package[$target] = $this->_cache["_".$target];
+        }
+        $this->_saveData("unified", $package, $prettyPrint);
     }
 
     
@@ -45,12 +54,18 @@ class DataGenerator {
     private $_cache = array();
 
     private static $_outputTargets = array(
-        //"albgc",
-        //"arbgl", "arbgc",
-        //"glul",
-        //"abal",
+        "albgl", "albgc",
+        "arbgl", "arbgc",
+        "glul",
+        "abal",
         "slug"
     );
+
+    private function _generateData() {
+        foreach(self::$_outputTargets as $target) {
+            $this->$target($this->_lib);
+        }
+    }
 
     private function _saveData($target, &$data, $pp) {
         $data = json_encode($data, $pp ? JSON_PRETTY_PRINT : null);
