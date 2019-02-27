@@ -89,10 +89,7 @@ function notificateShout() {
         //animation
         if(notif.classList.contains('fade')) {
             notif.classList.remove('fade');
-            notif.addEventListener(whichTransitionEndEvent(), function lelel(e) {
-                notif.removeEventListener(whichTransitionEndEvent(), lelel, false);
-                fd();           
-            }, false);
+            waitTransitionEnd(notif).then(fd);
         } else {
             fd();
         }
@@ -242,10 +239,7 @@ function resizeShout() {
             let resolving = function() {resolve(heightSwitch);}
 
             if (animOpen) {
-                shoutContainer.addEventListener(whichTransitionEndEvent(), function ww(e) {
-                    shoutContainer.removeEventListener(whichTransitionEndEvent(), ww, false);
-                    resolving();        
-                }, false);
+                waitTransitionEnd(shoutContainer).then(resolving);
             } else {
                 resolving();
             }

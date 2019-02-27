@@ -1,12 +1,6 @@
 function toggleProfile(event) {
     //resize the profile
-    if(resizeProfile(event.currentTarget)()) {
-        //if expended, wait for the animation to end to scroll
-        let profileContainer = document.getElementById('profileContainer');
-        profileContainer.addEventListener(whichTransitionEndEvent(), function addada(e) {
-            profileContainer.removeEventListener(whichTransitionEndEvent(), addada, false);
-        }, false);
-    }
+    resizeProfile(event.currentTarget)()
 }
 
 ///

@@ -73,9 +73,6 @@ function renderHCPie(data, divId) {
       //if expended
       if(heightSwitch) {
             //wait for the transition to end to scroll
-            statsContainer.addEventListener(whichTransitionEndEvent(), function eee(e) {
-                statsContainer.removeEventListener(whichTransitionEndEvent(), eee, false);
-                hNavigate(statsContainer);
-            }, false);
+            waitTransitionEnd(statsContainer).then(hNavigate);
         }
   }

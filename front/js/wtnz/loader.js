@@ -26,10 +26,7 @@ function hideLoader() {
         //permit underlying interactions
         document.getElementById("loader-container").style.pointerEvents = "none";
 
-        return loader.addEventListener(whichAnimationEvent(), function lele(e) {
-            loader.removeEventListener(whichAnimationEvent(), lele, false);
-            resolve();
-        }, false);
+        return waitAnimationEnd(loader).then(resolve);
     });
 }
 
@@ -48,10 +45,7 @@ function showApp() {
         content.classList.add("animated");
         content.classList.add("fadeIn");
 
-        return content.addEventListener(whichAnimationEvent(), function lele2(e) {
-            content.removeEventListener(whichAnimationEvent(), lele2, false);
-            resolve();
-        }, false);
+        return waitAnimationEnd(content).then(resolve);
     });
 }
 

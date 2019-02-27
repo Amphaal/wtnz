@@ -11,7 +11,7 @@ function titleCase(str) {
 }
 
 //detect transition handler
-function whichTransitionEndEvent() {
+function _whichTransitionEndEvent() {
 	var el = document.createElement('fakeelement');
 	var transitions = {
 		'transition': 'transitionend',
@@ -27,24 +27,7 @@ function whichTransitionEndEvent() {
 	}
 }
 
-function whichTransitionStartEvent() {
-	var el = document.createElement('fakeelement');
-	var transitions = {
-		'transition': 'transitionstart',
-		'OTransition': 'oTransitionStart',
-		'MozTransition': 'transitionstart',
-		'WebkitTransition': 'webkitTransitionStart'
-	}
-
-	for (var t in transitions) {
-		if (el.style[t] !== undefined) {
-			return transitions[t];
-		}
-	}
-}
-
-
-function whichAnimationEvent() {
+function _whichAnimationEndEvent() {
     var t,
         el = document.createElement("fakeelement");
     var animations = {
@@ -59,6 +42,27 @@ function whichAnimationEvent() {
         }
     }
 }
+
+function _waitEventEnd(waiter, eventTypeToListen) {
+    let useCapture = false;
+
+    return new Promise(function(resolve) {
+        let ff = function(e) {
+            waiter.removeEventListener(eventTypeToListen, ff, useCapture);
+            resolve(waiter);
+        }
+        waiter.addEventListener(eventTypeToListen, ff, useCapture);
+    });
+}
+
+function waitAnimationEnd(waiter) {
+    return _waitEventEnd(waiter, _whichAnimationEndEvent());
+}
+
+function waitTransitionEnd(waiter) {
+    return _waitEventEnd(waiter, _whichTransitionEndEvent());
+}
+
 
 function IsJsonString(str) {
     try {

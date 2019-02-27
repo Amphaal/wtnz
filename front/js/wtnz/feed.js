@@ -3,10 +3,7 @@ function toggleFeed(event) {
     if(resizeFeed(event.currentTarget)()) {
         //if expended, wait for the animation to end to scroll
         let feedContainer = document.getElementById('feedContainer');
-        feedContainer.addEventListener(whichTransitionEndEvent(), function ecee(e) {
-            feedContainer.removeEventListener(whichTransitionEndEvent(), ecee, false);
-            hNavigate(feedContainer);
-        }, false);
+        waitTransitionEnd(feedContainer).then(hNavigate);
     }
 }
 

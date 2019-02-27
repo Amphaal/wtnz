@@ -66,10 +66,7 @@ function displayAlbumInfos(dataFunc) {
 
             //should wait for animation to end
             if (!bypass) {
-                target.addEventListener(whichTransitionEndEvent(), function scd(e) {
-                    target.removeEventListener(whichTransitionEndEvent(), scd, false);
-                    resolve(target);
-                }, false);
+                waitTransitionEnd(target).then(resolve);
             } else {
                 resolve(target);
             }
