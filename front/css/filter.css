@@ -1,18 +1,19 @@
-#discoverContainer {
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-#discoverContainer .subContent::before{
-    margin-right: 0;
+.sorter {
+    position: absolute;
+    color :grey;
+    font-size: .8rem;
+    
+    left: 4rem;
+    top: 4rem;
 }
 
 .filterUI {
     position: relative; 
     transition: all .3s ease;
-    margin: .9rem 0 0 .7rem;
+    margin: 1rem 0 0 .7rem;
     display: flex;
     flex-direction: column;
+    min-height: 1rem;
 }
 
 .filterUI:not(.active) {
@@ -21,6 +22,7 @@
 
 .filterUI:last-child {
     margin-right:1rem;
+    margin-bottom:1rem;
 }
 
 .filterUI .ph {
@@ -38,14 +40,15 @@
 }
 
 .filterUI .list span[data-count]::after {
-    content: " " attr(data-count);
+    content: attr(data-count);
     font-size: .6rem;
     color: grey;
     vertical-align: middle;
+    margin-left: .25rem;
 }
 
 #albumUI.filterUI .list span[data-count]::after {
-    content: " - " attr(data-count);
+    content: "- " attr(data-count);
     font-size: .8rem;
 }
 

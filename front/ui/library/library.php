@@ -1,4 +1,4 @@
-<div id='wtnz-library'>
+<div id='wtnz-library' class="focused">
     <?php include "front/ui/library/parts/header.php" ?>
     <div id='mainFrame'>
         <?php include "front/ui/library/parts/shout.php" ?>

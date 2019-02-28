@@ -69,7 +69,7 @@ function renderHCPie(data, divId) {
   function toggleStats(event) {
       let statsContainer = document.getElementById('statsContainer');
       let heightSwitch = event.currentTarget.checked ? statsContainer.scrollHeight + "px" : "0";
-      statsContainer.style.height = heightSwitch;
+      statsContainer.style.maxHeight = heightSwitch;
       //if expended
       if(heightSwitch) {
             //wait for the transition to end to scroll

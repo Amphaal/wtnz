@@ -1,45 +1,31 @@
  @media (orientation : portrait) {
 
     [data-cat]::before {
-        width: auto;
         text-align: left;
     }
 
-    header {
-        align-items: center;
-    }
-
-    #logo {
+    .logo {
         display: none;
-    }
-
-    .subFrame {
-        margin-top: 1rem;
     }
 
     .subContent {
         flex-direction : column;
-    }
-
-    .subContent > * {
-        margin-top:1rem;
-        margin-left: 1rem;
+        padding: 1rem .75rem;
     }
 
     .filterUI {
-        margin-top:1.3rem;
+        margin-top: 1.3rem;
     }
 
     .filterUI:first-child {
-        margin-left: .7rem;
+        margin-top: .5rem;
     }
 
     .filterWrapper {
         flex-direction: column;
-        margin-top: 0 !important;
     }
 
-    #albumInfos .imgContainer + div {
+    #albumInfos .imgContainer + label {
         margin-left : 0;
     }
 
@@ -47,6 +33,17 @@
         margin: 0 .5rem;
     }
 
+    .sorter {
+        left: 8rem;
+        top: 1.4rem;
+    }    
+}
+
+@media (orientation : landscape) {
+
+    .filterUI:first-child {
+        margin-left: 0rem;
+    }
 }
 
 

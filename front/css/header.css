@@ -1,19 +1,21 @@
 
-#logo {
-    font-size: 2.5rem;
-    background-color: #f7f7f7;
+.logo {
+    font-size: 2.5rem; /*rel*/
     position: relative;
-    padding-left: .8rem;
-    padding-right: 1.5rem;
-    height: 100%;
+    padding-left: .35em;
+    padding-right: .6em;
 }
 
-#logo::after {
+.logo::after {
     content : "\00A9";
-    font-size: 1rem;
+    font-size: .4em;
     position : absolute;
     top : 47%;
     right : 10%;
+}
+
+.logo::before {
+    content : "WTNZ";
 }
 
 .fctr {
@@ -21,6 +23,8 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    background-color: #f7f7f7;
 }
 
 #menu {

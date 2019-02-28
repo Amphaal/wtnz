@@ -1,8 +1,6 @@
 <header>
     <div id='menu'>
-        <div class='fctr' id='logo'>
-            <span>WTNZ</span>
-        </div>
+        <span class='fctr logo'></span>
         <div id='banner'>
             <div id='banner-desc'>
                 <?php echo i18n('libraryOfHead', $user_qs)?>

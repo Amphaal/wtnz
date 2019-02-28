@@ -63,14 +63,14 @@ main > * {
     flex-shrink: 0;
 }
 
-
-#wtnz-library {
+main > *:first-child {
     opacity: 0;
 }
 
 #wtnz-connect {
     height: 100%;
-    background-color: red;
+    background-color: white;
+    align-items: center;
 }
 
 #mainFrame {
@@ -80,17 +80,25 @@ main > * {
     z-index: 0;
 
 }
-
 .subFrame {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 1.5rem; 
     position: relative;
+    transition: max-height 0.3s ease 0s;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.subFrame:not(:last-child) {
+    max-height:0;
 }
 
 .subContent {
     display: flex;
     position: relative;
+    padding: 1.5rem 1rem; 
+    flex-grow: 1;
+    flex-wrap: wrap;
 }
 
 
@@ -124,9 +132,10 @@ label.clickable input[type="radio"]:not(:checked) + i + span
     font-size : 1.5em;
     white-space : nowrap;
     position : relative;
-    margin: 0 1rem .5rem 1.3rem;
     width: 7.5rem;
     text-align: right;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
 }
 
 

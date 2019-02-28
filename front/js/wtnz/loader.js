@@ -30,7 +30,7 @@ function hideLoader() {
         //permit underlying interactions
         document.getElementById("loader-container").style.pointerEvents = "none";
 
-        return waitAnimationEnd(loader).then(resolve);
+        return resolve();
     });
 }
 

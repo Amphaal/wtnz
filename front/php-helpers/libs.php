@@ -7,3 +7,4 @@
 <script type="text/javascript" src="front/js/ext/sorttable.js"></script>
 <script type="text/javascript" src="front/js/ext/socket.io.js"></script>
 <script type="text/javascript" src="front/js/ext/hammer.min.js"></script>
+<script type="text/javascript" src="front/js/ext/mixitup.min.js"></script>

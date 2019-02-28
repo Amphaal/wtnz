@@ -209,12 +209,12 @@ function vNavigate(direction) {
     if(targetIndex > maxIndex || targetIndex < 0) return;
 
     //specific to target
-    if(targetIndex == 0) window.scrollTo({top : 0}); //scroll back to top
     if(targetIndex == 1) { document.body.classList.add("lock"); } else { document.body.classList.remove("lock"); } //remove Vscroll on connect
     
     //move...
     target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
     target.setAttribute("data-index", targetIndex);
+    window.scrollTo({top : 0}); //scroll back to top
 
     //reset focus flag
     for(let i = 0; i < maxChildren; i++) {
