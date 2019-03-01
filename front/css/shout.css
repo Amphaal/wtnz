@@ -20,20 +20,18 @@
     margin-left : .5rem;
 }
 
-#shoutContainer .cover {
+#shoutContainer .imgLoader {
     font-size: .5rem;
     box-shadow:0px 0px 10px #a9a9a9;
     z-index: 1;
 }
 
-#shoutContainer .cover, #shoutContainer .cover img {
+#shoutContainer .imgLoader, #shoutContainer .imgLoader img {
     width:2rem;
     height:2rem; 
-    background-color:white;
-    transition: all .3s ease;
 }
 
-#shoutContainer .cover i {
+#shoutContainer .imgLoader i {
     opacity: 0;
     z-index: 5000;
     top : .5em;
@@ -44,15 +42,15 @@
     font-size: 1rem;
 }
 
-#shoutContainer .cover:hover i {
+#shoutContainer .imgLoader:hover i {
     opacity: 1;
 }
 
-#shoutContainer .cover:hover img {
+#shoutContainer .imgLoader:hover img {
     opacity: .5;
 }
 
-#shoutContainer .cover {
+#shoutContainer .imgLoader {
     transition: all .3s ease;
     position: relative;
 }

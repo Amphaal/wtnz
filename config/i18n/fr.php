@@ -64,5 +64,7 @@
     "password" => "Mot de passe",
     "field_nc_pattern" => '"%s" doit comporter entre %d et %d caractères',
     "username_invalid" => "\"%s\" n'est pas un nom d'utilisateur valide, merci de vérifier les caractères spéciaux",
-    "profile" => "profil"
+    "profile" => "profil",
+    "sort_order" => "Trier par nom",
+    "sort_count" => "Trier par nombre / année"
 );

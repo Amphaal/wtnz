@@ -317,6 +317,7 @@ function generateSortButtons() {
 
         //define label
         let lbl = document.createElement("label");
+        lbl.setAttribute("title", i18n['sort_'+ sorter]);
         lbl.onclick = applySort;
         lbl.classList.add("clickable");
         if(isCurrentSorter) lbl.classList.add("active");

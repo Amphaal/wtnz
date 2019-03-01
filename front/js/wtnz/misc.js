@@ -77,9 +77,13 @@ function resizeManualHeightsAndWidths() {
 ///
 
 function brokenImgFr(elem) {
-    elem.classList.remove('searchingCover');
-    elem.classList.add('noImgFound');
-    elem.firstElementChild.removeAttribute('src');
+    elem.classList.add("fo");
+    waitTransitionEnd(elem).then(function() {
+        elem.firstElementChild.removeAttribute('src');
+        elem.classList.remove('searchingCover');
+        elem.classList.remove('fo');
+        elem.classList.add('noImgFound');
+    });
 }
 
 function brokenImg(event) {
@@ -87,7 +91,12 @@ function brokenImg(event) {
 }
 
 function imgLoaded(event) {
-    event.currentTarget.parentElement.classList.remove('searchingCover');
+    let imgLoader = event.currentTarget.parentElement;
+    imgLoader.classList.add("fo");
+    waitTransitionEnd(imgLoader).then(function() {
+        imgLoader.classList.remove('searchingCover');
+        imgLoader.classList.remove('fo');
+    });
 }
 
 function resetImgLoader(elem) {

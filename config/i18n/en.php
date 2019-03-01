@@ -64,5 +64,7 @@
     "password" => "Password",
     "field_nc_pattern" => '"%s" must have between %d and %d characters',
     "username_invalid" => '"%s" is not a safe username, please check for special characters',
-    "profile" => "profile"
+    "profile" => "profile",
+    "sort_order" => "Sort by name",
+    "sort_count" => "Sort by number / year"
 );
