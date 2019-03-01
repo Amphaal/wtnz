@@ -156,7 +156,11 @@ function generateFilterUI(id, dataFunc) {
     
     //define mixer for sorting 
     if(_discoverMixers[id]) _discoverMixers[id].destroy();
-    _discoverMixers[id] = mixitup(target);
+    _discoverMixers[id] = mixitup(target, {
+        animation: {
+            duration: 300
+        }
+    });
 
     return true;
 }
