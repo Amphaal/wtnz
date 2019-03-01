@@ -18,6 +18,17 @@
 
         var defFiltStorageKey = "_discoverSorter";
         var _discoverSorter = localStorage.getItem(defFiltStorageKey) || "count:desc";
+        var _defaultSorters = {
+                count : "desc", 
+                order : "asc"
+        };
+        var _sortersIconAdapter = {
+                order : "alpha",
+                count : "amount",
+                asc : "up",
+                desc : "down" 
+        };
 
         var _appDataFeeds = {};
+        var _currentShout = {};
 </script>

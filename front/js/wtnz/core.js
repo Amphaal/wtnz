@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     scrollUiEventHandling();
     instShoutMuteButton();
     registerSwipeEvents();
+    generateSortButtons();
 
     //download user file
     requestUserUnifiedLib();

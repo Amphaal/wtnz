@@ -7,6 +7,16 @@
     top: 3.5rem;
 }
 
+.sorter > * {
+    margin: 0 .1rem;
+    opacity: .6;
+    transition: all .1s ease;
+}
+
+.sorter .active {
+    color : black;
+}
+
 .filterUI {
     position: relative; 
     transition: all .3s ease;

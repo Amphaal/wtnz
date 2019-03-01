@@ -252,3 +252,89 @@ function applyManualSizesFilterUIs(id) {
         document.head.appendChild(styleCarrier);
     }
 }
+
+/// Sorting...
+
+function applySort(event) {
+    let thisLbl = event.currentTarget;
+
+    //depending on active...
+    if(!thisLbl.classList.contains("active")) {
+        
+        //remove active from others
+        [thisLbl.nextElementSibling, thisLbl.previousElementSibling].forEach(function(elem) {
+            if(!elem) return;
+            elem.classList.remove("active");
+        });
+
+        //pass to this one
+        thisLbl.classList.add("active");
+    } else {
+
+        //swap direction...
+        thisLbl.dataset.direction = thisLbl.dataset.direction == "asc" ? "desc" : "asc"; 
+
+    }
+
+    //replace icon
+    alterSortIcon(thisLbl.dataset, thisLbl.firstElementChild);
+
+    //alter sorting
+    updateSortingData(thisLbl.dataset);
+}
+
+function updateSortingData(dataset) {
+    _discoverSorter = dataset.category + ":" + dataset.direction;
+    localStorage.setItem(defFiltStorageKey, _discoverSorter);
+    Object.keys(_discoverMixers).forEach(function(key) {
+        _discoverMixers[key].sort(_discoverSorter).then(function(caca) {
+            debugger;
+        });
+    });
+}
+
+function alterSortIcon(dataset, iconElem) {
+    //generate new icon class
+    let iconClass = "fa-sort-" + Object.keys(dataset).map(function(val) {
+        return _sortersIconAdapter[dataset[val]];
+    }).join("-");
+
+    let toReplace = Object.values(iconElem.classList).find(function(e) {return e != "fas"});
+    if(toReplace) {
+        iconElem.classList.replace(toReplace, iconClass);
+    } else {
+        iconElem.classList.add(iconClass);
+    }
+}
+
+function generateSortButtons() {
+
+    let sortParam = _discoverSorter.split(":");
+
+    let btnGenerator = function(sorter) {
+        let isCurrentSorter = sortParam[0] == sorter;
+
+        //define label
+        let lbl = document.createElement("label");
+        lbl.onclick = applySort;
+        lbl.classList.add("clickable");
+        if(isCurrentSorter) lbl.classList.add("active");
+        lbl.dataset.category = sorter;
+        lbl.dataset.direction = isCurrentSorter ? sortParam[1] : _defaultSorters[sorter];
+
+        //define icon
+        let i = document.createElement("i");
+        i.classList.add("fas");
+        alterSortIcon(lbl.dataset, i);
+
+        //return
+        lbl.appendChild(i);
+        return lbl;
+    };
+
+    //bind buttons to container
+    let sorterElem = document.getElementsByClassName("sorter")[0];
+    Object.keys(_defaultSorters)
+          .map(btnGenerator)
+          .forEach(function(item) { sorterElem.appendChild(item); });
+}

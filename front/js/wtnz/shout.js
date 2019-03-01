@@ -68,7 +68,7 @@ var lastNotifShoutId = '';
 function notificateShout() {
     //preapre
     let shoutElem = document.getElementById('shoutContainer');
-    let notifShoutId = [shout.name, shout.album, shout.artist].join('_');
+    let notifShoutId = [_currentShout.name, _currentShout.album, _currentShout.artist].join('_');
     let isShoutContainerVisible = isVisible(shoutElem);
     let isShoutDisplayed = shoutElem.clientHeight;
     let isNewShout = notifShoutId !== lastNotifShoutId;
@@ -127,13 +127,13 @@ function displayShout(shoutData) {
     if (isWorth) {
 
         //list changes between states
-        a = Object.keys(shout);
+        a = Object.keys(_currentShout);
         b = Object.keys(shoutData);
         c = new Set(a.concat(b));
         d = [];
         c.forEach(function(v){d.push(v);});
         let changes = d.filter(function(id){
-            return shoutData[id] !== shout[id];
+            return shoutData[id] !== _currentShout[id];
         });
 
         //prepare data helpers
@@ -215,7 +215,7 @@ function displayShout(shoutData) {
     }
 
     //update current shout
-    shout = shoutData;
+    _currentShout = shoutData;
 
     //display/hide
     resizeShout()().then(notificateShout);
@@ -230,7 +230,7 @@ function resizeShout() {
             return new Promise(function(resolve) {
         
             let shoutContainer = document.getElementById('shoutContainer');
-            let isWorth = isWorthDisplayingShout(shout);
+            let isWorth = isWorthDisplayingShout(_currentShout);
             let heightSwitch = isWorth ? shoutContainer.scrollHeight + "px" : "";
             let animOpen = shoutContainer.style.maxHeight === "";
             shoutContainer.style.maxHeight = heightSwitch;
