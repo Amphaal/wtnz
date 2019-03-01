@@ -32,7 +32,7 @@ function registerSwipeEvents() {
 function bindResizeFunctions() {
     resizeFunctions.width.push(resizeFeed(document.getElementById('showFeed')));
     resizeFunctions.width.push(resizeShout());
-    Object.keys(filter).forEach(function(id) {
+    Object.keys(_discoverFilter).forEach(function(id) {
         resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })
 }
@@ -52,13 +52,13 @@ function requestUserUnifiedLib() {
 function processUnifiedLib(unifiedAsJSONText) {
     
     unified = JSON.parse(unifiedAsJSONText); //parse
-    dataFeeds = generateDataFeeds(unified); //bind lib to data functions
+    _appDataFeeds = generateDataFeeds(unified); //bind lib to data functions
     
     //stats rendering
     renderStats(unified); 
 
     //prepare UI
-    prepareFilterUIs(Object.keys(filter));
+    prepareFilterUIs(Object.keys(_discoverFilter));
     applyCompareDateBulk();
 
     //instantiate initial filterUI
@@ -68,7 +68,5 @@ function processUnifiedLib(unifiedAsJSONText) {
     generateFreshUploads(); 
     
     //finally, display the app to the user
-    displayApp().then(function(){
-        requestShout();
-    });
+    displayApp().then(requestShout);
 }

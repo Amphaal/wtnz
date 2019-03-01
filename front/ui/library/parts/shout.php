@@ -1,4 +1,4 @@
-<div id='shoutContainer' style='max-height:0'>
+<div id='shoutContainer' class="subFrame">
     <div id='shoutNotification'>
         <?php echo i18n("nowPlaying")?>
     </div>

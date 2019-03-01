@@ -3,8 +3,8 @@
     color :grey;
     font-size: .8rem;
     
-    left: 4rem;
-    top: 4rem;
+    left: 6.6rem;
+    top: 3.5rem;
 }
 
 .filterUI {
@@ -22,7 +22,7 @@
 
 .filterUI:last-child {
     margin-right:1rem;
-    margin-bottom:1rem;
+    margin-bottom:1.25rem;
 }
 
 .filterUI .ph {

@@ -4,7 +4,7 @@ footer {
     justify-content: space-between;
     flex-direction: row-reverse;
     background-color: #dcdcdc;
-    margin: .5rem 0;
+    margin-bottom: .5rem;
 }
 
 #credits {

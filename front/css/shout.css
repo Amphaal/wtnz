@@ -7,12 +7,13 @@
 }
 
 #shoutContainer .shout {
-    padding: .75rem 0;
+    padding: 1rem 0;
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width : 100%;
 }
 
 #shoutContainer .shout > a {
@@ -103,7 +104,7 @@
     height:0;
 }
 
-#shoutNotificationOut {
+#shoutNotificationWidget {
     position: fixed;
     z-index: 1000;
     right : -2rem;
@@ -115,7 +116,7 @@
     font-size: .7rem;
 }
 
-#shoutNotificationOut.show {
+#shoutNotificationWidget.show {
     animation-name: progNotOut;
     animation-duration: 2s;
 }

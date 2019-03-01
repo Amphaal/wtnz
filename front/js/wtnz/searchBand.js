@@ -5,7 +5,7 @@
 //search band through head input
 function searchBand(event) {
     let criteria = event.target.value;
-    let data = dataFeeds.searchBand(criteria);
+    let data = _appDataFeeds.searchBand(criteria);
     renderSearchResults(criteria, data);
 }
 

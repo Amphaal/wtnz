@@ -9,13 +9,15 @@
         var i18n = <?php echo json_encode(I18N)?>;
         var lang = <?php echo json_encode(LANG)?>;
 
-        var filter = {
+        var _discoverFilter = {
                 genreUI : null,
                 artistUI : null,
                 albumUI : null
         };
+        var _discoverMixers = {};
 
-        var dataFeeds = {};
-        var lib = {};
-        var shout = {};
-        </script>
+        var defFiltStorageKey = "_discoverSorter";
+        var _discoverSorter = localStorage.getItem(defFiltStorageKey) || "count:desc";
+
+        var _appDataFeeds = {};
+</script>

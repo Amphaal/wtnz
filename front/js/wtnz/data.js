@@ -18,14 +18,14 @@ function generateDataFeeds(lib) {
 //genreUI
 function getGenreUIDataFeed(lib) {
     return function() {
-        return albumsByGenreCount(lib);
+        return addSortingCapabilities(albumsByGenreCount(lib));
     };
 }
 
 //artistUI
 function getArtistUIDataFeed(lib) {
     return function() {
-        let filterCriteria = filter['genreUI'];
+        let filterCriteria = _discoverFilter['genreUI'];
         if(!filterCriteria) return;
 
         let artistsOfGenre = artistsByGenreList(lib)[filterCriteria];
@@ -36,34 +36,38 @@ function getArtistUIDataFeed(lib) {
         artistsOfGenre.forEach(function(val) {arrAog.push(val);});
         
         //reduce
-        return arrAog.reduce(function(result, current) {
+        arrAog = arrAog.reduce(function(result, current) {
             result[current] = Object.keys(apa[current]['Albums']).length;
             return result;
         }, {});
+
+        return addSortingCapabilities(arrAog);
     };
 }
 
 //albumUI
 function getAlbumUIDataFeed(lib){
     return function() {
-        let filterCriteria = filter['artistUI'];
+        let filterCriteria = _discoverFilter['artistUI'];
         if(!filterCriteria) return;
     
         let apa = albumsByArtistsList(lib);
         let source = apa[filterCriteria]['Albums'];
         
-        return Object.keys(source).reduce(function(result, current) {
+        source = Object.keys(source).reduce(function(result, current) {
             result[current] = source[current]['Year'];
             return result;
         }, {});
+
+        return addSortingCapabilities(source);
     };
 }
 
 //albumInfos
 function getAlbumInfosDataFeed(lib) {
     return function() {
-        let fArtist = filter['artistUI'];
-        let fAlbum = filter['albumUI'];
+        let fArtist = _discoverFilter['artistUI'];
+        let fAlbum = _discoverFilter['albumUI'];
         if(!fArtist || !fAlbum) return;
     
         let obj = albumsByArtistsList(lib)[fArtist]['Albums'][fAlbum];
@@ -72,6 +76,37 @@ function getAlbumInfosDataFeed(lib) {
         return obj;
     };
 }
+
+function addSortingCapabilities(data) {
+
+    //add alphanum sorting
+    data = Object.keys(data).sort().reduce(function(result, current, index) {
+        result.push({
+            nFilter :  current,
+            count : data[current],
+            order : index + 1
+        });
+        return result;
+    }, []);
+
+    //check params exists and are formated
+    let sortParams = _discoverSorter.split(":");
+    if (sortParams.length != 2) return data;
+
+    //apply sorters
+    let sortingCat = sortParams[0];
+    let order = sortParams[1];
+
+    let sortFunc = order.indexOf("asc") != -1 ? 
+    function(a,b) {
+        return a[sortingCat] - b[sortingCat];
+    } : function(a,b) {
+        return b[sortingCat] - a[sortingCat];
+    };
+
+    return data.sort(sortFunc);
+}
+
 
 //searchBand
 function getSearchBandDataFeed(lib){

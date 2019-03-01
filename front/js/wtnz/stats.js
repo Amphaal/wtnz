@@ -3,8 +3,8 @@
 ///
 
 function renderStats() {
-    renderHCPie(dataFeeds.statsAlbums(), 'statsAlbums');
-    renderHCPie(dataFeeds.statsArtists(), 'statsArtists');
+    renderHCPie(_appDataFeeds.statsAlbums(), 'statsAlbums');
+    renderHCPie(_appDataFeeds.statsArtists(), 'statsArtists');
 }
 
 ///

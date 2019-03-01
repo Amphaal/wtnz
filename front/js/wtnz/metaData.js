@@ -10,8 +10,8 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 
         let urlBase =  'https://musicbrainz.org/ws/2/release-group/?limit=1&fmt=json&query=';
         let queryObj = {
-            release : album || filter["albumUI"],
-            artist :  artist || filter["artistUI"]
+            release : album || _discoverFilter["albumUI"],
+            artist :  artist || _discoverFilter["artistUI"]
         };
     
         //if elements missing, abort

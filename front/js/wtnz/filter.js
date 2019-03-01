@@ -14,7 +14,7 @@ function updateFilter(event) {
     updateFilterUIs(IDsToReload);
 
     //dynamically generate albums infos and scrolls to it if necessary
-    displayAlbumInfos(dataFeeds.albumInfos).then(function(albumInfosElem) {
+    displayAlbumInfos(_appDataFeeds.albumInfos).then(function(albumInfosElem) {
         if(newFilters["albumUI"]) transitionToAlbumInfos(albumInfosElem);
     });
 
@@ -45,7 +45,7 @@ function getNewFiltersFromUI(event) {
         let filterCat = filterUIBound.id;
 
         //if dest filter is equal to current, it means that the user wants to remove it
-        if (dFilter && filter[filterCat] == dFilter) dFilter = null;
+        if (dFilter && _discoverFilter[filterCat] == dFilter) dFilter = null;
 
         //update dataFilters obj
         dataFilters = {};
@@ -63,11 +63,11 @@ function getNewFiltersFromUI(event) {
 function applyNewFilters(newFilters) {
 
     let resetFollowing = false;
-    return Object.keys(filter).reduce(function (toGenerate, id, index, initalArray) {
+    return Object.keys(_discoverFilter).reduce(function (toGenerate, id, index, initalArray) {
 
         //prepare
         let newValue = newFilters[id];
-        let oldValue = filter[id];
+        let oldValue = _discoverFilter[id];
         let newValIsUndef = typeof newValue === 'undefined';
 
         if (oldValue == newValue) return toGenerate; //if identical, skip
@@ -77,7 +77,7 @@ function applyNewFilters(newFilters) {
         if (resetFollowing && newValIsUndef && oldValue) newValue = null;
 
         //sets new value
-        filter[id] = newValue || null;
+        _discoverFilter[id] = newValue || null;
 
         //assumes a modification has occured
         resetFollowing = true;
@@ -118,11 +118,10 @@ function prepareFilterUIs(IDs) {
 //helper func
 function updateFilterUIs(arrayOfIDs) {
     arrayOfIDs.forEach(function (id) {
-        generateFilterUI(id, dataFeeds[id]);
+        generateFilterUI(id, _appDataFeeds[id]);
     });
-
-    Object.keys(filter).forEach(function (id) {
-        alterFilterUI(id, filter[id]);
+    Object.keys(_discoverFilter).forEach(function (id) {
+        alterFilterUI(id, _discoverFilter[id]);
     });
 
 }
@@ -131,30 +130,35 @@ function updateFilterUIs(arrayOfIDs) {
 function generateFilterUI(id, dataFunc) {
 
     let target = document.querySelector('#' + id + ' .list');
-    if (dataFunc == null) return false;
-
-    let data = dataFunc();
+    
+    //define mixer for sorting 
+    if(!_discoverMixers[id]) _discoverMixers[id] = mixitup(target, {
+        selectors: {
+            target: '[data-n-filter]'
+        }
+    });
 
     //purge current results
     while (target.firstChild) {
         target.removeChild(target.firstChild);
     }
 
+    if (dataFunc == null) return false;
+    let data = dataFunc();
+
     //if there is any data
     if (data) {
-        Object.keys(data).reduce(function (result, current) {
+        data.map(function(current) {
             let item = document.createElement('span');
-            item.innerHTML = current;
-            item.dataset.count = data[current];
-            item.dataset.nFilter = current
+            item.innerHTML = current.nFilter;
+            item.dataset.count = current.count;
+            item.dataset.order = current.order;
+            item.dataset.nFilter = current.nFilter;
             item.onmousedown = updateFilter;
-            result.push(item);
-            return result;
-        }, [])
-            .sort(function (a, b) { return b.dataset.count - a.dataset.count; })
-            .forEach(function (item) { target.appendChild(item); });
+            return item;
+        })
+        .forEach(function (item) { target.appendChild(item); });
     }
-
     return true;
 }
 
@@ -163,11 +167,11 @@ function alterFilterUI(id, filterCriteria) {
 
     //prepare
     let ui = document.getElementById(id);
-    let list = document.querySelector('#' + id + ' .list');
+    let list = document.querySelectorAll('#' + id + ' .list span');
     let ph = document.querySelector('#' + id + ' .ph');
 
     //ui filter greying not selected
-    list.childNodes.forEach(function (curr) {
+    list.forEach(function (curr) {
         let nodefilter = curr.dataset.nFilter;
         nodefilter == filterCriteria ? curr.classList.add("selected") : curr.classList.remove("selected");
     });
@@ -183,7 +187,7 @@ function alterFilterUI(id, filterCriteria) {
     }
 
     //ui filter prefix
-    list.childElementCount || ph.innerHTML ? ui.classList.add("active") : ui.classList.remove("active");
+    list.length || ph.innerHTML ? ui.classList.add("active") : ui.classList.remove("active");
 
     //apply for animations
     applyManualSizesFilterUIs(id)();

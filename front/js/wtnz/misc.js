@@ -40,7 +40,6 @@ window.addEventListener('resize', function(event) {
     timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize);
 });
 window.addEventListener('orientationchange', function() {
-    //debugger;
     //resizeManualHeightsAndWidths();
 })
 

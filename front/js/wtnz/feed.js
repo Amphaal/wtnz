@@ -21,7 +21,7 @@ function resizeFeed(checkboxElem) {
 }
 
 function generateFreshUploads() {
-    let data = dataFeeds.feedUploads()
+    let data = _appDataFeeds.feedUploads()
     let target = document.querySelector('#feedContainer .feedWrapper');
 
     //for each interval

@@ -39,6 +39,7 @@ function removeLoader() {
     return new Promise(function(resolve){
         let target = document.getElementById("loader-container");
         target.parentElement.removeChild(target);
+        return resolve();
     });
 }
 

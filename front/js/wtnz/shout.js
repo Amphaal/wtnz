@@ -80,6 +80,7 @@ function notificateShout() {
         let fadeAnim = function() {
             notif.classList.add('fade');
         };
+        
 
         //animation
         let fd = function() {
@@ -98,7 +99,7 @@ function notificateShout() {
         if(!isShoutContainerVisible) {
 
             //force refresh anim
-            let out = document.getElementById('shoutNotificationOut');
+            let out = document.getElementById('shoutNotificationWidget');
             out.classList.remove('show');
             void out.offsetWidth;
             out.classList.add('show');
@@ -217,9 +218,7 @@ function displayShout(shoutData) {
     shout = shoutData;
 
     //display/hide
-    resizeShout()().then(function() {
-        notificateShout();
-    });
+    resizeShout()().then(notificateShout);
 }
 
 ///
@@ -232,10 +231,9 @@ function resizeShout() {
         
             let shoutContainer = document.getElementById('shoutContainer');
             let isWorth = isWorthDisplayingShout(shout);
-            let heightSwitch = isWorth ? shoutContainer.scrollHeight + "px" : "0px";
-            let animOpen = shoutContainer.style.maxHeight === "0px";
+            let heightSwitch = isWorth ? shoutContainer.scrollHeight + "px" : "";
+            let animOpen = shoutContainer.style.maxHeight === "";
             shoutContainer.style.maxHeight = heightSwitch;
-
             let resolving = function() {resolve(heightSwitch);}
 
             if (animOpen) {
