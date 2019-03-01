@@ -130,13 +130,6 @@ function updateFilterUIs(arrayOfIDs) {
 function generateFilterUI(id, dataFunc) {
 
     let target = document.querySelector('#' + id + ' .list');
-    
-    //define mixer for sorting 
-    if(!_discoverMixers[id]) _discoverMixers[id] = mixitup(target, {
-        selectors: {
-            target: '[data-n-filter]'
-        }
-    });
 
     //purge current results
     while (target.firstChild) {
@@ -149,16 +142,22 @@ function generateFilterUI(id, dataFunc) {
     //if there is any data
     if (data) {
         data.map(function(current) {
-            let item = document.createElement('span');
+            let item = document.createElement('div');
             item.innerHTML = current.nFilter;
             item.dataset.count = current.count;
             item.dataset.order = current.order;
             item.dataset.nFilter = current.nFilter;
             item.onmousedown = updateFilter;
+            item.classList.add("mix");
             return item;
         })
         .forEach(function (item) { target.appendChild(item); });
     }
+    
+    //define mixer for sorting 
+    if(_discoverMixers[id]) _discoverMixers[id].destroy();
+    _discoverMixers[id] = mixitup(target);
+
     return true;
 }
 
@@ -167,7 +166,7 @@ function alterFilterUI(id, filterCriteria) {
 
     //prepare
     let ui = document.getElementById(id);
-    let list = document.querySelectorAll('#' + id + ' .list span');
+    let list = document.querySelectorAll('#' + id + ' .list > *');
     let ph = document.querySelector('#' + id + ' .ph');
 
     //ui filter greying not selected
@@ -287,9 +286,7 @@ function updateSortingData(dataset) {
     _discoverSorter = dataset.category + ":" + dataset.direction;
     localStorage.setItem(defFiltStorageKey, _discoverSorter);
     Object.keys(_discoverMixers).forEach(function(key) {
-        _discoverMixers[key].sort(_discoverSorter).then(function(caca) {
-            debugger;
-        });
+        _discoverMixers[key].sort(_discoverSorter);
     });
 }
 
