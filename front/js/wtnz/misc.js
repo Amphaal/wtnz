@@ -1,23 +1,72 @@
 
-function _resizeShutter(targetId, reason) {
+
+function registerXNavigateSwipeEvents() {
+    var hammertime = new Hammer(document.body);
+
+    hammertime.on('swipeleft swiperight', function(ev) {
+        hNavigate(ev.direction);
+    });
+
+    document.addEventListener("scroll", onScroll);
+}
+
+/*Prevent Scroll Event triggering */
+function preventSET(inBetweenPromise) {
+    //temporary disabling event listening
+    document.removeEventListener("scroll", onScroll);
+    return inBetweenPromise.then(function() {
+        document.addEventListener("scroll", onScroll);
+    });
+}
+
+function onScroll(ev) {
+    if(Math.abs(checkScrollSpeed()) < 10) return;
+    headerToggle();
+}
+
+//resize functions
+function bindResizeFunctions() {
+    resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight()});
+    resizeFunctions.width.push(function() {return resizeShout().applyNewHeight()});
+    Object.keys(_discoverFilter).forEach(function(id) {
+        resizeFunctions.any.push(applyManualSizesFilterUIs(id));
+    })
+}
+
+function _resizeShutter(targetId, reason, nextType) {
     let target = document.getElementById(targetId);
     let heightSwitch = reason ? target.scrollHeight + "px" : "";
     let changed = target.style.maxHeight != heightSwitch;
 
-    target.style.maxHeight = heightSwitch;
+    let updateTargetMaxHeight = function() {
+        window.requestAnimationFrame(function() {
+            target.style.maxHeight = heightSwitch;
+        });
+    };
     
     return {
-        changed : changed,
-        heightSwitch : heightSwitch
+        next : nextType == "changed" ? changed : heightSwitch,
+        applyNewHeight : changed ? updateTargetMaxHeight : function() {return;}
     };
 }
 
-function _toggleShutter(targetId, resizeFunction, onResizeTransitionEnd) {
+function _toggleShutter(targetId, resizeInstructionsGetter, onResizeTransitionEnd) {
+
     return new Promise(function(resolve) {
-        if (resizeFunction()) {
-            waitTransitionEnd(document.getElementById(targetId)).then(onResizeTransitionEnd);
-        } 
-        resolve();
+
+        let reziseInstructions = resizeInstructionsGetter();
+
+        if (reziseInstructions.next) {
+            let onceend = waitTransitionEnd(document.getElementById(targetId), reziseInstructions.applyNewHeight);
+            if(onResizeTransitionEnd) {
+                onceend.then(onResizeTransitionEnd).then(resolve);
+            } else {
+                onceend.then(resolve);
+            }
+        } else {
+            reziseInstructions.applyNewHeight();
+            resolve();
+        }
     });
 }
 
@@ -40,7 +89,7 @@ function vNavigate(elem, correct) {
     window.scroll(0, elemPos + (correct || 0));
 }
 
-function isVisible(elem) {
+function _isInClientViewField(elem) {
     return elem.getBoundingClientRect().top > window.scrollY;
 }
 
@@ -128,8 +177,10 @@ var checkScrollSpeed = (function(settings){
 ///
 
 function brokenImgFr(elem) {
-    elem.classList.add("fo");
-    waitTransitionEnd(elem).then(function() {
+    
+    waitTransitionEnd(elem, function() {
+        elem.classList.add("fo");
+    }).then(function() {
         elem.firstElementChild.removeAttribute('src');
         elem.classList.remove('searchingCover');
         elem.classList.remove('fo');
@@ -143,8 +194,10 @@ function brokenImg(event) {
 
 function imgLoaded(event) {
     let imgLoader = event.currentTarget.parentElement;
-    imgLoader.classList.add("fo");
-    waitTransitionEnd(imgLoader).then(function() {
+    
+    waitTransitionEnd(imgLoader, function() {
+        imgLoader.classList.add("fo");
+    }).then(function() {
         imgLoader.classList.remove('searchingCover');
         imgLoader.classList.remove('fo');
     });

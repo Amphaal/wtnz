@@ -1,6 +1,6 @@
 <div id='banner-side'>
     <label class="clickable" title="<?php echo i18n("users_profile", $user_qs)?>">
-        <input id='showProfile' type='checkbox' onclick="toggleProfile(event)" autocomplete="off">
+        <input id='showProfile' type='checkbox' onchange="toggleProfile(event)" autocomplete="off">
         <?php if($expectedProfilePic) {?>
         <img class='profilepic' src="<?php echo $expectedProfilePic ?>">
         <?php } else {?>
@@ -8,11 +8,11 @@
         <?php } ?>
     </label> 
     <label class="clickable" title="<?php echo i18n("feed")?>">
-        <input id='showFeed' type='checkbox' onclick="toggleFeed(event)" autocomplete="off">
+        <input id='showFeed' type='checkbox' onchange="toggleFeed(event)" autocomplete="off">
         <i class="fas fa-newspaper"></i>
     </label>
     <label class="clickable" title="<?php echo i18n("stats")?>">
-        <input id='showStats' type='checkbox' onclick="toggleStats(event)" autocomplete="off">
+        <input id='showStats' type='checkbox' onchange="toggleStats(event)" autocomplete="off">
         <i class="fas fa-chart-pie"></i>
     </label>
     <div class="clickable connect-side">

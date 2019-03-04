@@ -47,10 +47,11 @@ function removeLoader() {
 function showApp() {
     return new Promise(function(resolve) {
         let content = document.getElementById("wtnz-library");
-        content.classList.add("animated");
-        content.classList.add("fadeIn");
 
-        return waitAnimationEnd(content).then(resolve);
+        return waitAnimationEnd(content, function() {
+            content.classList.add("animated");
+            content.classList.add("fadeIn");
+        }).then(resolve);
     });
 }
 

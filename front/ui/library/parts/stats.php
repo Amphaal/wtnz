@@ -8,14 +8,14 @@
             <div id='statsSwitcher'>
                 <div>
                     <label class="clickable" title="Albums">
-                        <input id='rAlbums' data-phid='0' type='radio' name='statsS' onclick="switchPanel(event)" checked autocomplete="off">
+                        <input id='rAlbums' data-phid='0' type='radio' name='statsS' onchange="switchPanel(event)" checked autocomplete="off">
                         <i class="fas fa-compact-disc"></i>
                         <span>Albums</span>
                     </label>
                 </div>
                 <div>
                     <label class="clickable" title='<?php echo i18n("artists") ?>'>
-                        <input id='rArtists' data-phid='1' type='radio' name='statsS' onclick="switchPanel(event)" autocomplete="off">
+                        <input id='rArtists' data-phid='1' type='radio' name='statsS' onchange="switchPanel(event)" autocomplete="off">
                         <i class="fas fa-users"></i>
                         <span><?php echo i18n("artists") ?></span>
                     </label>

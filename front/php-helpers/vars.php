@@ -31,4 +31,5 @@
 
         var _appDataFeeds = {};
         var _currentShout = {};
+        var _currentShoutDWorth = false;
 </script>

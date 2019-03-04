@@ -70,7 +70,7 @@ function renderHCPie(data, divId) {
       return _resizeShutter(
           'statsContainer',
           document.getElementById("showStats").checked
-      )['heightSwitch'];
+    );
   }
 
   function toggleStats() {

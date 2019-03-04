@@ -62,12 +62,13 @@ function displayAlbumInfos(dataFunc) {
             link.setAttribute('target', "_blank");
 
             //show, start animation
-            target.classList.add('show');
+            let action = function() {target.classList.add('show');};
 
             //should wait for animation to end
             if (!bypass) {
-                waitTransitionEnd(target).then(resolve);
+                waitTransitionEnd(target, action).then(resolve);
             } else {
+                action();
                 resolve(target);
             }
         }

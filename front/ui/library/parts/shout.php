@@ -17,7 +17,7 @@
         </div>
         <div class='timeline'></div>
         <label class='mute clickable'>
-            <input id='muzzleShout' type='checkbox' onclick="toggleShoutSound(event)" autocomplete="off">
+            <input id='muzzleShout' type='checkbox' onchange="toggleShoutSound(event)" autocomplete="off">
             <i class="fas fa-bell" title-on='<?php echo i18n("playSound")?>' title-off='<?php echo i18n("muteNotif")?>'></i>
         </label>
     </div>

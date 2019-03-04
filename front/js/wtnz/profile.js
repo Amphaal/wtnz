@@ -1,5 +1,5 @@
-function toggleProfile(event) {
-    resizeProfile();
+function toggleProfile() {
+    _toggleShutter('profileContainer', resizeProfile);
 }
 
 ///

@@ -43,24 +43,24 @@ function _whichAnimationEndEvent() {
     }
 }
 
-function _waitEventEnd(waiter, eventTypeToListen) {
-    let useCapture = false;
+function _waitEventEnd(eventTypeToListen, waiter, action) {
 
     return new Promise(function(resolve) {
         let ff = function(e) {
-            waiter.removeEventListener(eventTypeToListen, ff, useCapture);
+            waiter.removeEventListener(eventTypeToListen, ff);
             resolve(waiter);
         }
-        waiter.addEventListener(eventTypeToListen, ff, useCapture);
+        waiter.addEventListener(eventTypeToListen, ff);
+        action();
     });
 }
 
-function waitAnimationEnd(waiter) {
-    return _waitEventEnd(waiter, _whichAnimationEndEvent());
+function waitAnimationEnd(waiter, action) {
+    return _waitEventEnd(_whichAnimationEndEvent(), waiter, action);
 }
 
-function waitTransitionEnd(waiter) {
-    return _waitEventEnd(waiter, _whichTransitionEndEvent());
+function waitTransitionEnd(waiter, action) {
+    return _waitEventEnd(_whichTransitionEndEvent(), waiter, action);
 }
 
 

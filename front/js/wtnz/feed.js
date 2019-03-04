@@ -10,7 +10,7 @@ function resizeFeed() {
     return _resizeShutter(
         'feedContainer', 
         document.getElementById("showFeed").checked
-    )['heightSwitch'];
+    );
 }
 
 function generateFreshUploads() {
