@@ -11,6 +11,10 @@
     box-shadow: 0px 0px .05rem #b7b7b7;
 }
 
+#statsContainer .subContent {
+    align-items: initial;
+}
+
 #statsContainer .subContent::before {
     position : absolute;
 }

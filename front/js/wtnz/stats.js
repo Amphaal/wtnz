@@ -66,13 +66,13 @@ function renderHCPie(data, divId) {
       statsContainer.scrollTop = containerHeight * panelNo;
   }
   
-  function toggleStats(event) {
-      let statsContainer = document.getElementById('statsContainer');
-      let heightSwitch = event.currentTarget.checked ? statsContainer.scrollHeight + "px" : "0";
-      statsContainer.style.maxHeight = heightSwitch;
-      //if expended
-      if(heightSwitch) {
-            //wait for the transition to end to scroll
-            waitTransitionEnd(statsContainer).then(hNavigate);
-        }
+  function resizeStats() {
+      return _resizeShutter(
+          'statsContainer',
+          document.getElementById("showStats").checked
+      )['heightSwitch'];
+  }
+
+  function toggleStats() {
+      return _toggleShutter('statsContainer', resizeStats, vNavigate);
   }

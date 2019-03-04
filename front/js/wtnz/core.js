@@ -6,9 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     //instantiation
     navigatorSpecificParameterization();
     bindResizeFunctions();
-    scrollUiEventHandling();
     instShoutMuteButton();
-    registerSwipeEvents();
+    registerXNavigateSwipeEvents();
     generateSortButtons();
 
     //download user file
@@ -21,18 +20,34 @@ function navigatorSpecificParameterization() {
     }
 }
 
-function registerSwipeEvents() {
+function registerXNavigateSwipeEvents() {
     var hammertime = new Hammer(document.body);
-    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
-    hammertime.on('swipe', function(ev) {
-        vNavigate(ev.direction);
+
+    hammertime.on('swipeleft swiperight', function(ev) {
+        hNavigate(ev.direction);
     });
+
+    document.addEventListener("scroll", onScroll);
+}
+
+/*Prevent Scroll Event triggering */
+function preventSET(inBetweenPromise) {
+    //temporary disabling event listening
+    document.removeEventListener("scroll");
+    inBetweenPromise().then(function() {
+        document.addEventListener("scroll", onScroll);
+    });
+}
+
+function onScroll(ev) {
+    if(Math.abs(checkScrollSpeed()) < 10) return;
+    headerToggle();
 }
 
 //resize functions
 function bindResizeFunctions() {
-    resizeFunctions.width.push(resizeFeed(document.getElementById('showFeed')));
-    resizeFunctions.width.push(resizeShout());
+    resizeFunctions.width.push(resizeFeed);
+    resizeFunctions.width.push(resizeShout);
     Object.keys(_discoverFilter).forEach(function(id) {
         resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })

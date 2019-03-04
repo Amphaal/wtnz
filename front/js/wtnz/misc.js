@@ -1,3 +1,27 @@
+
+function _resizeShutter(targetId, reason) {
+    let target = document.getElementById(targetId);
+    let heightSwitch = reason ? target.scrollHeight + "px" : "";
+    let changed = target.style.maxHeight != heightSwitch;
+
+    target.style.maxHeight = heightSwitch;
+    
+    return {
+        changed : changed,
+        heightSwitch : heightSwitch
+    };
+}
+
+function _toggleShutter(targetId, resizeFunction, onResizeTransitionEnd) {
+    return new Promise(function(resolve) {
+        if (resizeFunction()) {
+            waitTransitionEnd(document.getElementById(targetId)).then(onResizeTransitionEnd);
+        } 
+        resolve();
+    });
+}
+
+
 function applyCompareDateBulk() {
     //update date to compared and humanized
     let dateElems = document.querySelectorAll('[data-date]');
@@ -8,7 +32,7 @@ function applyCompareDateBulk() {
 }
 
 //scrolls to element, taking in account the sticky header
-function hNavigate(elem, correct) {
+function vNavigate(elem, correct) {
     if(!elem) return;
     //let sticky = document.querySelector('header');
     let relativeDocumentOffset = elem.getBoundingClientRect().top + window.scrollY;
@@ -24,8 +48,9 @@ function isVisible(elem) {
 /// resize handling
 ///
 
+
 var timeoutResize = false;
-var delayResize = 50;
+var delayResize = 100;
 var sourceHeight = window.innerHeight;
 var sourceWidth = window.innerWidth;
 var resizeFunctions = {
@@ -39,8 +64,9 @@ window.addEventListener('resize', function(event) {
     clearTimeout(timeoutResize);
     timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize);
 });
+
 window.addEventListener('orientationchange', function() {
-    //resizeManualHeightsAndWidths();
+    window.scrollTo({left : 0});
 })
 
 function resizeManualHeightsAndWidths() {
@@ -71,6 +97,31 @@ function resizeManualHeightsAndWidths() {
     }
 
 }
+
+var checkScrollSpeed = (function(settings){
+    settings = settings || {};
+
+    var lastPos, newPos, timer, delta, 
+        delay = settings.delay || 100; // in "ms" (higher means lower fidelity )
+
+    function clear() {
+      lastPos = null;
+      delta = 0;
+    }
+
+    clear();
+
+    return function(){
+      newPos = window.scrollY;
+      if ( lastPos != null ){ // && newPos < maxScroll 
+        delta = newPos -  lastPos;
+      }
+      lastPos = newPos;
+      clearTimeout(timer);
+      timer = setTimeout(clear, delay);
+      return delta;
+    };
+})();
 
 ///
 /// Img loading
@@ -130,30 +181,26 @@ function findScrollingDirection() {
 }
 
 var sueh_ticking = false;
-function scrollUiEventHandling() {
+function headerToggle() {
+    //if no animation on run...
+    let updateCl = mustHeaderUpdateAnimation(findScrollingDirection());
+    if (!sueh_ticking && updateCl !== false) {
+        
+        //lock
+        sueh_ticking = true;
 
-    //declare event listener
-    window.addEventListener('scroll', function(e) {
+        //cpu optimisation for execution
+        window.requestAnimationFrame(function() {
 
-        //if no animation on run...
-        let updateCl = mustHeaderUpdateAnimation(findScrollingDirection());
-        if (!sueh_ticking && updateCl !== false) {
-            
-            //lock
-            sueh_ticking = true;
+            //animate
+            updateHeaderClasses(updateCl);
 
-            //cpu optimisation for execution
-            window.requestAnimationFrame(function() {
-
-                //animate
-                updateHeaderClasses(updateCl);
-
-                //release
-                sueh_ticking = false;
-            });
-        }
-      });
+            //release
+            sueh_ticking = false;
+        });
+    }
 }
+
 
 //find if Header should be animated
 function mustHeaderUpdateAnimation(directionToCompute) {
@@ -196,7 +243,7 @@ function isHeaderOutOfReach() {
     return scrollHeight > headerHeight;
 }
 
-function vNavigate(direction) {
+function hNavigate(direction) {
     let target = document.getElementsByTagName('main')[0];
     let maxChildren = target.childElementCount;
     let maxIndex = maxChildren - 1;

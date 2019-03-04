@@ -21,7 +21,7 @@ function updateFilter(event) {
     //if must reload something, scroll to this last something
     if (!newFilters["albumUI"]) {
         let target = document.querySelector('.filterUI.active:not(.hasSelection)');
-        hNavigate(target, -30); //add margin-top for ::before tag element
+        vNavigate(target, -30); //add margin-top for ::before tag element
     }
 }
 
@@ -200,7 +200,7 @@ function alterFilterUI(id, filterCriteria) {
 //animation scroll
 function transitionToAlbumInfos(aiElem) {
     //scroll to albumInfos...
-    hNavigate(aiElem, -10);
+    vNavigate(aiElem, -10);
 }
 
 ///

@@ -218,7 +218,7 @@ function displayShout(shoutData) {
     _currentShout = shoutData;
 
     //display/hide
-    resizeShout()().then(notificateShout);
+    toggleShout().then(notificateShout);
 }
 
 ///
@@ -226,22 +226,12 @@ function displayShout(shoutData) {
 ///
 
 function resizeShout() {
-    return function() {
-            return new Promise(function(resolve) {
-        
-            let shoutContainer = document.getElementById('shoutContainer');
-            let isWorth = isWorthDisplayingShout(_currentShout);
-            let heightSwitch = isWorth ? shoutContainer.scrollHeight + "px" : "";
-            let animOpen = shoutContainer.style.maxHeight === "";
-            shoutContainer.style.maxHeight = heightSwitch;
-            let resolving = function() {resolve(heightSwitch);}
+    return _resizeShutter(
+        'shoutContainer', 
+        isWorthDisplayingShout(_currentShout)
+    )['changed'];
+}
 
-            if (animOpen) {
-                waitTransitionEnd(shoutContainer).then(resolving);
-            } else {
-                resolving();
-            }
-            
-        });
-    }
+function toggleShout() {
+    return _toggleShutter('shoutContainer', resizeShout);
 }

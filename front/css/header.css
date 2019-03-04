@@ -97,6 +97,5 @@ header.toHide {
 
 
 header.sticky {
-    position: -webkit-sticky;
     position: sticky;
 }
