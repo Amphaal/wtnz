@@ -35,12 +35,14 @@
 #albumInfos .imgLoader {
     box-shadow : rgba(255, 255, 255, .25) 0px 0px 13px 1px;
     font-size: .6rem;
+    display: flex;
+    width: 20vw;
 }
 
 #albumInfos .imgLoader, 
 #albumInfos .imgLoader img {
-    width: 250px;
-    height: 250px;
+    min-width: 250px;
+    min-height: 250px;
 }
 
 #albumInfos .imgLoader.noImgFound::before {

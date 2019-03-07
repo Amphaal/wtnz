@@ -1,5 +1,7 @@
 function toggleProfile() {
-    _toggleShutter('profileContainer', resizeProfile);
+    preventSET(
+        _toggleShutter('profileContainer', resizeProfile)
+    );
 }
 
 ///

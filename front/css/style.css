@@ -154,6 +154,11 @@ label.clickable input[type="radio"]:not(:checked) + i + span
     position: relative;
 }
 
+.imgLoader img {
+    width: 100%;
+    height: 100%;
+}
+
 .imgLoader::before {
     display: flex;
     justify-content: center;

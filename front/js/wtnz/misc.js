@@ -14,13 +14,15 @@ function registerXNavigateSwipeEvents() {
 function preventSET(inBetweenPromise) {
     //temporary disabling event listening
     document.removeEventListener("scroll", onScroll);
-    return inBetweenPromise.then(function() {
+    return inBetweenPromise.then(function(elem) {
         document.addEventListener("scroll", onScroll);
+        return elem;
     });
 }
 
-function onScroll(ev) {
-    if(Math.abs(checkScrollSpeed()) < 10) return;
+function onScroll() {
+    let ss = checkScrollSpeed();
+    if(Math.abs(ss) < 10) return;
     headerToggle();
 }
 
@@ -28,6 +30,9 @@ function onScroll(ev) {
 function bindResizeFunctions() {
     resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight()});
     resizeFunctions.width.push(function() {return resizeShout().applyNewHeight()});
+    resizeFunctions.any.push(function() {
+        return headerToggle();
+    });
     Object.keys(_discoverFilter).forEach(function(id) {
         resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })
@@ -50,24 +55,20 @@ function _resizeShutter(targetId, reason, nextType) {
     };
 }
 
-function _toggleShutter(targetId, resizeInstructionsGetter, onResizeTransitionEnd) {
+function _toggleShutter(targetId, resizeInstructionsGetter) {
 
-    return new Promise(function(resolve) {
+    let anim = new Promise(function(resolve) {
 
         let reziseInstructions = resizeInstructionsGetter();
 
-        if (reziseInstructions.next) {
-            let onceend = waitTransitionEnd(document.getElementById(targetId), reziseInstructions.applyNewHeight);
-            if(onResizeTransitionEnd) {
-                onceend.then(onResizeTransitionEnd).then(resolve);
-            } else {
-                onceend.then(resolve);
-            }
-        } else {
-            reziseInstructions.applyNewHeight();
-            resolve();
-        }
+        waitTransitionEnd(
+            document.getElementById(targetId), 
+            reziseInstructions.applyNewHeight
+        ).then(resolve);
+
     });
+
+    return anim;
 }
 
 
@@ -80,13 +81,56 @@ function applyCompareDateBulk() {
     });
 }
 
-//scrolls to element, taking in account the sticky header
+//scrolls to element
 function vNavigate(elem, correct) {
-    if(!elem) return;
-    //let sticky = document.querySelector('header');
+    
+    if(!elem) resolve();
     let relativeDocumentOffset = elem.getBoundingClientRect().top + window.scrollY;
-    let elemPos = relativeDocumentOffset;// - sticky.clientHeight;
-    window.scroll(0, elemPos + (correct || 0));
+    let elemPos = relativeDocumentOffset + (correct || 0);
+    let isScrollerAtDest = function() {return elemPos == window.scrollY || document.body.scrollHeight == window.innerHeight;};
+
+    if(isScrollerAtDest()) {
+        updateHeaderClasses("sticky"); return;
+    }
+
+    //push the menu up
+    let rollbackMenu = function() {
+        return waitTransitionEnd(
+            document.getElementsByTagName("header")[0], 
+            function() {
+                updateHeaderClasses("sticky toHide");
+        }
+        ).then(function() {
+            updateHeaderClasses("");
+        });
+    };
+
+    //scroll to destination
+    let scrollToDest = function() {
+        return new Promise(function(resolve) {
+            
+            //action
+            window.scroll(0, elemPos);
+            
+            //wait...
+            let timeoutMs = 0;
+            let timeoutStepMs = 100;
+            let timeoutLimit = function() {timeoutMs = timeoutMs + timeoutStepMs; return timeoutMs > 2000;};
+            var untilScrollIsOver = setInterval(function() {
+                if (isScrollerAtDest() || timeoutLimit()) {
+                    clearInterval(untilScrollIsOver);
+                    resolve();
+                }
+            }, timeoutStepMs);
+
+        });
+    };
+
+    //wait for both animations to continue
+    return Promise.all([
+        rollbackMenu(), 
+        scrollToDest()
+    ]);
 }
 
 function _isInClientViewField(elem) {

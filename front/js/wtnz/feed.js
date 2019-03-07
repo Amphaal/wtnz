@@ -1,5 +1,8 @@
 function toggleFeed() {
-    return _toggleShutter('feedContainer', resizeFeed, vNavigate);
+    return preventSET(
+        _toggleShutter('feedContainer', resizeFeed)
+        .then(vNavigate)
+    );
 }
 
 ///

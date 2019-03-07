@@ -67,12 +67,15 @@ function renderHCPie(data, divId) {
   }
   
   function resizeStats() {
-      return _resizeShutter(
+    return _resizeShutter(
           'statsContainer',
           document.getElementById("showStats").checked
     );
   }
 
   function toggleStats() {
-      return _toggleShutter('statsContainer', resizeStats, vNavigate);
+    return preventSET(
+          _toggleShutter('statsContainer', resizeStats)
+          .then(vNavigate)
+    );
   }

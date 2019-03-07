@@ -8,7 +8,6 @@ function requestShout() {
     });
     socket.on("newShout", function(newShout) {
         newShout = JSON.parse(newShout);
-        console.log("sheeeeeet");
         onReceivedShout(newShout);
     });
 }
@@ -69,11 +68,14 @@ function onReceivedShout(newShoutData) {
 
     //update current shout
     _currentShoutDWorth = isWorthDisplayingShout(newShoutData);
-    if (!_currentShoutDWorth) return;
 
     //check what kind of update to apply
+    let isNoMusicShout = newShoutData['date'] && Object.keys(newShoutData).length == 1;
     let changes = compareShoutChanges(newShoutData);
-    let isHardChange = changes.includes('artist') || changes.includes('album') || changes.includes('name');
+    let isHardChange = !isNoMusicShout && (
+        changes.includes('artist') || changes.includes('album') || changes.includes('name')
+    );
+
     
     //preapre
     let shoutContainer = document.getElementById('shoutContainer');
@@ -100,14 +102,15 @@ function onReceivedShout(newShoutData) {
                         out.classList.add('show');
                     });
                 }
-        
-                //play sound
-                notificationShoutSound.play().then(null, function(e) {
-                    /* expected on Chrome */
-                });
-
                 //display main notif frame
                 if(isHardChange) window.requestAnimationFrame(function() {
+                    
+                    //play sound
+                    notificationShoutSound.play().then(null, function(e) {
+                        /* expected on Chrome */
+                    });
+                    
+                    //display
                     notif.classList.add('fade');
                 });
 
