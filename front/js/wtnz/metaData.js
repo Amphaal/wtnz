@@ -30,6 +30,7 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 
         request_qmbfac[idProcess].onloadend = function(e) {
             let text = e.currentTarget.responseText;
+            if(!text) {reject(); return;}
             let obj = JSON.parse(text);
             let imgUrl = mbQueryCoverArtAPI(obj['release-groups']);
             imgUrl ? resolve(imgUrl) : reject();
