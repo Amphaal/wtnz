@@ -36,6 +36,9 @@
     box-shadow : rgba(255, 255, 255, .25) 0px 0px 13px 1px;
     font-size: .6rem;
     display: flex;
+}
+
+#albumInfos .imgLoader:not(.searchingCover) {
     width: 20vw;
 }
 

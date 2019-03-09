@@ -29,7 +29,11 @@ footer > * {
 }
 
 #langs img {
-    height: 1rem;
+    height: 1.3rem;
+}
+
+#langs > * {
+    display: flex;
 }
 
 #langs > *:not(:first-child) {

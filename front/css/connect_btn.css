@@ -36,8 +36,9 @@
     margin-right: .75rem;
 }
 
-.connect-side:hover {
+.connect-side:hover{
+    animation-name: pulse;
     animation-duration: 1s;
     animation-iteration-count: infinite;
-    animation-name: rubberBand;
+    animation-fill-mode: forwards;
 }

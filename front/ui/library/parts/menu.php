@@ -15,7 +15,5 @@
         <input id='showStats' type='checkbox' onchange="toggleStats(event)" autocomplete="off">
         <i class="fas fa-chart-pie"></i>
     </label>
-    <div class="clickable connect-side">
-        <?php include 'front/ui/_components/connect_btn.php' ?>
-    </div>
+    <?php include 'front/ui/_components/connect_btn.php' ?>
 </div>

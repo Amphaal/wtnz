@@ -148,47 +148,23 @@ label.clickable.unselected
     border-radius:25%;
 }
 
-.imgLoader, .imgLoader img {
-    transition: all .3s ease;
-    border-radius: .5em;
-    background-color : white;
-    position: relative;
-}
-
-.imgLoader img {
-    width: 100%;
-    height: 100%;
-}
-
-.imgLoader::before {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.notif::after {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    white-space: pre;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color : grey;
-    background-color : white;
-    border-radius: .5em;
-    z-index: 100;
-    transition: all .3s ease;
+    background-color: red;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%; 
+    content: attr(data-notif);
+    right: 10%;
+    top: 5%;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: bounceIn;
+    font-size: .6em;
+    text-align: center;
+    padding: .1em;
+    box-shadow: 0px 1px 5px 1px rgba(56,56,56,.2);
 }
-
-.imgLoader.searchingCover::before {
-    background-image : url(front/img/loader.svg);
-    background-size: 50%;
-    background-repeat: no-repeat;
-    background-position: center;
-    flex-direction: column;
-    content : "";
-}
-
-.imgLoader.fo::before {
-    opacity: 0;
-}
-
-.imgLoader.noImgFound::before {
-    content : ":'(";
+.notif:hover::after {
+    animation: none !important;
 }
