@@ -121,7 +121,8 @@ label.clickable:hover > * {
 label.clickable input[type="checkbox"]:not(:checked) + i,
 label.clickable input[type="checkbox"]:not(:checked) + img,
 label.clickable input[type="radio"]:not(:checked) + i,
-label.clickable input[type="radio"]:not(:checked) + i + span
+label.clickable input[type="radio"]:not(:checked) + i + span,
+label.clickable.unselected
  {
     color : rgba(0, 0, 0, .8);
     opacity: .6;

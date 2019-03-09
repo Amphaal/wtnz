@@ -117,8 +117,7 @@ function updateUsersConfig($myNewConfig, $user = null) {
 
 function checkUserSpecificFolders() {
     //for each user
-    $p = getConfig()['users'];
-    foreach($p as $user => $pass) {
+    foreach(getUsersDb() as $user => $confData) {
         $path = getInternalUserFolder($user);
         mayCreateUserDirectory($path);
     }
@@ -135,7 +134,7 @@ function getPublicUserFolder($user) {
 }
 
 function checkUserExists($user, $non_fatal_check = false) {
-    $do_exist = isset(getConfig()['users'][$user]) && file_exists(getInternalUserFolder($user));
+    $do_exist = getUserConfig($user) != null && file_exists(getInternalUserFolder($user));
     if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
     return $do_exist;
 }
@@ -143,7 +142,7 @@ function checkUserExists($user, $non_fatal_check = false) {
 function comparePasswords($user) {
     $passwd = isset($_POST['password']) ? $_POST['password'] : NULL;
     if(empty($passwd)) errorOccured(i18n("e_nopass"));
-    if($passwd != getConfig()['users'][$user]["password"]) errorOccured(i18n("e_pmm"));
+    if($passwd != getUserConfig($user)["password"]) errorOccured(i18n("e_pmm"));
 }
 
 function testUploadedFile($expectedFilename){
@@ -220,9 +219,9 @@ function connectAs($user, $passwd) {
     if(isset($_SESSION["loggedAs"]) && $_SESSION["loggedAs"] == $user) {
         $ret["isError"] = false;
         $ret["description"] = i18n("e_log_identical");
-    } elseif(!isset(getConfig()['users'][$user])) {
+    } elseif(getUserConfig($user) == null) {
         $ret["description"] = i18n("e_unsu", $user);
-    } elseif($passwd != getConfig()['users'][$user]["password"]) {
+    } elseif($passwd != getUserConfig($user)["password"]) {
         $ret["description"] = i18n("e_pmm");
     } else {
         $ret["isError"] = false;
@@ -252,12 +251,16 @@ function renHpat($rules) {
 
 function getMyConfig() {
    if(isUserLogged()) {
-        return getUsersConfig(getCurrentUserLogged());
+        return getUserConfig(getCurrentUserLogged());
     }
 }
 
-function getUsersConfig($user) {
-    return getConfig()['users'][$user];
+function getUsersDb() {
+    return Config::get()['users'] ?? null;
+}
+
+function getUserConfig($user) {
+    return getUsersDb()[$user] ?? null;
  }
 
 //POST remember

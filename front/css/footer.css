@@ -7,18 +7,36 @@ footer {
     margin-bottom: .5rem;
 }
 
-#credits {
+footer > * { 
     display: flex;
-    align-items: center;
     background-color : white;
     padding: .35rem;
     font-size: .65rem;
+    height: 100%;
+    align-items: center;
+}
+
+#credits {
     color : #525252;
     align-self: flex-end;
     margin-right: 5%;
 }
 
+#langs {
+    align-self: flex-start;
+    margin-left: 5%;
+    padding: 0 .35rem;
+}
+
+#langs img {
+    height: 1rem;
+}
+
+#langs > *:not(:first-child) {
+    margin-left: .5rem;
+}
+
+
 #credits a, #credits img {
-    width: .75rem;
     height: .75rem;
 }

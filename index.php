@@ -1,5 +1,8 @@
 <?php
 
+//start session
+session_start();
+
 include_once "config/config.php";
 include_once "back/helpers/helpers.php";
 include_once "back/controllers/uploadLib.php";
@@ -9,9 +12,6 @@ include_once "back/controllers/downloadApp.php";
 include_once "back/controllers/accessUserLib.php";
 
 function init_app() {
-
-    //start session
-    session_start();
 
     // get URI elements
     $qs = getQueryString();

@@ -66,5 +66,6 @@
     "username_invalid" => "\"%s\" n'est pas un nom d'utilisateur valide, merci de vérifier les caractères spéciaux",
     "profile" => "profil",
     "sort_order" => "Trier par nom",
-    "sort_count" => "Trier par nombre / année"
+    "sort_count" => "Trier par nombre / année",
+    "switch_lang" => "Changer de langue"
 );

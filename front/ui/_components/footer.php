@@ -8,4 +8,19 @@
             <img src='front/img/linkedin.png' alt="<?php echo i18n("devLinkedin")?>"/>
         </a>
     </div>
+    <div id="langs">
+        <?php foreach(getFilesInFolder('front/img/flags') as $file) { 
+            $bn =  basename($file, ".svg");
+            $isCurrentLang = $bn == I18nSingleton::getInstance()->getLang();
+        ?>
+        <label 
+            <?php if(!$isCurrentLang) {?> title="<?php echo i18n("switch_lang");?>" <?php } ?>
+            data-lang="<?php echo $bn; ?>" 
+            class="<?php if(!$isCurrentLang) {echo "clickable unselected";}?>" 
+            onclick="changeLang(event)"
+        >
+            <img src="<?php echo $file; ?>" />
+        </label>
+        <?php } ?>
+    </div>
 </footer>

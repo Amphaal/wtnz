@@ -1,4 +1,25 @@
+function changeLang(event) {
+    let newLang = event.currentTarget.getAttribute("data-lang");
+    ezPOST({
+        set_lang : newLang
+    });
+}
 
+function ezPOST(data) {
+    let form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    
+    Object.keys(data).map(function(key) {
+        let iElem = document.createElement('input');
+        iElem.setAttribute("type", "hidden");
+        iElem.setAttribute("name", key);
+        iElem.setAttribute("value", data[key]);
+        return iElem;
+    }).forEach(function (item) { form.appendChild(item); });
+    
+    document.body.appendChild(form);
+    form.submit();
+}
 
 function registerXNavigateSwipeEvents() {
     var hammertime = new Hammer(document.body);

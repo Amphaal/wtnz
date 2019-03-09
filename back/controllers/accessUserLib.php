@@ -1,7 +1,7 @@
 <?php 
 
     function getCustomBackgroundAnimColors($user) {
-        $config = getUsersConfig($user);
+        $config = getUserConfig($user);
         if(!$config) return;
         if(!array_key_exists("customColors", $config)) return;
 
@@ -12,7 +12,7 @@
     }
 
     function getProfilePicture($user) {
-        $config = getUsersConfig($user);
+        $config = getUserConfig($user);
         if(!$config) return;
         if(!array_key_exists("profilePic", $config)) return;
 

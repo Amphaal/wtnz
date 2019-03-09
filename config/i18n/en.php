@@ -66,5 +66,6 @@
     "username_invalid" => '"%s" is not a safe username, please check for special characters',
     "profile" => "profile",
     "sort_order" => "Sort by name",
-    "sort_count" => "Sort by number / year"
+    "sort_count" => "Sort by number / year",
+    "switch_lang" => "Change language"
 );

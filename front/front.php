@@ -3,7 +3,7 @@
     $icon = "front/img/ico.png";
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo LANG;?>">
+<html lang="<?php echo I18nSingleton::getInstance()->getLang();?>">
     <head>
         <title><?php echo $title;?></title>
         <link rel="icon" type="image/png" href="<?php echo $icon;?>" />
