@@ -5,6 +5,17 @@ function changeLang(event) {
     });
 }
 
+function removeNotification(selector) {
+    document.querySelectorAll(selector).forEach(function(elem) {
+        waitAnimationEnd(elem, function() {
+            elem.classList.add("notifOut");
+        }).then(function() {
+            elem.classList.remove("notif");
+            elem.classList.remove("notifOut");
+        });
+    });
+}
+
 function ezPOST(data) {
     let form = document.createElement("form");
     form.setAttribute("method", "POST");
@@ -367,6 +378,7 @@ function hNavigate(direction) {
     let maxIndex = maxChildren - 1;
     let actualIndex = target.getAttribute("data-index") || 0;
     let targetIndex = null;
+    let followUp = null;
 
     //direction to go
     if(direction == null) { //automatic switch
@@ -382,10 +394,34 @@ function hNavigate(direction) {
     if(targetIndex > maxIndex || targetIndex < 0) return;
 
     //specific to target
-    if(targetIndex == 1) { document.body.classList.add("lock"); } else { document.body.classList.remove("lock"); } //remove Vscroll on connect
+
+    //remove Vscroll on connect
+    if(targetIndex == 1) { 
+        document.body.classList.add("lock"); 
+
+        //starter animation
+        let rloader = document.getElementById("xmlRLoader");
+        let firstAnim = rloader.style.maxHeight == "";
+        if(firstAnim) followUp = function() {
+
+            removeNotification(".connect-side");
+
+            waitTransitionEnd(rloader, function() {
+                rloader.style.maxHeight = rloader.scrollHeight + "px";
+            }).then(function() {
+                waitAnimationEnd(rloader, function() {
+                    rloader.classList.add("bounceIn");
+                }).then(function(){
+                    rloader.style.opacity = 1;
+                });
+            });
+        };
+        
+    } else { 
+        document.body.classList.remove("lock"); 
+    } 
+
     
-    //move...
-    target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
     target.setAttribute("data-index", targetIndex);
     window.scrollTo({top : 0}); //scroll back to top
 
@@ -397,4 +433,9 @@ function hNavigate(direction) {
             target.children[i].classList.remove('focused');
         }
     }
+    
+    //move...
+    waitTransitionEnd(target, function() {
+        target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
+    }).then(followUp);
 }

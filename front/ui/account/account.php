@@ -1,6 +1,8 @@
 <div id='wtnz-connect'>
-    <div style="height:100vh; display:flex; align-items:center;flex-direction:column; justify-content:center">
+    <div id="connectContainer">
         <span class='logo' style="font-size:4rem"></span>
-        <div>CACA</div>
+        <div id='xmlRLoader'>
+            <?php include "back/ui/parts/account.php" ?>
+        </div>
     </div>
 </div>

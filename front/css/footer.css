@@ -32,8 +32,14 @@ footer > * {
     height: 1.3rem;
 }
 
+
 #langs > * {
     display: flex;
+}
+
+#langs > *:not(.unselected) img {
+    border: 1px dashed #6a67bd57;
+    padding : 0 .2rem;
 }
 
 #langs > *:not(:first-child) {

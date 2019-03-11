@@ -160,11 +160,18 @@ label.clickable.unselected
     animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-name: bounceIn;
-    font-size: .6em;
+    font-size: .6rem;
     text-align: center;
     padding: .1em;
     box-shadow: 0px 1px 5px 1px rgba(56,56,56,.2);
 }
+
+.notif.notifOut::after {
+    animation-name: bounceOut !important;
+    animation-iteration-count: 1 !important;
+    animation-fill-mode: forwards !important;
+}
+
 .notif:hover::after {
     animation: none !important;
 }
