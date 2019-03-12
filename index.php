@@ -4,7 +4,7 @@
 session_start();
 
 include_once "config/config.php";
-include_once "back/helpers/helpers.php";
+include_once "back/helpers/_helpers.php";
 include_once "back/controllers/uploadLib.php";
 include_once "back/controllers/uploadShout.php";
 include_once "back/controllers/manage.php";

@@ -53,9 +53,13 @@
     -webkit-appearance: button;
     appearance: button;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    padding: .33em;
+    font-size: .75rem;
+    padding: .5em;
     text-align: center;
     text-decoration: none;
     color: initial;
+}
+
+#accountManagement a:not(:first-child) {
+    margin-top: 1rem;
 }

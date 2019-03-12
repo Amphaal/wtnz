@@ -3,13 +3,26 @@
 include_once "db.php";
 include_once "i18n.php";
 
+
+function getCurrentLibraryFileName() {
+    return 'current.json';
+}
+
+function getUnifiedLibraryFileName() {
+    return 'unified.json';
+}
+
+function getCurrentShoutFileName() {
+    return 'shout.json';
+}
+
 class Config {
 
     private static $_instance = null;
     protected $_config;
     
     private function __construct() {  
-        $this->_config["users"] = getUserDb();
+        $this->_config["users"] = ObtainUsersDatabaseFileAsObject();
     }
 
     public static function forceUpdate() {
