@@ -36,7 +36,7 @@ function instShoutMuteButton() {
     
     //instantiate sound
     if(notificationShoutSound == null) {
-        notificationShoutSound = new Audio('front/sound/long-expected.mp3');
+        notificationShoutSound = new Audio('front/assets/sound/long-expected.mp3');
         notificationShoutSound.autoplay = false;
         notificationShoutSound.muted = false;
     }

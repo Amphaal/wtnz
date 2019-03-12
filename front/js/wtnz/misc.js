@@ -62,6 +62,8 @@ function onScroll() {
 function bindResizeFunctions() {
     resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight()});
     resizeFunctions.width.push(function() {return resizeShout().applyNewHeight()});
+    resizeFunctions.width.push(function() {return alignConnectSideElements()});
+    
     resizeFunctions.any.push(function() {
         return headerToggle();
     });
@@ -167,6 +169,17 @@ function vNavigate(elem, correct) {
 
 function _isInClientViewField(elem) {
     return elem.getBoundingClientRect().top > window.scrollY;
+}
+
+function alignConnectSideElements() {
+    let topMost = [];
+    document.querySelectorAll("#wtnz-library .connect-side").forEach(function(e) {
+        topMost.push(e.getBoundingClientRect().top);
+    });
+    topMost = Math.max(...topMost);
+
+    let target = document.querySelector("#wtnz-connect .connect-side")
+    target.style.top = topMost + "px";
 }
 
 ///
@@ -372,7 +385,12 @@ function isHeaderOutOfReach() {
     return scrollHeight > headerHeight;
 }
 
+function blurCurrentFocus() {
+    document.body.focus();
+}
+
 function hNavigate(direction) {
+    blurCurrentFocus();
     let target = document.getElementsByTagName('main')[0];
     let maxChildren = target.childElementCount;
     let maxIndex = maxChildren - 1;
@@ -398,39 +416,26 @@ function hNavigate(direction) {
     //remove Vscroll on connect
     if(targetIndex == 1) { 
         document.body.classList.add("lock"); 
-
-        //starter animation
-        let rloader = document.getElementById("xmlRLoader");
-        let firstAnim = rloader.style.maxHeight == "";
-        if(firstAnim) followUp = function() {
-
-            removeNotification(".connect-side");
-
-            waitTransitionEnd(rloader, function() {
-                rloader.style.maxHeight = rloader.scrollHeight + "px";
-            }).then(function() {
-                waitAnimationEnd(rloader, function() {
-                    rloader.classList.add("bounceIn");
-                }).then(function(){
-                    rloader.style.opacity = 1;
-                });
-            });
-        };
+        followUp = rLoaderAnimation();
         
     } else { 
         document.body.classList.remove("lock"); 
     } 
-
     
+    //scroll back to top
     target.setAttribute("data-index", targetIndex);
-    window.scrollTo({top : 0}); //scroll back to top
+    window.scrollTo({top : 0}); 
 
-    //reset focus flag
+    //reset focus flag / play state
     for(let i = 0; i < maxChildren; i++) {
+        let child = target.children[i];
+        let video = child.querySelector("video");
         if(i == targetIndex) {
-            target.children[i].classList.add('focused');
+            child.classList.add('focused');
+            if(video) video.play();
         } else {
-            target.children[i].classList.remove('focused');
+            child.classList.remove('focused');
+            if(video) video.pause();
         }
     }
     
@@ -438,4 +443,32 @@ function hNavigate(direction) {
     waitTransitionEnd(target, function() {
         target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
     }).then(followUp);
+}
+
+function rLoaderAnimation() {
+
+    let rloader = document.getElementById("xmlRLoader");
+    let firstAnim = rloader.style.maxHeight == "";
+    
+    if(firstAnim) return new Promise(function(resolve) {
+
+        removeNotification(".connect-side");
+
+        waitTransitionEnd(rloader, function() {
+            rloader.style.maxHeight = rloader.scrollHeight + "px";
+        }).then(function() {
+            waitAnimationEnd(rloader, function() {
+                rloader.classList.add("bounceIn");
+                document.getElementById("connectContainer").classList.add("anima");
+                document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
+                document.getElementById("bg").classList.add("show");
+            }).then(function(){
+                rloader.style.opacity = 1;
+                resolve();
+            });
+        });
+    });
+
+    /* dummy promise */
+    return new Promise(function(resolve) {resolve();});
 }

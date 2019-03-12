@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //instantiation
     navigatorSpecificParameterization();
+    alignConnectSideElements();
     bindResizeFunctions();
     instShoutMuteButton();
     registerXNavigateSwipeEvents();

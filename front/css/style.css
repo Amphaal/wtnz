@@ -1,6 +1,6 @@
 @font-face {
     font-family: bebasNeueFont;
-    src: url(front/fonts/BebasNeue-Regular.otf);
+    src: url(front/assets/fonts/BebasNeue-Regular.otf);
     font-display: swap;
 }
 
@@ -50,7 +50,7 @@ a, a:visited, a:hover, a:active {
 main {
     min-width : 100%;
     position: relative;
-    transition: all .25s ease-in;
+    transition: all .5s ease-in;
     display:flex; 
     transform:translateX(0px);
 }
@@ -71,6 +71,8 @@ main > *:first-child {
     height: 100%;
     background-color: white;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
 #mainFrame {
@@ -103,7 +105,7 @@ main > *:first-child {
 }
 
 
-label.clickable input[type="checkbox"], input[type="radio"]{
+label.clickable input[type="checkbox"], input[type="radio"] {
     display: none;
 }
 
@@ -112,6 +114,12 @@ label.clickable img,
 label.clickable i + span{
     transition: all .3s ease;
     cursor: pointer;
+}
+
+label.clickable {
+    display: flex; 
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 label.clickable:hover > * {

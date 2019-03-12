@@ -5,6 +5,9 @@
     
     left: 6.6rem;
     top: 3.5rem;
+
+    display: flex;
+    flex-direction: row;
 }
 
 .sorter > * {
