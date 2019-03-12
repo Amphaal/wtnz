@@ -9,7 +9,7 @@ include_once "back/controllers/uploadLib.php";
 include_once "back/controllers/uploadShout.php";
 include_once "back/controllers/manage.php";
 include_once "back/controllers/downloadApp.php";
-include_once "back/controllers/accessUserLib.php";
+include_once "back/controllers/library.php";
 
 function init_app() {
 
@@ -40,7 +40,7 @@ function init_app() {
     if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') header('Location: /wtnz/' . $user_qs);
 
     //redirect to user library in last resort
-    return routerAccessUserLib($user_qs);
+    return routerLibrary($user_qs);
 }
 
 function accessIndex() {
