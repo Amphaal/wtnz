@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="post" autocomplete="off" >
+<form method="post" autocomplete="off" enctype="multipart/form-data">
   <input name="MAX_FILE_SIZE" type="hidden"  value="<?php echo getFileUploadLimit() ?>" autocomplete="off" />
   <input name="wtnz_file" type="file" accept=".json" required autocomplete="off" />
   <br/>

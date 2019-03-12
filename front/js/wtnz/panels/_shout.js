@@ -63,6 +63,11 @@ function toggleShoutSound(event) {
 }
 
 
+function _isInClientViewField(elem) {
+    let boundaries = elem.getBoundingClientRect();
+    return boundaries.bottom >= 0 && boundaries.left >= 0;
+}
+
 //display shout
 function onReceivedShout(newShoutData) {
 

@@ -1,22 +1,22 @@
-<div style="display:flex">
+
+<div id="accountManagement">
     <?php if(isUserLogged()) {?>
         <div><?php echo i18n("welcome",  getCurrentUserLogged()) ?></div>
     <?php } ?>
-    <div style='margin:.5rem; display:flex'>
+    <div class="loginRack">
         <?php if(isUserLogged()) {?>
-            <button onclick="location.href='<?php echo  getCurrentUserLogged() ?>'"><?php echo i18n("log_accessMyLib")?></button>
-            <button onclick="location.href='/wtnz/manage/disconnect'"><?php echo i18n("log_disconnect")?></button>
+            <a href="/wtnz/<?php echo getCurrentUserLogged() ?>"><?php echo i18n("log_accessMyLib")?></a>
+            <a href="/wtnz/manage/disconnect"><?php echo i18n("log_disconnect")?></a>
         <?php } else { ?>
-            <button onclick="location.href='/wtnz/manage/create'"><?php echo i18n("log_createAccount")?></button>
-            <button onclick="location.href='/wtnz/manage/connect'"><?php echo i18n("e_log_connect")?></button>
+            <a href="/wtnz/manage/connect"><?php echo i18n("e_log_connect")?></a>
+            <a href="/wtnz/manage/create"><?php echo i18n("log_createAccount")?></a>
         <?php } ?>
     </div>
     <?php if(isUserLogged()) {?>
-        <div style='flex:.5'></div>
         <span><?php echo i18n("obtainApp")?></span>
         <div style='margin:.5rem'>
-            <button onclick="location.href='/wtnz/download/osx'"><?php echo i18n("downloadFeeder", "Mac")?></button>
-            <button onclick="location.href='/wtnz/download/win'"><?php echo i18n("downloadFeeder", "Windows")?></button>
+            <a href="/wtnz/download/osx"><?php echo i18n("downloadFeeder", "Mac")?></a>
+            <a href="/wtnz/download/win"><?php echo i18n("downloadFeeder", "Windows")?></a>
         </div>
     <?php } ?>
 </div>
