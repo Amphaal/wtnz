@@ -16,8 +16,8 @@
     <?php if(isUserLogged()) {?>
         <span><?php echo i18n("obtainApp")?></span>
         <div style='margin:.5rem; display: flex; flex-direction: column'>
-            <a href="/wtnz/download/osx"><?php echo i18n("downloadFeeder", "Mac")?></a>
-            <a href="/wtnz/download/win"><?php echo i18n("downloadFeeder", "Windows")?></a>
+            <a no-xhttp href="/wtnz/download/osx"><?php echo i18n("downloadFeeder", "Mac")?></a>
+            <a no-xhttp href="/wtnz/download/win"><?php echo i18n("downloadFeeder", "Windows")?></a>
         </div>
     <?php } ?>
 </div>
