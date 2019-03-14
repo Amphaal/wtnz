@@ -20,10 +20,13 @@
     max-width: 0;
     overflow: hidden;
     transition: all .3s ease;
-    transition-delay: .25s;
-    opacity: 0;
+    white-space: nowrap;
     position: relative;
     animation-fill-mode: forwards;
+    display: flex;
+    flex-direction: column;
+    font-size: .75rem;
+    padding: 1rem 0;
 }
 
 #wtnz-connect > *:not(video) {
@@ -51,6 +54,7 @@
 
 #accountManagement {
     display:flex;
+    flex-direction: column;
 }
 
 #accountManagement a {
@@ -62,8 +66,9 @@
     text-align: center;
     text-decoration: none;
     color: initial;
+    overflow: hidden;
 }
 
-#accountManagement a:not(:first-child) {
+#accountManagement a:not(:first-child):not(:only-child) {
     margin-top: 1rem;
 }

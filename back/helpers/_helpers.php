@@ -5,7 +5,7 @@ include_once "back/helpers/htmlHelpers.php";
 function getQueryString() {
     $request_uri = explode('/', strtolower($_SERVER['REQUEST_URI']));
     $request_uri = array_filter($request_uri, 'strlen' );
-    array_shift($request_uri);
+    array_shift($request_uri); //remove root app 
     return $request_uri;
 }
 
@@ -90,16 +90,26 @@ function isUserLogged() {
     return !empty(getCurrentUserLogged());
 }
 
-function goToSelfLibrary() {
-    header('Location: /wtnz/' . getCurrentUserLogged());
+function goToLocation($rq) {
+    header('Location: ' . getLocation($rq, param));
 }
 
-function goToUserLibrary($user_qs) {
-    header('Location: /wtnz/' . $user_qs);
-}
+function getLocation($rq) {
+    $r = getRootApp();
 
-function goToHome() {
-    header('Location: /wtnz/manage');
+    switch($rq) {
+        case "Home":
+            $r .= 'manage';
+            break;
+        case "ThisLibrary":
+            $r .= (getQueryString()[0] ?? "");
+            break;
+        case "MyLibrary":
+            $r .= getCurrentUserLogged();
+            break;
+    }
+
+    return strtolower($r);
 }
 
 function isXMLHttpRequest(){

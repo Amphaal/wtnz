@@ -11,6 +11,9 @@ include_once "back/controllers/manage.php";
 include_once "back/controllers/downloadApp.php";
 include_once "back/controllers/library.php";
 
+// $dg = new DataGenerator("amphaal");
+// var_dump($dg->getDataPart("slug")); die;
+
 function init_app() {
 
     sanitizePOST();
@@ -24,7 +27,7 @@ function init_app() {
     $action = array_shift($qs);
 
     //if no user directory is being accessed
-    if(!isset($user_qs)) return home(); 
+    if(!isset($user_qs)) return include "back/ui/welcome.php"; 
     
     //check if special queries
     if($user_qs == 'manage') return routerManage($action);
@@ -38,7 +41,7 @@ function init_app() {
     routerUploadShout($user_qs, $action);
 
     //else redirect on misformated/unhandled URI
-    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') goToUserLibrary();
+    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') home();
 
     //redirect to user library in last resort
     return routerLibrary($user_qs);

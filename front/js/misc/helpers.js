@@ -65,6 +65,18 @@ function waitTransitionEnd(waiter, action) {
     return _waitEventEnd(_whichTransitionEndEvent(), waiter, action);
 }
 
+function debounce(callback, delay){
+    var timer;
+    return function(){
+        var args = arguments;
+        var context = this;
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            callback.apply(context, args);
+        }, delay)
+    }
+}
+
 
 function ezPOST(data) {
     let form = document.createElement("form");

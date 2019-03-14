@@ -7,17 +7,19 @@ function rLoaderAnimation() {
 
         removeNotification(".connect-side");
 
-        waitTransitionEnd(rloader, function() {
-            expandRLoader(rloader);
+
+        
+        document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
+        document.getElementById("bg").classList.add("show");
+        let cc = document.getElementById("connectContainer");
+
+        waitTransitionEnd(cc, function() { 
+            cc.classList.add("anima");
         }).then(function() {
-            waitAnimationEnd(rloader, function() {
-                rloader.classList.add("bounceIn");
-                document.getElementById("connectContainer").classList.add("anima");
-                document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
-                document.getElementById("bg").classList.add("show");
-                resolve();
-            });
+            expandRLoader(rloader);
+            resolve();
         });
+
     });
 
     /* dummy promise */
@@ -26,16 +28,22 @@ function rLoaderAnimation() {
 
 
 function expandRLoader(rloader) {
-    rloader.style.maxHeight = rloader.scrollHeight + "px";
+    rloader.style.maxHeight = "100%";
     rloader.style.maxWidth = "100%";
 }
 
 function fillRLoader(rloader) {
     return function (response) {
+        
         let content = response.currentTarget.responseText;
-        rloader.innerHTML = content;
-        initRLoader();
-        expandRLoader(rloader);
+
+        if(content) {
+            rloader.innerHTML = content;
+            initRLoader();
+            expandRLoader(rloader);
+        } else {
+            rloader.style.pointerEvents = "";
+        }
     };
 }
 
@@ -43,7 +51,7 @@ function initRLoader() {
     let rloader = document.getElementById("xmlRLoader");
     rloader.style.pointerEvents = "";
 
-    let aBtns = rloader.querySelectorAll("a[href]");
+    let aBtns = rloader.querySelectorAll("a[href]:not([no-xhttp])");
     let aForm = rloader.querySelector("form");
 
     let goXHTML = function(method, url, POSTParams) {

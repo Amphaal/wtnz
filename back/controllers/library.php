@@ -35,8 +35,8 @@
         $latestUpdate = filemtime($expectedLibrary);
 
         //url based variables
-        $root = "https://zonme.to2x.ovh/wtnz/";
-        $sio_url = "wss://zonme.to2x.ovh:3000";
+        $root = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRootApp();
+        $sio_url = "wss://" . $_SERVER["HTTP_HOST"] . ":3000";
 
         include "front/front.php";
         exit;

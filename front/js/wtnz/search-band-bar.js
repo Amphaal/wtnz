@@ -2,9 +2,28 @@
 ///ENTRYPOINT
 ///
 
+var _SbLatestVal = "";
+function initSearchBand() {
+   let input = document.querySelector("#searchBand input");
+
+   //debouncing
+   let _searchBand = debounce(function(e) {
+        let criteria = e.target.value;
+        if(criteria != _SbLatestVal) {
+            _SbLatestVal = criteria;
+            searchBand(criteria);
+        }
+    }, 350);
+
+   input.addEventListener("keyup", _searchBand);
+   input.addEventListener("focus", toggleSearchResults);
+   input.addEventListener("blur", toggleSearchResults);
+   input.addEventListener("keydown", handleKeysSearchBand);
+}
+
+
 //search band through head input
-function searchBand(event) {
-    let criteria = event.target.value;
+function searchBand(criteria) {
     let data = _appDataFeeds.searchBand(criteria);
     renderSearchResults(criteria, data);
 }

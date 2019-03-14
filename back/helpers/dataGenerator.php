@@ -9,7 +9,6 @@ class DataGenerator {
         $this->_username = $username;
         $this->_iTargetPath = getInternalUserFolder($username) . "/";
 
-
         if($lib != null) {
             $this->_lib = $lib;
         } else {
@@ -23,6 +22,10 @@ class DataGenerator {
         foreach(self::$_outputTargets as $target) {
             $this->_saveData($target, $this->_cache[$target], $prettyPrint);
         }
+    }
+
+    public function getDataPart($target) {
+        return $this->$target($this->_lib);
     }
 
     public function generateUnifiedFile($prettyPrint = false) {
@@ -63,7 +66,7 @@ class DataGenerator {
 
     private function _generateData() {
         foreach(self::$_outputTargets as $target) {
-            $this->$target($this->_lib);
+            $this->getDataPart($target);
         }
     }
 
@@ -256,6 +259,14 @@ class DataGenerator {
         foreach($data as $key => $value) {
             $total[$key] = $slgfr($key);
         }
-        return $total;
+
+        //sort by string length then alpha
+        uksort($total, function($a, $b) {
+            return strlen($a) - strlen($b) ?: strcmp($a, $b);
+        });
+
+        array_walk($total, function(&$a, $b) { $a = array($a, $b); });
+
+        return array_values($total);
     }
 }

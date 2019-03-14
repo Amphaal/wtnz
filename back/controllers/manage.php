@@ -44,7 +44,7 @@ function disconnect() {
     session_destroy();
 
     if(isXMLHttpRequest()) {
-        goToHome();
+        goToLocation("Home");
     } else { 
         header('location: '. $_SERVER['HTTP_REFERER']);
     }
@@ -56,9 +56,9 @@ function login() {
         $login_result = connectAs($_POST['username'], $_POST['password']);
         if(!$login_result['isError']) {
             if(isXMLHttpRequest()) {
-                goToHome();
+                goToLocation("Home");
             } else { 
-                goToSelfLibrary();
+                goToLocation("MyLibrary");
             }
         }
     }

@@ -110,6 +110,9 @@ function addSortingCapabilities(data) {
 
 //searchBand
 function getSearchBandDataFeed(lib){
+
+    let limitResults = 100;
+
     return function(filterCriteria) {
         if(!filterCriteria) return;
         
@@ -117,20 +120,29 @@ function getSearchBandDataFeed(lib){
     
         let source = albumsByArtistsList(lib);
         let slugs = slugifiedArtists(lib);
-
-        let results = Object.keys(source).reduce(function(total, current) {
+        
+        let resultCount = 0;
+        let results = slugs.reduce(function(total, current) {
             
-            let searchIndex = slugs[current].indexOf(slugFc);
+            //if limit is reached, stop searching
+            if (resultCount === limitResults) {
+                return total;
+            }
+
+            let bandName = current[1];
+            let bandSlug = current[0];
+            let searchIndex = bandSlug.indexOf(slugFc);
             
             if(searchIndex > -1)  {
-                total[current] = {
-                    Genres :  source[current]["Genres"],
+                total[bandName] = {
+                    Genres :  source[bandName]["Genres"],
                     sIndexRange : searchBand_foundRange(
-                        current,
+                        bandName,
                         slugFc,
                         searchIndex
                     )
                 };
+                resultCount++;
             }
     
             return total;

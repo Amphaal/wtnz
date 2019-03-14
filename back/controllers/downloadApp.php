@@ -1,6 +1,8 @@
 <?php 
 
 function routerDownload($action) {
+    if(isXMLHttpRequest()) ob_end_clean(); die;
+
     $initialPath = $_SERVER["DOCUMENT_ROOT"].'/feedtnz/downloads/'.$action;
 
     $latestInFolder = scandir($initialPath, SCANDIR_SORT_DESCENDING)[0];

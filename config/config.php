@@ -16,6 +16,10 @@ function getCurrentShoutFileName() {
     return 'shout.json';
 }
 
+function getRootApp() {
+    return "/wtnz/";
+}
+
 class Config {
 
     private static $_instance = null;

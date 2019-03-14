@@ -29,7 +29,7 @@ var resizeFunctions = {
     any : []
 };
 
-//event listener with throtte
+//event listener with throttle
 window.addEventListener('resize', function(event) {
     clearTimeout(timeoutResize);
     timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize);
