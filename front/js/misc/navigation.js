@@ -11,7 +11,7 @@ function _resizeShutter(targetId, reason, nextType) {
     
     return {
         next : nextType == "changed" ? changed : heightSwitch,
-        applyNewHeight : changed ? updateTargetMaxHeight : function() {return;}
+        applyNewHeight : (changed ? updateTargetMaxHeight : null)
     };
 }
 
@@ -117,7 +117,7 @@ function hNavigate(direction) {
     //remove Vscroll on connect
     if(targetIndex == 1) { 
         document.body.classList.add("lock"); 
-        followUp = rLoaderAnimation();
+        followUp = function() {rLoaderAnimation();};
         
     } else { 
         document.body.classList.remove("lock"); 

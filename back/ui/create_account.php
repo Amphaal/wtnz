@@ -11,7 +11,7 @@
 
 <div style="display: flex; flex-direction:column;align-items:center;">
     <h1><?php echo i18n("e_log_createAccount")?></h1>
-    <form method="post" autocomplete="off">
+    <form method="POST" style="display: flex; flex-direction:column" autocomplete="off" action="<?php echo $_SERVER["REQUEST_URI"] ?>">
         <div>
             <input 
             pattern="<?php echo renHpat($rules['username'])?>" 

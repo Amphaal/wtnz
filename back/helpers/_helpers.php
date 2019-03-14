@@ -9,6 +9,10 @@ function getQueryString() {
     return $request_uri;
 }
 
+function sanitizePOST() {
+    if(array_key_exists('username', $_POST)) $_POST['username'] = trim(strtolower($_POST['username']));
+} 
+
 function errorOccured($error_text) {
     if(isset($_POST['headless'])) http_response_code(520);
     exit($error_text); 
@@ -88,4 +92,16 @@ function isUserLogged() {
 
 function goToSelfLibrary() {
     header('Location: /wtnz/' . getCurrentUserLogged());
+}
+
+function goToUserLibrary($user_qs) {
+    header('Location: /wtnz/' . $user_qs);
+}
+
+function goToHome() {
+    header('Location: /wtnz/manage');
+}
+
+function isXMLHttpRequest(){
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 }

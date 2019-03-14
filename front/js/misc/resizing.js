@@ -5,13 +5,14 @@
 
 //resize functions
 function bindResizeFunctions() {
-    resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight()});
-    resizeFunctions.width.push(function() {return resizeShout().applyNewHeight()});
-    resizeFunctions.width.push(function() {return alignConnectSideElements()});
+    resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight});
+    resizeFunctions.width.push(function() {return resizeShout().applyNewHeight});
+    resizeFunctions.width.push(function() {return alignConnectSideElements});
     
     resizeFunctions.any.push(function() {
-        return headerToggle();
+        return headerToggle;
     });
+
     Object.keys(_discoverFilter).forEach(function(id) {
         resizeFunctions.any.push(applyManualSizesFilterUIs(id));
     })
@@ -36,9 +37,7 @@ window.addEventListener('resize', function(event) {
 
 window.addEventListener('orientationchange', function() {
     window.scrollTo({left : 0});
-})
-
-
+});
 
 function resizeManualHeightsAndWidths() {
     
@@ -46,25 +45,23 @@ function resizeManualHeightsAndWidths() {
     let newHeight = window.innerHeight;
     let newWidth = window.innerWidth;
     
+    let execFunc = function(probFunc) {
+        if(!probFunc) probFunc()();
+    };
+
     //height or width...
-    resizeFunctions.any.forEach(function(func) {
-        func();
-    });
+    resizeFunctions.any.forEach(execFunc);
 
     //height...
     if(newHeight != sourceHeight) {
         sourceHeight = newHeight;
-        resizeFunctions.height.forEach(function(func) {
-            func();
-        });
+        resizeFunctions.height.forEach(execFunc);
     }
 
     //width...
     if(newWidth != sourceWidth) {
         sourceWidth = newWidth;
-        resizeFunctions.width.forEach(function(func) {
-            func();
-        });
+        resizeFunctions.width.forEach(execFunc);
     }
 
 }

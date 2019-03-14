@@ -11,10 +11,11 @@
 
 <div style="display: flex; flex-direction:column;align-items:center;">
     <h1><?php echo i18n("e_log_connect")?></h1>
-    <form method="post">
+    <form method="POST" action="<?php echo $_SERVER["REQUEST_URI"] ?>">
         <input 
             name="username" 
             placeholder="<?php echo i18n("e_log_username")?>" 
+            autocomplete="username"
             required 
             value="<?php echo isset($_POST['username']) ? $_POST['username'] : ""; ?>"
         />
@@ -23,6 +24,7 @@
                 name="password" 
                 type="password" 
                 placeholder="<?php echo i18n("userPwd")?>" 
+                autocomplete="current-password"
                 required 
             />
         </div>

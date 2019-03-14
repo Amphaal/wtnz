@@ -45,12 +45,14 @@ function _whichAnimationEndEvent() {
 
 function _waitEventEnd(eventTypeToListen, waiter, action) {
 
+    if(!action) return Promise.resolve(null);
+
     return new Promise(function(resolve) {
-        let ff = function(e) {
-            waiter.removeEventListener(eventTypeToListen, ff);
+        let evHandler = function(e) {
+            waiter.removeEventListener(eventTypeToListen, evHandler);
             resolve(waiter);
         }
-        waiter.addEventListener(eventTypeToListen, ff);
+        waiter.addEventListener(eventTypeToListen, evHandler);
         action();
     });
 }

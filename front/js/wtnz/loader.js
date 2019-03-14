@@ -21,14 +21,10 @@ function displayApp() {
 
 //hide loader bar
 function hideLoader() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
         //fade-in
-        let loader = document.getElementById("loader");
-        loader.classList.remove("fadeIn");
-        loader.classList.add("fadeOut");
-
-        //permit underlying interactions
-        document.getElementById("loader-container").style.pointerEvents = "none";
+        let loader = document.getElementById("loader-container");
+        loader.style.opacity = 0;
 
         return resolve();
     });
@@ -48,9 +44,8 @@ function showApp() {
     return new Promise(function(resolve) {
         let content = document.getElementById("wtnz-library");
 
-        return waitAnimationEnd(content, function() {
-            content.classList.add("animated");
-            content.classList.add("fadeIn");
+        return waitTransitionEnd(content, function() {
+            content.style.opacity = 1;
         }).then(resolve);
     });
 }

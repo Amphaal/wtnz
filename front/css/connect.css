@@ -1,25 +1,29 @@
 #connectContainer {
-    height:100vh; 
+    height:100vh;
+    max-width: 0;
     display:flex; 
     align-items:center;
     flex-direction:column; 
     justify-content:center;
     position:relative;
-    transition: padding .5s ease, background-color .5s ease;
+    transition: padding .5s ease, background-color .5s ease, max-width .5s ease;
 }
 
 #connectContainer.anima {
     background-color: rgba(0,0,0,.1);
     padding: 0 1rem;
+    max-width: 100%;
 }
 
 #xmlRLoader {
     max-height: 0;
+    max-width: 0;
     overflow: hidden;
     transition: all .3s ease;
     transition-delay: .25s;
     opacity: 0;
     position: relative;
+    animation-fill-mode: forwards;
 }
 
 #wtnz-connect > *:not(video) {

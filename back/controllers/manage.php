@@ -11,11 +11,17 @@ function routerManage($action) {
             return disconnect();
             break;
         case "connect";
-        default;
             return login();
+            break;
+        default;
+            return home();
             break;
     }
 }
+
+function home() {
+     include "back/ui/home.php";
+}  
 
 function accountCreation() {
     $rules = [
@@ -36,15 +42,24 @@ function accountCreation() {
 function disconnect() {
     session_unset();
     session_destroy();
-    header('location: '. $_SERVER['HTTP_REFERER']);
+
+    if(isXMLHttpRequest()) {
+        goToHome();
+    } else { 
+        header('location: '. $_SERVER['HTTP_REFERER']);
+    }
+
 }
 
 function login() {
-    
     if($_POST) {
         $login_result = connectAs($_POST['username'], $_POST['password']);
         if(!$login_result['isError']) {
-            goToSelfLibrary();
+            if(isXMLHttpRequest()) {
+                goToHome();
+            } else { 
+                goToSelfLibrary();
+            }
         }
     }
 

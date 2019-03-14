@@ -13,9 +13,10 @@ include_once "back/controllers/library.php";
 
 function init_app() {
 
+    sanitizePOST();
+
     // get URI elements
     $qs = getQueryString();
-    if(array_key_exists('username', $_POST)) $_POST['username'] = trim(strtolower($_POST['username']));
     
     //generate folders if non existing
     checkUserSpecificFolders(); 
@@ -23,7 +24,7 @@ function init_app() {
     $action = array_shift($qs);
 
     //if no user directory is being accessed
-    if(!isset($user_qs)) return accessIndex(); 
+    if(!isset($user_qs)) return home(); 
     
     //check if special queries
     if($user_qs == 'manage') return routerManage($action);
@@ -37,15 +38,10 @@ function init_app() {
     routerUploadShout($user_qs, $action);
 
     //else redirect on misformated/unhandled URI
-    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') header('Location: /wtnz/' . $user_qs);
+    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') goToUserLibrary();
 
     //redirect to user library in last resort
     return routerLibrary($user_qs);
-}
-
-function accessIndex() {
-    include "back/ui/home.php";
-    exit;
 }
 
 init_app();
