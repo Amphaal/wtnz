@@ -1,7 +1,3 @@
-<?php 
-    $title = "WTNZ - " . i18n('libraryOf', $user_qs);
-    $icon = "front/assets/img/ico.png";
-?>
 <!DOCTYPE html>
 <html lang="<?php echo I18nSingleton::getInstance()->getLang();?>">
     <head>

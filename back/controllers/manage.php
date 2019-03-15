@@ -20,7 +20,7 @@ function routerManage($action) {
 }
 
 function home() {
-     include "back/ui/home.php";
+    includeXMLRSwitch("back/ui/home.php");
 }  
 
 function accountCreation() {
@@ -36,7 +36,7 @@ function accountCreation() {
         }
     } 
 
-    include "back/ui/create_account.php";
+    includeXMLRSwitch("back/ui/create_account.php");
 }
 
 function disconnect() {
@@ -63,7 +63,7 @@ function login() {
         }
     }
 
-    include "back/ui/login.php";
+    includeXMLRSwitch("back/ui/login.php");
 
 }
 

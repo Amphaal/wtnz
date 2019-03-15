@@ -26,3 +26,11 @@ function getFilesInFolder($path_to) {
     }
     return $ret;
 }
+
+function includeXMLRSwitch($inside_part) {
+    if(isXMLHttpRequest()) {
+        include $inside_part;
+    } else {
+        include "back/ui/template/_template.php";
+    }
+}

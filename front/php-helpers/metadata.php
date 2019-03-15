@@ -1,8 +1,4 @@
-<?php 
-
-    $descr = i18n("wtnz_descr");
-
-?><meta charset="UTF-8" >
+<meta charset="UTF-8" >
 <meta name="theme-color" content="#efefef">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta property="og:url" content="<?php echo $root . $user_qs;?>">

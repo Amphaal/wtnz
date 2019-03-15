@@ -11,9 +11,6 @@ include_once "back/controllers/manage.php";
 include_once "back/controllers/downloadApp.php";
 include_once "back/controllers/library.php";
 
-// $dg = new DataGenerator("amphaal");
-// var_dump($dg->getDataPart("slug")); die;
-
 function init_app() {
 
     sanitizePOST();
@@ -27,7 +24,7 @@ function init_app() {
     $action = array_shift($qs);
 
     //if no user directory is being accessed
-    if(!isset($user_qs)) return include "back/ui/welcome.php"; 
+    if(!isset($user_qs)) return includeXMLRSwitch("back/ui/welcome.php"); 
     
     //check if special queries
     if($user_qs == 'manage') return routerManage($action);

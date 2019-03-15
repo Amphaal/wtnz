@@ -26,17 +26,21 @@
         $expectedUnified = getPublicUserFolder($user_qs) . getUnifiedLibraryFileName();
         $expectedShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
         $expectedProfilePic = getProfilePicture($user_qs);
-        
 
         //Client variables
         $clientURLUnified = dirname($_SERVER['REQUEST_URI']) . substr($expectedUnified, 1);
         $clientURLLibrary = dirname($_SERVER['REQUEST_URI']) . substr($expectedLibrary, 1);
         $clientURLShout = dirname($_SERVER['REQUEST_URI']) . substr($expectedShout, 1);
         $latestUpdate = filemtime($expectedLibrary);
-
+        
         //url based variables
         $root = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRootApp();
         $sio_url = "wss://" . $_SERVER["HTTP_HOST"] . ":3000";
+        
+        //addons
+        $descr = i18n("wtnz_descr");
+        $title = "WTNZ - " . i18n('libraryOf', $user_qs);
+        $icon = "front/assets/img/ico.png";
 
         include "front/front.php";
         exit;

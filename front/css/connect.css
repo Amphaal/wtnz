@@ -45,6 +45,8 @@
 }
 
 #accountManagement a {
+    user-select : none;
+    -moz-appearance: button;
     -webkit-appearance: button;
     appearance: button;
     font-family: Arial, Helvetica, sans-serif;
