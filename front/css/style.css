@@ -48,7 +48,7 @@ a, a:visited, a:hover, a:active {
 
 
 main {
-    min-width : 100%;
+    width : 100%;
     position: relative;
     transition: all .5s ease-in;
     display:flex; 

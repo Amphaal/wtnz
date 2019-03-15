@@ -4,6 +4,8 @@
     overflow: hidden;
     height: 400px;
     scroll-behavior: smooth;
+    opacity: 0;
+    transition: opacity .5s ease;
 }
 
 #statsContainer {

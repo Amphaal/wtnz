@@ -67,5 +67,9 @@
         padding-bottom : .75rem;
     }
 
+    main {
+        transition: all .25s ease-in;
+    }
+
 }
 

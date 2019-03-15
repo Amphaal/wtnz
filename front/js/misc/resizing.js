@@ -3,24 +3,34 @@
 /// resize handling
 ///
 
-//resize functions
-function bindResizeFunctions() {
-    resizeFunctions.width.push(function() {return resizeFeed().applyNewHeight});
-    resizeFunctions.width.push(function() {return resizeShout().applyNewHeight});
-    resizeFunctions.width.push(function() {return alignConnectSideElements});
-    
-    resizeFunctions.any.push(function() {
-        return headerToggle;
-    });
-
-    Object.keys(_discoverFilter).forEach(function(id) {
-        resizeFunctions.any.push(applyManualSizesFilterUIs(id));
-    })
+function _rF(description, innerFunction) {
+ return {
+        description : description, 
+        innerFunction : innerFunction
+    };
 }
 
+//resize functions
+function bindResizeFunctions() {
+    resizeFunctions.width.push(
+        _rF("resizeFeed", resizeFeed().applyNewHeight),
+        _rF("resizeShout", resizeShout().applyNewHeight),
+        _rF("alignConnectSideElements", alignConnectSideElements)
+    );
+    
+    resizeFunctions.any.push(
+        _rF("headerToggle", headerToggle)
+    );
 
-var timeoutResize = false;
-var delayResize = 100;
+    Object.keys(_discoverFilter).forEach(function(id) {
+        resizeFunctions.any.push(
+            _rF("applyManualSizesFilterUIs[" + id + "]", function() { 
+                return applyManualSizesFilterUIs(id);
+            })
+        );
+    });
+};
+
 var sourceHeight = window.innerHeight;
 var sourceWidth = window.innerWidth;
 var resizeFunctions = {
@@ -30,10 +40,9 @@ var resizeFunctions = {
 };
 
 //event listener with throttle
-window.addEventListener('resize', function(event) {
-    clearTimeout(timeoutResize);
-    timeoutResize = setTimeout(resizeManualHeightsAndWidths, delayResize);
-});
+window.addEventListener('resize', 
+    debounce(resizeManualHeightsAndWidths, 250)
+);
 
 window.addEventListener('orientationchange', function() {
     window.scrollTo({left : 0});
@@ -45,23 +54,34 @@ function resizeManualHeightsAndWidths() {
     let newHeight = window.innerHeight;
     let newWidth = window.innerWidth;
     
-    let execFunc = function(probFunc) {
-        if(!probFunc) probFunc()();
+    let execFunc = function(date, logTrackId) {
+        return function(functorObj) {
+            console.log("["+ date +"] " + logTrackId + " : " + functorObj.description);
+            if(functorObj.innerFunction) functorObj.innerFunction();
+        };
     };
 
+    let date = new Date();
+
     //height or width...
-    resizeFunctions.any.forEach(execFunc);
+    resizeFunctions.any.forEach(
+        execFunc(date, "any")
+    );
 
     //height...
     if(newHeight != sourceHeight) {
         sourceHeight = newHeight;
-        resizeFunctions.height.forEach(execFunc);
+        resizeFunctions.height.forEach(
+            execFunc(date, "height")
+        );
     }
 
     //width...
     if(newWidth != sourceWidth) {
         sourceWidth = newWidth;
-        resizeFunctions.width.forEach(execFunc);
+        resizeFunctions.width.forEach(
+            execFunc(date, "width")
+        );
     }
 
 }

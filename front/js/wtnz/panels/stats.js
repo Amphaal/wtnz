@@ -12,6 +12,7 @@ function renderStats() {
 ///
 
 //render a single chart
+var _hcObjects = {};
 function renderHCPie(data, divId) {
 
     //format to highcharts specifics
@@ -56,7 +57,8 @@ function renderHCPie(data, divId) {
     };
 
     //instanciate
-    Highcharts.chart(divId, chart);
+    let hc = Highcharts.chart(divId, chart);
+    _hcObjects[divId] = hc;
   }
   
   function switchPanel(event) {
@@ -66,6 +68,22 @@ function renderHCPie(data, divId) {
       statsContainer.scrollTop = containerHeight * panelNo;
   }
   
+    function _reflowCharts(source) {
+
+    return new Promise(function(resolve) {
+        
+        Object.keys(_hcObjects).forEach(function(elemId) {
+            _hcObjects[elemId].reflow(); 
+        });
+
+        if(!document.getElementById('stats').style.opacity) {
+            document.getElementById('stats').style.opacity = 1;
+        }
+
+        resolve(source);
+    });
+    }
+
   function resizeStats() {
     return _resizeShutter(
           'statsContainer',
@@ -76,6 +94,7 @@ function renderHCPie(data, divId) {
   function toggleStats() {
     return preventSET(
           _toggleShutter('statsContainer', resizeStats)
+          .then(_reflowCharts)
           .then(vNavigate)
     );
   }

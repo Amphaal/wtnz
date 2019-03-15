@@ -193,7 +193,7 @@ function alterFilterUI(id, filterCriteria) {
     list.length || ph.innerHTML ? ui.classList.add("active") : ui.classList.remove("active");
 
     //apply for animations
-    applyManualSizesFilterUIs(id)();
+    applyManualSizesFilterUIs(id);
 }
 
 
@@ -208,52 +208,50 @@ function transitionToAlbumInfos(aiElem) {
 ///
 
 function applyManualSizesFilterUIs(id) {
-    return function () {
         
-        //prepare
-        let list = document.querySelector('#' + id + ' .list');
-        let ph = document.querySelector('#' + id + ' .ph');
-        if(!list || !ph) return;
+    //prepare
+    let list = document.querySelector('#' + id + ' .list');
+    let ph = document.querySelector('#' + id + ' .ph');
+    if(!list || !ph) return;
 
-        //reset manual widths for animations
-        let mWidthQuery = 'style[data-ct="' + id + '"]';
-        let mWidth = document.querySelector(mWidthQuery);
-        if (mWidth) mWidth.parentElement.removeChild(mWidth);
+    //reset manual widths for animations
+    let mWidthQuery = 'style[data-ct="' + id + '"]';
+    let mWidth = document.querySelector(mWidthQuery);
+    if (mWidth) mWidth.parentElement.removeChild(mWidth);
 
-        //calculate ceil + small margin upper
-        let ceil = function (val) {
-            return (Math.ceil(val * 10) / 10) + 0.1;
-        };
+    //calculate ceil + small margin upper
+    let ceil = function (val) {
+        return (Math.ceil(val * 10) / 10) + 0.1;
+    };
 
-        //helper function to calculate heights / widths
-        let genCss = function (minOrMax, dimension) {
-            let prop = "scroll" + dimension;
-            let val = null;
-            switch (minOrMax) {
-                case "min":
-                    val = ceil(((ph[prop] || list[prop] + 1) / getRootElementFontSize()));
-                    return '#' + id + '{' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
-                case "max":
-                    val = ceil(((list[prop] + 1) / getRootElementFontSize()));
-                    return '#' + id + '.open {' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
-            }
+    //helper function to calculate heights / widths
+    let genCss = function (minOrMax, dimension) {
+        let prop = "scroll" + dimension;
+        let val = null;
+        switch (minOrMax) {
+            case "min":
+                val = ceil(((ph[prop] || list[prop] + 1) / getRootElementFontSize()));
+                return '#' + id + '{' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
+            case "max":
+                val = ceil(((list[prop] + 1) / getRootElementFontSize()));
+                return '#' + id + '.open {' + dimension.toLowerCase() + ' : ' + val + 'rem;}';
         }
-
-        //force relative positionning to get true height / width of list
-        list.style.position = "relative"; 
-
-        //set manual widths and heights for animations 
-        let styleCarrier = document.createElement('style');
-        styleCarrier.dataset.ct = id;
-        styleCarrier.innerHTML += genCss("min", "Width");
-        styleCarrier.innerHTML += genCss("max", "Width");
-        styleCarrier.innerHTML += genCss("min", "Height");
-        styleCarrier.innerHTML += genCss("max", "Height");
-
-        list.style.position = null; //unforce
-
-        document.head.appendChild(styleCarrier);
     }
+
+    //force relative positionning to get true height / width of list
+    list.style.position = "relative"; 
+
+    //set manual widths and heights for animations 
+    let styleCarrier = document.createElement('style');
+    styleCarrier.dataset.ct = id;
+    styleCarrier.innerHTML += genCss("min", "Width");
+    styleCarrier.innerHTML += genCss("max", "Width");
+    styleCarrier.innerHTML += genCss("min", "Height");
+    styleCarrier.innerHTML += genCss("max", "Height");
+
+    list.style.position = null; //unforce
+
+    document.head.appendChild(styleCarrier);
 }
 
 /////////////////
