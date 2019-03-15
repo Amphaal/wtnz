@@ -84,6 +84,6 @@ function queryMusicBrainzForAlbumCover(idProcess, album, artist) {
 function mbQueryCoverArtAPI(mbReleasesArray) {
     if (!mbReleasesArray.length) return;
     let urlBase = 'https://coverartarchive.org/release-group/{mbid}/front-250';
-    return urlBase.replace('{mbid}',mbReleasesArray[0].id);
+    return urlBase.replace('{mbid}', mbReleasesArray[0].id);
 }
 

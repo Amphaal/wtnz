@@ -14,16 +14,18 @@
     <form method="POST" style="display: flex; flex-direction:column" autocomplete="off" action="<?php echo $_SERVER["REQUEST_URI"] ?>">
         <div>
             <input 
-            pattern="<?php echo renHpat($rules['username'])?>" 
-            name="username" 
-            placeholder="<?php echo i18n("e_log_username")?>" 
-            required 
-            value="<?php echo PRem('username') ?>"
+                autocomplete="username"
+                pattern="<?php echo renHpat($rules['username'])?>" 
+                name="username" 
+                placeholder="<?php echo i18n("e_log_username")?>" 
+                required 
+                value="<?php echo PRem('username') ?>"
             />
             <span><?php echo i18n("e_log_rule", $rules['username']["min"], $rules['username']["max"]);?></span> 
         </div>
         <div>
             <input 
+                autocomplete="current-password"
                 pattern="<?php echo renHpat($rules['password'])?>" 
                 name="password" 
                 type="password" 
