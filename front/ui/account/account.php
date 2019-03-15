@@ -6,7 +6,4 @@
             <?php home() ?>
         </div>
     </div>
-    <video id="bg" autoplay="autoplay" muted="true" loop="loop">
-        <source src="front/assets/video/bg.mp4" type="video/mp4">
-    </video>
 </div>

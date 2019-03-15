@@ -85,19 +85,23 @@ function vNavigate(elem, correct) {
 }
 
 
-
+//for mobile, unselect selected item for disabling animations
 function blurCurrentFocus() {
     document.body.focus();
 }
 
 function hNavigate(direction) {
+    
     blurCurrentFocus();
+    
     let target = document.getElementsByTagName('main')[0];
     let maxChildren = target.childElementCount;
     let maxIndex = maxChildren - 1;
     let actualIndex = target.getAttribute("data-index") || 0;
     let targetIndex = null;
-    let followUp = null;
+    
+    let followUp = Promise.resolve(null);
+    let lateVideoStop = Promise.resolve(null);
 
     //direction to go
     if(direction == null) { //automatic switch
@@ -127,21 +131,30 @@ function hNavigate(direction) {
     target.setAttribute("data-index", targetIndex);
     window.scrollTo({top : 0}); 
 
-    //reset focus flag / play state
+    //reset focus flag
     for(let i = 0; i < maxChildren; i++) {
         let child = target.children[i];
-        let video = child.querySelector("video");
         if(i == targetIndex) {
             child.classList.add('focused');
-            if(video) video.play();
         } else {
             child.classList.remove('focused');
-            if(video) video.pause();
         }
     }
     
+    //define playstate for video bg
+    let bgVideo = document.getElementById("bg");
+    if(targetIndex == 0) {
+        lateVideoStop = function() { bgVideo.pause(); }
+    } else {
+        bgVideo.play();
+    }
+
+
     //move...
     waitTransitionEnd(target, function() {
         target.style.transform = "translateX(-" + String(targetIndex * 100) + "%)";
-    }).then(followUp);
+    })
+    .then(alignConnectSideElements)
+    .then(lateVideoStop)
+    .then(followUp);
 }

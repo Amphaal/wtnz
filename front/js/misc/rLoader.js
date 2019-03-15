@@ -6,8 +6,6 @@ function rLoaderAnimation() {
     if(firstAnim) return new Promise(function(resolve) {
 
         removeNotification(".connect-side");
-
-
         
         document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
         document.getElementById("bg").classList.add("show");

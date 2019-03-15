@@ -56,7 +56,7 @@ function resizeManualHeightsAndWidths() {
     
     let execFunc = function(date, logTrackId) {
         return function(functorObj) {
-            console.log("["+ date +"] " + logTrackId + " : " + functorObj.description);
+            //console.log("["+ date +"] " + logTrackId + " : " + functorObj.description);
             if(functorObj.innerFunction) functorObj.innerFunction();
         };
     };

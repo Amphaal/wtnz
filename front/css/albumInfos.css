@@ -39,7 +39,7 @@
 }
 
 #albumInfos .imgLoader:not(.searchingCover) {
-    width: 20vw;
+    min-width: 20vw;
 }
 
 #albumInfos .imgLoader, 

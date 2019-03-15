@@ -29,21 +29,8 @@
     padding: 1rem 0;
 }
 
-#wtnz-connect > *:not(video) {
+#wtnz-connect > * {
     z-index: 1;
-}
-
-#wtnz-connect > video {
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity .5s ease;
-}
-
-#wtnz-connect > video.show {
-    opacity: 1;
 }
 
 #wtnz-connect .loginRack {
