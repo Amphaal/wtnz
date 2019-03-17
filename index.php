@@ -1,5 +1,7 @@
 <?php
 
+
+
 //start session
 session_start();
 
@@ -24,7 +26,7 @@ function init_app() {
     $action = array_shift($qs);
 
     //if no user directory is being accessed
-    if(!isset($user_qs)) return includeXMLRSwitch("back/ui/welcome.php"); 
+    if(!isset($user_qs)) return includeXMLRSwitch("back/ui/welcome.php", get_defined_vars()); 
     
     //check if special queries
     if($user_qs == 'manage') return routerManage($action);

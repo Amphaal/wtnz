@@ -1,11 +1,11 @@
 <div id="accountManagement">
-    <?php if(isUserLogged()) {?>
+    <?php if($iul) {?>
         <div><?php echo i18n("welcome",  getCurrentUserLogged()) ?></div>
     <?php } ?>
     <div class="loginRack">
-        <?php if(isUserLogged()) {?>
-            <?php if(getLocation("ThisLibrary") != getLocation("MyLibrary")) {?>
-                <a no-xhttp href="<?php echo getLocation("MyLibrary") ?>"><?php echo i18n("log_accessMyLib")?></a>
+        <?php if($iul) {?>
+            <?php if(getLocation("ThisLibrary") != $mylib_loc) {?>
+                <a no-xhttp href="<?php echo $mylib_loc ?>"><?php echo i18n("log_accessMyLib")?></a>
             <?php }?>
             <a href="/wtnz/manage/disconnect"><?php echo i18n("log_disconnect")?></a>
         <?php } else { ?>
@@ -13,11 +13,12 @@
             <a href="/wtnz/manage/create"><?php echo i18n("log_createAccount")?></a>
         <?php } ?>
     </div>
-    <?php if(isUserLogged()) {?>
+    <?php if($iul) {?>
         <span><?php echo i18n("obtainApp")?></span>
         <div style='margin:.5rem; display: flex; flex-direction: column'>
-            <a no-xhttp href="/wtnz/download/osx"><?php echo i18n("downloadFeeder", "Mac")?></a>
-            <a no-xhttp href="/wtnz/download/win"><?php echo i18n("downloadFeeder", "Windows")?></a>
+            <?php foreach($dd_folders as $folder) {?>
+                <a no-xhttp href="/wtnz/download/<?php echo $folder ?>"><?php echo i18n("downloadFeeder", fromDownloadFolderToOS($folder))?></a>
+            <?php }?>
         </div>
     <?php } ?>
 </div>

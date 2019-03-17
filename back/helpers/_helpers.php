@@ -9,6 +9,13 @@ function getQueryString() {
     return $request_uri;
 }
 
+function startsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === ''
+      || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+}
+
+
 function sanitizePOST() {
     if(array_key_exists('username', $_POST)) $_POST['username'] = trim(strtolower($_POST['username']));
 } 

@@ -27,10 +27,20 @@ function getFilesInFolder($path_to) {
     return $ret;
 }
 
-function includeXMLRSwitch($inside_part) {
+function includeXMLRSwitch($inside_part, $included_vars_array) {
+
+    foreach($included_vars_array as $varname => $value) {
+        $$varname = $value;
+    }
+
+    unset($included_vars_array);
+    unset($varname);
+    unset($value);
+
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
         include "back/ui/template/_template.php";
     }
+    
 }

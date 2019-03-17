@@ -20,7 +20,25 @@ function routerManage($action) {
 }
 
 function home() {
-    includeXMLRSwitch("back/ui/home.php");
+    
+    //prepare
+    $iul = isUserLogged();
+    $os = getOs();
+    $mylib_loc = getLocation("MyLibrary");
+    $dd_folders = array();
+    
+    //downloads...
+    if($iul) {
+        if($os) {
+            array_push($dd_folders, fromOSToDownloadFolder($os));
+        } else {
+            array_push($dd_folders, 
+                array_keys(availableDownloads())
+            );
+        }
+    }
+
+    includeXMLRSwitch("back/ui/home.php", get_defined_vars());
 }  
 
 function accountCreation() {
@@ -36,7 +54,7 @@ function accountCreation() {
         }
     } 
 
-    includeXMLRSwitch("back/ui/create_account.php");
+    includeXMLRSwitch("back/ui/create_account.php", get_defined_vars());
 }
 
 function disconnect() {
@@ -63,7 +81,7 @@ function login() {
         }
     }
 
-    includeXMLRSwitch("back/ui/login.php");
+    includeXMLRSwitch("back/ui/login.php", get_defined_vars());
 
 }
 
