@@ -8,7 +8,8 @@
         var sioURL = <?php echo json_encode($sio_url)?>;
         var i18n = <?php echo json_encode(I18nSingleton::getInstance()->getDictionary())?>;
         var lang = <?php echo json_encode(I18nSingleton::getInstance()->getLang())?>;
-
+        var initialRLoaderUrl = <?php echo json_encode($initialRLoaderUrl)?>;
+        
         var _discoverFilter = {
                 genreUI : null,
                 artistUI : null,
@@ -32,4 +33,6 @@
         var _appDataFeeds = {};
         var _currentShout = {};
         var _currentShoutDWorth = false;
+
+        var _rLoader = null;
 </script>

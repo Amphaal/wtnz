@@ -41,6 +41,7 @@
         $descr = i18n("wtnz_descr");
         $title = "WTNZ - " . i18n('libraryOf', $user_qs);
         $icon = "front/assets/img/ico.png";
+        $initialRLoaderUrl = getLocation("Home");
 
         include "front/front.php";
         exit;

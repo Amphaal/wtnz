@@ -1,10 +1,19 @@
 
 class RLoader {
 
-    constructor(rLoaderId) {
+    constructor(rLoaderId, defaultPath) {
+        
         this._rLoader = document.getElementById(rLoaderId);
-        this._isDirty = !this._rLoader.getAttribute("loaded");
-        if(this._isDirty) this._init();
+        
+        this._mustDisplayBackButton = false;
+        this._previousResponseUrl = null;
+        this._currentUrl = defaultPath;
+
+        this._initialLoadPromise = _XMLHttpPromise("GET", this._currentUrl)
+            .then(function(xmlr) {
+                this._rLoader.innerHTML = xmlr.response;
+                this._init();
+            }.bind(this));
     }
 
     initialAnimation() {
@@ -18,11 +27,16 @@ class RLoader {
             document.getElementById("bg").classList.add("show");
             let cc = document.getElementById("connectContainer");
     
-            waitTransitionEnd(cc, function() { 
-                cc.classList.add("anima");
-            })
-            .then(this._fadeIn.bind(this))
-            .then(resolve);
+            let waitAll = [
+                waitTransitionEnd(cc, function() { 
+                    cc.classList.add("anima");
+                }),
+                this._initialLoadPromise
+            ];
+            
+            Promise.all(waitAll)
+                .then(this._fadeIn.bind(this))
+                .then(resolve);
     
         }.bind(this));
     
@@ -52,7 +66,7 @@ class RLoader {
         }.bind(this));
     }
 
-    _goXMLR(method, url, POSTParams) {
+    _goXMLR(method, url, POSTParams, requestingBackButton) {
 
         let awaitAll = [
             _XMLHttpPromise(method, url, POSTParams), 
@@ -60,22 +74,47 @@ class RLoader {
         ];
         
         return Promise.all(awaitAll).then(function(results) {
-            this._fillWithContent(results[0]);
+            
+            let xmlr = results[0];
+            let newRUrl = xmlr.responseURL;
+            
+            if(this._previousResponseUrl != newRUrl) {
+                this._previousResponseUrl = this._currentUrl;
+                this._currentUrl = newRUrl;
+                this._mustDisplayBackButton = Boolean(requestingBackButton);
+            }
+
+            this._fillWithContent(xmlr.response);
+
         }.bind(this));
 
     };
 
+    _injectBackButton() {
+        let btn = document.createElement("button");
+        btn.innerHTML = "<<";
+        this._rLoader.appendChild(btn);
+
+        btn.onclick = function(event) {
+            debugger;
+            event.preventDefault();
+            this._goXMLR(
+                "GET", 
+                this._previousResponseUrl
+            );
+        }.bind(this);
+    }
+
     _fillWithContent(content) {
-        
         if(content) {
             this._rLoader.innerHTML = content;
+            if(this._mustDisplayBackButton) this._injectBackButton();
             this._init();
         }
 
         this._fadeIn();
 
     }
-
 
     _init() {
     
@@ -85,7 +124,12 @@ class RLoader {
             let url = e.getAttribute("href");
             e.onclick = function(event) {
                 event.preventDefault();
-                this._goXMLR("GET", url);
+                this._goXMLR(
+                    "GET", 
+                    url, 
+                    null, 
+                    !e.hasAttribute("no-back")
+                );
             }.bind(this);
             e.removeAttribute("href");
         }.bind(this));

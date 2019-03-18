@@ -19,9 +19,7 @@ function routerManage($action) {
     }
 }
 
-function home($force_xHTML = false) {
-    
-    forceXMLHttp($force_xHTML);
+function home() {
 
     //prepare
     $iul = isUserLogged();

@@ -180,7 +180,7 @@ function _XMLHttpPromise(method, url, POSTParams) {
         
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
+                resolve(xhr);
             } else {
                 reject({
                     status: this.status,

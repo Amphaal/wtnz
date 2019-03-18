@@ -120,8 +120,7 @@ function hNavigate(direction) {
     if(targetIndex == 1) { 
         document.body.classList.add("lock"); 
         followUp = function() {
-            let rloader = new RLoader("xmlRLoader");
-            rloader.initialAnimation();
+            _rLoader.initialAnimation();
         };
     } else { 
         followUp = function() {  

@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     registerXNavigateSwipeEvents();
     generateSortButtons();
     initSearchBand();
+    _rLoader = new RLoader("xmlRLoader", initialRLoaderUrl);
 
     //download user file
     requestUserUnifiedLib();
