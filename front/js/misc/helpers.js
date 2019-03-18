@@ -43,16 +43,22 @@ function _whichAnimationEndEvent() {
     }
 }
 
+var _waiterStack = {};
 function _waitEventEnd(eventTypeToListen, waiter, action) {
 
     if(!action) return Promise.resolve(null);
 
     return new Promise(function(resolve) {
-        let evHandler = function(e) {
-            waiter.removeEventListener(eventTypeToListen, evHandler);
+    
+        let newId = String(Date.now()) + '_' + String(Math.round(Math.random()*100));
+
+        _waiterStack[newId] = function(e) {
+            waiter.removeEventListener(eventTypeToListen, _waiterStack[newId]);
+            delete _waiterStack[newId];
             resolve(waiter);
-        }
-        waiter.addEventListener(eventTypeToListen, evHandler);
+        };
+
+        waiter.addEventListener(eventTypeToListen, _waiterStack[newId]);
         action();
     });
 }
@@ -160,4 +166,37 @@ function searchBand_foundRange(displayedName, slugFc, searchIndex) {
     }
 
     return [begin, begin + searchIndex];
+}
+
+
+function _XMLHttpPromise(method, url, POSTParams) {
+    
+    return new Promise(function (resolve, reject) {
+        
+        let xhr = new XMLHttpRequest();
+        if(!method) method = "GET";
+        xhr.open(method, url);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+                resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        
+        xhr.onerror = function () {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        
+        xhr.send(POSTParams);
+    });
+
 }

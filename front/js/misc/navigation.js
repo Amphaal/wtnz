@@ -116,15 +116,17 @@ function hNavigate(direction) {
     if(targetIndex == actualIndex || targetIndex == null) return;
     if(targetIndex > maxIndex || targetIndex < 0) return;
 
-    //specific to target
-
     //remove Vscroll on connect
     if(targetIndex == 1) { 
         document.body.classList.add("lock"); 
-        followUp = function() {rLoaderAnimation();};
-        
+        followUp = function() {
+            let rloader = new RLoader("xmlRLoader");
+            rloader.initialAnimation();
+        };
     } else { 
-        document.body.classList.remove("lock"); 
+        followUp = function() {  
+            document.body.classList.remove("lock"); 
+        };
     } 
     
     //scroll back to top

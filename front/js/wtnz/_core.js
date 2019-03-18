@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
     instShoutMuteButton();
     registerXNavigateSwipeEvents();
     generateSortButtons();
-    initRLoader();
     initSearchBand();
 
     //download user file
@@ -22,7 +21,7 @@ function requestUserUnifiedLib() {
     let request = new XMLHttpRequest(); 
     request.onprogress = updateProgress;
     request.onloadend = function(e) {
-        return processUnifiedLib(e.currentTarget.responseText);
+        processUnifiedLib(e.currentTarget.responseText);
     };
     request.open('GET', clientURLUnified, true);
     request.send(null);

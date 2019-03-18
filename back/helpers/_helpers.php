@@ -122,3 +122,9 @@ function getLocation($rq) {
 function isXMLHttpRequest(){
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 }
+
+function forceXMLHttp($force) {
+   if($force) {
+    $_SERVER['HTTP_X_REQUESTED_WITH'] = "xmlhttprequest";
+   } 
+}

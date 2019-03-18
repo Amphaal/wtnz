@@ -3,7 +3,7 @@
     <div id="connectContainer">
         <span class='logo' style="font-size:4rem"></span>
         <div id='xmlRLoader'>
-            <?php home() ?>
+            <?php home(true) ?>
         </div>
     </div>
 </div>

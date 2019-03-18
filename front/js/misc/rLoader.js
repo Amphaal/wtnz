@@ -1,84 +1,108 @@
-function rLoaderAnimation() {
 
-    let rloader = document.getElementById("xmlRLoader");
-    let firstAnim = rloader.style.maxHeight == "";
+class RLoader {
+
+    constructor(rLoaderId) {
+        this._rLoader = document.getElementById(rLoaderId);
+        this._isDirty = !this._rLoader.getAttribute("loaded");
+        if(this._isDirty) this._init();
+    }
+
+    initialAnimation() {
+        let firstAnim = this._rLoader.style.opacity === "";
+
+        if(firstAnim) return new Promise(function(resolve) {
+
+            removeNotification(".connect-side");
+            
+            document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
+            document.getElementById("bg").classList.add("show");
+            let cc = document.getElementById("connectContainer");
     
-    if(firstAnim) return new Promise(function(resolve) {
+            waitTransitionEnd(cc, function() { 
+                cc.classList.add("anima");
+            })
+            .then(this._fadeIn.bind(this))
+            .then(resolve);
+    
+        }.bind(this));
+    
+        /* dummy promise */
+        return Promise.resolve(null);
+    }
 
-        removeNotification(".connect-side");
+    _getButtons() {
+        return this._rLoader.querySelectorAll("button[href]");
+    }
+
+    _getForm() {
+        return this._rLoader.querySelector("form");
+    }
+
+    _fadeIn() {
+        return waitTransitionEnd(this._rLoader, function() {
+            this._rLoader.style.pointerEvents = "";
+            this._rLoader.style.opacity = 1;
+        }.bind(this));
+    }
+
+    _fadeOut() {
+        return waitTransitionEnd(this._rLoader, function() {
+            this._rLoader.style.pointerEvents = "none";
+            this._rLoader.style.opacity = 0;
+        }.bind(this));
+    }
+
+    _goXMLR(method, url, POSTParams) {
+
+        let awaitAll = [
+            _XMLHttpPromise(method, url, POSTParams), 
+            this._fadeOut()
+        ];
         
-        document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
-        document.getElementById("bg").classList.add("show");
-        let cc = document.getElementById("connectContainer");
+        return Promise.all(awaitAll).then(function(results) {
+            this._fillWithContent(results[0]);
+        }.bind(this));
 
-        waitTransitionEnd(cc, function() { 
-            cc.classList.add("anima");
-        }).then(function() {
-            expandRLoader(rloader);
-            resolve();
-        });
+    };
 
-    });
-
-    /* dummy promise */
-    return Promise.resolve(null);
-}
-
-
-function expandRLoader(rloader) {
-    rloader.style.maxHeight = "100%";
-    rloader.style.maxWidth = "100%";
-}
-
-function fillRLoader(rloader) {
-    return function (response) {
+    _fillWithContent(content) {
         
-        let content = response.currentTarget.responseText;
-
         if(content) {
-            rloader.innerHTML = content;
-            initRLoader();
-            expandRLoader(rloader);
-        } else {
-            rloader.style.pointerEvents = "";
+            this._rLoader.innerHTML = content;
+            this._init();
         }
-    };
-}
 
-function initRLoader() {
-    let rloader = document.getElementById("xmlRLoader");
-    rloader.style.pointerEvents = "";
+        this._fadeIn();
 
-    let aBtns = rloader.querySelectorAll("a[href]:not([no-xhttp])");
-    let aForm = rloader.querySelector("form");
+    }
 
-    let goXHTML = function(method, url, POSTParams) {
-        if(!method) method = "GET";
-        rloader.style.pointerEvents = "none";
-        let xmlR = new XMLHttpRequest();
-        xmlR.open(method, url, true);
-        xmlR.onloadend = fillRLoader(rloader);
-        xmlR.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xmlR.send(POSTParams);
-    };
 
-    //buttons
-    if(aBtns.length) aBtns.forEach(function(e) {
-        let url = e.getAttribute("href");
-        e.onclick = function(event) {
+    _init() {
+    
+        //buttons
+        let aBtns = this._getButtons();
+        if(aBtns.length) aBtns.forEach(function(e) {
+            let url = e.getAttribute("href");
+            e.onclick = function(event) {
+                event.preventDefault();
+                this._goXMLR("GET", url);
+            }.bind(this);
+            e.removeAttribute("href");
+        }.bind(this));
+    
+        //forms
+        let aForm = this._getForm();
+        if(aForm) aForm.onsubmit = function(event) {
             event.preventDefault();
-            goXHTML("GET", url);
-        };
-        e.removeAttribute("href");
-    });
+            this._goXMLR(
+                aForm.getAttribute("method"), 
+                aForm.getAttribute("action"),
+                new FormData(aForm)
+            );
+        }.bind(this);
 
-    //forms
-    if(aForm) aForm.onsubmit = function(event) {
-        event.preventDefault();
-        goXHTML(
-            aForm.getAttribute("method"), 
-            aForm.getAttribute("action"),
-            new FormData(aForm)
-        );
-    };
+        this._rLoader.setAttribute("loaded", true);
+    }
+
 }
+

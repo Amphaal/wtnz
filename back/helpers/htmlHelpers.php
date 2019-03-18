@@ -27,6 +27,23 @@ function getFilesInFolder($path_to) {
     return $ret;
 }
 
+function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
+    
+    $out = "";
+    
+    if(isXMLHttpRequest() && !$forceWLocation) {
+        $out ='href="' . $url . '"';
+    } else {
+        $out = 'onclick="window.location=\'' . $url . '\'"';
+    }
+
+    if(isXMLHttpRequest() && $XMLR_noBackButton) {
+        $out .= " no-back";
+    }
+
+    echo $out;
+}
+
 function includeXMLRSwitch($inside_part, $included_vars_array) {
 
     foreach($included_vars_array as $varname => $value) {
