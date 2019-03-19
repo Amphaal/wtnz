@@ -1,11 +1,12 @@
-<style>
 <?php
 
-foreach(getFilesInFolder('front/css') as $file) { 
-    echo file_get_contents($file);
-} 
+    $css = "";
 
-echo getCustomBackgroundAnimColors($user_qs);
+    foreach(getFilesInFolder('front/css') as $file) { 
+        $css .= file_get_contents($file);
+    } 
 
+    $css .= getCustomBackgroundAnimColors($user_qs);
+
+    echo "<style>" . $css . "</style>";
 ?>
-</style>

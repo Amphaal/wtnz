@@ -67,5 +67,6 @@
     "profile" => "profile",
     "sort_order" => "Sort by name",
     "sort_count" => "Sort by number / year",
-    "switch_lang" => "Change language"
+    "switch_lang" => "Change language",
+    "e_log_home" => "Create an account / Login"
 );

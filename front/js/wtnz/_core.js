@@ -1,8 +1,14 @@
 ///
 /// STARTUP
 ///
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("load", function() {
+    waitTransitionEnd(document.getElementById("loader-container"), function(elem) {
+        elem.style.opacity = 1;
+    }).then(initializateApp); 
+});
 
+function initializateApp() {
+    
     //instantiation
     navigatorSpecificParameterization();
     alignConnectSideElements();
@@ -15,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //download user file
     requestUserUnifiedLib();
-});
+}
 
 //download library
 function requestUserUnifiedLib() {
