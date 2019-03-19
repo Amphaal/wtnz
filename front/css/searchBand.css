@@ -15,6 +15,7 @@
     width: 100%;
     box-sizing: border-box;
     opacity : .8;
+    font-size: 0.55rem;
 }
 
 #searchBand input:focus {

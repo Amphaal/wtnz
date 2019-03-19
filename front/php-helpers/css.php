@@ -1,12 +1,14 @@
-<?php
 
-    $css = "";
+<?php
+    echo "<style>";
+
+    include "back/ui/template/style.css";
 
     foreach(getFilesInFolder('front/css') as $file) { 
-        $css .= file_get_contents($file);
+        echo file_get_contents($file);
     } 
 
-    $css .= getCustomBackgroundAnimColors($user_qs);
+    echo getCustomBackgroundAnimColors($user_qs);
 
-    echo "<style>" . $css . "</style>";
+    echo "</style>";
 ?>
