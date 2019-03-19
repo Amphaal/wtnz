@@ -53,13 +53,13 @@ function _waitEventEnd(eventTypeToListen, waiter, action) {
         let newId = String(Date.now()) + '_' + String(Math.round(Math.random()*100));
 
         _waiterStack[newId] = function(e) {
-            console.log("out", waiter);
+            //console.log("out", waiter);
             waiter.removeEventListener(eventTypeToListen, _waiterStack[newId]);
             delete _waiterStack[newId];
             resolve(waiter);
         };
 
-        console.log("in", waiter);
+        //console.log("in", waiter);
         waiter.addEventListener(eventTypeToListen, _waiterStack[newId]);
         action(waiter);
     });

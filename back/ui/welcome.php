@@ -1,1 +1,1 @@
-<div style='font-size:3em'><?php echo i18n("thisis")?></div>
+<h1><?php echo i18n("thisis")?></h1>

@@ -16,8 +16,37 @@ function getCurrentShoutFileName() {
     return 'shout.json';
 }
 
-function getRootApp() {
+function getRelativeRootApp() {
     return "/wtnz/";
+}
+
+function getAppDescription() {
+    return i18n("wtnz_descr");
+}
+
+$_initial_title = "WTNZ";
+$_title = null;
+
+function setTitle($superbus) {
+    global $_title, $_initial_title;
+    if($superbus) $_title .= $_initial_title . " - " . $superbus;
+}
+
+function getTitle() {
+    global $_title, $_initial_title;
+    return $_title ?? $_initial_title;
+}
+
+function getWebsocketUrl() {
+    return "wss://" . $_SERVER["HTTP_HOST"] . ":3000";
+}
+
+function getAppIconUrl() {
+    return getAbsoluteRootAppUrl() . "front/assets/img/ico.png";
+}
+
+function getAbsoluteRootAppUrl() {
+    return $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRelativeRootApp();
 }
 
 function getDownloadsFolder() {

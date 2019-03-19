@@ -102,7 +102,7 @@ function goToLocation($rq) {
 }
 
 function getLocation($rq) {
-    $r = getRootApp();
+    $r = getRelativeRootApp();
 
     switch($rq) {
         case "Home":

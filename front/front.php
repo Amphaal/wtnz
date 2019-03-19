@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="<?php echo I18nSingleton::getInstance()->getLang();?>">
+<html lang="<?php echo I18nSingleton::getInstance()->getLang()?>">
     <head>
-        <title><?php echo $title;?></title>
-        <link rel="icon" type="image/png" href="<?php echo $icon;?>" />
-        <?php include "front/php-helpers/metadata.php" ?>
+        <?php include "back/ui/template/metadata.php" ?>
         <?php include "front/php-helpers/css.php" ?>
         <?php include "front/php-helpers/libs.php" ?>
         <?php include "front/php-helpers/vars.php" ?>

@@ -54,7 +54,7 @@
     "downloadFeeder" => "Télécharger pour %s",
     "obtainApp" => "Récupérer le logiciel compagnon",
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
-    "wtnz_descr" => "Ta Musique qui Claque",
+    "wtnz_descr" => "Ta Musique, leur claque",
     "users_profile" => "Profil | %s",
     "curAlCo" => "Couverture de l'album selectionné",
     "crea_miss_p_u" => '"%s" manquant pour la création de compte',
