@@ -1,8 +1,8 @@
 <?php
 
 define('USER_DB_PATH', dirname(__DIR__) . "/data/users.json");
-define('USERS_DATA_RPATH', "/data/users");
-define('USERS_DATA_PATH', dirname(__DIR__) . USERS_DATA_RPATH);
+define('USERS_DATA_RPATH', getRelativeRootApp() . "data/users");
+define('USERS_DATA_PATH', dirname(__DIR__) . "/data/users");
 
 
 function getInternalUserFolder($user) {
@@ -11,7 +11,7 @@ function getInternalUserFolder($user) {
 }
 
 function getPublicUserFolder($user) {
-    $path = "./" . USERS_DATA_RPATH . '/' . $user . '/';
+    $path = USERS_DATA_RPATH . '/' . $user . '/';
     return $path;
 }
 

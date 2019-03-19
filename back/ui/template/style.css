@@ -1,6 +1,6 @@
 @font-face {
     font-family: bebasNeueFont;
-    src: url(front/assets/fonts/BebasNeue-Regular.otf);
+    src: url(/wtnz/front/assets/fonts/BebasNeue-Regular.otf);
     font-display: swap;
 }
 
@@ -41,4 +41,23 @@ body {
 
 body.lock {
     overflow-y:hidden;
+}
+
+/**/
+
+
+.loginRack {
+    margin:.5rem; 
+    display:flex; 
+    flex-direction:column;
+}
+
+#accountManagement {
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#accountManagement button:not(:first-child):not(:only-child) {
+    margin-top: 1rem;
 }

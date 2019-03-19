@@ -1,12 +1,3 @@
-<style>
- input {
-    min-width: 15rem;
- }
- span {
-     font-size: 0.8rem;
- }
-</style>
-
 <?php if(!empty($acr)) {var_dump($acr);}?>
 
 <div style="display: flex; flex-direction:column;align-items:center;">

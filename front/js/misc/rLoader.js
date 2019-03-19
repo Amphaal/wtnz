@@ -54,15 +54,13 @@ class RLoader {
 
     _fadeIn() {
         return waitTransitionEnd(this._rLoader, function() {
-            this._rLoader.style.pointerEvents = "";
-            this._rLoader.style.opacity = 1;
+            this._rLoader.classList.add("shown");
         }.bind(this));
     }
 
     _fadeOut() {
         return waitTransitionEnd(this._rLoader, function() {
-            this._rLoader.style.pointerEvents = "none";
-            this._rLoader.style.opacity = 0;
+            this._rLoader.classList.remove("shown");
         }.bind(this));
     }
 
@@ -78,7 +76,7 @@ class RLoader {
             let xmlr = results[0];
             let newRUrl = xmlr.responseURL;
             
-            if(this._previousResponseUrl != newRUrl) {
+            if(this._currentUrl != newRUrl) {
                 this._previousResponseUrl = this._currentUrl;
                 this._currentUrl = newRUrl;
                 this._mustDisplayBackButton = Boolean(requestingBackButton);
@@ -92,11 +90,11 @@ class RLoader {
 
     _injectBackButton() {
         let btn = document.createElement("button");
-        btn.innerHTML = "<<";
+        btn.innerHTML = "<< back";
+        btn.classList.add("back");
         this._rLoader.appendChild(btn);
 
         btn.onclick = function(event) {
-            debugger;
             event.preventDefault();
             this._goXMLR(
                 "GET", 

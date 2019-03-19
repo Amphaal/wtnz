@@ -101,8 +101,8 @@ function goToLocation($rq) {
     header('Location: ' . getLocation($rq, param));
 }
 
-function getLocation($rq) {
-    $r = getRelativeRootApp();
+function getLocation($rq, $abs = null) {
+    $r = $abs ? getAbsoluteRootAppUrl() : getRelativeRootApp();
 
     switch($rq) {
         case "Home":

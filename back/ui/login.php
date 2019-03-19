@@ -1,12 +1,3 @@
-<style>
- input {
-    min-width: 10rem;
- }
- span {
-     font-size: 0.8rem;
- }
-</style>
-
 <?php if(!empty($login_result)) {var_dump($login_result);}?>
 
 <div style="display: flex; flex-direction:column;align-items:center;">

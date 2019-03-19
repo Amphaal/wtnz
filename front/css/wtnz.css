@@ -125,8 +125,8 @@ label.clickable.unselected
 .notif::after {
     position: absolute;
     background-color: red;
-    width: 1em;
-    height: 1em;
+    min-width: 1em;
+    min-height: 1em;
     border-radius: 50%; 
     content: attr(data-notif);
     right: 10%;
