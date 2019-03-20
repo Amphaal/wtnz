@@ -11,19 +11,10 @@
         return $css;
     }
 
-    function getProfilePicture($user) {
-        $config = getUserConfig($user);
-        if(!$config) return;
-        if(!array_key_exists("profilePic", $config)) return;
-
-        $profilePicPath = $config["profilePic"];
-        return getPublicUserFolder($user) . $profilePicPath;
-    }
-
     function routerLibrary($user_qs) {
 
         $expectedLibrary = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
-        $expectedProfilePic = getProfilePicture($user_qs);
+        $expectedProfilePic = getPublicUserFolder($user_qs) . getProfilePicture($user_qs);
 
         $clientURLUnified = getPublicUserFolder($user_qs) . getUnifiedLibraryFileName();
         $clientURLShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();

@@ -4,7 +4,7 @@ class PPEditor {
         if(!this._editor) return;
         this._picker = this._editor.getElementsByClassName("PPPicker")[0];
         this._imgHolder = this._editor.getElementsByClassName("imgHolder")[0];
-        this._imgElem = this._imgHolder.getElementsByClassName("img")[0];
+        this._imgElem = this._imgHolder.getElementsByTagName("img")[0];
         this._clickHandler = null;
 
         this._addClickHandler();
@@ -49,8 +49,7 @@ class PPEditor {
     }
 
     _bindToImg(xmlr) {
-        debugger;
-        //xmlr.response
+        this._imgElem.src = xmlr.response;
     }
 
     _removeClickHandler() {

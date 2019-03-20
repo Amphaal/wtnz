@@ -1,5 +1,9 @@
 <?php 
 
+function getServerRootApp() {
+    return pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_DIRNAME);
+}
+
 function getCurrentLibraryFileName() {
     return 'current.json';
 }
@@ -16,7 +20,7 @@ function getProfilePicFilename($ext) {
     return "pp.".$ext;
 }
 
-function getRelativeRootApp() {
+function getRelativeRootAppUrl() {
     return "/wtnz/";
 }
 
@@ -46,7 +50,7 @@ function getAppIconUrl() {
 }
 
 function getAbsoluteRootAppUrl() {
-    return $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRelativeRootApp();
+    return $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRelativeRootAppUrl();
 }
 
 function getDownloadsFolder() {

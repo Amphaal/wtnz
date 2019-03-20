@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="front/js/ext/animate.min.css">
-<?php include "back/template/libs.php" ?>
+<?php include "back/template/php-helpers/libs.php" ?>
 <script type="text/javascript" src="front/js/ext/highcharts.js"></script>
 <script type="text/javascript" src="front/js/ext/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="front/js/ext/sorttable.js"></script>

@@ -1,13 +1,5 @@
 <div id="accountManagement">
-    <?php if($iul) {?>
-        <span id="ProfilePicEditor" title="<?php echo i18n("updateProfilePic")?>">
-            <input class="PPPicker" type="file" name="profile_pic" accept="image/*">
-            <div class="imgHolder">
-                <i class="fas fa-user ph"></i>
-                <img class="pp" src="" />
-            </div>
-        </span>
-    <?php } ?>
+    <?php if($iul) include "back/ui/parts/ppEditor.php" ?>
     <div>
         <?php if($iul) {?>
         <div><?php echo i18n("welcome_back",  getCurrentUserLogged()) ?></div>
@@ -30,16 +22,8 @@
             <?php } ?>
         </div>
     </div>
-    <?php if($iul) {?>
-        <div>
-            <span><?php echo i18n("obtainApp")?></span>
-            <div style='margin:.5rem; display: flex; flex-direction: column'>
-                <?php foreach($dd_folders as $folder) {?>
-                    <button <?php _btnLink("/wtnz/download/" . $folder, true) ?>>
-                        <?php echo i18n("downloadFeeder", fromDownloadFolderToOS($folder))?>
-                    </button>
-                <?php }?>
-            </div>
-        </div>
-    <?php } ?>
+    <?php if($iul) include "back/ui/parts/downloadButtons.php" ?>
 </div>
+<script>
+    let ppe = new PPEditor("ProfilePicEditor");
+</script>

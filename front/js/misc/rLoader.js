@@ -11,8 +11,7 @@ class RLoader {
 
         this._initialLoadPromise = _XMLHttpPromise("GET", this._currentUrl)
             .then(function(xmlr) {
-                this._rLoader.innerHTML = xmlr.response;
-                this._init();
+                this._fillWithContent(xmlr.response, true);
             }.bind(this));
     }
 
@@ -103,15 +102,23 @@ class RLoader {
         }.bind(this);
     }
 
-    _fillWithContent(content) {
+    _fillWithContent(content, preventAnimation) {
         if(content) {
             this._rLoader.innerHTML = content;
             if(this._mustDisplayBackButton) this._injectBackButton();
             this._init();
+            this._executeInnerScript();
         }
 
-        this._fadeIn();
+        if(!preventAnimation) this._fadeIn();
 
+    }
+
+    _executeInnerScript() {
+        let arr = this._rLoader.getElementsByTagName('script');
+        for (let n = 0; n < arr.length; n++) {
+            eval(arr[n].innerHTML);
+        }
     }
 
     _init() {

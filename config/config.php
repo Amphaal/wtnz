@@ -1,10 +1,8 @@
 <?php 
 
-
-
-include_once "abs_path.php";
-include_once "db.php";
-include_once "i18n.php";
+include_once "config/_parts/abs_path.php";
+include_once "config/_parts/db.php";
+include_once "config/_parts/i18n.php";
 
 class Config {
 

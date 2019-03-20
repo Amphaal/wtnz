@@ -22,17 +22,27 @@ function routerManage($action) {
 function ProfilePic() {
     //upload
     if($_FILES && isUserLogged()) {
-        
+ 
         //prepare...
         $currentUser = getCurrentUserLogged();
         $expectedFilename = "file";
-        $ext =  pathinfo($_FILES[$expectedFilename]['name'], PATHINFO_EXTENSION);
+        $ext = pathinfo($_FILES[$expectedFilename]['name'], PATHINFO_EXTENSION);
         testUploadedFile($expectedFilename);
-        
+
         //upload...
         $ppname = getProfilePicFilename($ext);
         $internalDest = getInternalUserFolder($currentUser) . $ppname;
         uploadFile($internalDest, $expectedFilename);
+
+        //remove previous if different ext...
+        $currentpicFN = getProfilePicture($currentUser);
+        if($currentpicFN && $currentpicFN != $ppname) {
+            $currentpicFN = getInternalUserFolder($currentUser) . $currentpicFN;
+            @unlink($currentpicFN);
+        }
+
+        //update DB
+        setMyProfilePicture($ppname);
 
         //return
         ob_clean(); flush();

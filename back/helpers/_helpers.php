@@ -2,6 +2,7 @@
 
 include_once "back/helpers/htmlHelpers.php";
 
+
 function getQueryString() {
     $request_uri = explode('/', strtolower($_SERVER['REQUEST_URI']));
     $request_uri = array_filter($request_uri, 'strlen' );
@@ -85,6 +86,19 @@ function isUselessUpload($targetPath, $expectedFilename) {
     return $hash_uploaded == $hash_current ? true : false;
 }
 
+function setMyProfilePicture($ppFilename) {
+    updateUsersConfig(array("profilePic" => $ppFilename));
+}
+
+function getProfilePicture($user) {
+    $config = getUserConfig($user);
+    if(!$config) return;
+    if(!array_key_exists("profilePic", $config)) return;
+
+    $profilePicPath = $config["profilePic"];
+    return $profilePicPath;
+}
+
 //
 //conectivity
 //
@@ -102,7 +116,7 @@ function goToLocation($rq) {
 }
 
 function getLocation($rq, $abs = null) {
-    $r = $abs ? getAbsoluteRootAppUrl() : getRelativeRootApp();
+    $r = $abs ? getAbsoluteRootAppUrl() : getRelativeRootAppUrl();
 
     switch($rq) {
         case "Home":
