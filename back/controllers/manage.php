@@ -10,8 +10,8 @@ function routerManage($action) {
         case "disconnect":
             return disconnect();
             break;
-        case "connect";
-            return login();
+        case "pp":
+            return ProfilePic();
             break;
         default;
             return home();
@@ -19,7 +19,31 @@ function routerManage($action) {
     }
 }
 
+function ProfilePic() {
+    //upload
+    if($_FILES && isUserLogged()) {
+        
+        //prepare...
+        $currentUser = getCurrentUserLogged();
+        $expectedFilename = "file";
+        $ext =  pathinfo($_FILES[$expectedFilename]['name'], PATHINFO_EXTENSION);
+        testUploadedFile($expectedFilename);
+        
+        //upload...
+        $ppname = getProfilePicFilename($ext);
+        $internalDest = getInternalUserFolder($currentUser) . $ppname;
+        uploadFile($internalDest, $expectedFilename);
+
+        //return
+        ob_clean(); flush();
+        echo getPublicUserFolder($currentUser) . $ppname;
+        return;  
+    }
+}
+
 function home() {
+
+    login();
 
     //prepare
     $iul = isUserLogged();
@@ -38,8 +62,14 @@ function home() {
         }
     }
 
+    //title
+    $title = $iul ? "e_log_manage" : "e_log_home";
+    setTitle(i18n($title));
+
     includeXMLRSwitch("back/ui/home.php", get_defined_vars());
 }  
+
+
 
 function accountCreation() {
     $rules = [
@@ -80,9 +110,6 @@ function login() {
             }
         }
     }
-
-    includeXMLRSwitch("back/ui/login.php", get_defined_vars());
-
 }
 
 function tryCreatingUser($rules) {

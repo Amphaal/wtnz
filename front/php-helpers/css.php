@@ -2,7 +2,9 @@
 <?php
     echo "<style>";
 
-    include "back/ui/template/style.css";
+    foreach(getFilesInFolder('back/ui/template/css') as $file) { 
+        echo file_get_contents($file);
+    } 
 
     foreach(getFilesInFolder('front/css') as $file) { 
         echo file_get_contents($file);

@@ -50,7 +50,7 @@
     "e_log_createAccount" => "Create account",
     "e_log_retype" => "Retype to confirm",
     "e_log_rule" => "(between %d and %d characters)",
-    "welcome" => "Welcome back, %s",
+    "welcome_back" => "Welcome back, %s",
     "downloadFeeder" => "Download for %s",
     "obtainApp" => "Obtain the companion app",
     "e_noDownloadFound" => "Downloadable file cannot be found",
@@ -68,5 +68,8 @@
     "sort_order" => "Sort by name",
     "sort_count" => "Sort by number / year",
     "switch_lang" => "Change language",
-    "e_log_home" => "Create an account / Login"
+    "e_log_home" => "Create an account / Login",
+    "e_log_manage" => "Account management",
+    "welcome" => "Welcome",
+    "updateProfilePic" => "Update your profile picture"
 );

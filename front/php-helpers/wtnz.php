@@ -1,6 +1,10 @@
 <script>
     <?php
 
+        foreach(getFilesInFolder('back/ui/template/js') as $file) { 
+            echo file_get_contents($file);
+        }
+
         foreach(getFilesInFolder('front/js/polyfills') as $file) { 
             echo file_get_contents($file);
         }

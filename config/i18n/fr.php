@@ -50,7 +50,7 @@
     "e_log_createAccount" => "Création du compte",
     "e_log_retype" => "Confirmer en ressaisissant",
     "e_log_rule" => "(entre %d et %d caractères)",
-    "welcome" => "Bon retour à toi, %s.",
+    "welcome_back" => "Bon retour à toi, %s.",
     "downloadFeeder" => "Télécharger pour %s",
     "obtainApp" => "Récupérer le logiciel compagnon",
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
@@ -68,5 +68,8 @@
     "sort_order" => "Trier par nom",
     "sort_count" => "Trier par nombre / année",
     "switch_lang" => "Changer de langue",
-    "e_log_home" => "Créer un compte / Se connecter"
+    "e_log_home" => "Créer un compte / Se connecter",
+    "e_log_manage" => "Gestion du compte",
+    "welcome" => "Bienvenue",
+    "updateProfilePic" => "Mettre à jour son image de profil"
 );

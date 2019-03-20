@@ -12,6 +12,10 @@ function getCurrentShoutFileName() {
     return 'shout.json';
 }
 
+function getProfilePicFilename($ext) {
+    return "pp.".$ext;
+}
+
 function getRelativeRootApp() {
     return "/wtnz/";
 }

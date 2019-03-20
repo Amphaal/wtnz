@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?php echo I18nSingleton::getInstance()->getLang()?>">
     <head>
-        <?php include "back/ui/template/metadata.php" ?>
+        <?php include "back/ui/template/php-helpers/metadata.php" ?>
         <?php include "front/php-helpers/css.php" ?>
         <?php include "front/php-helpers/libs.php" ?>
         <?php include "front/php-helpers/vars.php" ?>

@@ -1,5 +1,7 @@
 <?php 
 
+
+
 include_once "abs_path.php";
 include_once "db.php";
 include_once "i18n.php";
@@ -29,4 +31,3 @@ class Config {
 };
 
 ?>
-
