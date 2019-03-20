@@ -57,7 +57,7 @@ function includeXMLRSwitch($inside_part, $included_vars_array) {
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
-        include "back/ui/template/_template.php";
+        include "back/template/_template.php";
     }
     
 }
