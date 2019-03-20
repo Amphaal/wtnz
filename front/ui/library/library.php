@@ -6,5 +6,5 @@
         <?php include "front/ui/library/parts/feed.php" ?>
         <?php include "front/ui/library/parts/discover.php" ?>
     </div>
-    <?php include "front/ui/_components/footer.php" ?>
+    <?php include "back/template/_components/footer.php" ?>
 </div>

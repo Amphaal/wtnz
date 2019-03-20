@@ -187,3 +187,10 @@ function _XMLHttpPromise(method, url, POSTParams) {
     });
 
 }
+
+function changeLang(event) {
+    let newLang = event.currentTarget.getAttribute("data-lang");
+    ezPOST({
+        set_lang : newLang
+    });
+}

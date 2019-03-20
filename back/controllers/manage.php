@@ -63,6 +63,12 @@ function home() {
     
     //downloads...
     if($iul) {
+
+        $curUser = getCurrentUserLogged();
+        $pp = getProfilePicture($curUser);
+        $pp_path = null;
+        if($pp) $pp_path = getPublicUserFolder($curUser) . $pp;
+
         if($os) {
             array_push($dd_folders, fromOSToDownloadFolder($os));
         } else {
@@ -110,6 +116,7 @@ function disconnect() {
 }
 
 function login() {
+
     if($_POST) {
         $login_result = connectAs($_POST['username'], $_POST['password']);
         if(!$login_result['isError']) {

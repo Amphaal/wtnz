@@ -17,6 +17,7 @@ class I18nHandler {
         
         $cli_lang = Locale::getPrimaryLanguage($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? null;
         $post_lang = $_POST['set_lang'] ?? null;
+        if($post_lang) unset($_POST['set_lang']);
         $session_lang = $_SESSION['lang'] ?? null;
         $requested_lang = $post_lang ?? $session_lang ?? $cli_lang ?? self::$_default_lang;
 
@@ -62,3 +63,5 @@ function i18n($key, ...$args) {
         ...$args
     );
 }
+
+I18nSingleton::getInstance();

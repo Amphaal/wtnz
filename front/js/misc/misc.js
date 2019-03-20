@@ -1,10 +1,3 @@
-function changeLang(event) {
-    let newLang = event.currentTarget.getAttribute("data-lang");
-    ezPOST({
-        set_lang : newLang
-    });
-}
-
 function removeNotification(selector) {
     document.querySelectorAll(selector).forEach(function(elem) {
         waitAnimationEnd(elem, function() {

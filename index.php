@@ -11,7 +11,6 @@ include_once "back/controllers/manage.php";
 include_once "back/controllers/downloadApp.php";
 include_once "back/controllers/library.php";
 
-
 function init_app() {
 
     sanitizePOST();

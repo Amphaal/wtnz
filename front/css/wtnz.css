@@ -41,13 +41,7 @@ main > *:first-child {
     overflow: hidden;
 }
 
-#mainFrame {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    z-index: 0;
 
-}
 .subFrame {
     display: flex;
     flex-wrap: wrap;
@@ -70,37 +64,6 @@ main > *:first-child {
     align-items : flex-start;
 }
 
-
-label.clickable input[type="checkbox"], input[type="radio"] {
-    display: none;
-}
-
-label.clickable i,
-label.clickable img, 
-label.clickable i + span{
-    transition: all .3s ease;
-    cursor: pointer;
-}
-
-label.clickable {
-    display: flex; 
-    flex-grow: 0;
-    flex-shrink: 0;
-}
-
-label.clickable:hover > * {
-    opacity: .8 !important;
-}
-
-label.clickable input[type="checkbox"]:not(:checked) + i,
-label.clickable input[type="checkbox"]:not(:checked) + img,
-label.clickable input[type="radio"]:not(:checked) + i,
-label.clickable input[type="radio"]:not(:checked) + i + span,
-label.clickable.unselected
- {
-    color : rgba(0, 0, 0, .8);
-    opacity: .6;
-}
 
 [data-cat]::before {
     content : attr(data-cat) " ||";
