@@ -44,6 +44,68 @@ function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
     echo $out;
 }
 
+function _magnifikInput($params, $rules = null) {
+    $newInput = array();
+    $newContainer = array();
+    $descr = "";
+
+    $toPh = function($val) { return 'placeholder="' . $val . '"';};
+    $toVal = function($val) { return 'value="' . $val .'"';};
+
+    //if type unset, set default
+    if(!array_key_exists('type', $params)) $params['type'] = "text";
+
+    //autoset name depending on type
+    if(in_array($params['type'], array("password", "email"))) {
+        $params["name"] = $params["type"];
+    }
+
+    $inputName = $params["name"];
+
+    //if required, specific binding
+    if(array_key_exists('required', $params)) {
+        array_push($newInput, "required");
+        unset($params["required"]);
+    }
+
+    //placeholder helper
+    if(array_key_exists('placeholder', $params)) {
+        
+        $trad = $toPh(
+            i18n($params["placeholder"])
+        );
+        
+        array_push($newContainer, $trad);
+        unset($params["placeholder"]);
+    }
+
+    //value helper
+    $prem = PRem($inputName);
+    if($prem) {
+        $prem = $toVal($prem);
+        array_push($newInput, $prem);
+    }
+
+    //rules helper
+    if($rules && $rules[$inputName]) {
+        array_push($newInput, 'pattern="' .  renHpat($rules[$inputName]) . '"');
+        $content = i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
+        array_push($newInput, $toPh($content));
+    }
+
+    //default parsing
+    foreach($params as $key => $value) {
+        array_push($newInput, $key . '="' . $value . '"');
+    }
+
+    $impl = function($arr) { return implode(" ", $arr);};
+
+    return "<div class='magnifik' " . $impl($newContainer) . " >
+                <input " . $impl($newInput) . " />
+            </div>";
+}
+
+
 function includeXMLRSwitch($inside_part, $included_vars_array) {
 
     foreach($included_vars_array as $varname => $value) {

@@ -49,7 +49,7 @@
     "e_log_email" => "Adresse e-mail de contact",
     "e_log_createAccount" => "Création du compte",
     "e_log_retype" => "Confirmer en ressaisissant",
-    "e_log_rule" => "(entre %d et %d caractères)",
+    "e_log_rule" => "Entre %d et %d caractères",
     "welcome_back" => "Bon retour à toi, %s.",
     "downloadFeeder" => "Télécharger pour %s",
     "obtainApp" => "Récupérer le logiciel compagnon",

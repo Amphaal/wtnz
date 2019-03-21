@@ -57,12 +57,15 @@ body.lock {
     text-align: center;
 }
 
-#accountManagement > *:not(:first-child):not(:only-child) {
- margin-top:1rem;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-#accountManagement button:not(:first-child):not(:only-child) {
-    margin-top: 1rem;
+#accountManagement > *:not(:first-child):not(:only-child),
+#accountManagement button:not(:first-child):not(:only-child),
+form > *:not(:first-child):not(:only-child) {
+    margin-top:1rem;
 }
 
 #mainFrame {
@@ -71,4 +74,46 @@ body.lock {
     flex-direction: column;
     z-index: 0;
     justify-content: center;
+}
+
+button, input[type="submit"], input[type="button"] {
+    user-select : none;
+    cursor: pointer;
+}
+
+.magnifik {
+    position: relative;
+}
+
+.magnifik input[type="text"], input[type="password"], input[type="email"] {
+    padding: .25rem;
+    padding-top: 1rem;
+    border-radius: 5px;
+    border : 1px solid #666;
+    font-size: .75rem;
+}
+
+.magnifik .descr {
+    text-align: right;
+    font-size: .75rem;
+}
+
+.magnifik::before {
+    content : attr(placeholder);
+    position: absolute;
+    font-size: .5rem;
+    top: .25rem;
+    left: .30rem;
+    color: grey;
+    transition: all .5s ease;
+}
+
+.magnifik input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    box-shadow : 0 0 0px 1000px white inset;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+    box-shadow: 0 0 0px 2px #dadada !important;
 }

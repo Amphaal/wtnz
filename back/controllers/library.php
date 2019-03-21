@@ -21,7 +21,8 @@
 
         //Client variables
         $latestUpdate = filemtime($expectedLibrary);
-        
+        $isLogged = isUserLogged();
+
         //addons
         setTitle(i18n('libraryOf', $user_qs));
         $initialRLoaderUrl = getLocation("Home", true);

@@ -49,7 +49,7 @@
     "e_log_email" => "Email address",
     "e_log_createAccount" => "Create account",
     "e_log_retype" => "Retype to confirm",
-    "e_log_rule" => "(between %d and %d characters)",
+    "e_log_rule" => "Between %d and %d characters",
     "welcome_back" => "Welcome back, %s",
     "downloadFeeder" => "Download for %s",
     "obtainApp" => "Obtain the companion app",
