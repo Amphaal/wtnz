@@ -9,9 +9,15 @@
     transition: padding .5s ease, background-color .5s ease, max-width .5s ease;
 }
 
+#connectContainer .logoContainer {
+    background-color: rgba(255,255,255,.5);
+    padding: 0 1rem;
+    width: 100%;
+    text-align: center;
+}
+
 #connectContainer.anima {
     background-color: rgba(0,0,0,.1);
-    padding: 0 1rem;
     max-width: 100%;
 }
 
@@ -23,12 +29,13 @@
     overflow: hidden;
     transition: all .5s ease;
     white-space: nowrap;
-    position: relative;
+     
     animation-fill-mode: forwards;
     display: flex;
     flex-direction: column;
     font-size: .75rem;
     margin: 1rem 0;
+    padding: 0 1rem;
     
     opacity: 0;
     max-width: 0;

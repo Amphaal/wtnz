@@ -3,12 +3,12 @@
     z-index: 500;
     transition: max-height .3s ease;
     overflow: hidden;
-    position: relative;
+     
 }
 
 #shoutContainer .shout {
     padding: 1rem 0;
-    position: relative;
+     
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -52,7 +52,7 @@
 
 #shoutContainer .imgLoader {
     transition: all .3s ease;
-    position: relative;
+     
 }
 
 #shoutContainer .albumDesc {

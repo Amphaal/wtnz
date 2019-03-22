@@ -19,7 +19,7 @@
 }
 
 #loader-bar {
-    position: relative;
+     
     background-color : black;
     height : .05rem;
     flex-grow: 1;

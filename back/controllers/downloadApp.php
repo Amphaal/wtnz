@@ -23,6 +23,7 @@ function routerDownload($action) {
     //apply headers
     header('Content-Type: application/octet-stream');
     header("Content-Transfer-Encoding: Binary"); 
+    header("Content-Length: ".filesize($filepath));
     header('Content-Disposition: attachment; filename="'.$latestInFolder.'"');
     
     //return file

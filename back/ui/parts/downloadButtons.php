@@ -1,10 +1,8 @@
 <div>
-    <span><?php echo i18n("obtainApp")?></span>
-    <div style='margin:.5rem; display: flex; flex-direction: column'>
+    <span><?php echo i18n("obtainCompanionApp")?></span>
+    <div id="dlContainer">
         <?php foreach($dd_folders as $folder) {?>
-            <button <?php _btnLink("/wtnz/download/" . $folder, true) ?>>
-                <?php echo i18n("downloadFeeder", fromDownloadFolderToOS($folder))?>
-            </button>
+            <a class="<?php echo $folder?>" href="/wtnz/download/<?php echo $folder?>" title="<?php echo i18n("downloadFeeder", fromDownloadFolderToOS($folder))?>"></a>
         <?php }?>
     </div>
 </div>

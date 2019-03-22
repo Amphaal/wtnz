@@ -1,3 +1,7 @@
+function _popup(event) {
+    event.currentTarget.classList.toggle("hide");
+}
+
 //ucwords()
 function titleCase(str) {
     let splitStr = str.toLowerCase().split(' ');

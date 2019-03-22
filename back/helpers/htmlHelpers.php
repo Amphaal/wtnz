@@ -44,6 +44,12 @@ function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
     echo $out;
 }
 
+function _popup($result) {
+    if(empty($result)) return;
+    $type = $result["isError"] == true ? "error" : "info";
+    return '<div onclick="_popup(event)" class="popup ' . $type . '"><div class="content">' . $result["description"] . '</div></div>';
+}
+
 function _magnifikInput($params, $rules = null) {
     $newInput = array();
     $newContainer = array();

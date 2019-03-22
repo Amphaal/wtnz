@@ -1,7 +1,6 @@
-<?php if(!empty($acr)) {var_dump($acr);}?>
-
-<div style="display: flex; flex-direction:column;align-items:center;">
+<div id="accountCreation">
     <h1><?php echo i18n("e_log_createAccount")?></h1>
+    <?php echo _popup($acr); ?>
     <form method="POST" autocomplete="off" action="<?php echo $_SERVER["REQUEST_URI"] ?>">
         <?php echo _magnifikInput(array(
             "name" => "username",

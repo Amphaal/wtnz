@@ -52,7 +52,7 @@
     "e_log_rule" => "Entre %d et %d caractères",
     "welcome_back" => "Bon retour à toi, %s.",
     "downloadFeeder" => "Télécharger pour %s",
-    "obtainApp" => "Récupérer le logiciel compagnon",
+    "obtainCompanionApp" => "Télécharger <span class='obtain'>FeedTNZ</span>, le logiciel compagnon",
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
     "wtnz_descr" => "Ta Musique, leur claque",
     "users_profile" => "Profil | %s",

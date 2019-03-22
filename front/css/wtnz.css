@@ -1,6 +1,6 @@
 main {
     width : 100%;
-    position: relative;
+     
     transition: all .5s ease-in;
     display:flex; 
     transform:translateX(0px);
@@ -30,6 +30,7 @@ main > *:first-child {
     transition: opacity .5s ease;
 }
 
+
 #bg.show {
     opacity: 1;
 }
@@ -37,27 +38,30 @@ main > *:first-child {
 #wtnz-connect {
     height: 100%;
     align-items: center;
-    position: relative;
+     
     overflow: hidden;
 }
 
+#wtnz-library #mainFrame {
+    justify-content: flex-start;
+}
 
 .subFrame {
     display: flex;
     flex-wrap: wrap;
-    position: relative;
+     
     transition: max-height 0.3s ease 0s;
     flex-shrink: 0;
     overflow: hidden;
 }
 
 .subFrame:not(:last-child) {
-    max-height:0;
+    max-height:0px;
 }
 
 .subContent {
     display: flex;
-    position: relative;
+     
     padding: 1.5rem 1rem; 
     flex-grow: 1;
     flex-wrap: wrap;
@@ -101,6 +105,11 @@ main > *:first-child {
     text-align: center;
     padding: .1em;
     box-shadow: 0px 1px 5px 1px rgba(56,56,56,.2);
+    pointer-events: none;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .notif.notifOut::after {

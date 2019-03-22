@@ -21,7 +21,7 @@
 }
 
 .filterUI {
-    position: relative; 
+      
     transition: all .3s ease;
     margin: 1rem 0 0 .7rem;
     display: flex;
@@ -46,7 +46,7 @@
 }
 
 .filterUI .list {
-    position: relative;
+     
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -67,7 +67,7 @@
 
 .filterUI .list > * {
     color : rgba(29, 29, 29, 1);
-    position: relative;
+     
     cursor: pointer;
     transition: transform .3s ease;
 }
@@ -85,7 +85,7 @@
 }
 
 .filterUI.hasSelection .ph {
-    position: relative;
+     
     width:fit-content;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .filterUI.hasSelection.open .list {
-    position: relative;
+     
     transform: scale(1);
     opacity: 1;
 }

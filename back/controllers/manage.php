@@ -53,7 +53,8 @@ function ProfilePic() {
 
 function home() {
 
-    login();
+    $login_result = null;
+    login($login_result);
 
     //prepare
     $iul = isUserLogged();
@@ -69,13 +70,8 @@ function home() {
         $pp_path = null;
         if($pp) $pp_path = getPublicUserFolder($curUser) . $pp;
 
-        if($os) {
-            array_push($dd_folders, fromOSToDownloadFolder($os));
-        } else {
-            array_push($dd_folders, 
-                array_keys(availableDownloads())
-            );
-        }
+        $dd_folders = array_keys(availableDownloads());
+
     }
 
     //title
@@ -93,6 +89,7 @@ function accountCreation() {
         "password" => ["min" => 8, "max" => 20],
     ];
     
+    $acr = null;
     if($_POST){
         $acr = tryCreatingUser($rules);
         if(!$acr["isError"]) {
@@ -115,10 +112,11 @@ function disconnect() {
 
 }
 
-function login() {
+function login(&$login_result = null) {
 
     if($_POST) {
         $login_result = connectAs($_POST['username'], $_POST['password']);
+        
         if(!$login_result['isError']) {
             if(isXMLHttpRequest()) {
                 goToLocation("Home");
@@ -131,32 +129,32 @@ function login() {
 
 function tryCreatingUser($rules) {
 
-    $ret = array("errDescr" => null);
+    $ret = array("description" => null);
 
     $user = $_POST['username'];
     $passwd = $_POST['password'];
     $end_checks = false;
 
     //checks...
-    while(!$end_checks && empty($ret["errDescr"])) {
+    while(!$end_checks && empty($ret["description"])) {
 
         //fields filed
         foreach($rules as $field => $f_rules) {
             if(empty($field)) {
-                $ret["errDescr"] = i18n("crea_miss_p_u", i18n($field));
+                $ret["description"] = i18n("crea_miss_p_u", i18n($field));
                 continue;
             }
         }
 
         // is user already logged
         if (isUserLogged()) {
-            $ret["errDescr"] = i18n("err_nocreate_onlog");
+            $ret["description"] = i18n("err_nocreate_onlog");
             continue;
         }
         
         //check user asked to create exists
         if (checkUserExists($user, true)) {
-            $ret["errDescr"] = i18n("user_already_exist", $user);
+            $ret["description"] = i18n("user_already_exist", $user);
             continue;
         }
         
@@ -164,7 +162,7 @@ function tryCreatingUser($rules) {
         $isUNOk = null;
         preg_match('/^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/', $user, $isUNOk);
         if (count($isUNOk) == 0) {
-            $ret["errDescr"] = i18n("username_invalid", $user);
+            $ret["description"] = i18n("username_invalid", $user);
             continue;
         }
 
@@ -176,7 +174,7 @@ function tryCreatingUser($rules) {
             $max = $f_rules['max'];
 
             if($len < $min || $len > $max) {
-                $ret["errDescr"] = i18n("field_nc_pattern", i18n($field), 
+                $ret["description"] = i18n("field_nc_pattern", i18n($field), 
                                         $min, $max);
                 continue;
             }
@@ -187,7 +185,7 @@ function tryCreatingUser($rules) {
     }
 
     //check if return
-    $ret["isError"] = !empty($ret["errDescr"]);
+    $ret["isError"] = !empty($ret["description"]);
     if($ret["isError"]) return $ret;
 
     //else create account

@@ -52,7 +52,7 @@
     "e_log_rule" => "Between %d and %d characters",
     "welcome_back" => "Welcome back, %s",
     "downloadFeeder" => "Download for %s",
-    "obtainApp" => "Obtain the companion app",
+    "obtainCompanionApp" => "Obtain <span class='obtain'>FeedTNZ</span>, the companion app",
     "e_noDownloadFound" => "Downloadable file cannot be found",
     "wtnz_descr" => "The freshest music from the finest people.",
     "users_profile" => "%s | Profile",
