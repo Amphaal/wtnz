@@ -3,7 +3,7 @@
     padding: .5rem;
     padding-top: 1.1rem;
     border-radius: 5px;
-    border : 1px solid #666;
+    border : 1px solid rgba(0, 0, 0, .05);
     font-size: .75rem;
     width: 100%;
 }
@@ -23,7 +23,18 @@
     transition: all .5s ease;
 }
 
+
+@keyframes autofill {
+    to {
+        background: rgba(255, 255, 255, .75);
+    }
+}
+
 .magnifik input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
-    box-shadow : 0 0 0px 1000px white inset;
+    animation-name: autofill;
+    animation-fill-mode: both;
+}
+
+.magnifik input {
+    background: rgba(255, 255, 255, .75);
 }

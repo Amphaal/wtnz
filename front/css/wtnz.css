@@ -21,6 +21,7 @@ main > *:first-child {
 }
 
 #bg {
+    z-index: -20;
     position: fixed;
     top:0;
     height: 100vh;

@@ -1,3 +1,17 @@
+#PPWrapper {
+    display:flex; justify-content:center;
+}
+
+#bBandEditor {
+    width:120%; height:3rem; position:absolute;top: 30%;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+#bBandEditor:hover {
+    opacity: .5;
+}
+
 #ProfilePicEditor {
     align-self: center; 
     display: flex;

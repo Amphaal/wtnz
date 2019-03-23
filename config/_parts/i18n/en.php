@@ -71,5 +71,6 @@
     "e_log_home" => "Create an account / Login",
     "e_log_manage" => "Account management",
     "welcome" => "Welcome",
-    "updateProfilePic" => "Update your profile picture"
+    "updateProfilePic" => "Update your profile picture",
+    "updateBBand" => "Update your background wave"
 );

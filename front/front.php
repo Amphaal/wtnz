@@ -8,12 +8,13 @@
         <?php include "front/php-helpers/wtnz.php" ?>
     </head>
     <body>
-        <?php include "front/ui/_components/bg.php" ?>
+        
         <?php include "front/ui/_components/loader.php" ?>
         <?php include "front/ui/library/parts/shoutWidget.php" ?>
         <main id="main-app">
             <?php include "front/ui/library/library.php" ?>
             <?php include "front/ui/account/account.php" ?>
         </main>
+        <?php include "front/ui/_components/bg.php" ?>
     </body>
 </html>
