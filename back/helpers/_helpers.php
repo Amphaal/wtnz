@@ -3,14 +3,15 @@
 include_once "back/helpers/htmlHelpers.php";
 
 
-
-function getCustomBackgroundAnimColors($user) {
-    return UserDb::from($user)["customColors"] ?? getDefaultBackgroundColors();
-}
-
-function cbacToCss($user = null) {
-    $colours = getCustomBackgroundAnimColors($user);
-    $css = ".wAnim::after { background: linear-gradient(-45deg, %s, %s, %s, %s);} !important";
+function cbacToCss($target = null, $colours = null) {
+    if(!$target || !$colours) {
+        $colours = getDefaultBackgroundColors();
+        $target = "";
+    } else {
+        $target = '[data-owner="' . $target . '"]';
+    }
+    
+    $css = ".wAnim" . $target ."::after { background: linear-gradient(-45deg, %s, %s, %s, %s);}";
     $css = sprintf($css, ...$colours);
     return $css;
 }

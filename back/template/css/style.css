@@ -135,3 +135,7 @@ button, input[type="submit"], input[type="button"] {
     user-select : none;
     cursor: pointer;
 }
+
+#EditorWrapper {
+    display:flex; justify-content:center;
+}

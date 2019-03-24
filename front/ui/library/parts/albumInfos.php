@@ -19,5 +19,5 @@
             </a>
         </div>
     </div>
-    <div class='wAnim'></div>
+    <?php echo _wAnim($user_qs)?>
 </div>

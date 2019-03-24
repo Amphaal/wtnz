@@ -27,11 +27,13 @@
     background-color:#f10000;
     color: #ebebeb;
     user-select: none;
+    overflow: hidden;
+    white-space: normal;
 }
 
 .popup> .content::after {
     content: "\01F5D9";
     position: absolute;
-    top: .25rem;
-    right: .5rem;
+    top: 0;
+    right: .25rem;
 }

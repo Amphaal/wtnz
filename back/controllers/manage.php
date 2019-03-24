@@ -62,9 +62,10 @@ function home() {
     $mylib_loc = getLocation("MyLibrary");
     $dd_folders = array();
     
-    //downloads...
+    //if user is logged...
     if($iul) {
 
+        //downloads...
         $curUser = getCurrentUserLogged();
         $pp = getProfilePicture($curUser);
         $pp_path = null;

@@ -4,8 +4,8 @@
     foreach(getFilesInFolder('back/template/css') as $file) { 
         echo file_get_contents($file);
     } 
-
-    echo cbacToCss();
     
+    echo cbacToCss();
+
     echo "</style>";
 ?>

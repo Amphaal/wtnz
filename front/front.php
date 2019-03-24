@@ -6,9 +6,15 @@
         <?php include "front/php-helpers/libs.php" ?>
         <?php include "front/php-helpers/vars.php" ?>
         <?php include "front/php-helpers/wtnz.php" ?>
+        <?php 
+            echo "<style>";
+
+            echo cbacToCss($user_qs, UserDb::fromProtected($user_qs)["customColors"]);
+        
+            echo "</style>";
+        ?>
     </head>
     <body>
-        
         <?php include "front/ui/_components/loader.php" ?>
         <?php include "front/ui/library/parts/shoutWidget.php" ?>
         <main id="main-app">

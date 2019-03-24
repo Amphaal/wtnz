@@ -72,5 +72,7 @@
     "e_log_manage" => "Gestion du compte",
     "welcome" => "Bienvenue",
     "updateProfilePic" => "Mettre à jour son image de profil",
-    "updateBBand" => "Mettre à jour la vague du bandeau"
+    "updateBBand" => "Mettre à jour la vague du bandeau",
+    "cancel" => "Annuler",
+    "validate" => "Valider"
 );

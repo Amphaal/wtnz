@@ -1,20 +1,21 @@
 <?php 
-    function routerLibrary($user_qs) {
 
-        $expectedLibrary = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
-        $expectedProfilePic = getPublicUserFolder($user_qs) . getProfilePicture($user_qs);
+function routerLibrary($user_qs) {
 
-        $clientURLUnified = getPublicUserFolder($user_qs) . getUnifiedLibraryFileName();
-        $clientURLShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
+    $expectedLibrary = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
+    $expectedProfilePic = getPublicUserFolder($user_qs) . getProfilePicture($user_qs);
 
-        //Client variables
-        $latestUpdate = filemtime($expectedLibrary);
-        $isLogged = isUserLogged();
+    $clientURLUnified = getPublicUserFolder($user_qs) . getUnifiedLibraryFileName();
+    $clientURLShout = getPublicUserFolder($user_qs) . getCurrentShoutFileName();
 
-        //addons
-        setTitle(i18n('libraryOf', $user_qs));
-        $initialRLoaderUrl = getLocation("Home", true);
+    //Client variables
+    $latestUpdate = filemtime($expectedLibrary);
+    $isLogged = isUserLogged();
 
-        include "front/front.php";
-        exit;
-    }
+    //addons
+    setTitle(i18n('libraryOf', $user_qs));
+    $initialRLoaderUrl = getLocation("Home", true);
+
+    include "front/front.php";
+    exit;
+}

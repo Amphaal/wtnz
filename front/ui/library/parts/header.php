@@ -11,5 +11,5 @@
         <?php include 'front/ui/_components/connect_btn.php' ?>
     </div>
     <?php include "front/ui/library/parts/profile.php" ?>
-    <div class='wAnim'></div>
+    <?php echo _wAnim($user_qs)?>
 </header>

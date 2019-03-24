@@ -1,0 +1,55 @@
+#bBandEditor .colorPicker {
+    opacity: 0;
+    transition: all .5s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bBandEditor .colorPicker .controls{
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#bBandEditor .colorPicker .colors > *{
+    border:none;
+    background: none;
+
+}
+
+#bBandEditor.open .colorPicker {
+    opacity: 1;
+}
+
+#bBandEditor:not(.open) input {
+    pointer-events: none;
+}
+
+#bBandEditor input {
+    cursor: pointer;
+}
+
+#bBandEditor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width:120%; height:3rem; position:absolute;top: 30%;
+    transition: all .5s ease;
+}
+
+#bBandEditor:not(.open):hover {
+    cursor: pointer;
+    opacity: .5;
+}
+
+#bBandEditor.open .wAnim::after {
+    animation-duration: 2s;
+}

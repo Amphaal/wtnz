@@ -71,7 +71,11 @@ class AppDb {
 };
 
 class UserDb {
-    private static $_private_fields = array("password", "email");
+    
+    private static $_private_fields = array(
+        "password" => null, 
+        "email" => null
+    );
 
     private static function _stripPrivate($data) {
         if(!$data) return $data;
@@ -99,7 +103,12 @@ class UserDb {
     }
 
     public static function from($user) {
-        return self::all()[$user] ?? null;
+        $requested = self::all()[$user] ?? null;
+        if($requested) {
+            if(!array_key_exists("customColors", $requested)) 
+                $requested["customColors"] = getDefaultBackgroundColors();
+        }
+        return $requested;
     }
 
     public static function mine() {

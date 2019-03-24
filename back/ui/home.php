@@ -1,6 +1,9 @@
 <div id="accountManagement">
-    <?php if($iul) {
-        include "back/ui/parts/ppEditor.php"; ?>
+    <?php if($iul) {?>
+        <div id='EditorWrapper'>
+            <?php include "back/ui/parts/bbEditor.php" ?>
+            <?php include "back/ui/parts/ppEditor.php" ?>
+        </div>
         <div><?php echo i18n("welcome_back",  getCurrentUserLogged()) ?></div>
     <?php } ?>
     <div class="loginRack">
@@ -22,6 +25,16 @@
     </div>
     <?php if($iul) include "back/ui/parts/downloadButtons.php" ?>
 </div>
+<?php 
+    if($iul) {
+        echo "<style>";
+
+        echo cbacToCss(getCurrentUserLogged(), UserDb::mineProtected()["customColors"]);
+    
+        echo "</style>";
+    }
+?>
 <script>
     let ppe = new PPEditor("ProfilePicEditor");
+    let bbe = new BBEditor("bBandEditor");
 </script>

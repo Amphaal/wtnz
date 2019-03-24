@@ -72,5 +72,7 @@
     "e_log_manage" => "Account management",
     "welcome" => "Welcome",
     "updateProfilePic" => "Update your profile picture",
-    "updateBBand" => "Update your background wave"
+    "updateBBand" => "Update your background wave",
+    "cancel" => "Cancel",
+    "validate" => "Validate"
 );
