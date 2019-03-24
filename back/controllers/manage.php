@@ -189,7 +189,7 @@ function tryCreatingUser($rules) {
     if($ret["isError"]) return $ret;
 
     //else create account
-    updateUsersConfig(array(
+    UserDb::update(array(
         "password" => $passwd,
         "email" => $_POST['email'],
         "customColors" => randomizeBannerColors()
@@ -222,9 +222,9 @@ function connectAs($user, $passwd) {
     if(isset($_SESSION["loggedAs"]) && $_SESSION["loggedAs"] == $user) {
         $ret["isError"] = false;
         $ret["description"] = i18n("e_log_identical");
-    } elseif(getUserConfig($user) == null) {
+    } elseif(UserDb::from($user) == null) {
         $ret["description"] = i18n("e_unsu", $user);
-    } elseif($passwd != getUserConfig($user)["password"]) {
+    } elseif($passwd != UserDb::from($user)["password"]) {
         $ret["description"] = i18n("e_pmm");
     } else {
         $ret["isError"] = false;

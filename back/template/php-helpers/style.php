@@ -5,7 +5,7 @@
         echo file_get_contents($file);
     } 
 
-    echo getCustomBackgroundAnimColors($user_qs);
-
+    echo cbacToCss();
+    
     echo "</style>";
 ?>

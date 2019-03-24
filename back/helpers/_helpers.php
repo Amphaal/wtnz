@@ -3,6 +3,18 @@
 include_once "back/helpers/htmlHelpers.php";
 
 
+
+function getCustomBackgroundAnimColors($user) {
+    return UserDb::from($user)["customColors"] ?? getDefaultBackgroundColors();
+}
+
+function cbacToCss($user = null) {
+    $colours = getCustomBackgroundAnimColors($user);
+    $css = ".wAnim::after { background: linear-gradient(-45deg, %s, %s, %s, %s);} !important";
+    $css = sprintf($css, ...$colours);
+    return $css;
+}
+
 function getQueryString() {
     $request_uri = explode('/', strtolower($_SERVER['REQUEST_URI']));
     $request_uri = array_filter($request_uri, 'strlen' );
@@ -40,14 +52,14 @@ function mayCreateUserDirectory($directory) {
 
 function checkUserSpecificFolders() {
     //for each user
-    foreach(getAllAppUsers() as $user => $confData) {
+    foreach(UserDb::all() as $user => $confData) {
         $path = getInternalUserFolder($user);
         mayCreateUserDirectory($path);
     }
 }  
 
 function checkUserExists($user, $non_fatal_check = false) {
-    $do_exist = getUserConfig($user) != null && file_exists(getInternalUserFolder($user));
+    $do_exist = UserDb::from($user) != null && file_exists(getInternalUserFolder($user));
     if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
     return $do_exist;
 }
@@ -55,7 +67,7 @@ function checkUserExists($user, $non_fatal_check = false) {
 function comparePasswords($user) {
     $passwd = isset($_POST['password']) ? $_POST['password'] : NULL;
     if(empty($passwd)) errorOccured(i18n("e_nopass"));
-    if($passwd != getUserConfig($user)["password"]) errorOccured(i18n("e_pmm"));
+    if($passwd != UserDb::from($user)["password"]) errorOccured(i18n("e_pmm"));
 }
 
 function testUploadedFile($expectedFilename){
@@ -87,11 +99,11 @@ function isUselessUpload($targetPath, $expectedFilename) {
 }
 
 function setMyProfilePicture($ppFilename) {
-    updateUsersConfig(array("profilePic" => $ppFilename));
+    UserDb::update(array("profilePic" => $ppFilename));
 }
 
 function getProfilePicture($user) {
-    $config = getUserConfig($user);
+    $config = UserDb::from($user);
     if(!$config) return;
     if(!array_key_exists("profilePic", $config)) return;
 

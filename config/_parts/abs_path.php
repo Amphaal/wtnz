@@ -20,25 +20,16 @@ function getProfilePicFilename($ext) {
     return "pp.".$ext;
 }
 
+function getDefaultBackgroundColors() {
+    return array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB");
+}
+
 function getRelativeRootAppUrl() {
     return "/wtnz/";
 }
 
 function getAppDescription() {
     return i18n("wtnz_descr");
-}
-
-$_initial_title = "WTNZ";
-$_title = null;
-
-function setTitle($superbus) {
-    global $_title, $_initial_title;
-    if($superbus) $_title .= $_initial_title . " - " . $superbus;
-}
-
-function getTitle() {
-    global $_title, $_initial_title;
-    return $_title ?? $_initial_title;
 }
 
 function getWebsocketUrl() {
@@ -55,6 +46,20 @@ function getAbsoluteRootAppUrl() {
 
 function getDownloadsFolder() {
     return $_SERVER["DOCUMENT_ROOT"] . '/feedtnz/downloads/';
+}
+
+define('USERS_DATA_PATH', getServerRootApp() . "/data/users");
+
+function getAppDbPath() {
+    return getServerRootApp(). "/data/users.json";
+}
+
+function getInternalUserFolder($user) {
+    return getServerRootApp() . "/data/users/" . $user . '/';
+}
+
+function getPublicUserFolder($user) {
+    return getRelativeRootAppUrl() . "data/users/" . $user . '/';
 }
 
 ////////////////
@@ -97,3 +102,24 @@ function fromOSToDownloadFolder($os) {
 ////////////////////
 // END OS Related //
 ////////////////////
+
+///////////
+// title //
+///////////
+
+$_initial_title = "WTNZ";
+$_title = null;
+
+function setTitle($superbus) {
+    global $_title, $_initial_title;
+    if($superbus) $_title .= $_initial_title . " - " . $superbus;
+}
+
+function getTitle() {
+    global $_title, $_initial_title;
+    return $_title ?? $_initial_title;
+}
+
+///////////////
+// END title //
+///////////////
