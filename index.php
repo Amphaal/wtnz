@@ -26,7 +26,7 @@ function init_app() {
     //if no user directory is being accessed
     if(!isset($user_qs)) {
         setTitle(i18n("welcome"));
-        return includeXMLRSwitch("back/ui/welcome.php", get_defined_vars()); 
+        includeXMLRSwitch("back/ui/welcome.php", get_defined_vars()); 
     }
     
     //check if special queries
@@ -41,7 +41,7 @@ function init_app() {
     routerUploadShout($user_qs, $action);
 
     //else redirect on misformated/unhandled URI
-    if(!empty($action) || substr($_SERVER['REQUEST_URI'], -1) == '/') home();
+    if(!empty($action)) home();
 
     //redirect to user library in last resort
     return routerLibrary($user_qs);

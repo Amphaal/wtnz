@@ -8,7 +8,7 @@
     <?php } ?>
     <div class="loginRack">
         <?php if($iul) {?>
-            <?php if(getLocation("ThisLibrary") != $mylib_loc) {?>
+            <?php if($is_not_my_lib) {?>
                 <button <?php _btnLink($mylib_loc, true)?>>
                     <?php echo i18n("log_accessMyLib")?>
                 </button>

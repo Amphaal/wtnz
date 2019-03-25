@@ -28,7 +28,7 @@
 }
 
 .imgLoader.searchingCover::before {
-    background-image : url(front/assets/img/loader.svg);
+    background-image : url(/wtnz/front/assets/img/loader.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;

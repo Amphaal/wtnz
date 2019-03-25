@@ -13,11 +13,26 @@ function routerManage($action) {
         case "pp":
             return ProfilePic();
             break;
+        case "bb":
+            return BackgroundBand();
         default;
             return home();
             break;
     }
 }
+
+function BackgroundBand() {
+    $newColors = file_get_contents('php://input');
+    if(!$newColors) return;
+    $newColors = json_decode($newColors);
+    
+    if(!isUserLogged()) return;
+
+    UserDb::update(array("customColors" => $newColors));
+    echo "OK";
+    return;
+}
+
 
 function ProfilePic() {
     //upload
@@ -58,12 +73,14 @@ function home() {
 
     //prepare
     $iul = isUserLogged();
-    $os = getOs();
     $mylib_loc = getLocation("MyLibrary");
+    $is_not_my_lib = true;
     $dd_folders = array();
     
     //if user is logged...
     if($iul) {
+
+        $is_not_my_lib = (getLocation("ThisLibrary") != $mylib_loc);
 
         //downloads...
         $curUser = getCurrentUserLogged();

@@ -131,5 +131,7 @@ function includeXMLRSwitch($inside_part, $included_vars_array) {
     } else {
         include "back/template/_template.php";
     }
+
+    exit;
     
 }

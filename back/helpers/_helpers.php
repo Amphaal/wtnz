@@ -16,8 +16,9 @@ function cbacToCss($target = null, $colours = null) {
     return $css;
 }
 
-function getQueryString() {
-    $request_uri = explode('/', strtolower($_SERVER['REQUEST_URI']));
+function getQueryString($request_uri = null) {
+    if(!$request_uri) $request_uri = $_SERVER['REQUEST_URI'];
+    $request_uri = explode('/', strtolower($request_uri));
     $request_uri = array_filter($request_uri, 'strlen' );
     array_shift($request_uri); //remove root app 
     return $request_uri;
@@ -136,7 +137,13 @@ function getLocation($rq, $abs = null) {
             $r .= 'manage';
             break;
         case "ThisLibrary":
-            $r .= (getQueryString()[0] ?? "");
+            $url = null;
+            if(isXMLHttpRequest())  {
+                $temp = getQueryString($_SERVER['HTTP_REFERER']);
+                array_shift($temp); //domain removal
+                $url = implode("/", $temp);
+            }
+            $r .= (getQueryString($url)[0] ?? "");
             break;
         case "MyLibrary":
             $r .= getCurrentUserLogged();

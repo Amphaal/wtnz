@@ -8,14 +8,19 @@
     justify-content: center;
 }
 
-#bBandEditor .colorPicker .controls{
+#bBandEditor .colorPicker .controls {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: -1.25rem;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
+}
+
+#bBandEditor .colorPicker .colors {
+    position: absolute;
+    bottom: -1.3rem;
 }
 
 #bBandEditor .colorPicker .colors > *{
