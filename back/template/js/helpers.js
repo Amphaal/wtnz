@@ -86,14 +86,25 @@ function _whichAnimationEndEvent() {
 }
 
 var _waiterStack = {};
-function _waitEventEnd(eventTypeToListen, waiter, action) {
+function _waitEventEnd(eventTypeToListen, waiter, action, targetPseudoElem) {
 
+    //if no action, immediate return
     if(!action) return Promise.resolve(null);
 
     return new Promise(function(resolve) {
-    
+        
+        let isAnim = eventTypeToListen.includes("nimation");
         let newId = String(Date.now()) + '_' + String(Math.round(Math.random()*100)) + '_' + String(waiter.id);
-        let eventsToExpect = window.getComputedStyle(waiter, null)["transition-property"].split(",");
+        let waiterStyle = window.getComputedStyle(waiter, null);
+        let pseudoStyle = window.getComputedStyle(waiter, targetPseudoElem);
+        let eventsToExpect = isAnim ? pseudoStyle["animation-name"].split(",")
+                                    : pseudoStyle["transition-property"].split(",");
+
+
+        if(isAnim && (waiterStyle["display"] == "none" || pseudoStyle["display"] == "none")) {
+            //animationEnd will never be triggered, resolve...
+            return resolve(waiter);
+        }
 
         _waiterStack[newId] = {
             expectedEvents : eventsToExpect,
@@ -101,31 +112,30 @@ function _waitEventEnd(eventTypeToListen, waiter, action) {
             onEventEnd : function(e) {
                 
                 //event triggered on property
-                _waiterStack[newId].eventEndHits.push(e.propertyName);
+                _waiterStack[newId].eventEndHits.push(isAnim ? e.animationName : e.propertyName);
                 
                 //if count... disengage
                 if(_waiterStack[newId].eventEndHits.length == _waiterStack[newId].expectedEvents.length) {
-                    //console.log("out", waiter);
-                    waiter.removeEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd);
+                    
+                    waiter.removeEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd); //console.log("out", waiter);
                     delete _waiterStack[newId];
-                    resolve(waiter);
+                    return resolve(waiter);
                 }
             }
         };
 
-        //console.log("in", waiter);
-        waiter.addEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd);
+        waiter.addEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd); //console.log("in", waiter);
         
         action(waiter);
     });
 }
 
-function waitAnimationEnd(waiter, action) {
-    return _waitEventEnd(_whichAnimationEndEvent(), waiter, action);
+function waitAnimationEnd(waiter, action, targetPseudoElem) {
+    return _waitEventEnd(_whichAnimationEndEvent(), waiter, action, targetPseudoElem);
 }
 
-function waitTransitionEnd(waiter, action) {
-    return _waitEventEnd(_whichTransitionEndEvent(), waiter, action);
+function waitTransitionEnd(waiter, action, targetPseudoElem) {
+    return _waitEventEnd(_whichTransitionEndEvent(), waiter, action, targetPseudoElem);
 }
 
 function debounce(callback, delay){

@@ -47,7 +47,7 @@
     "e_log_connect" => "Se connecter",
     "e_log_username" => "Nom d'utilisateur",
     "e_log_email" => "Adresse e-mail de contact",
-    "e_log_createAccount" => "Création du compte",
+    "e_log_createAccount" => "Création de compte",
     "e_log_retype" => "Confirmer en ressaisissant",
     "e_log_rule" => "Entre %d et %d caractères",
     "welcome_back" => "Bon retour à toi, %s.",

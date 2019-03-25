@@ -2,7 +2,7 @@ function removeNotification(selector) {
     document.querySelectorAll(selector).forEach(function(elem) {
         waitAnimationEnd(elem, function() {
             elem.classList.add("notifOut");
-        }).then(function() {
+        }, "::after").then(function() {
             elem.classList.remove("notif");
             elem.classList.remove("notifOut");
         });

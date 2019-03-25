@@ -14,7 +14,9 @@
         "required" => true
     ))?>
     <input 
+        class="hype"
         type="submit" 
-        value="<?php echo i18n("e_log_connect")?>"
+        value="✓ <?php echo i18n("validate")?>"
+        title="<?php echo i18n("e_log_connect")?>"
     />
 </form>

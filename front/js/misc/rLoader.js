@@ -95,6 +95,7 @@ class RLoader {
     _injectBackButton() {
         let btn = document.createElement("button");
         btn.innerHTML = "<< " + i18n["back"];
+        btn.setAttribute("title", i18n["back"]);
         btn.classList.add("back");
         this._rLoader.appendChild(btn);
 

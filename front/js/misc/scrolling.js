@@ -125,7 +125,7 @@ function isHeaderOutOfReach() {
 }
 
 function registerXNavigateSwipeEvents() {
-    var hammertime = new Hammer(document.body);
+    var hammertime = new Hammer(document.body,  { inputClass: Hammer.TouchInput });
 
     hammertime.on('swipeleft swiperight', function(ev) {
         hNavigate(ev.direction);

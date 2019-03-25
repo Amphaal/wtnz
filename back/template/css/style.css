@@ -22,6 +22,14 @@ html, body {
     scroll-behavior: smooth;   
 }
 
+hr {
+    width: 100%;
+    margin: 0;
+    border: 0; 
+    height: 1px; 
+    background: linear-gradient(90deg, #f0f0f0, #8c8b8b, #f0f0f0);
+}
+
 span, div {
     user-select : text;
     -ms-user-select : text;
@@ -30,6 +38,16 @@ span, div {
 a, a:visited, a:hover, a:active {
     color: inherit;
     text-decoration: none;
+}
+
+button, input[type="submit"], input[type="button"] {
+    user-select : none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }
 
 body {
@@ -65,61 +83,11 @@ body.lock {
     text-shadow: white 0 0 2px;
 }
 
-#dlContainer {
-    margin:.5rem; 
-    display: flex; 
-    flex-direction: row;
-    justify-content: space-evenly;
-}
 
-#dlContainer > a {
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 3rem;
-    width: 3rem;
-    background-size: 60%;
-    background-color: white;
-    border-radius: 50%;
-    box-shadow: 0 0 3px rgba(0,0,0,.25);
-}
-
-#dlContainer > a::after{
-    content: "";
-    background-image: url(/wtnz/front/assets/img/arrdown.svg);
-    background-size: 27%;
-    background-repeat: no-repeat; 
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    left: 20%;
-    top: 22%;
-    position: absolute;
-    right: 0;
-    z-index: 20;
-    opacity: .8;
-}
-
-#dlContainer > a:hover, #dlContainer > a:hover::after {
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-name: pulse;
-}
-
-#dlContainer > a.win {background-image: url(/wtnz/front/assets/img/os/win.svg);}
-#dlContainer > a.osx {background-image: url(/wtnz/front/assets/img/os/osx.svg); background-position-y: 40%;}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form input[type="submit"] {
-    margin-top: 2rem !important;
-}
 
 #accountManagement > *:not(:first-child):not(:only-child),
 #accountManagement button:not(:first-child):not(:only-child),
-form > * {
+form > *:not(:first-child):not(:only-child) {
     margin-top:1rem;
 }
 
@@ -131,10 +99,6 @@ form > * {
     justify-content: center;
 }
 
-button, input[type="submit"], input[type="button"] {
-    user-select : none;
-    cursor: pointer;
-}
 
 #EditorWrapper {
     display:flex; justify-content:center;

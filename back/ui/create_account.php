@@ -19,9 +19,11 @@
             "placeholder" => "e_log_email",
             "required" => true
         ))?>
-        <input 
+        <input
+            class="hype"
             type="submit" 
-            value="<?php echo i18n("e_log_createAccount")?>"
+            value="✓ <?php echo i18n("validate")?>"
+            title="<?php echo i18n("e_log_createAccount")?>"
         />
     </form>
 </div>

@@ -9,17 +9,21 @@
     <div class="loginRack">
         <?php if($iul) {?>
             <?php if($is_not_my_lib) {?>
-                <button <?php _btnLink($mylib_loc, true)?>>
-                    <?php echo i18n("log_accessMyLib")?>
+                <button class="hype" <?php _btnLink($mylib_loc, true)?>>
+                    <i class="fas fa-book"></i>
+                    <span><?php echo i18n("log_accessMyLib")?></span>
                 </button>
             <?php }?>
-            <button <?php _btnLink("/wtnz/manage/disconnect", false, true)?>>
-                <?php echo i18n("log_disconnect")?>
+            <button class="hype" <?php _btnLink("/wtnz/manage/disconnect", false, true)?>>
+                <i class="fas fa-power-off"></i>
+                <span><?php echo i18n("log_disconnect")?></span>
             </button>
         <?php } else { ?>
             <?php include "back/ui/login.php" ?>
-            <button <?php _btnLink("/wtnz/manage/create")?>>
-                <?php echo i18n("log_createAccount")?>
+            <hr/>
+            <button class="hype" <?php _btnLink("/wtnz/manage/create")?>>
+                <i class="fas fa-user-circle"></i>
+                <span><?php echo i18n("log_createAccount")?></span>
             </button>
         <?php } ?>
     </div>
