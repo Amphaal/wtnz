@@ -1,12 +1,24 @@
 #connectContainer {
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
     height:100vh;
     max-width: 0;
-    display:flex; 
-    align-items:center;
-    flex-direction:column; 
-    justify-content:center;
     position:relative;
-    transition: padding .5s ease, background-color .5s ease, max-width .5s ease;
+    transition: background-color .5s ease, max-width .5s ease;
+    overflow: hidden;
+    overflow-y: auto; 
+}
+
+#connectContainer > *:first-child {
+    margin-top: auto !important;
+}
+
+
+#connectContainer > *:last-child {
+    margin-bottom: auto !important;
 }
 
 #connectContainer .logoContainer {
@@ -28,28 +40,27 @@
 }
 
 #xmlRLoader {
-    overflow: hidden;
-    transition: all .5s ease;
+    transition: width .5s ease, max-height .5s ease, margin .5s ease, opacity .5s ease; /*for all transition detection*/
     white-space: nowrap;
      
     animation-fill-mode: forwards;
     display: flex;
     flex-direction: column;
     font-size: .75rem;
-    margin: 1rem 0;
-    padding: 0 1rem;
     
     opacity: 0;
-    max-width: 0;
+    width: 0;
     max-height: 0;
     pointer-events: none;
+    overflow:hidden;
 }
 
 #xmlRLoader.shown {
     pointer-events: all;
     opacity: 1;
-    max-width: 100%;
+    width: 100%;
     max-height: 100%;
+    margin: 1rem 0;
 }
 
 #xmlRLoader button.back {

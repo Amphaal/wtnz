@@ -11,6 +11,7 @@ function removeNotification(selector) {
 
 function alignConnectSideElements() {
     let topMost = [];
+
     document.querySelectorAll("#wtnz-library .connect-side").forEach(function(e) {
         topMost.push(e.getBoundingClientRect().top);
     });

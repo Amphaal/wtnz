@@ -74,5 +74,6 @@
     "updateProfilePic" => "Mettre à jour son image de profil",
     "updateBBand" => "Mettre à jour la vague du bandeau",
     "cancel" => "Annuler",
-    "validate" => "Valider"
+    "validate" => "Valider",
+    "back" => "Retour"
 );

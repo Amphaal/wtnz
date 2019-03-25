@@ -74,5 +74,6 @@
     "updateProfilePic" => "Update your profile picture",
     "updateBBand" => "Update your background wave",
     "cancel" => "Cancel",
-    "validate" => "Validate"
+    "validate" => "Validate",
+    "back" => "Back"
 );

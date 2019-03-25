@@ -20,8 +20,8 @@ class RLoader {
 
         if(firstAnim) return new Promise(function(resolve) {
 
-            removeNotification(".connect-side");
-            
+            removeNotification(".connect-side.notif");
+
             document.querySelector("#wtnz-connect .connect-side").classList.add("anima");
             document.getElementById("bg").classList.add("show");
             let cc = document.getElementById("connectContainer");
@@ -52,12 +52,17 @@ class RLoader {
     }
 
     _fadeIn() {
+        
         return waitTransitionEnd(this._rLoader, function() {
             this._rLoader.classList.add("shown");
+        }.bind(this)).then(function() {
+            this._rLoader.style.overflow = "visible";
         }.bind(this));
     }
 
     _fadeOut() {
+        this._rLoader.style.overflow = "";
+
         return waitTransitionEnd(this._rLoader, function() {
             this._rLoader.classList.remove("shown");
         }.bind(this));
@@ -89,7 +94,7 @@ class RLoader {
 
     _injectBackButton() {
         let btn = document.createElement("button");
-        btn.innerHTML = "<< back";
+        btn.innerHTML = "<< " + i18n["back"];
         btn.classList.add("back");
         this._rLoader.appendChild(btn);
 

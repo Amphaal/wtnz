@@ -92,17 +92,30 @@ function _waitEventEnd(eventTypeToListen, waiter, action) {
 
     return new Promise(function(resolve) {
     
-        let newId = String(Date.now()) + '_' + String(Math.round(Math.random()*100));
+        let newId = String(Date.now()) + '_' + String(Math.round(Math.random()*100)) + '_' + String(waiter.id);
+        let eventsToExpect = window.getComputedStyle(waiter, null)["transition-property"].split(",");
 
-        _waiterStack[newId] = function(e) {
-            //console.log("out", waiter);
-            waiter.removeEventListener(eventTypeToListen, _waiterStack[newId]);
-            delete _waiterStack[newId];
-            resolve(waiter);
+        _waiterStack[newId] = {
+            expectedEvents : eventsToExpect,
+            eventEndHits : [],
+            onEventEnd : function(e) {
+                
+                //event triggered on property
+                _waiterStack[newId].eventEndHits.push(e.propertyName);
+                
+                //if count... disengage
+                if(_waiterStack[newId].eventEndHits.length == _waiterStack[newId].expectedEvents.length) {
+                    //console.log("out", waiter);
+                    waiter.removeEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd);
+                    delete _waiterStack[newId];
+                    resolve(waiter);
+                }
+            }
         };
 
         //console.log("in", waiter);
-        waiter.addEventListener(eventTypeToListen, _waiterStack[newId]);
+        waiter.addEventListener(eventTypeToListen, _waiterStack[newId].onEventEnd);
+        
         action(waiter);
     });
 }
