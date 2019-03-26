@@ -32,7 +32,10 @@ function routerDownload($action) {
 }
 
 function getLatestDownloadableFile($searchFolder) {
-    $result = scandir($searchFolder, SCANDIR_SORT_DESCENDING);
+    $result = array_diff(
+        scandir($searchFolder, SCANDIR_SORT_DESCENDING),
+        array('..', '.')
+    );
     return count($result) ? $result[0] : null;
 }
 
