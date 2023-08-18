@@ -63,7 +63,7 @@
 }
 
 #ProfilePicEditor.uploading::after {
-    background-image : url(/wtnz/front/assets/img/loader.svg);
+    background-image : url(/public/assets/img/loader.svg);
     background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;

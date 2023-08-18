@@ -1,10 +1,10 @@
-<div id='wtnz-library' class="focused">
-    <?php include "front/ui/library/parts/header.php" ?>
+<div id='app-music-library' class="focused">
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/header.php" ?>
     <div id='mainFrame'>
-        <?php include "front/ui/library/parts/shout.php" ?>
-        <?php include "front/ui/library/parts/stats.php" ?>
-        <?php include "front/ui/library/parts/feed.php" ?>
-        <?php include "front/ui/library/parts/discover.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/shout.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/stats.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/feed.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/discover.php" ?>
     </div>
-    <?php include "back/template/_components/footer.php" ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/back/template/_components/footer.php" ?>
 </div>

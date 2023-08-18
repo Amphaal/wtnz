@@ -16,4 +16,3 @@
 <meta name="twitter:description" content="<?php echo getAppDescription();?>">
 <meta name="twitter:title" content="<?php echo getTitle();?>">
 <meta name="twitter:card" content="photo">
-<meta name="twitter:site" content="@wtnz">

@@ -26,7 +26,7 @@ function getFilesInFolder($path_to) {
     $files = array_diff($files, array('..', '.'));
     $ret = [];
     foreach($files as $file) { 
-        array_push($ret, $path_to . '/' . $file);
+        array_push($ret, $path_to . "/" . $file);
     }
     return $ret;
 }
@@ -36,9 +36,9 @@ function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
     $out = "";
     
     if(isXMLHttpRequest() && !$forceWLocation) {
-        $out ='href="' . $url . '"';
+        $out ='href="' . $url . "\"";
     } else {
-        $out = 'onclick="window.location=\'' . $url . '\'"';
+        $out = 'onclick="window.location=\'' . $url . "\"\"";
     }
 
     if(isXMLHttpRequest() && $XMLR_noBackButton) {
@@ -51,7 +51,7 @@ function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
 function _popup($result) {
     if(empty($result)) return;
     $type = $result["isError"] == true ? "error" : "info";
-    return '<div onclick="_popup(event)" class="popup ' . $type . '"><div class="content">' . $result["description"] . '</div></div>';
+    return "<div onclick=\"_popup(event)\" class=\"popup " . $type . '"><div class="content">' . $result["description"] . '</div></div>';
 }
 
 function _magnifikInput($params, $rules = null) {
@@ -59,8 +59,8 @@ function _magnifikInput($params, $rules = null) {
     $newContainer = array();
     $descr = "";
 
-    $toPh = function($val) { return 'placeholder="' . $val . '"';};
-    $toVal = function($val) { return 'value="' . $val .'"';};
+    $toPh = function($val) { return 'placeholder="' . $val . "\"";};
+    $toVal = function($val) { return 'value="' . $val ."\"";};
 
     //if type unset, set default
     if(!array_key_exists('type', $params)) $params['type'] = "text";
@@ -98,14 +98,14 @@ function _magnifikInput($params, $rules = null) {
 
     //rules helper
     if($rules && $rules[$inputName]) {
-        array_push($newInput, 'pattern="' .  renHpat($rules[$inputName]) . '"');
+        array_push($newInput, 'pattern="' .  renHpat($rules[$inputName]) . "\"");
         $content = i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
         array_push($newInput, $toPh($content));
     }
 
     //default parsing
     foreach($params as $key => $value) {
-        array_push($newInput, $key . '="' . $value . '"');
+        array_push($newInput, $key . "=\"" . $value . "\"");
     }
 
     $impl = function($arr) { return implode(" ", $arr);};
@@ -129,7 +129,7 @@ function includeXMLRSwitch($inside_part, $included_vars_array) {
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
-        include "back/template/_template.php";
+        include $_SERVER['DOCUMENT_ROOT'] . "/back/template/_template.php";
     }
 
     exit;

@@ -28,6 +28,7 @@ class BBEditor {
 
     saveColors(colors) {
         this._currentColors = colors;
+        // TODO
         _XMLHttpPromise("POST", "/wtnz/manage/bb", JSON.stringify(colors));
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once "back/helpers/htmlHelpers.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/back/helpers/htmlHelpers.php";
 
 
 function cbacToCss($target = null, $colours = null) {
@@ -8,7 +8,7 @@ function cbacToCss($target = null, $colours = null) {
         $colours = getDefaultBackgroundColors();
         $target = "";
     } else {
-        $target = '[data-owner="' . $target . '"]';
+        $target = '[data-owner="' . $target . "\"]";
     }
     
     $css = ".wAnim" . $target ."::after { background: linear-gradient(-45deg, %s, %s, %s, %s);}";

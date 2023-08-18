@@ -1,5 +1,7 @@
 <?php 
 
+include $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
+
 function getServerRootApp() {
     return pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_DIRNAME);
 }
@@ -25,11 +27,11 @@ function getDefaultBackgroundColors() {
 }
 
 function getRelativeRootAppUrl() {
-    return "/wtnz/";
+    return "/";
 }
 
 function getAppDescription() {
-    return i18n("wtnz_descr");
+    return i18n("app_descr");
 }
 
 function getWebsocketUrl() {
@@ -37,15 +39,16 @@ function getWebsocketUrl() {
 }
 
 function getAppIconUrl() {
-    return getAbsoluteRootAppUrl() . "front/assets/img/ico.png";
+    return "/public/assets/img/ico.png";
 }
 
 function getAbsoluteRootAppUrl() {
-    return $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . getRelativeRootAppUrl();
+    return ($_SERVER["REQUEST_SCHEME"] ?: 'http') . "://" . $_SERVER["HTTP_HOST"] . getRelativeRootAppUrl();
 }
 
+// TODO
 function getDownloadsFolder() {
-    return $_SERVER["DOCUMENT_ROOT"] . '/feedtnz/downloads/';
+    return $_SERVER["DOCUMENT_ROOT"] . "/feedtnz/downloads/";
 }
 
 define('USERS_DATA_PATH', getServerRootApp() . "/data/users");
@@ -55,11 +58,11 @@ function getAppDbPath() {
 }
 
 function getInternalUserFolder($user) {
-    return getServerRootApp() . "/data/users/" . $user . '/';
+    return getServerRootApp() . "/data/users/" . $user . "/";
 }
 
 function getPublicUserFolder($user) {
-    return getRelativeRootAppUrl() . "data/users/" . $user . '/';
+    return getRelativeRootAppUrl() . "data/users/" . $user . "/";
 }
 
 ////////////////
@@ -107,7 +110,7 @@ function fromOSToDownloadFolder($os) {
 // title //
 ///////////
 
-$_initial_title = "WTNZ";
+$_initial_title = $appName;
 $_title = null;
 
 function setTitle($superbus) {

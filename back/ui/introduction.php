@@ -1,3 +1,5 @@
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . "/config/const.php" ?>
+
 First time here ? Welcome then ! Let me explain why you might be here :
 
 You might be a curious person:
@@ -12,7 +14,7 @@ Or maybe are-you a music enthusiast :
 - You are a Metadata nazi, probably using MusicBrainz Picard to keep things in order.
 - You like to share your beautiful music tastes to people you meet.
 
-BINGO, WTNZ is for you. 
+BINGO, <?= $appName ?> is for you. 
 
 Get started by creating an account, or simply navigate through our users accounts to discover new exciting music.
 Use the companion app to upload your library and stream in real time what you are playing on iTunes ! Cool, isn't it ? 

@@ -1,12 +1,12 @@
 <?php
 
-function uploadLib($user_qs) {
-    $expectedFilename = 'wtnz_file';
+include_once $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
 
+function uploadLib($user_qs) {
     comparePasswords($user_qs);
-    testUploadedFile($expectedFilename);
-    testFileCompatibility($expectedFilename);
-    processUploadedLib($user_qs, $expectedFilename);
+    testUploadedFile($expectedUploadedLibraryFilename);
+    testFileCompatibility($expectedUploadedLibraryFilename);
+    processUploadedLib($user_qs, $expectedUploadedLibraryFilename);
 }
 
 function processUploadedLib($user_qs, $expectedFilename) {
@@ -40,7 +40,7 @@ function archivePreviousUpload($user_qs, $pathTo) {
 
     //copy save
     $archive_dir = filemtime($pathTo).'_'.rand(0,999);
-    $copyDestination = getInternalUserFolder($user_qs) . $archive_dir . '/' . basename($pathTo);
+    $copyDestination = getInternalUserFolder($user_qs) . $archive_dir . "/" . basename($pathTo);
     
     //archive...
     if (!mkdir(dirname($copyDestination))) errorOccured(i18n("e_cad"));

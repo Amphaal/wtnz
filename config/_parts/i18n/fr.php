@@ -1,4 +1,8 @@
-<?php return array(
+<?php 
+
+include $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
+
+return array(
     'worksBest' => 'Fonctionne mieux avec',
     'libraryOf' => 'Bibliothèque | %s',
     'whatsnew' => "QUOI DE NEUF",
@@ -10,7 +14,7 @@
     "year" => "Année",
     "dateAddition" => "Date d'Ajout",
     "tracks" => "Pistes",
-    "thisis" => "Ici, c'est WTNZ.",
+    "thisis" => "Ici, c'est " . $appName . ".",
     "listenTTA" => "Ecouter l'album",
     "nowPlaying" => "Joué en ce moment...",
     "devLinkedin" => "Profil LinkedIn du developpeur",
@@ -52,9 +56,9 @@
     "e_log_rule" => "Entre %d et %d caractères",
     "welcome_back" => "Bon retour à toi, %s.",
     "downloadFeeder" => "Télécharger pour %s",
-    "obtainCompanionApp" => "Télécharger <span class='obtain'>FeedTNZ</span>, le logiciel compagnon",
+    "obtainCompanionApp" => "Télécharger <span class='obtain'>" . $companionAppName . "</span>, le logiciel compagnon",
     "e_noDownloadFound" => "Impossible de trouver le fichier à télécharger",
-    "wtnz_descr" => "Ta Musique, leur claque",
+    "app_descr" => "Ta Musique, leur claque",
     "users_profile" => "Profil | %s",
     "curAlCo" => "Couverture de l'album selectionné",
     "crea_miss_p_u" => '"%s" manquant pour la création de compte',

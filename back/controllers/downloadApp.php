@@ -24,7 +24,7 @@ function routerDownload($action) {
     header('Content-Type: application/octet-stream');
     header("Content-Transfer-Encoding: Binary"); 
     header("Content-Length: ".filesize($filepath));
-    header('Content-Disposition: attachment; filename="'.$latestInFolder.'"');
+    header('Content-Disposition: attachment; filename="'.$latestInFolder."\"");
     
     //return file
     ob_clean(); flush();

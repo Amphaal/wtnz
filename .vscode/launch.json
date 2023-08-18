@@ -1,0 +1,31 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run PHP + Chrome",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "php -c C:/php/php.ini-development -S localhost:8080",
+            "serverReadyAction": {
+                "pattern": "started",
+                "action": "startDebugging",
+                "name": "Launch Chrome against localhost"
+            },
+            "cascadeTerminateToConfigurations": ["Launch Chrome against localhost"]
+        },
+        {
+            "name": "Launch Chrome against localhost",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}",
+            "presentation": {
+                "hidden": true
+            },
+            "cascadeTerminateToConfigurations": ["Run PHP + Chrome"]
+        }
+    ]
+}

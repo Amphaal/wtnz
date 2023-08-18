@@ -1,6 +1,6 @@
 <?php 
 
-include_once "back/helpers/Slugifier.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/back/helpers/Slugifier.php";
 
 class DataGenerator {
 
@@ -80,7 +80,7 @@ class DataGenerator {
     //////////////////////
 
     private function _getMixedTrackNoFactory(&$currentVal) {
-        return $currentVal['Disc Number'] . '.' . $currentVal['Track Number'];
+        return $currentVal['Disc Number'] . "." . $currentVal['Track Number'];
     }
 
     private function _getTrackNameFactory(&$currentVal) {
@@ -100,8 +100,8 @@ class DataGenerator {
     }
 
     private function _getAlbumIdFactory(&$currentVal) {
-        return $currentVal['Album'] . '_' 
-        . $currentVal['Album Artist'] . '_' 
+        return $currentVal['Album'] . "_" 
+        . $currentVal['Album Artist'] . "_" 
         . $currentVal['Year'];
     }
 
