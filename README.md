@@ -1,6 +1,6 @@
-# wtnz
+# SoundVitrine
 
-[![CodeFactor](https://www.codefactor.io/repository/github/amphaal/wtnz/badge)](https://www.codefactor.io/repository/github/amphaal/wtnz)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8960843e3cd94a3c903b5ec54829ec41)](https://www.codacy.com/gh/Amphaal/wtnz/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Amphaal/wtnz&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/amphaal/soundvitrine/badge)](https://www.codefactor.io/repository/github/amphaal/soundvitrine)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8960843e3cd94a3c903b5ec54829ec41)](https://app.codacy.com/gh/Amphaal/SoundVitrine/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-WTNZ is an hosted iTunes Library portal for the web
+SoundVitrine is an hosted iTunes Library portal for the web. Used alongside SoundBuddy, you can broadcast to visitors what you are listening to, and what music you currently have on your computer !
