@@ -1,6 +1,6 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/const.php";
 
 return array(
     'worksBest' => 'Fonctionne mieux avec',

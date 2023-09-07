@@ -8,12 +8,13 @@
             "name": "Run PHP + Chrome",
             "type": "node-terminal",
             "request": "launch",
-            "command": "php -c C:/php/php.ini-development -S localhost:8080",
+            "command": "php -c ../.vscode/php.ini-development -S localhost:8080",
             "serverReadyAction": {
                 "pattern": "started",
                 "action": "startDebugging",
                 "name": "Launch Chrome against localhost"
             },
+            "cwd": "${workspaceFolder}/src",
             "cascadeTerminateToConfigurations": ["Launch Chrome against localhost"]
         },
         {
@@ -21,7 +22,6 @@
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}",
             "presentation": {
                 "hidden": true
             },
