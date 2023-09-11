@@ -48,7 +48,7 @@ function getDownloadsFolder() {
 }
 
 /** internal folder path of user's data */
-function getInternalAppDbPath() {
+function getInternalUsersDbPath() {
     return $_SERVER["DOCUMENT_ROOT"] . "/_data/users.json";
 }
 

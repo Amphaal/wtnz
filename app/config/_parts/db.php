@@ -5,7 +5,7 @@
 //
 
 //
-class AppDb {
+class _AbstractUsersDatabase {
 
     ///////////////
     // SINGLETON //
@@ -41,14 +41,21 @@ class AppDb {
     protected $_db_path;
     
     private function __construct() {
-        $this->_db_path = getInternalAppDbPath();
-        $this->_db = $this->_ObtainDatabaseAsObject();
+        $this->_db_path = getInternalUsersDbPath();
+        $this->_db = $this->_obtainDatabaseAsObject();
     }
 
-    private function _updateDb($new_db) {
+    private function _updateDbRaw($new_db_raw) {
         @mkdir(dirname($this->_db_path)); // create the containing directory
-        $new_file = json_encode($new_db, JSON_PRETTY_PRINT);
-        file_put_contents($this->_db_path, $new_file); // write the new file
+        file_put_contents($this->_db_path, $new_db_raw); // write the new file
+    }
+
+    /**
+     * @param db_to_write database as PHP object
+     */
+    private function _updateDb($db_to_write) {
+        $db_as_json = json_encode($db_to_write, JSON_PRETTY_PRINT);
+        _updateDbRaw($db_as_json);
     }
 
     public function updateDb($new_db) {
@@ -57,12 +64,10 @@ class AppDb {
     }
 
     private function _createDefaultDatabase() {
-        $this->_updateDb(
-            json_decode('{}', true)
-        );
+        $this->_updateDbRaw("{}");
     }
 
-    private function _ObtainDatabaseAsObject() {
+    private function _obtainDatabaseAsObject() {
         $db = null;
         $file_content = @file_get_contents($this->_db_path);
 
@@ -111,12 +116,12 @@ class UserDb {
     
         //apply
         $allUsers[$targetUser] = $new_data;
-        AppDb::get()->updateDb($allUsers);
+        _AbstractUsersDatabase::get()->updateDb($allUsers);
     }
     
     /** list all users */
     public static function all() {
-        return AppDb::get()->_db ?? [];
+        return _AbstractUsersDatabase::get()->_db ?? [];
     }
 
     public static function from($user) {
