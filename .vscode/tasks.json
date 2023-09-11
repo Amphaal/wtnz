@@ -5,6 +5,9 @@
       "label": "Prepare app data folder",
       "type": "shell",
       "command": "mkdir -p _data",
+      "windows": {
+        "command": "md -Force _data"
+      }
     },
     {
       "label": "Shutdown debug stack",

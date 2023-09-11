@@ -19,7 +19,7 @@
 
 #dlContainer > a::after{
     content: "";
-    background-image: url(/public/assets/img/arrdown.svg);
+    background-image: url(/public/images/arrdown.svg);
     background-size: 27%;
     background-repeat: no-repeat; 
     background-position: center;
@@ -39,5 +39,5 @@
     animation-name: pulse;
 }
 
-#dlContainer > a.win {background-image: url(/public/assets/img/os/win.svg);}
-#dlContainer > a.osx {background-image: url(/public/assets/img/os/osx.svg); background-position-y: 40%;}
+#dlContainer > a.win {background-image: url(/public/images/os/win.svg);}
+#dlContainer > a.osx {background-image: url(/public/images/os/osx.svg); background-position-y: 40%;}

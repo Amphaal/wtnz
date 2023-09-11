@@ -1,10 +1,11 @@
 <?php
 
+// display errors on http response
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//start session
+// handles users sessions, start
 session_start();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/config.php";
@@ -21,7 +22,7 @@ function init_app() {
 
     // get URI elements
     $qs = getQueryString();
-    
+
     //generate folders if non existing
     checkUserSpecificFolders(); 
     $user_qs = array_shift($qs);

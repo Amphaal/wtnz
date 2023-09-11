@@ -12,11 +12,11 @@
         } 
 
 
-        foreach(getFilesInFolder('public/js/app') as $file) { 
+        foreach(getFilesInFolder('front/js/app') as $file) { 
             echo file_get_contents($file);
         } 
 
-        foreach(getFilesInFolder('public/js/app/panels') as $file) { 
+        foreach(getFilesInFolder('front/js/app/panels') as $file) { 
             echo file_get_contents($file);
         } 
 

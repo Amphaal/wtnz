@@ -35,7 +35,7 @@ function getWebsocketUrl() {
 }
 
 function getAppIconUrl() {
-    return "/public/assets/img/ico.png";
+    return "/public/images/ico.png";
 }
 
 function getAbsoluteRootAppUrl() {
