@@ -1,0 +1,43 @@
+version: "3.7"
+
+services:
+  # [PHP-FPM]
+  php-fpm:
+    container_name: php-fpm
+    hostname: php-fpm
+    restart: on-failure:2
+    build: ./custom_images/php
+    volumes:
+      - ./php.ini-custom:/usr/local/etc/php/php.ini:ro
+    networks:
+      - web-fronts
+
+  # [Proxy]
+  nginx-proxy:
+    container_name: nginx-proxy
+    hostname: nginx-proxy
+    image: nginx:alpine
+    restart: on-failure:2
+    depends_on:
+      - php-fpm
+    networks:
+      - web-fronts
+    volumes:
+      - ../app:/usr/share/nginx/html/extra_soundvitrine:ro
+      #
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+      - ./conf.d:/etc/nginx/conf.d:ro
+    # https://github.com/nginx-proxy/nginx-proxy/issues/133#issuecomment-754094932
+    # allows right logging of IP and forwarding of X-Forwarded-For [Requester IP], for reverse-proxy scenarii
+    # without "mode:host", requester IP resolves to inadequate IPs
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+
+#
+networks:
+  web-fronts:

@@ -5,27 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run PHP + Chrome",
-            "type": "node-terminal",
-            "request": "launch",
-            "command": "php -c C:/php/php.ini-development -S localhost:8080",
-            "serverReadyAction": {
-                "pattern": "started",
-                "action": "startDebugging",
-                "name": "Launch Chrome against localhost"
-            },
-            "cascadeTerminateToConfigurations": ["Launch Chrome against localhost"]
-        },
-        {
-            "name": "Launch Chrome against localhost",
+            "name": "Debug with Docker stack",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080",
+            "preLaunchTask": "Run debug stack",
+            "postDebugTask": "Shutdown debug stack",
+            "url": "http://localhost",
             "webRoot": "${workspaceFolder}",
-            "presentation": {
-                "hidden": true
-            },
-            "cascadeTerminateToConfigurations": ["Run PHP + Chrome"]
         }
     ]
 }
