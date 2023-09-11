@@ -8,6 +8,7 @@ services:
     restart: on-failure:2
     build: ./custom_images/php
     volumes:
+      - ../app:/usr/share/nginx/html/extra_soundvitrine:ro
       - ./php.ini-custom:/usr/local/etc/php/php.ini:ro
     networks:
       - web-fronts

@@ -11,8 +11,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/back/controllers/manage.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/back/controllers/downloadApp.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/back/controllers/library.php";
 
-echo "poop";
-
 function init_app() {
 
     sanitizePOST();
