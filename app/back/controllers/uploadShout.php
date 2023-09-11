@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php";
 
 function uploadShout($user_qs) {
     //tests

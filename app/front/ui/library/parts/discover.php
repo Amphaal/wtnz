@@ -6,6 +6,6 @@
             <div data-sl='<?php echo i18n("artists")?>' id='artistUI'></div>
             <div data-sl='Albums' id='albumUI'></div>
         </div>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/front/ui/library/parts/albumInfos.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/front/ui/library/parts/albumInfos.php" ?>
     </div>
 </div>

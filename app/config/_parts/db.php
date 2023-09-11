@@ -1,6 +1,10 @@
 <?php
 
 //
+//
+//
+
+//
 class AppDb {
 
     ///////////////
@@ -37,7 +41,7 @@ class AppDb {
     protected $_db_path;
     
     private function __construct() {
-        $this->_db_path = getAppDbPath();
+        $this->_db_path = getInternalAppDbPath();
         $this->_db = $this->_ObtainDatabaseAsObject();
     }
 
@@ -79,6 +83,10 @@ class AppDb {
 };
 
 //
+//
+//
+
+//
 class UserDb {
     
     private static $_private_fields = array(
@@ -106,9 +114,9 @@ class UserDb {
         AppDb::get()->updateDb($allUsers);
     }
     
-
+    /** list all users */
     public static function all() {
-        return AppDb::get()->_db ?? null;
+        return AppDb::get()->_db ?? [];
     }
 
     public static function from($user) {

@@ -16,6 +16,6 @@ function routerLibrary($user_qs) {
     setTitle(i18n('libraryOf', $user_qs));
     $initialRLoaderUrl = getLocation("Home", true);
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/front/front.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/app/front/front.php";
     exit;
 }

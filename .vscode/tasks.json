@@ -2,6 +2,11 @@
 	"version": "2.0.0",
 	"tasks": [
     {
+      "label": "Prepare app data folder",
+      "type": "shell",
+      "command": "mkdir -p _data",
+    },
+    {
       "label": "Shutdown debug stack",
       "type": "shell",
       "command": "docker",
@@ -13,6 +18,7 @@
     {
       "label": "Run debug stack",
       "type": "shell",
+      "dependsOn": "Prepare app data folder",
       "command": "docker",
       // "dependsOn": "shutdown debug stack",
       "args": ["compose", "-f", "docker-compose.debug.yml", "up", "-d", "--wait"],

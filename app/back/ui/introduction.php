@@ -1,4 +1,4 @@
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . "/config/const.php" ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php" ?>
 
 First time here ? Welcome then ! Let me explain why you might be here :
 

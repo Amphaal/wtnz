@@ -1,10 +1,6 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT'] . "/config/const.php";
-
-function getServerRootApp() {
-    return pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_DIRNAME);
-}
+include $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php";
 
 function getCurrentLibraryFileName() {
     return 'current.json';
@@ -51,16 +47,17 @@ function getDownloadsFolder() {
     return $_SERVER["DOCUMENT_ROOT"] . "/feedtnz/downloads/";
 }
 
-define('USERS_DATA_PATH', getServerRootApp() . "/data/users");
-
-function getAppDbPath() {
-    return getServerRootApp(). "/data/users.json";
+/** internal folder path of user's data */
+function getInternalAppDbPath() {
+    return $_SERVER["DOCUMENT_ROOT"] . "/_data/users.json";
 }
 
+/** internal folder path of user's data */
 function getInternalUserFolder($user) {
-    return getServerRootApp() . "/data/users/" . $user . "/";
+    return $_SERVER["DOCUMENT_ROOT"] . "/_data/users/" . $user . "/";
 }
 
+/** web server exposed user's data */
 function getPublicUserFolder($user) {
     return getRelativeRootAppUrl() . "data/users/" . $user . "/";
 }
