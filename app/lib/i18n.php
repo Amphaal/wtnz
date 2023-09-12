@@ -7,9 +7,8 @@ class I18nHandler {
     private $_lang = null;
     private $_dict = null;
 
-
     private static function _dictFromLang($lang) {
-        $trFile = __DIR__ . "/i18n/" . $lang . ".php";
+        $trFile = $_SERVER['DOCUMENT_ROOT'] . "/app/translations/" . $lang . ".php";
         return include($trFile);
     }
 

@@ -1,17 +1,15 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php";
-
 function uploadLib($user_qs) {
     comparePasswords($user_qs);
-    testUploadedFile($expectedUploadedLibraryFilename);
-    testFileCompatibility($expectedUploadedLibraryFilename);
-    processUploadedLib($user_qs, $expectedUploadedLibraryFilename);
+    testUploadedFile(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    testFileCompatibility(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    processUploadedLib($user_qs, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
 }
 
 function processUploadedLib($user_qs, $expectedFilename) {
 
-    $pathTo = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
+    $pathTo = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
     
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
@@ -56,7 +54,7 @@ function routerUploadLib($user_qs, $action) {
     $isAPICall = isset($_POST['headless']);
     if(!$isAPICall) {
         //redirect to upload UI if no library for the user
-        $expectedLibrary = getInternalUserFolder($user_qs) . getCurrentLibraryFileName();
+        $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
         if(!file_exists($expectedLibrary)) return accessManualUploadUI($user_qs);
     }
 

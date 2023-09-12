@@ -41,7 +41,7 @@ class _AbstractUsersDatabase {
     protected $_db_path;
     
     private function __construct() {
-        $this->_db_path = getInternalUsersDbPath();
+        $this->_db_path = constant("USER_DB_FILE_PATH");
         $this->_db = $this->_obtainDatabaseAsObject();
     }
 
@@ -128,7 +128,7 @@ class UserDb {
         $requested = self::all()[$user] ?? null;
         if($requested) {
             if(!array_key_exists("customColors", $requested)) 
-                $requested["customColors"] = getDefaultBackgroundColors();
+                $requested["customColors"] = constant("DEFAULT_BACKGROUND_COLORS");
         }
         return $requested;
     }

@@ -5,7 +5,7 @@
         var clientURLShout = <?php echo json_encode($clientURLShout)?>;
         var libraryUser = <?php echo json_encode($user_qs)?>;
         
-        var sioURL = <?php echo json_encode(getWebsocketUrl())?>;
+        var sioURL = <?php echo json_encode(constant("SHOUT_SERVICE_WEBSOCKET_ROOT_URL"))?>;
         var initialRLoaderUrl = <?php echo json_encode($initialRLoaderUrl)?>;
 
         var _discoverFilter = {

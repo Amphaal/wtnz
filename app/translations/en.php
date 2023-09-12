@@ -1,7 +1,5 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php";
-
 return array(
     'worksBest' => 'Works best with',
     'libraryOf' => "%s's Library",
@@ -14,7 +12,7 @@ return array(
     "year" => "Year",
     "dateAddition" => "Date of Addition",
     "tracks" => "Tracks",
-    "thisis" => "This is " . $appName . ".",
+    "thisis" => "This is " . constant("APP_NAME") . ".",
     "listenTTA" => "Listen to the Album",
     "nowPlaying" => "Now Playing...",
     "devLinkedin" => "Developer's LinkedIn profile",
@@ -56,7 +54,7 @@ return array(
     "e_log_rule" => "Between %d and %d characters",
     "welcome_back" => "Welcome back, %s",
     "downloadFeeder" => "Download for %s",
-    "obtainCompanionApp" => "Obtain <span class='obtain'>" . $companionAppName . "</span>, the companion app",
+    "obtainCompanionApp" => "Obtain <span class='obtain'>" . constant("COMPANION_APP_NAME") . "</span>, the companion app",
     "e_noDownloadFound" => "Downloadable file cannot be found",
     "app_descr" => "The freshest music from the finest people.",
     "users_profile" => "%s | Profile",

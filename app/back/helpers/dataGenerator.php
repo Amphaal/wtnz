@@ -1,6 +1,6 @@
 <?php 
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/Slugifier.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/Slugifier.php";
 
 class DataGenerator {
 
@@ -12,7 +12,7 @@ class DataGenerator {
         if($lib != null) {
             $this->_lib = $lib;
         } else {
-            $file_content = file_get_contents($this->_iTargetPath . getCurrentLibraryFileName());
+            $file_content = file_get_contents($this->_iTargetPath . constant("MUSIC_LIB_PROFILE_FILE_NAME"));
             $this->_lib = json_decode($file_content, true);
         }
     }

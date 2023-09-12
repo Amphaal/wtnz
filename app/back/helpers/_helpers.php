@@ -1,11 +1,11 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/htmlHelpers.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/htmlHelpers.php";
 
 
 function cbacToCss($target = null, $colours = null) {
     if(!$target || !$colours) {
-        $colours = getDefaultBackgroundColors();
+        $colours = constant("DEFAULT_BACKGROUND_COLORS");
         $target = "";
     } else {
         $target = '[data-owner="' . $target . "\"]";
@@ -130,7 +130,7 @@ function goToLocation($rq) {
 }
 
 function getLocation($rq, $abs = null) {
-    $r = $abs ? getAbsoluteRootAppUrl() : getRelativeRootAppUrl();
+    $r = $abs ? constant("WEB_APP_ROOT_FULLPATH") : constant("WEB_APP_ROOT");
 
     switch($rq) {
         case "Home":

@@ -23,7 +23,7 @@
             class="<?php if(!$isCurrentLang) {echo "clickable unselected";}?>" 
             onclick="changeLang(event)"
         >
-            <img src="<?php echo getRelativeRootAppUrl(). $file; ?>" />
+            <img src="<?php echo constant("WEB_APP_ROOT") . $file; ?>" />
         </label>
         <?php } ?>
     </div>

@@ -11,7 +11,7 @@ function routerDownload($action) {
     if(isXMLHttpRequest()) $out();
     
     //target server folder
-    $initialPath = getDownloadsFolder() . $action;
+    $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $action;
 
     //check if files exists, take latest released version (desc order files) 
     $latestInFolder = getLatestDownloadableFile($initialPath);
@@ -69,7 +69,7 @@ function getFilesFromDirectory($searchFolder) {
 
 function availableDownloads() {
     $ret = array();
-    $df = getDownloadsFolder();
+    $df = constant("COMPANION_APP_DOWNLOADS_FOLDER");
 
     $subdirs = getSubDirectoriesFromDirectory($df);
     

@@ -5,16 +5,22 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+include $_SERVER['DOCUMENT_ROOT'] . "/app/config.php";
+
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/db.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_title.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_user-agent.php";
+
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadLib.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadShout.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/manage.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/downloadApp.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/library.php";
+
 // handles users sessions, start
 session_start();
-
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/config.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadLib.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadShout.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/manage.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/downloadApp.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/library.php";
 
 function init_app() {
 

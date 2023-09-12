@@ -1,15 +1,13 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/app/config/const.php";
-
 function uploadShout($user_qs) {
     //tests
     comparePasswords($user_qs);
-    testUploadedFile($expectedShoutFilename);
-    testFileCompatibility($expectedShoutFilename);
+    testUploadedFile(constant("SHOUT_UPLOAD_FILE_NAME"));
+    testFileCompatibility(constant("SHOUT_UPLOAD_FILE_NAME"));
     
     //move file
-    uploadFile(getInternalUserFolder($user_qs) . getCurrentShoutFileName(), $expectedShoutFilename);
+    uploadFile(getInternalUserFolder($user_qs) . constant("SHOUT_PROFILE_FILE_NAME"), constant("SHOUT_UPLOAD_FILE_NAME"));
     
     exit(i18n("shouted"));
 }
