@@ -14,6 +14,22 @@ services:
     networks:
       - web-fronts
 
+  # [Websockets]
+  sound-sentry:
+    container_name: sound-sentry
+    hostname: sound-sentry
+    restart: on-failure:2
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ../_data:/srv/data:rw
+    build:
+      context: https://github.com/Amphaal/SoundSentry.git#main
+    ports:
+      - 3000:3000
+    networks:
+      - web-fronts
+
   # [Proxy]
   nginx-proxy:
     container_name: nginx-proxy
