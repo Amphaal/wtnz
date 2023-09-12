@@ -1,6 +1,6 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/Slugifier.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/data-generator/slugifier.php";
 
 class DataGenerator {
 

@@ -4,7 +4,7 @@ function _wAnim($owner) {
     return '<div class="wAnim" data-owner="'. $owner .'"></div>';
 }
 
-function getFileUploadLimit(){
+function getFileUploadLimit() {
     $max_upload = (int)(ini_get('upload_max_filesize'));
     $max_post = (int)(ini_get('post_max_size'));
     $memory_limit = (int)(ini_get('memory_limit'));

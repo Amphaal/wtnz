@@ -13,11 +13,11 @@ include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_title.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_user-agent.php";
 
 include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadLib.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/uploadShout.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/manage.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/downloadApp.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/controllers/musicLibrary.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadLib.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadShout.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/manage.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/downloadApp.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/musicLibrary.php";
 
 // handles users sessions, start
 session_start();

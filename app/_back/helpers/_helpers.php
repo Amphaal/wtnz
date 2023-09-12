@@ -32,7 +32,9 @@ function startsWith($haystack, $needle) {
 
 
 function sanitizePOST() {
-    if(array_key_exists('username', $_POST)) $_POST['username'] = trim(strtolower($_POST['username']));
+    if(array_key_exists('username', $_POST)) {
+        $_POST['username'] = trim(strtolower($_POST['username']));
+    }
 } 
 
 function errorOccured($error_text) {
@@ -41,7 +43,7 @@ function errorOccured($error_text) {
     //throw new Exception($error_text);
 }
 
-function mayCreateUserDirectory($directory) {
+function _mayCreateUserDirectory($directory) {
     $shouldWrite = !file_exists($directory);
     if (!$shouldWrite) return null;
 
@@ -56,7 +58,7 @@ function checkUserSpecificFolders() {
     //for each user
     foreach(UserDb::all() as $user => $confData) {
         $path = getInternalUserFolder($user);
-        mayCreateUserDirectory($path);
+        _mayCreateUserDirectory($path);
     }
 }  
 
@@ -114,7 +116,7 @@ function getProfilePicture($user) {
 }
 
 //
-//conectivity
+//connectivity
 //
 
 function getCurrentUserLogged() {

@@ -1,6 +1,6 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/DataGenerator.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/data-generator/data_generator.php";
 
 function routerManage($action) {
     switch($action) {
