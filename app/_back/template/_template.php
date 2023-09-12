@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="<?php echo I18nSingleton::getInstance()->getLang()?>">
+<html lang="<?= I18nSingleton::getInstance()->getLang() ?>">
     <head>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/metadata.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/metadata.php" ?>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/libs.php" ?>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/style.php" ?>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/js.php" ?>
