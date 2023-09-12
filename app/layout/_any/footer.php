@@ -20,7 +20,7 @@
         <label 
             <?php if(!$isCurrentLang) {?> title="<?= i18n("switch_lang");?>" <?php } ?>
             data-lang="<?= $bn; ?>" 
-            class="<?php if(!$isCurrentLang) {echo "clickable unselected";}?>" 
+            class="<?php if(!$isCurrentLang) { echo "clickable unselected"; }?>" 
             onclick="changeLang(event)"
         >
             <img src="<?= constant("WEB_APP_ROOT") . $file; ?>" />

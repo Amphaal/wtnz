@@ -11,8 +11,15 @@ include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/db.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_title.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_user-agent.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/css_compiler.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/string_extensions.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/error_handling.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/templating.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/file_uploading.php";
 
+/** */
 include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
+
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadLib.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadShout.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/manage.php";

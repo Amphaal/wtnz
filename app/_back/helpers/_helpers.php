@@ -2,45 +2,12 @@
 
 include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/htmlHelpers.php";
 
-
-function cbacToCss($target = null, $colours = null) {
-    if(!$target || !$colours) {
-        $colours = constant("DEFAULT_BACKGROUND_COLORS");
-        $target = "";
-    } else {
-        $target = '[data-owner="' . $target . "\"]";
-    }
-    
-    $css = ".wAnim" . $target ."::after { background: linear-gradient(-45deg, %s, %s, %s, %s);}";
-    $css = sprintf($css, ...$colours);
-    return $css;
-}
-
 function getQueryString($request_uri = null) {
     if(!$request_uri) $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = explode('/', strtolower($request_uri));
     $request_uri = array_filter($request_uri, 'strlen' );
     // array_shift($request_uri); //remove root app 
     return $request_uri;
-}
-
-function startsWith($haystack, $needle) {
-    // search backwards starting from haystack length characters from the end
-    return $needle === ''
-      || strrpos($haystack, $needle, -strlen($haystack)) !== false;
-}
-
-
-function sanitizePOST() {
-    if(array_key_exists('username', $_POST)) {
-        $_POST['username'] = trim(strtolower($_POST['username']));
-    }
-} 
-
-function errorOccured($error_text) {
-    if(isset($_POST['headless'])) http_response_code(520);
-    exit($error_text); 
-    //throw new Exception($error_text);
 }
 
 function _mayCreateUserDirectory($directory) {
