@@ -1,24 +1,9 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/js.php" ?>
-
 <script>
     <?php
-    
-        foreach(getFilesInFolder('front/js/polyfills') as $file) { 
-            echo file_get_contents($file);
-        }
-
-        foreach(getFilesInFolder('front/js/misc') as $file) { 
-            echo file_get_contents($file);
-        } 
-
-
-        foreach(getFilesInFolder('front/js/app') as $file) { 
-            echo file_get_contents($file);
-        } 
-
-        foreach(getFilesInFolder('front/js/app/panels') as $file) { 
-            echo file_get_contents($file);
-        } 
-
+        echoFilesOfFolder('front/js/polyfills');
+        echoFilesOfFolder('front/js/misc');
+        echoFilesOfFolder('front/js/app');
+        echoFilesOfFolder('front/js/app/panels');
     ?>
 </script>
