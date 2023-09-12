@@ -8,14 +8,17 @@ error_reporting(E_ALL);
 include $_SERVER['DOCUMENT_ROOT'] . "/app/config.php";
 
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/db.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/users-management/users_management.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_title.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_user-agent.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/css_compiler.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/string_extensions.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/error_handling.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/templating.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/templating.shards.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/file_uploading.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/http.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/magnifik_input.php";
 
 /** */
 include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
@@ -62,7 +65,7 @@ function init_app() {
     if(!empty($action)) home();
 
     //redirect to user library in last resort
-    return routerLibrary($user_qs);
+    return routerMusicLibrary($user_qs);
 }
 
 init_app();

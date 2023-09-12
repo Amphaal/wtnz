@@ -2,9 +2,9 @@
 
 function uploadShout($user_qs) {
     //tests
-    comparePasswords($user_qs);
+    checkPOSTedUserPassword($user_qs);
     testUploadedFile(constant("SHOUT_UPLOAD_FILE_NAME"));
-    testFileCompatibility(constant("SHOUT_UPLOAD_FILE_NAME"));
+    testUploadedFileJSONCompliance(constant("SHOUT_UPLOAD_FILE_NAME"));
     
     //move file
     uploadFile(getInternalUserFolder($user_qs) . constant("SHOUT_PROFILE_FILE_NAME"), constant("SHOUT_UPLOAD_FILE_NAME"));

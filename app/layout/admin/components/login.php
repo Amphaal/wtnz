@@ -1,5 +1,5 @@
 <h1><?= i18n("e_log_connect")?></h1>
-<?= _popup($login_result); ?>
+<?php mayDisplayPopup($login_result); ?>
 <form method="POST" action="<?= $_SERVER["REQUEST_URI"] ?>">
     <?= renderMagnifikInput(array(
         "name" => "username",

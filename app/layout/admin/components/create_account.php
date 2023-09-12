@@ -1,6 +1,6 @@
 <div id="accountCreation">
     <h1><?= i18n("e_log_createAccount")?></h1>
-    <?= _popup($acr); ?>
+    <?php mayDisplayPopup($acr); ?>
     <form class="loginRack" method="POST" autocomplete="off" action="<?= $_SERVER["REQUEST_URI"] ?>">
         <?= renderMagnifikInput(array(
             "name" => "username",

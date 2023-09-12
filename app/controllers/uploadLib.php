@@ -1,9 +1,9 @@
 <?php
 
 function uploadLib($user_qs) {
-    comparePasswords($user_qs);
+    checkPOSTedUserPassword($user_qs);
     testUploadedFile(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
-    testFileCompatibility(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    testUploadedFileJSONCompliance(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
     processUploadedLib($user_qs, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
 }
 

@@ -1,6 +1,6 @@
 <?php 
 
-function routerLibrary($user_qs) {
+function routerMusicLibrary($user_qs) {
 
     $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
     $expectedProfilePic = getPublicUserFolder($user_qs) . getProfilePicture($user_qs);
