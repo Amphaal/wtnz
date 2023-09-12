@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 include $_SERVER['DOCUMENT_ROOT'] . "/app/config.php";
 
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
@@ -20,10 +21,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/file_uploading.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/http.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/magnifik_input.php";
 
-/** */
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/_helpers.php";
-
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadLib.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadMusicLibrary.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadShout.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/manage.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/downloadApp.php";
@@ -47,7 +45,7 @@ function init_app() {
     //if no user directory is being accessed
     if(!isset($user_qs)) {
         setTitle(i18n("welcome"));
-        includeXMLRSwitch("layout/admin/components/welcome.php", get_defined_vars()); 
+        injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars()); 
     }
     
     //check if special queries
@@ -58,7 +56,7 @@ function init_app() {
     checkUserExists($user_qs); 
 
     //router stack
-    routerUploadLib($user_qs, $action);
+    routerUploadMusicLibrary($user_qs, $action);
     routerUploadShout($user_qs, $action);
 
     //else redirect on misformated/unhandled URI

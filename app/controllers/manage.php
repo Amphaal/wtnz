@@ -96,7 +96,7 @@ function home() {
     $title = $iul ? "e_log_manage" : "e_log_home";
     setTitle(i18n($title));
 
-    includeXMLRSwitch("layout/admin/components/home.php", get_defined_vars());
+    injectAndDisplayIntoAdminLayout("layout/admin/components/home.php", get_defined_vars());
 }  
 
 
@@ -115,7 +115,7 @@ function accountCreation() {
         }
     } 
 
-    includeXMLRSwitch("layout/admin/components/create_account.php", get_defined_vars());
+    injectAndDisplayIntoAdminLayout("layout/admin/components/create_account.php", get_defined_vars());
 }
 
 function disconnect() {

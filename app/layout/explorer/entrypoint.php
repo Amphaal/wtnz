@@ -16,10 +16,10 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/compiled.js.php" ?>
         <script>
             <?php
-                echoFilesOfFolder('public/ext/js/polyfills');
-                echoFilesOfFolder('app/layout/explorer/js/misc');
-                echoFilesOfFolder('app/layout/explorer/js/app');
-                echoFilesOfFolder('app/layout/explorer/js/app/panels');
+                echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/public/ext/js/polyfills');
+                echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/layout/explorer/js/misc');
+                echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/layout/explorer/js/app');
+                echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/layout/explorer/js/app/panels');
             ?>
         </script>
 
@@ -27,7 +27,7 @@
         <style>
             <?php
                 include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/compiled.css.php";
-                echoFilesOfFolder('app/layout/explorer/css');
+                echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/layout/explorer/css');
             ?>
         </style>
         <?php /** 2b. Profile specific CSS */ ?>

@@ -25,6 +25,7 @@ function isUselessUpload($targetPath, $expectedFilename) {
 function testUploadedFile($expectedFilename){
     $fileToUpload = isset($_FILES[$expectedFilename]) ? $_FILES[$expectedFilename] : NULL;
     if(empty($fileToUpload)) errorOccured(i18n("e_upLibMiss"));
+    var_dump($fileToUpload);
     if($fileToUpload['error'] == 4 ) errorOccured(i18n("e_noFUp"));
     if($fileToUpload['error'] > 0 ) errorOccured(i18n("e_upErr"));
 }

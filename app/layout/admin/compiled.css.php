@@ -1,6 +1,6 @@
 <style>
 <?php
-    echoFilesOfFolder('back/template/css');
+    echoFilesOfFolder($_SERVER['DOCUMENT_ROOT'] . '/app/layout/admin/css'); 
     echo cbacToCss();
 ?>
 </style>

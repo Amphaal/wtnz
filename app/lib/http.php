@@ -1,7 +1,5 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/back/helpers/htmlHelpers.php";
-
 function getQueryString($request_uri = null) {
     if(!$request_uri) $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = explode('/', strtolower($request_uri));

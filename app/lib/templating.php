@@ -19,7 +19,7 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function includeXMLRSwitch($inside_part, $included_vars_array) {
+function injectAndDisplayIntoAdminLayout($inside_part, $included_vars_array) {
 
     foreach($included_vars_array as $varname => $value) {
         $$varname = $value;

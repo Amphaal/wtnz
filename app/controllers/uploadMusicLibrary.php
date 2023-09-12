@@ -1,6 +1,6 @@
 <?php
 
-function uploadLib($user_qs) {
+function uploadMusicLibrary($user_qs) {
     checkPOSTedUserPassword($user_qs);
     testUploadedFile(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
     testUploadedFileJSONCompliance(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
@@ -49,30 +49,23 @@ function archivePreviousUpload($user_qs, $pathTo) {
 /// UI specifics
 ///
 
-function routerUploadLib($user_qs, $action) {
+function routerUploadMusicLibrary($user_qs, $action) {
+    // if having POST && FILES, means we try to upload
+    if (!empty($_POST) && !empty($_FILES)) {
+        return uploadMusicLibrary($user_qs);  
+    }
 
+    /** check if calling from COMPANION_APP */
     $isAPICall = isset($_POST['headless']);
-    if(!$isAPICall) {
-        //redirect to upload UI if no library for the user
-        $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
-        if(!file_exists($expectedLibrary)) return accessManualUploadUI($user_qs);
-    }
 
-    //if not asking lib upload, skip for next router
-    if($action != 'uploadlib') return;
-    
-    //check prerequisites
-    if(!empty($_POST) && !empty($_FILES)) {
-        return uploadLib($user_qs);  
-    // if from UI 
-    } elseif($isAPICall) {
+    /** if called from API, always expect POST and FILES to be filled */
+    if($isAPICall) {
         errorOccured(i18n("missingArgs"));
-    } else {
-        return accessManualUploadUI($user_qs);
     }
 
-}
-
-function accessManualUploadUI($user_qs) {
-    includeXMLRSwitch("layout/admin/components/upload.php", get_defined_vars());
+    // redirect to upload UI if no library for the user OR wanting explicitely this UI
+    $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
+    if(!file_exists($expectedLibrary) || $action == 'uploadMusicLibrary') {
+        return injectAndDisplayIntoAdminLayout("layout/admin/components/upload.php", get_defined_vars());
+    }
 }
