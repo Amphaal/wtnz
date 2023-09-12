@@ -137,7 +137,7 @@ function includeXMLRSwitch($inside_part, $included_vars_array) {
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
-        include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/_template.php";
+        include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/entrypoint.php";
     }
 
     exit;

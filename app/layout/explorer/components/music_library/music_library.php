@@ -6,5 +6,5 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/explorer/components/music_library/parts/feed.php" ?>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/explorer/components/music_library/parts/discover.php" ?>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/_components/footer.php" ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/_any/footer.php" ?>
 </div>

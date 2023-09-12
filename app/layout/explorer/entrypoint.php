@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="<?= I18nSingleton::getInstance()->getLang() ?>">
     <head>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/metadata.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/_any/metadata.php" ?>
 
         <?php /** 1a. external JS libs */ ?>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/libs.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/compiled.js-ext.php" ?>
         <script type="text/javascript" src="/public/ext/js/highcharts.js"></script>
         <script type="text/javascript" src="/public/ext/js/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="/public/ext/js/sorttable.js"></script>
@@ -13,7 +13,7 @@
         <script type="text/javascript" src="/public/ext/js/mixitup.min.js"></script>
         <?php /** 1b. internal JS libs + PHP-to-JS variables */ ?>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/explorer/js/vars.php" ?>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/js.php" ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/compiled.js.php" ?>
         <script>
             <?php
                 echoFilesOfFolder('public/ext/js/polyfills');
@@ -26,7 +26,7 @@
         <?php /** 2aa All-purposes CSS */ ?>
         <style>
             <?php
-                include $_SERVER['DOCUMENT_ROOT'] . "/app/back/template/php-helpers/style.php";
+                include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/compiled.css.php";
                 echoFilesOfFolder('app/layout/explorer/css');
             ?>
         </style>

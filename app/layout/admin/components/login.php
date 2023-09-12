@@ -1,13 +1,13 @@
-<h1><?php echo i18n("e_log_connect")?></h1>
-<?php echo _popup($login_result); ?>
-<form method="POST" action="<?php echo $_SERVER["REQUEST_URI"] ?>">
-    <?php echo _magnifikInput(array(
+<h1><?= i18n("e_log_connect")?></h1>
+<?= _popup($login_result); ?>
+<form method="POST" action="<?= $_SERVER["REQUEST_URI"] ?>">
+    <?= _magnifikInput(array(
         "name" => "username",
         "placeholder" => "e_log_username",
         "autocomplete" => "username",
         "required" => true
     ))?>
-    <?php echo _magnifikInput(array(
+    <?= _magnifikInput(array(
         "type" => "password",
         "placeholder" => "userPwd",
         "autocomplete" => "current-password",
@@ -16,7 +16,7 @@
     <input 
         class="hype"
         type="submit" 
-        value="✓ <?php echo i18n("validate")?>"
-        title="<?php echo i18n("e_log_connect")?>"
+        value="✓ <?= i18n("validate")?>"
+        title="<?= i18n("e_log_connect")?>"
     />
 </form>

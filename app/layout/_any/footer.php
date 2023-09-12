@@ -4,8 +4,8 @@
         <span>&nbsp;-&nbsp;</span>
         <span style="color:black">0.3.0 Alpha</span>
         <span>&nbsp;-&nbsp;</span>
-        <a href='https://www.linkedin.com/in/guillaumevara/' title="<?php echo i18n("devLinkedin")?>" target="_blank" rel="noopener">
-            <img src='/public/images/linkedin.png' alt="<?php echo i18n("devLinkedin")?>"/>
+        <a href='https://www.linkedin.com/in/guillaumevara/' title="<?= i18n("devLinkedin")?>" target="_blank" rel="noopener">
+            <img src='/public/images/linkedin.png' alt="<?= i18n("devLinkedin")?>"/>
         </a>
     </div>
     <div id="langs">
@@ -18,12 +18,12 @@
             $isCurrentLang = $bn == $curLang;
         ?>
         <label 
-            <?php if(!$isCurrentLang) {?> title="<?php echo i18n("switch_lang");?>" <?php } ?>
-            data-lang="<?php echo $bn; ?>" 
+            <?php if(!$isCurrentLang) {?> title="<?= i18n("switch_lang");?>" <?php } ?>
+            data-lang="<?= $bn; ?>" 
             class="<?php if(!$isCurrentLang) {echo "clickable unselected";}?>" 
             onclick="changeLang(event)"
         >
-            <img src="<?php echo constant("WEB_APP_ROOT") . $file; ?>" />
+            <img src="<?= constant("WEB_APP_ROOT") . $file; ?>" />
         </label>
         <?php } ?>
     </div>

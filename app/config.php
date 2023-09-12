@@ -34,7 +34,7 @@ define("SHOUT_SERVICE_WEBSOCKET_ROOT_URL", "wss://" . $_SERVER["HTTP_HOST"] . ":
 /** since theses colors can be customized by user */
 define("DEFAULT_BACKGROUND_COLORS",  array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
 
-//
+/** TODO */
 define("COMPANION_APP_DOWNLOADS_FOLDER", $_SERVER["DOCUMENT_ROOT"] . "/_downloads\/");
 
 /** internal folder path of user's data */

@@ -37,7 +37,7 @@ function init_app() {
     //if no user directory is being accessed
     if(!isset($user_qs)) {
         setTitle(i18n("welcome"));
-        includeXMLRSwitch("back/ui/welcome.php", get_defined_vars()); 
+        includeXMLRSwitch("layout/admin/components/welcome.php", get_defined_vars()); 
     }
     
     //check if special queries
