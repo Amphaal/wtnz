@@ -1,15 +1,19 @@
-//download library
+// download library
 function requestShout() {
-    let socketServer = sioURL + "/shout";
-    var socket = io(socketServer, {
-        query : { 
-            userToWatch : libraryUser 
+    //
+    let socketServerUrl = sioURL + "/" + libraryUser + "/shout";
+    var socket = new WebSocket(socketServerUrl);
+
+    //
+    socket.onmessage = (event) => {
+        const payload = JSON.parse(event.data);
+        switch(payload.id) {
+            case "newShout": {
+                onReceivedShout(payload.r);
+            }
+            break;
         }
-    });
-    socket.on("newShout", function(newShout) {
-        newShout = JSON.parse(newShout);
-        onReceivedShout(newShout);
-    });
+    }
 }
 
 

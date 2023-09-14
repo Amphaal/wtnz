@@ -27,12 +27,12 @@ define("WEB_APP_ROOT", "/");
 /** */
 define("WEB_APP_ROOT_FULLPATH", ($_SERVER["REQUEST_SCHEME"] ?: 'http') . "://" . $_SERVER["HTTP_HOST"] . constant("WEB_APP_ROOT"));
 
-/** */
-define("SHOUT_SERVICE_WEBSOCKET_ROOT_URL", "wss://" . $_SERVER["HTTP_HOST"] . ":3000");
+/** use WSS in production environment */
+define("SHOUT_SERVICE_WEBSOCKET_ROOT_URL", "ws" . (isset($_ENV["DEBUG_MODE"]) ? "" : "s") . "://" . $_SERVER["HTTP_HOST"] . ":3000");
 
 
 /** since theses colors can be customized by user */
-define("DEFAULT_BACKGROUND_COLORS",  array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
+define("DEFAULT_BACKGROUND_COLORS", array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
 
 /** TODO */
 define("COMPANION_APP_DOWNLOADS_FOLDER", $_SERVER["DOCUMENT_ROOT"] . "/_downloads\/");
