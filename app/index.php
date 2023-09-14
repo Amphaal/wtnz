@@ -38,7 +38,10 @@ function init_app() {
 
     //generate folders if non existing
     checkUserSpecificFolders(); 
-    $user_qs =  strtolower(array_shift($qs));
+    $user_qs =  array_shift($qs);
+    if (!empty($user_qs)) {
+        $user_qs = strtolower($user_qs);
+    }
     $action = array_shift($qs);
 
     //if no user directory is being accessed
