@@ -3,14 +3,14 @@
 function uploadMusicLibrary($user_qs) {
     checkPOSTedUserPassword($user_qs);
     testUploadedFile(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
-    testUploadedFileJSONCompliance(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
-    processUploadedLib($user_qs, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    prepareAndTestUploadedFileCompliance(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    processUploadedMusicLibrary($user_qs, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
 }
 
-function processUploadedLib($user_qs, $expectedFilename) {
+function processUploadedMusicLibrary($user_qs, $expectedFilename) {
 
     $pathTo = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
-    
+
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
 

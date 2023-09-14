@@ -15,7 +15,7 @@
       "command": "docker",
       "args": ["compose", "-f", "docker-compose.debug.yml", "down", "-v"],
       "options": {
-        "cwd": "${workspaceFolder}/debug"
+        "cwd": "${workspaceFolder}/soundsuite_debug"
       }
     },
     {
@@ -26,7 +26,7 @@
       // "dependsOn": "shutdown debug stack",
       "args": ["compose", "-f", "docker-compose.debug.yml", "up", "-d", "--wait"],
       "options": {
-        "cwd": "${workspaceFolder}/debug"
+        "cwd": "${workspaceFolder}/soundsuite_debug"
       }
     },
   ]

@@ -71,7 +71,7 @@ class DataGenerator {
     }
 
     private function _saveData($target, &$data, $pp) {
-        $data = json_encode($data, $pp ? JSON_PRETTY_PRINT : null);
+        $data = json_encode($data, $pp ? JSON_PRETTY_PRINT : 0);
         file_put_contents($this->_iTargetPath . $target . ".json", $data);
     }
 

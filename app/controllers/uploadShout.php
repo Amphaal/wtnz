@@ -1,20 +1,20 @@
 <?php
 
 function uploadShout($user_qs) {
-    //tests
+    // preliminary tests
     checkPOSTedUserPassword($user_qs);
     testUploadedFile(constant("SHOUT_UPLOAD_FILE_NAME"));
-    testUploadedFileJSONCompliance(constant("SHOUT_UPLOAD_FILE_NAME"));
+    prepareAndTestUploadedFileCompliance(constant("SHOUT_UPLOAD_FILE_NAME"));
     
-    //move file
-    uploadFile(getInternalUserFolder($user_qs) . constant("SHOUT_PROFILE_FILE_NAME"), constant("SHOUT_UPLOAD_FILE_NAME"));
-    
+    // uploading file
+    $whereToUpload = getInternalUserFolder($user_qs) . constant("SHOUT_PROFILE_FILE_NAME");
+    uploadFile($whereToUpload, constant("SHOUT_UPLOAD_FILE_NAME"));
+
+    //
     exit(i18n("shouted"));
 }
 
-function routerUploadShout($user_qs, $action) {
-    if($action != 'uploadshout') return;
-
+function rerouteToUploadShout($user_qs, $action) {
     $isAPICall = isset($_POST['headless']);
     if(!$isAPICall) return;
 

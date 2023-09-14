@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 include $_SERVER['DOCUMENT_ROOT'] . "/app/config.php";
 
 include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
@@ -39,7 +38,7 @@ function init_app() {
 
     //generate folders if non existing
     checkUserSpecificFolders(); 
-    $user_qs = array_shift($qs);
+    $user_qs =  strtolower(array_shift($qs));
     $action = array_shift($qs);
 
     //if no user directory is being accessed
@@ -56,8 +55,16 @@ function init_app() {
     checkUserExists($user_qs); 
 
     //router stack
-    routerUploadMusicLibrary($user_qs, $action);
-    routerUploadShout($user_qs, $action);
+    switch($action) {
+        case 'uploadShout': {
+            rerouteToUploadShout($user_qs, $action);
+        }
+        break;
+
+        default: {
+            routerUploadMusicLibrary($user_qs, $action);
+        }
+    }
 
     //else redirect on misformated/unhandled URI
     if(!empty($action)) home();
