@@ -20,22 +20,24 @@ function initializateApp() {
     _rLoader = new RLoader("xmlRLoader", initialRLoaderUrl);
 
     //download user file
-    requestUserUnifiedLib();
+    requestUserUnifiedMusicLibrary();
 }
 
 //download library
-function requestUserUnifiedLib() {
+function requestUserUnifiedMusicLibrary() {
     let request = new XMLHttpRequest(); 
     request.onprogress = updateProgress;
     request.onloadend = function(e) {
-        processUnifiedLib(e.currentTarget.responseText);
+        if (e.currentTarget.status == 200) {
+            processUnifiedMusicLibrary(e.currentTarget.responseText);
+        }
     };
     request.open('GET', clientURLUnified, true);
     request.send(null);
 }
 
 //process...
-function processUnifiedLib(unifiedAsJSONText) {
+function processUnifiedMusicLibrary(unifiedAsJSONText) {
     
     unified = JSON.parse(unifiedAsJSONText); //parse
     _appDataFeeds = generateDataFeeds(unified); //bind lib to data functions

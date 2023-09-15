@@ -1,7 +1,7 @@
 // download library
 function requestShout() {
     //
-    let socketServerUrl = sioURL + "/" + libraryUser + "/shout";
+    let socketServerUrl = "ws" + (location.protocol === 'https:' ? 's' : '') + '://' + sioURL + "/" + libraryUser + "/shout";
     var socket = new WebSocket(socketServerUrl);
 
     //

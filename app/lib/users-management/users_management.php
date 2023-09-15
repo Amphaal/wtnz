@@ -1,6 +1,6 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/users-management/db.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/users-management/db.php";
 
 /** */
 function checkUserSpecificFolders() {

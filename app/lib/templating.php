@@ -5,17 +5,26 @@ function echoFilesOfFolder($path_to_dir) {
     foreach(getFilesInFolder($path_to_dir) as $file) { 
         echo file_get_contents($file);
     }
+    echo("\n");
 }
 
 /** list alls files within a folder (not recursive) */
 function getFilesInFolder($path_to) {
-    $files = scandir($path_to); 
-    $files = array_diff($files, array('..', '.'));
-    $ret = [];
-    foreach($files as $file) { 
-        array_push($ret, $path_to . "/" . $file);
+    // get files, dirs and ., ..
+    $maybeFiles = scandir($path_to); 
+
+    // removes ., ..
+    $maybeFiles = array_diff($maybeFiles, array('..', '.'));
+    $files = [];
+
+    foreach($maybeFiles as $maybeFile) {
+        $maybeFileFullPath = $path_to . '/' . $maybeFile;
+        if (!is_file($maybeFileFullPath)) continue;
+        array_push($files, $maybeFileFullPath);
     }
-    return $ret;
+
+    //
+    return $files;
 }
 
 /** */
@@ -32,7 +41,7 @@ function injectAndDisplayIntoAdminLayout($inside_part, $included_vars_array) {
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
-        include $_SERVER['DOCUMENT_ROOT'] . "/app/layout/admin/entrypoint.php";
+        include $_SERVER["DOCUMENT_ROOT"] . "/layout/admin/entrypoint.php";
     }
 
     exit;

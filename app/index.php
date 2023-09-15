@@ -5,26 +5,26 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/config.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/i18n.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/users-management/users_management.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_title.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/web_user-agent.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/css_compiler.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/string_extensions.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/error_handling.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/templating.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/templating.shards.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/file_uploading.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/http.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/lib/magnifik_input.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/i18n.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/users-management/users_management.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/web_title.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/web_user-agent.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/css_compiler.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/string_extensions.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/error_handling.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/templating.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/templating.shards.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/file_uploading.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/http.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/lib/magnifik_input.php";
 
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadMusicLibrary.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/uploadShout.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/manage.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/downloadApp.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/app/controllers/musicLibrary.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/controllers/uploadMusicLibrary.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/controllers/uploadShout.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/controllers/manage.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/controllers/downloadApp.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/controllers/musicLibrary.php";
 
 // handles users sessions, start
 session_start();

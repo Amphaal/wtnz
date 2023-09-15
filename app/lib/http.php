@@ -9,7 +9,7 @@ function getQueryString($request_uri = null) {
 }
 
 function goToLocation($rq) {
-    header('Location: ' . getLocation($rq, param));
+    header('Location: ' . getLocation($rq));
 }
 
 function getLocation($rq, $abs = null) {

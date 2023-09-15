@@ -5,7 +5,7 @@
         var clientURLShout = <?= json_encode($clientURLShout)?>;
         var libraryUser = <?= json_encode($user_qs)?>;
         
-        var sioURL = <?= json_encode(constant("SHOUT_SERVICE_WEBSOCKET_ROOT_URL"))?>;
+        var sioURL = <?= json_encode(constant("SHOUT_SERVICE_WEBSOCKET_ROOT_HOST"))?>;
         var initialRLoaderUrl = <?= json_encode($initialRLoaderUrl)?>;
 
         var _discoverFilter = {

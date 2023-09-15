@@ -24,10 +24,11 @@ function alignConnectSideElements() {
 function linkToYoutube(artist, albumOrTitle) {
     //link to YT
     let yt_query = 'https://www.youtube.com/results?search_query=';
-    let album_query =  encodeURIComponent(artist+ ' ' + albumOrTitle)
-                            .replace('  ', ' ')
-                            .replace(' ', '+')
-                            .toLowerCase();
+    let album_query = encodeURIComponent(
+            (artist + ' ' + albumOrTitle)
+                .replaceAll('  ', ' ').toLowerCase()
+        ).replaceAll('%20', '+');
+
     return yt_query + album_query;
 }
 

@@ -7,8 +7,6 @@ services:
     hostname: php-fpm
     restart: on-failure:2
     build: ./custom_images/php
-    environment:
-      - DEBUG_MODE
     volumes:
       - ../_data:/usr/share/nginx/html/extra_soundvitrine/_data:rw
       - ../app:/usr/share/nginx/html/extra_soundvitrine/app:ro
