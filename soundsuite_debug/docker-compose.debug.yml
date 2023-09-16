@@ -7,6 +7,7 @@ services:
     hostname: php-fpm
     restart: on-failure:2
     build: ./custom_images/php
+    user: "1001:1001" # same as user using FTP
     volumes:
       - ../_data:/usr/share/nginx/html/extra_soundvitrine/_data:rw
       - ../app:/usr/share/nginx/html/extra_soundvitrine/app:ro
@@ -23,10 +24,13 @@ services:
       - NODE_ENV=development
     volumes:
       - ../_data:/srv/data:rw
+      - ./SoundSentry/dist:/home/node/app/dist:ro # override source files so breakpoints will trigger
+    command: "--inspect=0.0.0.0 app"
     build:
       context: https://github.com/Amphaal/SoundSentry.git#main
     ports:
-      - 3000:3000
+      - "3000:3000"
+      - "9229:9229" # debug port
     networks:
       - web-fronts
 
