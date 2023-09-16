@@ -26,6 +26,7 @@ services:
       - ../_data:/srv/data:rw
       - ./SoundSentry/dist:/home/node/app/dist:ro # override source files so breakpoints will trigger
     command: "--inspect=0.0.0.0 app"
+    user: "1001:1001" # same as user using FTP
     build:
       context: https://github.com/Amphaal/SoundSentry.git#main
     ports:

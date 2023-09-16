@@ -11,7 +11,7 @@
             "address": "localhost",
             "localRoot": "${workspaceFolder}/soundsuite_debug/SoundSentry/dist",
             "remoteRoot": "/home/node/app/dist",
-            "name": "Debug SoundSentry",
+            "name": "1. Debug SoundSentry",
             "port": 9229,
             "request": "attach",
             "skipFiles": [
@@ -24,7 +24,7 @@
             }
         },
         {
-            "name": "Debug SoundVitrine",
+            "name": "2. Debug SoundVitrine",
             "type": "chrome",
             "request": "launch",
             "postDebugTask": "Shutdown debug stack",
@@ -33,7 +33,7 @@
             "presentation": {
                 "hidden": true,
                 "group": "",
-                "order": 1
+                "order": 2
             }
         }
     ],
@@ -41,10 +41,10 @@
         {
             "name": "Debug Full stack",
             "configurations": [
-                "Debug SoundSentry",
-                "Debug SoundVitrine"
+                "1. Debug SoundSentry",
+                "2. Debug SoundVitrine",
             ],
-            "preLaunchTask": "Run debug stack",
+            "preLaunchTask": "Run debug stack"
         }
     ]
 }
