@@ -28,7 +28,7 @@ define("WEB_APP_ROOT", "/");
 define("WEB_APP_ROOT_FULLPATH", ($_SERVER["REQUEST_SCHEME"] ?: 'http') . "://" . $_SERVER["HTTP_HOST"] . constant("WEB_APP_ROOT"));
 
 /** use WSS in production environment */
-define("SHOUT_SERVICE_WEBSOCKET_ROOT_HOST", $_SERVER["HTTP_HOST"] . ":3000");
+define("SHOUT_SERVICE_WEBSOCKET_ROOT_HOST", $_SERVER["HTTP_HOST"] . "/sentry");
 
 /** since theses colors can be customized by user */
 define("DEFAULT_BACKGROUND_COLORS", array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));

@@ -29,7 +29,7 @@
         </style>
         <?php /** 2b. Profile specific CSS */ ?>
         <style>
-            <?= cbacToCss($user_qs, UserDb::fromProtected($user_qs)["customColors"]) ?>
+            <?= cbacToCss($qs_user, UserDb::fromProtected($qs_user)["customColors"]) ?>
         </style>
     </head>
     <body>

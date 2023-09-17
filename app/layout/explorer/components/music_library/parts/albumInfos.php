@@ -19,5 +19,5 @@
             </a>
         </div>
     </div>
-    <?= _wAnim($user_qs)?>
+    <?= _wAnim($qs_user)?>
 </div>

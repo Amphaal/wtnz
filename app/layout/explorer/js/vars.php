@@ -3,7 +3,7 @@
 
         var clientURLUnified = <?= json_encode($clientURLUnified)?>;
         var clientURLShout = <?= json_encode($clientURLShout)?>;
-        var libraryUser = <?= json_encode($user_qs)?>;
+        var libraryUser = <?= json_encode($qs_user)?>;
         
         var sioURL = <?= json_encode(constant("SHOUT_SERVICE_WEBSOCKET_ROOT_HOST"))?>;
         var initialRLoaderUrl = <?= json_encode($initialRLoaderUrl)?>;

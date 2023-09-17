@@ -1,5 +1,5 @@
 <div id='banner-side'>
-    <label class="clickable" title="<?= i18n("users_profile", $user_qs)?>">
+    <label class="clickable" title="<?= i18n("users_profile", $qs_user)?>">
         <input id='showProfile' type='checkbox' onchange="toggleProfile(event)" autocomplete="off">
         <?php if($expectedProfilePic) {?>
         <img class='profilepic' src="<?= $expectedProfilePic ?>">

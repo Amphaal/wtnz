@@ -1,6 +1,6 @@
 <?php 
 
-function routerDownload($action) {
+function routerInterceptor_Download($qs_action) {
 
     $out = function() {
         ob_end_clean(); 
@@ -11,7 +11,7 @@ function routerDownload($action) {
     if(isXMLHttpRequest()) $out();
     
     //target server folder
-    $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $action;
+    $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $qs_action;
 
     //check if files exists, take latest released version (desc order files) 
     $latestInFolder = getLatestDownloadableFile($initialPath);

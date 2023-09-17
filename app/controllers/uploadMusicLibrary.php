@@ -1,27 +1,27 @@
 <?php
 
-function uploadMusicLibrary($user_qs) {
-    checkPOSTedUserPassword($user_qs);
+function uploadMusicLibrary($qs_user) {
+    checkPOSTedUserPassword($qs_user);
     testUploadedFile(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
     prepareAndTestUploadedFileCompliance(constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
-    processUploadedMusicLibrary($user_qs, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
+    processUploadedMusicLibrary($qs_user, constant("MUSIC_LIB_UPLOAD_FILE_NAME"));
 }
 
-function processUploadedMusicLibrary($user_qs, $expectedFilename) {
+function processUploadedMusicLibrary($qs_user, $expectedFilename) {
 
-    $pathTo = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
+    $pathTo = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
 
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) exit(i18n("fiNu"));
 
     //archive current file if necessary
-    //archivePreviousUpload($user_qs, $pathTo);
+    //archivePreviousUpload($qs_user, $pathTo);
 
     //move the uploaded file to user's directory
     uploadFile($pathTo, $expectedFilename);
 
     //generate data from upload
-    $dg = new DataGenerator($user_qs);
+    $dg = new DataGenerator($qs_user);
     $dg->generateUnifiedFile();
 
     //specific redirect for headless client
@@ -32,13 +32,13 @@ function processUploadedMusicLibrary($user_qs, $expectedFilename) {
     exit();
 }
 
-function archivePreviousUpload($user_qs, $pathTo) {
+function archivePreviousUpload($qs_user, $pathTo) {
     //ignore if current file doesnt exist
     if(!file_exists($pathTo)) return;
 
     //copy save
     $archive_dir = filemtime($pathTo).'_'.rand(0,999);
-    $copyDestination = getInternalUserFolder($user_qs) . $archive_dir . "/" . basename($pathTo);
+    $copyDestination = getInternalUserFolder($qs_user) . $archive_dir . "/" . basename($pathTo);
     
     //archive...
     if (!mkdir(dirname($copyDestination))) errorOccured(i18n("e_cad"));
@@ -49,10 +49,10 @@ function archivePreviousUpload($user_qs, $pathTo) {
 /// UI specifics
 ///
 
-function routerUploadMusicLibrary($user_qs, $action) {
+function routerMiddleware_UploadMusicLibrary($qs_user, $wantsExplicitAccess) {
     // if having POST && FILES, means we try to upload
     if (!empty($_POST) && !empty($_FILES)) {
-        return uploadMusicLibrary($user_qs);  
+        return uploadMusicLibrary($qs_user);  
     }
 
     /** check if calling from COMPANION_APP */
@@ -64,8 +64,8 @@ function routerUploadMusicLibrary($user_qs, $action) {
     }
 
     // redirect to upload UI if no library for the user OR wanting explicitely this UI
-    $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
-    if(!file_exists($expectedLibrary) || $action == 'uploadMusicLibrary') {
+    $expectedLibrary = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
+    if(!file_exists($expectedLibrary) || $wantsExplicitAccess) {
         return injectAndDisplayIntoAdminLayout("layout/admin/components/upload.php", get_defined_vars());
     }
 }

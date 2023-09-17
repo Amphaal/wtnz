@@ -2,22 +2,18 @@
 
 include $_SERVER["DOCUMENT_ROOT"] . "/lib/data-generator/data_generator.php";
 
-function routerManage($action) {
-    switch($action) {
+function routerInterceptor_Manage($qs_action) {
+    switch($qs_action) {
         case "create":
             return accountCreation();
-            break;
         case "disconnect":
             return disconnect();
-            break;
         case "pp":
             return ProfilePic();
-            break;
         case "bb":
             return BackgroundBand();
         default;
             return home();
-            break;
     }
 }
 

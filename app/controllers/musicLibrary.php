@@ -1,25 +1,24 @@
 <?php 
 
-function routerMusicLibrary($user_qs) {
+function routerInterceptor_MusicLibrary($qs_user) {
 
-    $expectedLibrary = getInternalUserFolder($user_qs) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
-    $profilePicture = getProfilePicture($user_qs);
+    $expectedLibrary = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
+    $profilePicture = getProfilePicture($qs_user);
     
     $expectedProfilePic = NULL;
     if ($profilePicture) {
-        $expectedProfilePic = getPublicUserFolder($user_qs) . $profilePicture;
+        $expectedProfilePic = getPublicUserFolder($qs_user) . $profilePicture;
     }
 
-    $clientURLUnified = getPublicUserFolder($user_qs) . constant("COMPILED_MUSIC_LIB_PROFILE_FILE_NAME");
-    $clientURLShout = getPublicUserFolder($user_qs) . constant("SHOUT_PROFILE_FILE_NAME");
-
+    $clientURLUnified = getPublicUserFolder($qs_user) . constant("COMPILED_MUSIC_LIB_PROFILE_FILE_NAME");
+    $clientURLShout = getPublicUserFolder($qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
 
     //Client variables
     $latestUpdate = filemtime($expectedLibrary);
     $isLogged = isUserLogged();
 
     //addons
-    setTitle(i18n('libraryOf', $user_qs));
+    setTitle(i18n('libraryOf', $qs_user));
     $initialRLoaderUrl = getLocation("Home", true);
 
     include $_SERVER["DOCUMENT_ROOT"] . "/layout/explorer/entrypoint.php";

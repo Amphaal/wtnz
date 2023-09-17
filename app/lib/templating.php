@@ -44,6 +44,6 @@ function injectAndDisplayIntoAdminLayout($inside_part, $included_vars_array) {
         include $_SERVER["DOCUMENT_ROOT"] . "/layout/admin/entrypoint.php";
     }
 
+    //
     exit;
-    
 }
