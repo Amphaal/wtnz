@@ -4,7 +4,6 @@ function getQueryString($request_uri = null) {
     if(!$request_uri) $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = explode('/', $request_uri);
     $request_uri = array_filter($request_uri, 'strlen' );
-    // array_shift($request_uri); //remove root app 
     return $request_uri;
 }
 

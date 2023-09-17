@@ -38,7 +38,7 @@ function init_app() {
     $qs = getQueryString();
 
     // 1st part of URL
-    $qs_domain = array_shift($qs_domain);
+    $qs_domain = array_shift($qs);
     
     //
     switch($qs_domain) {
@@ -95,10 +95,14 @@ function init_app() {
         }
         break;
 
-        default: {
+        case NULL: {
             // root "/"
             setTitle(i18n("welcome"));
             injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
+        }
+
+        default: {
+            /** */
         }
         break;
     }
