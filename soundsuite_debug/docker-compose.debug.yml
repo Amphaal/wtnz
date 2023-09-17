@@ -30,7 +30,6 @@ services:
     build:
       context: https://github.com/Amphaal/SoundSentry.git#main
     ports:
-      - "3000:3000"
       - "9229:9229" # debug port
     networks:
       - web-fronts
