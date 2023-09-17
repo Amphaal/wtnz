@@ -40,7 +40,7 @@ function instShoutMuteButton() {
     
     //instantiate sound
     if(notificationShoutSound == null) {
-        notificationShoutSound = new Audio('public/audio/long-expected.mp3');
+        notificationShoutSound = new Audio('/public/audio/long-expected.mp3');
         notificationShoutSound.autoplay = false;
         notificationShoutSound.muted = false;
     }
