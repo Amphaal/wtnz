@@ -67,19 +67,33 @@ function requestShout() {
 
 
 /**
- * check if worth displaying
- * @param {*} shoutData 
+ * Depending on shout timestamp, determines if it is meaningful or not to update any informations on UI relative to its update
+ * @param {object} shoutData 
  * @returns {boolean}
  */
 function isWorthDisplayingShout(shoutData) {
-    if ((!shoutData['duration'] || !shoutData['date'])) return 0; //if is no data
-    if (!shoutData['playerState']) return 1; // if is paused
+    if (typeof(shoutData['duration']) !== 'number' || typeof(shoutData['date']) !== 'string') return false; // if is no correct data about track length or current timestamp, aint no worth
+    if (!shoutData['playerState']) return true; // if is paused, always meaningful
 
-    //if is playing and remaning time comparing dates
-    let remaining = (shoutData['duration'] || 0) - (shoutData['playerPosition'] || 0);
-    let secondsElapsed = calculateSecondsElapsed(shoutData['date']);
-    let isWorth = (remaining - secondsElapsed) > 0;
-    return isWorth;
+    //
+    // so then, if it is playing and remaning time comparing dates
+    //
+
+    /** @type {number} */
+    const effectiveDuration = shoutData['duration'] ?? 0;
+    /** @type {number} */
+    const effectivePlayerPosition = shoutData['playerPosition'] ?? 0;
+
+    //
+    const remainingSecondsBeforeTrackPlayEnds = Math.max(effectiveDuration - effectivePlayerPosition, 0);
+
+    /** @type {string} UTC ISO timestamp */
+    const ts = shoutData['date'];
+    const secondsElapsedSinceLatestShoutUpdate = calculateSecondsElapsed(ts);
+    const isWorthDisplaying = (remainingSecondsBeforeTrackPlayEnds - secondsElapsedSinceLatestShoutUpdate) > 0;
+
+    //
+    return isWorthDisplaying;
 }
 
 //sound handling
@@ -125,7 +139,10 @@ function _isInClientViewField(elem) {
     return boundaries.bottom >= 0 && boundaries.left >= 0;
 }
 
-//display shout
+/**
+ * will handle the way to display new shout data
+ * @param {object} newShoutData 
+ */
 function onReceivedShout(newShoutData) {
 
     //update current shout
