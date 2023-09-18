@@ -1,21 +1,30 @@
 
 .logo {
     font-size: 2.5rem; /*rel*/
-     
-    padding: 0 .35em;
+    padding: 0 0.25em 0 0.5em;
+    gap: 0.2rem;
 }
 
-.logo::after {
-    content : "\00A9";
-    font-size: .4em;
-    position : relative;
-    top: .1em;
+.logo .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo .content .upper {
+    margin-bottom: .25em;
+}
+
+.logo .content .lower {
+    position: absolute;
+    bottom: .4em;
     left: .1em;
+    font-size: .3em;
+    letter-spacing: .7em;
 }
 
-.logo::before {
-    /* TODO */
-    content : "WTNZ";
+.logo .cpr_sign {
+    font-size: .5em;
 }
 
 .fctr {

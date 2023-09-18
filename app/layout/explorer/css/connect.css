@@ -33,6 +33,14 @@
     text-align: center;
 }
 
+.logoContainer .logo .content .lower::after {
+    content : "\00A9";
+    position : relative;
+    left: -.4em;
+    top: -.2em;
+    font-size: .7em;
+}
+
 #connectContainer.anima {
     background-color: rgba(0,0,0,.25);
     max-width: 100%;

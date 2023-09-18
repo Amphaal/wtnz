@@ -1,6 +1,12 @@
 <header>
     <div id='menu'>
-        <span class='fctr logo'></span>
+        <span class='fctr logo'>
+            <div class='content'>
+                <span class='upper'>Sound</span>
+                <span class='lower'>Vitrine</span>
+            </div>
+            <span class='cpr_sign'>©</span>
+        </span>
         <div id='banner'>
             <div id='banner-desc'>
                 <?= i18n('libraryOfHead', $qs_user)?>

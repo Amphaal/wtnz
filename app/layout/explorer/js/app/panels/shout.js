@@ -209,9 +209,11 @@ function onReceivedShout(newShoutData) {
                 if(isHardChange) window.requestAnimationFrame(function() {
                     
                     //play sound
-                    notificationShoutSound.play().then(null, function(e) {
-                        /* expected on Chrome */
-                    });
+                    if (navigator.userActivation.hasBeenActive) {
+                        notificationShoutSound.play().then(null, function(_) {
+                            /* expected on Chrome */
+                        });
+                    }
                     
                     //display
                     notif.classList.add('fade');
