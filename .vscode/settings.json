@@ -2,6 +2,6 @@
     "js/ts.implicitProjectConfig.checkJs": true,
     "javascript.preferences.importModuleSpecifierEnding": "js",
     "search.exclude": {
-        "**/js/ext": true
+        "app/public/ext/js/**": true
     }
 }

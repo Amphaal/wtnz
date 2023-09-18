@@ -21,15 +21,28 @@ function alignConnectSideElements() {
     target.style.top = topMost + "px";
 }
 
-function linkToYoutube(artist, albumOrTitle) {
-    //link to YT
-    let yt_query = 'https://www.youtube.com/results?search_query=';
-    let album_query = encodeURIComponent(
-            (artist + ' ' + albumOrTitle)
-                .replaceAll('  ', ' ').toLowerCase()
-        ).replaceAll('%20', '+');
+// from https://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 
-    return yt_query + album_query;
+function linkToYoutube(artist, albumOrTitle) {
+    //
+    const raw_search = (artist + ' ' + albumOrTitle).replaceAll('  ', ' ').toLowerCase();
+
+    //link to YT
+    const yt_query = 'https://www.youtube.com/results?search_query=';
+    const prepared_query = encodeURIComponent(
+        decodeHtml(raw_search)
+    ).replaceAll('%20', '+');
+
+    //
+    debugger;
+
+    //
+    return yt_query + prepared_query;
 }
 
 function navigatorSpecificParameterization() {
