@@ -24,7 +24,8 @@ function requestShout() {
         switch(payload.id) {
             //
             case "newShout": {
-                onReceivedShout(payload.r);
+                console.log('Received shout update ! Handling...');
+                onReceivedShout(JSON.parse(payload.r));
             }
             break;
 
@@ -65,7 +66,11 @@ function requestShout() {
 }
 
 
-//check if worth displaying
+/**
+ * check if worth displaying
+ * @param {*} shoutData 
+ * @returns {boolean}
+ */
 function isWorthDisplayingShout(shoutData) {
     if ((!shoutData['duration'] || !shoutData['date'])) return 0; //if is no data
     if (!shoutData['playerState']) return 1; // if is paused
