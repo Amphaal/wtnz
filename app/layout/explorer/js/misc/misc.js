@@ -39,9 +39,6 @@ function linkToYoutube(artist, albumOrTitle) {
     ).replaceAll('%20', '+');
 
     //
-    debugger;
-
-    //
     return yt_query + prepared_query;
 }
 

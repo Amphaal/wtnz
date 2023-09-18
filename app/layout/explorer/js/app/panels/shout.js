@@ -11,15 +11,18 @@ function doWSPing(socket) {
     socket?.send(JSON.stringify({id: 'ping', r: ''}));
 }
 
-// download library
-function requestShout() {
+//
+function createWebSocketForShouts() {
     //
     const socketServerUrl = "ws" + (location.protocol === 'https:' ? 's' : '') + '://' + sioURL + "/" + libraryUser + "/shout";
     socket = new WebSocket(socketServerUrl);
     console.log("Initialization of WebSockets client on", socketServerUrl, "...");
 
-    //
-    socket.addEventListener("message", (event) => {
+    /**
+     * 
+     * @param {MessageEvent} event 
+     */
+    const onMessage = (event) => {
         const payload = JSON.parse(event.data);
         switch(payload.id) {
             //
@@ -35,10 +38,10 @@ function requestShout() {
             }
             break;
         }
-    });
+    };
 
-    //
-    socket.addEventListener("open", () => {
+    /** */
+    const onOpen = () => {
         //
         doWSPing(socket);
 
@@ -49,20 +52,41 @@ function requestShout() {
 
         //
         console.log("Web socket opened !");
-    });
+    };
 
-    socket.addEventListener("close", () => {
+    /** */
+    const onError = () => {
+        console.log("Web socket failed.");
+    };
+
+    /** */
+    const onClose = () => {
         if (hbEmitter != null) {
             clearInterval(hbEmitter);
             hbEmitter = null;
         }
 
         console.log("Web socket closed...");
-    });
 
-    socket.addEventListener("error", () => {
-        console.log("Web socket failed.");
-    });
+        //
+        //
+        //
+
+        socket.removeEventListener("message", onMessage);
+        socket.removeEventListener("open", onOpen);
+        socket.removeEventListener("error", onError);
+        socket.removeEventListener("close", onClose);
+
+        // reconnect after 1s
+        setTimeout(createWebSocketForShouts, 1000);
+    };
+
+    //
+    socket.addEventListener("message", onMessage);
+    socket.addEventListener("open", onOpen);
+    socket.addEventListener("error", onError);
+    socket.addEventListener("close", onClose);
+
 }
 
 

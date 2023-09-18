@@ -55,5 +55,5 @@ function processUnifiedMusicLibrary(unifiedAsJSONText) {
     generateFreshUploads(); 
     
     //finally, display the app to the user
-    displayApp().then(requestShout);
+    displayApp().then(createWebSocketForShouts);
 }
