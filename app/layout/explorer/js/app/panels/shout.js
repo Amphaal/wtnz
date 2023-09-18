@@ -1,19 +1,27 @@
 /** @type {WebSocket | null} */
 var socket = null;
+var hbEmitter = null;
 
 // download library
 function requestShout() {
     //
     const socketServerUrl = "ws" + (location.protocol === 'https:' ? 's' : '') + '://' + sioURL + "/" + libraryUser + "/shout";
     socket = new WebSocket(socketServerUrl);
-    console.log("Initilization of WebSocket on", socketServerUrl, "...");
+    console.log("Initialization of WebSockets client on", socketServerUrl, "...");
 
     //
     socket.addEventListener("message", (event) => {
         const payload = JSON.parse(event.data);
         switch(payload.id) {
+            //
             case "newShout": {
                 onReceivedShout(payload.r);
+            }
+            break;
+
+            //
+            case "pong": {
+                console.log('...Pong !');
             }
             break;
         }
@@ -21,10 +29,22 @@ function requestShout() {
 
     //
     socket.addEventListener("open", () => {
+        //
+        hbEmitter = setInterval(() => {
+            console.log("Ping...");
+            socket?.send(JSON.stringify({id: 'ping', r: ''}));
+        }, 30000);
+
+        //
         console.log("Web socket opened !");
     });
 
     socket.addEventListener("close", () => {
+        if (hbEmitter != null) {
+            clearInterval(hbEmitter);
+            hbEmitter = null;
+        }
+
         console.log("Web socket closed...");
     });
 
