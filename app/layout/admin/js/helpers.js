@@ -183,11 +183,23 @@ function compareDateFromNomHumanized(strISO8601, dateNow) {
     return dateThen.from(dateNow);
 }
 
-
+/**
+ * 
+ * @param {string} dateFrom should be UTC+0 ISO string representation of when the shout was done at last
+ * @returns 
+ */
 function calculateSecondsElapsed(dateFrom) {
-    let dateNow = new moment();
-    let dateThen = moment(dateFrom);
-    return moment.duration(dateNow.diff(dateThen)).asSeconds();
+    const dateNow = new moment();
+    const dateThen = moment(dateFrom);
+    const mDiff = dateNow.diff(dateThen);
+
+    const diffSecs = moment.duration(mDiff).asSeconds();
+
+    if (diffSecs < 0) {
+        console.warn("Shout update could never happen in the future ! Please check that the date provided by shout is UTC+0 compliant (no local timezoned)");
+    }
+
+    return diffSecs;
 }
 
 function getRootElementFontSize() {

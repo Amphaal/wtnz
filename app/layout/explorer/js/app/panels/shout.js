@@ -87,9 +87,9 @@ function isWorthDisplayingShout(shoutData) {
     //
     const remainingSecondsBeforeTrackPlayEnds = Math.max(effectiveDuration - effectivePlayerPosition, 0);
 
-    /** @type {string} UTC ISO timestamp */
-    const ts = shoutData['date'];
-    const secondsElapsedSinceLatestShoutUpdate = calculateSecondsElapsed(ts);
+    /** @type {string} UTC+0 ISO timestamp */
+    const shoutTs = shoutData['date'];
+    const secondsElapsedSinceLatestShoutUpdate = calculateSecondsElapsed(shoutTs);
     const isWorthDisplaying = (remainingSecondsBeforeTrackPlayEnds - secondsElapsedSinceLatestShoutUpdate) > 0;
 
     //
