@@ -40,7 +40,12 @@ function getLatestDownloadableFile($searchFolder) {
 }
 
 function getSubDirectoriesFromDirectory($searchFolder) {
-    
+    //
+    $folder_exists = file_exists($searchFolder);
+    if (!$folder_exists) {
+        return [];
+    }
+
     //must be a directory
     $is_eligible = function($filename) use ($searchFolder) {
         return is_dir($searchFolder . $filename);

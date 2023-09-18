@@ -8,28 +8,40 @@ function getQueryString($request_uri = null) {
 }
 
 function goToLocation($rq) {
-    header('Location: ' . getLocation($rq));
+    header("Location: " . getLocation($rq));
 }
 
 function getLocation($rq, $abs = null) {
     $r = $abs ? constant("WEB_APP_ROOT_FULLPATH") : constant("WEB_APP_ROOT");
 
     switch($rq) {
-        case "Home":
+        //
+        case "Home": {
             $r .= 'manage';
-            break;
-        case "ThisLibrary":
+        }
+        break;
+
+        //
+        case "ThisLibrary": {
             $url = null;
+
+            //
             if(isXMLHttpRequest())  {
                 $temp = getQueryString($_SERVER['HTTP_REFERER']);
                 array_shift($temp); //domain removal
                 $url = implode("/", $temp);
             }
-            $r .= (getQueryString($url)[0] ?? "");
-            break;
-        case "MyLibrary":
-            $r .= getCurrentUserLogged();
-            break;
+
+            //
+            $r .= "u/" . (getQueryString($url)[1] ?? "");
+        }
+        break;
+        
+        //
+        case "MyLibrary": {
+            $r .= "u/" . getCurrentUserLogged();
+        }
+        break;
     }
 
     return strtolower($r);

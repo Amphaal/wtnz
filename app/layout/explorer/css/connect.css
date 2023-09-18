@@ -33,6 +33,10 @@
     text-align: center;
 }
 
+.logoContainer .logo .content .lower {
+    transform: translate(0.5em, 3.2em);
+}
+
 .logoContainer .logo .content .lower::after {
     content : "\00A9";
     position : relative;

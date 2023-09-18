@@ -39,6 +39,9 @@ define("COMPANION_APP_DOWNLOADS_FOLDER", $_SERVER["DOCUMENT_ROOT"] . "/../_downl
 /** internal folder path of user's data */
 define("USER_DB_FILE_PATH", $_SERVER["DOCUMENT_ROOT"] . "/../_data/users.json");
 
+/** */
+define("COMPANION_APP_GITHUB_LATEST_RELEASE_URL", "https://github.com/Amphaal/SoundBuddy/releases/latest");
+
 //
 //
 //

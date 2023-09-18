@@ -6,7 +6,7 @@
         if(isXMLHttpRequest() && !$forceWLocation) {
             $out ='href="' . $url . "\"";
         } else {
-            $out = 'onclick="window.location=\'' . $url . "\"\"";
+            $out = "onclick=\"window.location='" . $url . "'\"";
         }
 
         if(isXMLHttpRequest() && $XMLR_noBackButton) {

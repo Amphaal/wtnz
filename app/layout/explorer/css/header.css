@@ -17,8 +17,7 @@
 
 .logo .content .lower {
     position: absolute;
-    bottom: .4em;
-    left: .1em;
+    transform: translate(0.3em, 3.3em);
     font-size: .3em;
     letter-spacing: .7em;
 }
