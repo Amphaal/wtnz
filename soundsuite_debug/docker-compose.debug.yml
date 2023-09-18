@@ -16,6 +16,10 @@ services:
       - web-fronts
 
   # [Websockets]
+  #
+  # CAREFUL: https://github.com/microsoft/WSL/issues/4739
+  # Using Docker on Windows will not trigger events
+  #
   sound-sentry:
     container_name: sound-sentry
     hostname: sound-sentry
