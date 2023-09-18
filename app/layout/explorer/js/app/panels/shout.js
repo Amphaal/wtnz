@@ -1,6 +1,15 @@
-/** @type {WebSocket | null} */
+/** @type {WebSocket} */
 var socket = null;
 var hbEmitter = null;
+
+/**
+ * 
+ * @param {WebSocket} socket 
+ */
+function doWSPing(socket) {
+    console.log("Ping...");
+    socket?.send(JSON.stringify({id: 'ping', r: ''}));
+}
 
 // download library
 function requestShout() {
@@ -30,9 +39,11 @@ function requestShout() {
     //
     socket.addEventListener("open", () => {
         //
+        doWSPing(socket);
+
+        //
         hbEmitter = setInterval(() => {
-            console.log("Ping...");
-            socket?.send(JSON.stringify({id: 'ping', r: ''}));
+            doWSPing(socket);
         }, 30000);
 
         //
