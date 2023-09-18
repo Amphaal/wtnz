@@ -1,11 +1,15 @@
+/** @type {WebSocket | null} */
+var socket = null;
+
 // download library
 function requestShout() {
     //
-    let socketServerUrl = "ws" + (location.protocol === 'https:' ? 's' : '') + '://' + sioURL + "/" + libraryUser + "/shout";
-    var socket = new WebSocket(socketServerUrl);
+    const socketServerUrl = "ws" + (location.protocol === 'https:' ? 's' : '') + '://' + sioURL + "/" + libraryUser + "/shout";
+    socket = new WebSocket(socketServerUrl);
+    console.log("Initilization of WebSocket on", socketServerUrl, "...");
 
     //
-    socket.onmessage = (event) => {
+    socket.addEventListener("message", (event) => {
         const payload = JSON.parse(event.data);
         switch(payload.id) {
             case "newShout": {
@@ -13,7 +17,20 @@ function requestShout() {
             }
             break;
         }
-    }
+    });
+
+    //
+    socket.addEventListener("open", () => {
+        console.log("Web socket opened !");
+    });
+
+    socket.addEventListener("close", () => {
+        console.log("Web socket closed...");
+    });
+
+    socket.addEventListener("error", () => {
+        console.log("Web socket failed.");
+    });
 }
 
 
