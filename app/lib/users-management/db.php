@@ -55,7 +55,7 @@ class _AbstractUsersDatabase {
      */
     private function _updateDb($db_to_write) {
         $db_as_json = json_encode($db_to_write, JSON_PRETTY_PRINT);
-        _updateDbRaw($db_as_json);
+        $this->fromProtected_updateDbRaw($db_as_json);
     }
 
     public function updateDb($new_db) {
