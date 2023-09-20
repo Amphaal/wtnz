@@ -1,15 +1,16 @@
 <h1><?= i18n("thisis")?></h1>
 <style>
     #intro-users-descr {
-        display:flex;
-        transition: opacity .2s;
+        display: flex;
+
     }
 
-    #intro-users-descr:hover {
+    #intro-users-descr .user:hover, .manage_button:hover {
         opacity: .7;
     }
 
-    #intro-users-descr .user {
+    #intro-users-descr .user, .manage_button {
+        transition: opacity .2s;
         border-radius: 5px;
         background-color: white; 
         padding: .5em; 
@@ -37,5 +38,13 @@
             </div>
         </a>
     <?php } ?>
+</div>
+<div style="margin-top: 1em; display: flex; justify-content: center;">
+    <a href="/manage">
+        <div class="manage_button" style="background-color: #ffbaba54;">
+            <i class="fa-solid fa-plus"></i>
+            <span><?= i18n("log_createAccount") ?></span>
+        </div>
+    </a>
 </div>
 
