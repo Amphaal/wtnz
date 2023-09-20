@@ -57,6 +57,12 @@ function getInternalUserFolder($user) {
 }
 
 /** web server exposed user's data */
-function getPublicUserFolder($user) {
-    return constant("WEB_APP_ROOT") . "data/users/" . $user . "/";
+function getPublicUserFolder() {
+    return constant("WEB_APP_ROOT") . "data/users/";
+}
+
+
+/** web server exposed user's data */
+function getPublicUserFolderOf($user) {
+    return getPublicUserFolder() . $user . "/";
 }

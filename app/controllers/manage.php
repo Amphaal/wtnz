@@ -57,7 +57,7 @@ function ProfilePic() {
 
         //return
         ob_clean(); flush();
-        echo getPublicUserFolder($currentUser) . $ppname;
+        echo getPublicUserFolderOf($currentUser) . $ppname;
         return;  
     }
 }
@@ -82,7 +82,7 @@ function home() {
         $curUser = getCurrentUserLogged();
         $pp = getProfilePicture($curUser);
         $pp_path = null;
-        if($pp) $pp_path = getPublicUserFolder($curUser) . $pp;
+        if($pp) $pp_path = getPublicUserFolderOf($curUser) . $pp;
 
         $dd_folders = array_keys(availableDownloads());
 

@@ -95,8 +95,10 @@ function init_app() {
         }
         break;
 
+        // means root "/"
         case NULL: {
-            // root "/"
+            // get users so we can display them
+            $users = UserDb::all();
             setTitle(i18n("welcome"));
             injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
         }

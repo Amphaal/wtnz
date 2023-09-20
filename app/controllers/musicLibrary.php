@@ -7,11 +7,11 @@ function routerInterceptor_MusicLibrary($qs_user) {
     
     $expectedProfilePic = NULL;
     if ($profilePicture) {
-        $expectedProfilePic = getPublicUserFolder($qs_user) . $profilePicture;
+        $expectedProfilePic = getPublicUserFolderOf($qs_user) . $profilePicture;
     }
 
-    $clientURLUnified = getPublicUserFolder($qs_user) . constant("COMPILED_MUSIC_LIB_PROFILE_FILE_NAME");
-    $clientURLShout = getPublicUserFolder($qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
+    $clientURLUnified = getPublicUserFolderOf($qs_user) . constant("COMPILED_MUSIC_LIB_PROFILE_FILE_NAME");
+    $clientURLShout = getPublicUserFolderOf($qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
 
     //Client variables
     $latestUpdate = filemtime($expectedLibrary);
