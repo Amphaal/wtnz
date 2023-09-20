@@ -2,7 +2,9 @@
 <style>
     #intro-users-descr {
         display: flex;
-
+        gap: .4em;
+        align-items: center;
+        justify-content: center;
     }
 
     #intro-users-descr .user:hover, .manage_button:hover {
@@ -25,7 +27,7 @@
         <a href="/u/<?= $username ?>">
             <div class="user">
                 <?php 
-                $hasProfilePicture = $data["profilePic"];
+                $hasProfilePicture = $data["profilePic"] ?? NULL;
                 if($hasProfilePicture != null) {
                     $expectedProfilePic = getPublicUserFolderOf($username) . $hasProfilePicture;
                     ?>
