@@ -41,7 +41,7 @@
 </div>
 <div style="margin-top: 1em; display: flex; justify-content: center;">
     <a href="/manage">
-        <div class="manage_button" style="background-color: #ffbaba54;">
+        <div class="manage_button" style="background-color: #ffbaba54; box-shadow: 0px 0px 20px 0px white;">
             <i class="fa-solid fa-plus"></i>
             <span><?= i18n("log_createAccount") ?></span>
         </div>
