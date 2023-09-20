@@ -25,7 +25,7 @@
     <img src="/public/images/ico.png" width="50%"/>
     <h1 style="margin-bottom: 0; text-align: center"><?= i18n("thisis")?></h1>
     <div style="font-size: .75em; color: #3b3b3b; text-align: center">
-        <?= i18n("project_shorthand_descr", '<img src="/public/images/iTunes.png" width="24px" style="margin: 0 .2em; vertical-align: bottom;" />')?>
+        <?= i18n("project_shorthand_descr", '<img src="/public/images/itunes.png" width="24px" style="margin: 0 .2em; vertical-align: bottom;" />')?>
     </div>
     <br/>
     <div id="intro-users-descr">
