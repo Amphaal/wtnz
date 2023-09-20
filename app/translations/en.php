@@ -1,6 +1,9 @@
 <?php 
 
 return array(
+    'uploadWithCompanionApp' => 'Upload via companion app',
+    'or' => 'or',
+    'project_shorthand_descr' => 'Share your iTunes library %s and broadcast what you are listening to live !',
     'worksBest' => 'Works best with',
     'libraryOf' => "%s's Library",
     'whatsnew' => "WHAT'S NEW",

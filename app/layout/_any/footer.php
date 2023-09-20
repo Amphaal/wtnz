@@ -1,8 +1,8 @@
 <footer>
     <div id='credits'>
-        <span>LVNWL 2018-<?= date("Y") ?></span>
+        <span><?= constant("APP_NAME")?> 2018-<?= date("Y") ?></span>
         <span>&nbsp;-&nbsp;</span>
-        <span style="color:black">0.3.0 Alpha</span>
+        <span style="color:black">0.8.4 Beta</span>
         <span>&nbsp;-&nbsp;</span>
         <a href='https://www.linkedin.com/in/guillaumevara/' title="<?= i18n("devLinkedin")?>" target="_blank" rel="noopener">
             <img src='/public/images/linkedin.png' alt="<?= i18n("devLinkedin")?>"/>

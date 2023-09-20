@@ -1,6 +1,9 @@
 <?php 
 
 return array(
+    'uploadWithCompanionApp' => "Envoi via l'application compagnon",
+    'or' => 'ou',
+    'project_shorthand_descr' => 'Partagez votre librarie iTunes %s et diffusez ce que vous écoutez en live !',
     'worksBest' => 'Fonctionne mieux avec',
     'libraryOf' => 'Bibliothèque | %s',
     'whatsnew' => "QUOI DE NEUF",
