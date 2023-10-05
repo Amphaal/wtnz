@@ -1,9 +1,13 @@
 <style>
     #intro-users-descr {
         display: flex;
-        gap: .4em;
         align-items: center;
         justify-content: center;
+        flex-wrap: wrap;
+        overflow: auto;
+        max-height: 33vh;
+        padding: .75em;
+        gap: .5em;
     }
 
     #intro-users-descr .user:hover, .manage_button:hover {
@@ -21,7 +25,7 @@
         box-shadow: 0px 0px 20px 0px #00000036;
     }    
 </style>
-<div style="display:flex; align-items:center; flex-direction: column">
+<div style="display:flex; align-items:center; flex-direction: column; width: 100wv">
     <img src="/public/images/ico.png" width="50%"/>
     <h1 style="margin-bottom: 0; text-align: center"><?= i18n("thisis")?></h1>
     <div style="font-size: .75em; color: #3b3b3b; text-align: center">
