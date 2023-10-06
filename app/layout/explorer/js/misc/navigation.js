@@ -1,9 +1,16 @@
+/**
+ * 
+ * @param {*} targetId which element should open or close
+ * @param {*} reason should open or close shutter
+ * @param {*} nextType 
+ * @returns {{ next: string | boolean, applyNewHeight: (() => void) | null }}
+ */
 function _resizeShutter(targetId, reason, nextType) {
-    let target = document.getElementById(targetId);
-    let heightSwitch = reason ? target.scrollHeight + "px" : "";
-    let changed = target.style.maxHeight != heightSwitch;
+    const target = document.getElementById(targetId);
+    const heightSwitch = reason ? target.scrollHeight + "px" : "";
+    const changed = target.style.maxHeight != heightSwitch;
 
-    let updateTargetMaxHeight = function() {
+    const updateTargetMaxHeight = function() {
         window.requestAnimationFrame(function() {
             target.style.maxHeight = heightSwitch;
         });

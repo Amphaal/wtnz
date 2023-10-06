@@ -207,10 +207,13 @@ function onReceivedShout(newShoutData) {
                 }
                 //display main notif frame
                 if(isHardChange) window.requestAnimationFrame(function() {
-                    
-                    //play sound
-                    const hasUserActivationAPI = navigator.userActivation != null;
-                    if (!hasUserActivationAPI || navigator.userActivation.hasBeenActive) {
+                    /** CHROME API */
+                    const hasUserBeenActive = navigator.userActivation != null && navigator.userActivation.hasBeenActive;
+
+                    /** FIREFOX API */
+                    const isAllowedToPlayByPolicy = navigator.getAutoplayPolicy != null && navigator.getAutoplayPolicy(notificationShoutSound) === "allowed";
+                    if (hasUserBeenActive || isAllowedToPlayByPolicy) {
+                        //play sound
                         notificationShoutSound.play().then(null, function(_) {
                             /* expected on Chrome */
                         });

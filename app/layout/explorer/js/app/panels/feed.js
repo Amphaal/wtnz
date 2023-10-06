@@ -9,6 +9,10 @@ function toggleFeed() {
 /// resize functions
 ///
 
+/**
+ * 
+ * @returns 
+ */
 function resizeFeed() {
     return _resizeShutter(
         'feedContainer', 

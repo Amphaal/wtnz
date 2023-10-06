@@ -11,8 +11,8 @@
         </a>
         <div class='albumDesc'>
             <div>
-                <div class='name'></div>
-                <div class='meta'></div>
+                <div class='name'>PLACEHOLDER</div> <? // we must use placeholder to prevent https://github.com/Amphaal/SoundVitrine/issues/6 ?>
+                <div class='meta'>PLACEHOLDER</div> <? // we must use placeholder to prevent https://github.com/Amphaal/SoundVitrine/issues/6 ?>
             </div>
         </div>
         <div class='timeline'></div>

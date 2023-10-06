@@ -3,40 +3,29 @@
 /// resize handling
 ///
 
-function _rF(description, innerFunction) {
- return {
-        description : description, 
-        innerFunction : innerFunction
-    };
-}
-
 //resize functions
 function bindResizeFunctions() {
-    resizeFunctions.width.push(
-        _rF("resizeFeed", resizeFeed().applyNewHeight),
-        _rF("resizeShout", resizeShout().applyNewHeight),
-        _rF("alignConnectSideElements", alignConnectSideElements)
-    );
+    //
+    resizeFunctions.width.resizeFeed = () => resizeFeed().applyNewHeight;
+    resizeFunctions.width.resizeShout = () => resizeShout().applyNewHeight;
+    resizeFunctions.width.alignConnectSideElements = () => () => alignConnectSideElements;
     
-    resizeFunctions.any.push(
-        _rF("headerToggle", headerToggle)
-    );
+    //
+    resizeFunctions.any.headerToggle = () => () =>  headerToggle;
 
-    Object.keys(_discoverFilter).forEach(function(id) {
-        resizeFunctions.any.push(
-            _rF("applyManualSizesFilterUIs[" + id + "]", function() { 
-                return applyManualSizesFilterUIs(id);
-            })
-        );
+    Object.keys(_discoverFilter).forEach((id) => {
+        const key = "applyManualSizesFilterUIs[" + id + "]";
+        resizeFunctions.any[key] = () => () => applyManualSizesFilterUIs(id);
     });
 };
 
 var sourceHeight = window.innerHeight;
 var sourceWidth = window.innerWidth;
+/** @type {Object<string, Object<string, () => (() => void | null )>>} */
 var resizeFunctions = {
-    height : [],
-    width : [],
-    any : []
+    height : {},
+    width : {},
+    any : {}
 };
 
 //event listener with throttle
@@ -51,27 +40,34 @@ window.addEventListener('orientationchange', function() {
 function resizeManualHeightsAndWidths() {
     
     //prepare
-    let newHeight = window.innerHeight;
-    let newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+    const newWidth = window.innerWidth;
     
-    let execFunc = function(date, logTrackId) {
-        return function(functorObj) {
+    /**
+     * 
+     * @param {Date} date 
+     * @param {string} logTrackId 
+     * @returns {(arg0: () => (() => void | null)) => void}
+     */
+    const execFunc = function(date, logTrackId) {
+        /** @type {(functorObj: () => (() => void | null)) => void} */
+        return (functorObj) => {
             //console.log("["+ date +"] " + logTrackId + " : " + functorObj.description);
-            if(functorObj.innerFunction) functorObj.innerFunction();
+            if(functorObj != null) functorObj();
         };
     };
 
-    let date = new Date();
+    const date = new Date();
 
     //height or width...
-    resizeFunctions.any.forEach(
+    Object.values(resizeFunctions.any).forEach(
         execFunc(date, "any")
     );
 
     //height...
     if(newHeight != sourceHeight) {
         sourceHeight = newHeight;
-        resizeFunctions.height.forEach(
+        Object.values(resizeFunctions.height).forEach(
             execFunc(date, "height")
         );
     }
@@ -79,7 +75,7 @@ function resizeManualHeightsAndWidths() {
     //width...
     if(newWidth != sourceWidth) {
         sourceWidth = newWidth;
-        resizeFunctions.width.forEach(
+        Object.values(resizeFunctions.width).forEach(
             execFunc(date, "width")
         );
     }
