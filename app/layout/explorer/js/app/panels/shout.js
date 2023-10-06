@@ -209,7 +209,7 @@ function onReceivedShout(newShoutData) {
                 if(isHardChange) window.requestAnimationFrame(function() {
                     
                     //play sound
-                    if (navigator.userActivation.hasBeenActive) {
+                    if (navigator.userActivation && navigator.userActivation.hasBeenActive) {
                         notificationShoutSound.play().then(null, function(_) {
                             /* expected on Chrome */
                         });
