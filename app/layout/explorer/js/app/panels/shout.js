@@ -229,7 +229,7 @@ function onReceivedShout(newShoutData) {
     }
 
     //if shouts are already kicking in > trigger notif before re-toggling
-    let isShoutContainerRefreshingContent = shoutContainer?.clientHeight != shoutContainer?.scrollHeight;
+    let isShoutContainerRefreshingContent = shoutContainer.clientHeight > 0;
     if(isShoutContainerRefreshingContent && notif.classList.contains('fade') && isHardChange) {
 
         waitTransitionEnd(notif, function() {
