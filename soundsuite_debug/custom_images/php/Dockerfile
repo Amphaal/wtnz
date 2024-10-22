@@ -1,4 +1,5 @@
-FROM php:fpm
+FROM phpswoole/swoole:latest
+
 RUN apt-get -y update \
 && apt-get install -y libicu-dev \ 
 && docker-php-ext-configure intl \

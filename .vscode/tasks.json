@@ -35,8 +35,8 @@
       "command": "git",
       "args": ["pull"],
       "options": {
-        "cwd": "${workspaceFolder}/soundsuite_debug/SoundSentry"
-      }
+        "cwd": "${workspaceFolder}/soundsuite_debug/SoundSentry",
+      },
     }
   ]
 }
