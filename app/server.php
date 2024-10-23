@@ -5,11 +5,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-// Create a Swoole HTTP server on 0.0.0.0:9501
-$server = new Swoole\Http\Server("0.0.0.0", 9501);
-
-$documentRoot = __DIR__ . '/app';
-
 //
 //
 //
@@ -46,6 +41,26 @@ function handleSession($request, $response) {
 //
 //
 
+$documentRoot = __DIR__ . '/app';
+
+//
+//
+//
+
+// Create a Swoole HTTP server on 0.0.0.0:9501
+$server = new Swoole\Http\Server("0.0.0.0", 9501);
+
+//
+$server->on('WorkerStart', function($serv, $workerId) use ($documentRoot)
+{
+    // Files which won't be reloaded
+    var_dump(get_included_files());
+
+    // Include files from here so they can be reloaded...
+    include $documentRoot . '/index.php'; // Include your standard PHP script
+});
+
+//
 $server->on("request", function ($request, $response) use ($documentRoot) {
     // Use the session handler function
     [$sessionId, $session, $sessionFile] = handleSession($request, $response);
@@ -56,7 +71,9 @@ $server->on("request", function ($request, $response) use ($documentRoot) {
 
     // // Capture the output of the standard PHP script
     ob_start();
-        include $documentRoot . '/index.php'; // Include your standard PHP script
+        $i18n = generatei18n();
+        $injectAndDisplayIntoAdminLayout = generateAdminLayoutInjector();
+        init_app($sessionFile, $request);
     $output = ob_get_clean();
 
     //

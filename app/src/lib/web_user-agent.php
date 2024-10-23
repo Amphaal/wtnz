@@ -4,7 +4,7 @@
 // OS Related //
 ////////////////
 
-function getOS() { 
+function getOS($request) { 
 
     $os_array = array(
         '/mac/i' =>  'Mac',

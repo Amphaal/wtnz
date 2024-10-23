@@ -1,15 +1,15 @@
 <?php 
-    function _btnLink($url, $forceWLocation = false, $XMLR_noBackButton = false) {
+    function _btnLink($request, $url, $forceWLocation = false, $XMLR_noBackButton = false) {
         
         $out = "";
         
-        if(isXMLHttpRequest() && !$forceWLocation) {
+        if(isXMLHttpRequest($request) && !$forceWLocation) {
             $out ='href="' . $url . "\"";
         } else {
             $out = "onclick=\"window.location='" . $url . "'\"";
         }
 
-        if(isXMLHttpRequest() && $XMLR_noBackButton) {
+        if(isXMLHttpRequest($request) && $XMLR_noBackButton) {
             $out .= " no-back";
         }
 
@@ -23,28 +23,28 @@
             <?php include $documentRoot . "/layout/admin/components/parts/bbEditor.php" ?>
             <?php include $documentRoot . "/layout/admin/components/parts/ppEditor.php" ?>
         </div>
-        <div><?= i18n("welcome_back",  getCurrentUserLogged()) ?></div>
+        <div><?= $i18n("welcome_back",  getCurrentUserLogged()) ?></div>
     <?php } ?>
     <div class="loginRack">
         <?php if($iul) {?>
             <?php if($is_not_my_lib) {?>
-                <button class="hype" <?php _btnLink($mylib_loc, true)?>>
+                <button class="hype" <?php _btnLink($request, $mylib_loc, true)?>>
                     <i class="fas fa-book"></i>
-                    <span><?= i18n("log_accessMyLib")?></span>
+                    <span><?= $i18n("log_accessMyLib")?></span>
                 </button>
             <?php }?>
             <?php /* TODO */ ?>
-            <button class="hype" <?php _btnLink("/manage/disconnect", false, true)?>>
+            <button class="hype" <?php _btnLink($request, "/manage/disconnect", false, true)?>>
                 <i class="fas fa-power-off"></i>
-                <span><?= i18n("log_disconnect")?></span>
+                <span><?= $i18n("log_disconnect")?></span>
             </button>
         <?php } else { ?>
             <?php include $documentRoot . "/layout/admin/components/login.php" ?>
             <hr/>
             <?php /* TODO */ ?>
-            <button class="hype" <?php _btnLink("/manage/create")?>>
+            <button class="hype" <?php _btnLink($request, "/manage/create")?>>
                 <i class="fas fa-user-circle"></i>
-                <span><?= i18n("log_createAccount")?></span>
+                <span><?= $i18n("log_createAccount")?></span>
             </button>
         <?php } ?>
     </div>

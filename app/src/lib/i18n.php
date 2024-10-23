@@ -7,12 +7,12 @@ class I18nHandler {
     private $_lang = null;
     private $_dict = null;
 
-    private static function _dictFromLang($lang) {
+    private static function _dictFromLang($documentRoot, $lang) {
         $trFile = $documentRoot . "/translations/" . $lang . ".php";
         return include($trFile);
     }
 
-    private static function _deduceUsedLanguage() {
+    private static function _deduceUsedLanguage($request) {
         
         $cli_lang = Locale::getPrimaryLanguage($request->header['accept-language']) ?? null;
         $post_lang = $request->post['set_lang'] ?? null;
@@ -35,10 +35,10 @@ class I18nHandler {
         return $this->_dict;
     }
 
-    public function __construct() {
-        $this->_lang = self::_deduceUsedLanguage();
+    public function __construct($documentRoot, $request) {
+        $this->_lang = self::_deduceUsedLanguage($request);
         $session['lang'] = $this->_lang;
-        $this->_dict = self::_dictFromLang($this->_lang);
+        $this->_dict = self::_dictFromLang($documentRoot, $this->_lang);
     }
 
 };
@@ -46,21 +46,21 @@ class I18nHandler {
 class I18nSingleton {
     private static $_instance = null;
 
-    public static function getInstance() {
+    public static function getInstance($documentRoot, $request) {
 
         if(is_null(self::$_instance)) {
-            self::$_instance = new I18nHandler();
+            self::$_instance = new I18nHandler($documentRoot, $request);
         }
 
         return self::$_instance;
     }
 };
 
-function i18n($key, ...$args) {
-    return sprintf(
-        I18nSingleton::getInstance()->getDictionary()[$key], 
-        ...$args
-    );
+function generatei18n() {
+    return function ($key, ...$args) {
+        return sprintf(
+            I18nSingleton::getInstance($documentRoot, $request)->getDictionary()[$key], 
+            ...$args
+        );
+    };
 }
-
-I18nSingleton::getInstance();

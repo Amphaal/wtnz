@@ -22,15 +22,15 @@ include $documentRoot . "/controllers/downloadApp.php";
 include $documentRoot . "/controllers/musicLibrary.php";
 
 // handles users sessions, start
-session_start();
+// session_start();
 
-function init_app() {
+function init_app($sessionFile, $request) {
     // 
-    checkUserSpecificFolders(); // generate folders if non existing
-    sanitizePOST(); // cleanup POST
+    checkUserSpecificFolders($request); // generate folders if non existing
+    sanitizePOST($request); // cleanup POST
 
     // get URI elements
-    $qs = getQueryString();
+    $qs = getQueryString($request);
 
     // 1st part of URL
     $qs_domain = array_shift($qs);
@@ -45,13 +45,13 @@ function init_app() {
 
         case 'manage': {
             $qs_action = array_shift($qs); // 2nd part of URL
-            return routerInterceptor_Manage($qs_action);
+            return routerInterceptor_Manage($qs_action, $sessionFile, $request);
         }
         break;
 
         case 'download': {
             $qs_action = array_shift($qs); // 2nd part of URL
-            return routerInterceptor_Download($qs_action);
+            return routerInterceptor_Download($request, $qs_action);
         }
         break;
 
@@ -61,7 +61,7 @@ function init_app() {
             if (!empty($qs_user)) $qs_user = strtolower($qs_user); // always lower
 
             // 
-            checkUserExists($qs_user); 
+            checkUserExists($request, $qs_user); 
 
             // 3rd part of URL
             $qs_action = array_shift($qs);
@@ -69,21 +69,21 @@ function init_app() {
             //
             switch($qs_action) {
                 case 'uploadShout': {
-                    return routerInterceptor_uploadShout($qs_user);
+                    return routerInterceptor_uploadShout($request, $qs_user);
                 }
                 break;
 
                 case 'uploadMusicLibrary':
                 default: {
                     // if user has no library
-                    routerMiddleware_UploadMusicLibrary($qs_user, $qs_action == 'uploadMusicLibrary');
+                    routerMiddleware_UploadMusicLibrary($request, $qs_user, $qs_action == 'uploadMusicLibrary');
 
                     // if action provided, but unknown, redirect to admin home
                     if(!empty($qs_action)) {
                         home();
                     } else {
                         // else, show music library
-                        routerInterceptor_MusicLibrary($qs_user);
+                        routerInterceptor_MusicLibrary($request, $qs_user);
                     }
                 }
             }
@@ -94,8 +94,8 @@ function init_app() {
         case NULL: {
             // get users so we can display them
             $users = UserDb::all();
-            setTitle(i18n("welcome"));
-            injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
+            setTitle($i18n("welcome"));
+            $injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
         }
 
         default: {
@@ -107,5 +107,3 @@ function init_app() {
     // will default to 404 not found
     http_response_code(404);
 }
-
-init_app();

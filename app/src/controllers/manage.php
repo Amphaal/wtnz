@@ -2,18 +2,18 @@
 
 include $documentRoot . "/lib/data-generator/data_generator.php";
 
-function routerInterceptor_Manage($qs_action) {
+function routerInterceptor_Manage($qs_action, $sessionFile, $request) {
     switch($qs_action) {
         case "create":
-            return accountCreation();
+            return accountCreation($request);
         case "disconnect":
-            return disconnect();
+            return disconnect($sessionFile, $request);
         case "pp":
-            return ProfilePic();
+            return ProfilePic($request);
         case "bb":
             return BackgroundBand();
         default;
-            return home();
+            return home($request);
     }
 }
 
@@ -30,7 +30,7 @@ function BackgroundBand() {
 }
 
 
-function ProfilePic() {
+function ProfilePic($request) {
     //upload
     if($request->files && isUserLogged()) {
  
@@ -38,12 +38,12 @@ function ProfilePic() {
         $currentUser = getCurrentUserLogged();
         $expectedFilename = "file";
         $ext = pathinfo($request->files[$expectedFilename]['name'], PATHINFO_EXTENSION);
-        testUploadedFile($expectedFilename);
+        testUploadedFile($request, $expectedFilename);
 
         //upload...
         $ppname = getProfilePicFilename($ext);
         $internalDest = getInternalUserFolder($currentUser) . $ppname;
-        uploadFile($internalDest, $expectedFilename);
+        uploadFile($request, $internalDest, $expectedFilename);
 
         //remove previous if different ext...
         $currentpicFN = getProfilePicture($currentUser);
@@ -62,21 +62,21 @@ function ProfilePic() {
     }
 }
 
-function home() {
+function home($request) {
 
     $login_result = null;
-    login($login_result);
+    login($request, $login_result);
 
     //prepare
     $iul = isUserLogged();
-    $mylib_loc = getLocation("MyLibrary");
+    $mylib_loc = getLocation($request, "MyLibrary");
     $is_not_my_lib = true;
     $dd_folders = array();
     
     //if user is logged...
     if($iul) {
 
-        $is_not_my_lib = (getLocation("ThisLibrary") != $mylib_loc);
+        $is_not_my_lib = (getLocation($request, "ThisLibrary") != $mylib_loc);
 
         //downloads...
         $curUser = getCurrentUserLogged();
@@ -90,14 +90,14 @@ function home() {
 
     //title
     $title = $iul ? "e_log_manage" : "e_log_home";
-    setTitle(i18n($title));
+    setTitle($i18n($title));
 
-    injectAndDisplayIntoAdminLayout("layout/admin/components/home.php", get_defined_vars());
+    $injectAndDisplayIntoAdminLayout("layout/admin/components/home.php", get_defined_vars());
 }  
 
 
 
-function accountCreation() {
+function accountCreation($request) {
     $rules = [
         "username" => ["min" => 6, "max" => 20],
         "password" => ["min" => 8, "max" => 20],
@@ -105,43 +105,44 @@ function accountCreation() {
     
     $acr = null;
     if($request->post){
-        $acr = tryCreatingUser($rules);
+        $acr = tryCreatingUser($request, $rules);
         if(!$acr["isError"]) {
-            login();
+            login($request);
         }
     } 
 
-    injectAndDisplayIntoAdminLayout("layout/admin/components/create_account.php", get_defined_vars());
+    $injectAndDisplayIntoAdminLayout("layout/admin/components/create_account.php", get_defined_vars());
 }
 
-function disconnect() {
-    session_unset();
-    session_destroy();
+function disconnect($sessionFile, $request) {
+    unlink($sessionFile);
+    // session_unset();
+    // session_destroy();
 
-    if(isXMLHttpRequest()) {
-        goToLocation("Home");
+    if(isXMLHttpRequest($request)) {
+        goToLocation($request, "Home");
     } else { 
         header('location: '. $request->header['referer']);
     }
 
 }
 
-function login(&$login_result = null) {
+function login($request, &$login_result = null) {
 
     if($request->post) {
         $login_result = connectAs($request->post['username'], $request->post['password']);
         
         if(!$login_result['isError']) {
-            if(isXMLHttpRequest()) {
-                goToLocation("Home");
+            if(isXMLHttpRequest($request)) {
+                goToLocation($request, "Home");
             } else { 
-                goToLocation("MyLibrary");
+                goToLocation($request, "MyLibrary");
             }
         }
     }
 }
 
-function tryCreatingUser($rules) {
+function tryCreatingUser($request, $rules) {
 
     $ret = array("description" => null);
 
@@ -155,20 +156,20 @@ function tryCreatingUser($rules) {
         //fields filed
         foreach($rules as $field => $f_rules) {
             if(empty($field)) {
-                $ret["description"] = i18n("crea_miss_p_u", i18n($field));
+                $ret["description"] = $i18n("crea_miss_p_u", $i18n($field));
                 continue;
             }
         }
 
         // is user already logged
         if (isUserLogged()) {
-            $ret["description"] = i18n("err_nocreate_onlog");
+            $ret["description"] = $i18n("err_nocreate_onlog");
             continue;
         }
         
         //check user asked to create exists
-        if (checkUserExists($user, true)) {
-            $ret["description"] = i18n("user_already_exist", $user);
+        if (checkUserExists($request, $user, true)) {
+            $ret["description"] = $i18n("user_already_exist", $user);
             continue;
         }
         
@@ -176,7 +177,7 @@ function tryCreatingUser($rules) {
         $isUNOk = null;
         preg_match('/^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/', $user, $isUNOk);
         if (count($isUNOk) == 0) {
-            $ret["description"] = i18n("username_invalid", $user);
+            $ret["description"] = $i18n("username_invalid", $user);
             continue;
         }
 
@@ -188,7 +189,7 @@ function tryCreatingUser($rules) {
             $max = $f_rules['max'];
 
             if($len < $min || $len > $max) {
-                $ret["description"] = i18n("field_nc_pattern", i18n($field), 
+                $ret["description"] = $i18n("field_nc_pattern", $i18n($field), 
                                         $min, $max);
                 continue;
             }
@@ -228,18 +229,18 @@ function connectAs($user, $passwd) {
     $ret = array("isError" => true, "description" => null);
     
     if(empty($user)) {
-        $ret["description"] = i18n("e_log_nouser");
+        $ret["description"] = $i18n("e_log_nouser");
     }
     elseif(empty($passwd))  {
-        $ret["description"] = i18n("e_nopass");
+        $ret["description"] = $i18n("e_nopass");
     }
     if(isset($session["loggedAs"]) && $session["loggedAs"] == $user) {
         $ret["isError"] = false;
-        $ret["description"] = i18n("e_log_identical");
+        $ret["description"] = $i18n("e_log_identical");
     } elseif(UserDb::from($user) == null) {
-        $ret["description"] = i18n("e_unsu", $user);
+        $ret["description"] = $i18n("e_unsu", $user);
     } elseif($passwd != UserDb::from($user)["password"]) {
-        $ret["description"] = i18n("e_pmm");
+        $ret["description"] = $i18n("e_pmm");
     } else {
         $ret["isError"] = false;
         $session["loggedAs"] = $user;

@@ -1,8 +1,8 @@
 <?php 
 
 /** generic cleaning of POST fields, if any */
-function sanitizePOST() {
-    if(array_key_exists('username', $request->post)) {
+function sanitizePOST($request) {
+    if($request->post && array_key_exists('username', $request->post)) {
         $request->post['username'] = trim(strtolower($request->post['username']));
     }
 } 
@@ -14,7 +14,7 @@ function getFileUploadLimit() {
     return min($max_upload, $max_post, $memory_limit) * 1000;
 }
 
-function isUselessUpload($targetPath, $expectedFilename) {
+function isUselessUpload($request, $targetPath, $expectedFilename) {
     //check for duplicate in current / uploaded file
     if (!file_exists($targetPath)) return false;
     $hash_uploaded = hash_file('sha1', $request->files[$expectedFilename]['tmp_name']);
@@ -22,19 +22,19 @@ function isUselessUpload($targetPath, $expectedFilename) {
     return $hash_uploaded == $hash_current ? true : false;
 }
 
-function testUploadedFile($expectedFilename){
+function testUploadedFile($request, $expectedFilename){
     $fileToUpload = isset($request->files[$expectedFilename]) ? $request->files[$expectedFilename] : NULL;
-    if(empty($fileToUpload)) errorOccured(i18n("e_upLibMiss"));
-    if($fileToUpload['error'] == 4 ) errorOccured(i18n("e_noFUp"));
-    if($fileToUpload['error'] > 0 ) errorOccured(i18n("e_upErr"));
+    if(empty($fileToUpload)) errorOccured($request, $i18n("e_upLibMiss"));
+    if($fileToUpload['error'] == 4 ) errorOccured($request, $i18n("e_noFUp"));
+    if($fileToUpload['error'] > 0 ) errorOccured($request, $i18n("e_upErr"));
 }
 
-function uploadFile($pathTo, $expectedFilename) {
+function uploadFile($request, $pathTo, $expectedFilename) {
     $uploadResult = move_uploaded_file($request->files[$expectedFilename]['tmp_name'], $pathTo);
-    if(!$uploadResult) errorOccured(i18n("e_upErr"));
+    if(!$uploadResult) errorOccured($request, $i18n("e_upErr"));
 }
 
-function prepareAndTestUploadedFileCompliance($expectedFilename) {
+function prepareAndTestUploadedFileCompliance($request, $expectedFilename) {
     $decompressed = '';
     
     // check if compressed
@@ -60,6 +60,6 @@ function prepareAndTestUploadedFileCompliance($expectedFilename) {
     //check if JSON compliant
     json_decode($decompressed);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        errorOccured(i18n("e_ucJSON"));
+        errorOccured($request, $i18n("e_ucJSON"));
     }
 }

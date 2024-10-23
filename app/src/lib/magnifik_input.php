@@ -1,7 +1,7 @@
 <?php
 
 /** */
-function renderMagnifikInput($params, $rules = null) {
+function renderMagnifikInput($request, $params, $rules = null) {
     $newInput = array();
     $newContainer = array();
     $descr = "";
@@ -29,7 +29,7 @@ function renderMagnifikInput($params, $rules = null) {
     if(array_key_exists('placeholder', $params)) {
         
         $trad = $toPh(
-            i18n($params["placeholder"])
+            $i18n($params["placeholder"])
         );
         
         array_push($newContainer, $trad);
@@ -37,7 +37,7 @@ function renderMagnifikInput($params, $rules = null) {
     }
 
     //value helper
-    $prem = _PRem($inputName);
+    $prem = _PRem($request, $inputName);
     if($prem) {
         $prem = $toVal($prem);
         array_push($newInput, $prem);
@@ -46,7 +46,7 @@ function renderMagnifikInput($params, $rules = null) {
     //rules helper
     if($rules && $rules[$inputName]) {
         array_push($newInput, 'pattern="' .  _renHpat($rules[$inputName]) . "\"");
-        $content = i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
+        $content = $i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
         array_push($newInput, $toPh($content));
     }
 
@@ -68,6 +68,6 @@ function _renHpat($rules) {
 }
 
 //POST remember
-function _PRem($post_val) {
+function _PRem($request, $post_val) {
     return isset($request->post[$post_val]) ? $request->post[$post_val] : "";
 }

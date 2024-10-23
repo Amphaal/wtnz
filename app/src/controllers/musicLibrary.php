@@ -1,6 +1,6 @@
 <?php 
 
-function routerInterceptor_MusicLibrary($qs_user) {
+function routerInterceptor_MusicLibrary($request, $qs_user) {
 
     $expectedLibrary = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
     $profilePicture = getProfilePicture($qs_user);
@@ -18,8 +18,8 @@ function routerInterceptor_MusicLibrary($qs_user) {
     $isLogged = isUserLogged();
 
     //addons
-    setTitle(i18n('libraryOf', $qs_user));
-    $initialRLoaderUrl = getLocation("Home", true);
+    setTitle($i18n('libraryOf', $qs_user));
+    $initialRLoaderUrl = getLocation($request, "Home", true);
 
     include $documentRoot . "/layout/explorer/entrypoint.php";
     exit;

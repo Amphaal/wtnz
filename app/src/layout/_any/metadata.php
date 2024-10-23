@@ -1,6 +1,6 @@
 <?php 
 
-$app_description = i18n("app_descr");
+$app_description = $i18n("app_descr");
 $app_icon_href = "/public/images/ico.png";
 $app_title = getTitle();
 

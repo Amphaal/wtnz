@@ -3,7 +3,7 @@
 /**
  * may return empty array on "/" or "/?..."
  */
-function getQueryString($request_uri = null) {
+function getQueryString($request, $request_uri = null) {
     if(!$request_uri) $request_uri = $request->server['request_uri'];
     $request_uri = explode('/', $request_uri); // split components on slashes
     $request_uri = array_filter($request_uri, 'strlen' ); // remove non-empty
@@ -29,12 +29,12 @@ function getQueryString($request_uri = null) {
     return $request_uri;
 }
 
-function goToLocation($rq) {
-    header("Location: " . getLocation($rq));
+function goToLocation($request, $rq) {
+    header("Location: " . getLocation($request, $rq));
 }
 
-function getLocation($rq, $abs = null) {
-    $r = $abs ? constant("WEB_APP_ROOT_FULLPATH") : constant("WEB_APP_ROOT");
+function getLocation($request, $rq, $abs = null) {
+    $r = $abs ? getWebAppRootFullpath($request) : constant("WEB_APP_ROOT");
 
     switch($rq) {
         //
@@ -48,7 +48,7 @@ function getLocation($rq, $abs = null) {
             $url = null;
 
             //
-            if(isXMLHttpRequest())  {
+            if(isXMLHttpRequest($request))  {
                 $temp = getQueryString($request->header['referer']);
                 array_shift($temp); //domain removal
                 $url = implode("/", $temp);
@@ -69,11 +69,11 @@ function getLocation($rq, $abs = null) {
     return strtolower($r);
 }
 
-function isXMLHttpRequest(){
+function isXMLHttpRequest($request){
     return isset($request->header['x-requested-with']) && strtolower($request->header['x-requested-with']) === 'xmlhttprequest';
 }
 
-function forceXMLHttp($force) {
+function forceXMLHttp($request, $force) {
    if($force) {
     $request->header['x-requested-with'] = "xmlhttprequest";
    } 

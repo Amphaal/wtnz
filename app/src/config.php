@@ -24,12 +24,6 @@ define("SHOUT_PROFILE_FILE_NAME", 'shout.json');
 /** where, on the current web server, is exposed the root of the app */
 define("WEB_APP_ROOT", "/");
 
-/** */
-define("WEB_APP_ROOT_FULLPATH", ($request->server['server_protocol']  ?: 'http') . "://" . $request->header['host'] . constant("WEB_APP_ROOT"));
-
-/** use WSS in production environment */
-define("SHOUT_SERVICE_WEBSOCKET_ROOT_HOST", $request->header['host'] . "/sentry");
-
 /** since theses colors can be customized by user */
 define("DEFAULT_BACKGROUND_COLORS", array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
 
@@ -45,6 +39,15 @@ define("COMPANION_APP_GITHUB_LATEST_RELEASE_URL", "https://github.com/Amphaal/So
 //
 //
 //
+
+function getWebAppRootFullpath($request) {
+    return ($request->server['server_protocol']  ?: 'http') . "://" . $request->header['host'] . constant("WEB_APP_ROOT");
+}
+
+/** use WSS in production environment */
+function getShoutServiceWebsocketRootHost($request) {
+    return $request->header['host'] . "/sentry";
+}
 
 /** */
 function getProfilePicFilename($ext) {

@@ -1,6 +1,6 @@
 <?php 
 
-function routerInterceptor_Download($qs_action) {
+function routerInterceptor_Download($request, $qs_action) {
 
     $out = function() {
         ob_end_clean(); 
@@ -8,7 +8,7 @@ function routerInterceptor_Download($qs_action) {
     };
 
     //if xmlHttpRequest, cancel...
-    if(isXMLHttpRequest()) $out();
+    if(isXMLHttpRequest($request)) $out();
     
     //target server folder
     $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $qs_action;

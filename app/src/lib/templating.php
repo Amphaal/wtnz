@@ -28,22 +28,24 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function injectAndDisplayIntoAdminLayout($inside_part, $included_vars_array) {
+function generateAdminLayoutInjector() {
+    return function ($inside_part, $included_vars_array) {
 
-    foreach($included_vars_array as $varname => $value) {
-        $$varname = $value;
-    }
-
-    unset($included_vars_array);
-    unset($varname);
-    unset($value);
-
-    if(isXMLHttpRequest()) {
-        include $inside_part;
-    } else {
-        include $documentRoot . "/layout/admin/entrypoint.php";
-    }
-
-    //
-    exit;
+        foreach($included_vars_array as $varname => $value) {
+            $$varname = $value;
+        }
+    
+        unset($included_vars_array);
+        unset($varname);
+        unset($value);
+    
+        if(isXMLHttpRequest($request)) {
+            include $inside_part;
+        } else {
+            include $documentRoot . "/layout/admin/entrypoint.php";
+        }
+    
+        //
+        exit;
+    };
 }

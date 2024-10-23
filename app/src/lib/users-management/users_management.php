@@ -3,35 +3,35 @@
 include $documentRoot . "/lib/users-management/db.php";
 
 /** */
-function checkUserSpecificFolders() {
+function checkUserSpecificFolders($request) {
     //for each user
     foreach(UserDb::all() as $user => $confData) {
         $path = getInternalUserFolder($user);
-        _mayCreateUserDirectory($path);
+        _mayCreateUserDirectory($request, $path);
     }
 }  
 
-function _mayCreateUserDirectory($directory) {
+function _mayCreateUserDirectory($request, $directory) {
     $shouldWrite = !file_exists($directory);
     if (!$shouldWrite) return null;
 
     $result = mkdir($directory, 0777, true);
     if (!$result) 
     {
-        errorOccured(i18n("e_wdu", $directory));
+        errorOccured($request, $i18n("e_wdu", $directory));
     }
 }
 
-function checkUserExists($user, $non_fatal_check = false) {
+function checkUserExists($request, $user, $non_fatal_check = false) {
     $do_exist = UserDb::from($user) != null && file_exists(getInternalUserFolder($user));
-    if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
+    if(!$do_exist && !$non_fatal_check) errorOccured($request, $i18n("e_unsu", $user));
     return $do_exist;
 }
 
-function checkPOSTedUserPassword($of_user) {
+function checkPOSTedUserPassword($request, $of_user) {
     $passwd = isset($request->post['password']) ? $request->post['password'] : NULL;
-    if(empty($passwd)) errorOccured(i18n("e_nopass"));
-    if($passwd != UserDb::from($of_user)["password"]) errorOccured(i18n("e_pmm"));
+    if(empty($passwd)) errorOccured($request, $i18n("e_nopass"));
+    if($passwd != UserDb::from($of_user)["password"]) errorOccured($request, $i18n("e_pmm"));
 }
 
 function setMyProfilePicture($ppFilename) {
