@@ -1,4 +1,4 @@
-<h1><?= $i18n("e_log_connect")?></h1>
+<h1><?= ContextManager::get("i18n")("e_log_connect")?></h1>
 <?php mayDisplayPopup($login_result); ?>
 <form method="POST" action="<?= $request->server['request_uri'] ?>">
     <?= renderMagnifikInput($request, array(
@@ -16,7 +16,7 @@
     <input 
         class="hype"
         type="submit" 
-        value="✓ <?= $i18n("validate")?>"
-        title="<?= $i18n("e_log_connect")?>"
+        value="✓ <?= ContextManager::get("i18n")("validate")?>"
+        title="<?= ContextManager::get("i18n")("e_log_connect")?>"
     />
 </form>

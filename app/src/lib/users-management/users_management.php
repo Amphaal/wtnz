@@ -18,20 +18,20 @@ function _mayCreateUserDirectory($request, $directory) {
     $result = mkdir($directory, 0777, true);
     if (!$result) 
     {
-        errorOccured($request, $i18n("e_wdu", $directory));
+        errorOccured($request, ContextManager::get("i18n")("e_wdu", $directory));
     }
 }
 
 function checkUserExists($request, $user, $non_fatal_check = false) {
     $do_exist = UserDb::from($user) != null && file_exists(getInternalUserFolder($user));
-    if(!$do_exist && !$non_fatal_check) errorOccured($request, $i18n("e_unsu", $user));
+    if(!$do_exist && !$non_fatal_check) errorOccured($request, ContextManager::get("i18n")("e_unsu", $user));
     return $do_exist;
 }
 
 function checkPOSTedUserPassword($request, $of_user) {
     $passwd = isset($request->post['password']) ? $request->post['password'] : NULL;
-    if(empty($passwd)) errorOccured($request, $i18n("e_nopass"));
-    if($passwd != UserDb::from($of_user)["password"]) errorOccured($request, $i18n("e_pmm"));
+    if(empty($passwd)) errorOccured($request, ContextManager::get("i18n")("e_nopass"));
+    if($passwd != UserDb::from($of_user)["password"]) errorOccured($request, ContextManager::get("i18n")("e_pmm"));
 }
 
 function setMyProfilePicture($ppFilename) {

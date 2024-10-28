@@ -28,7 +28,7 @@
             "type": "chrome",
             "request": "launch",
             "postDebugTask": "Shutdown debug stack",
-            "url": "http://localhost",
+            "url": "http://127.0.0.1",
             "webRoot": "${workspaceFolder}",
             "presentation": {
                 "hidden": true,

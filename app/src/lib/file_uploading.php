@@ -24,14 +24,14 @@ function isUselessUpload($request, $targetPath, $expectedFilename) {
 
 function testUploadedFile($request, $expectedFilename){
     $fileToUpload = isset($request->files[$expectedFilename]) ? $request->files[$expectedFilename] : NULL;
-    if(empty($fileToUpload)) errorOccured($request, $i18n("e_upLibMiss"));
-    if($fileToUpload['error'] == 4 ) errorOccured($request, $i18n("e_noFUp"));
-    if($fileToUpload['error'] > 0 ) errorOccured($request, $i18n("e_upErr"));
+    if(empty($fileToUpload)) errorOccured($request, ContextManager::get("i18n")("e_upLibMiss"));
+    if($fileToUpload['error'] == 4 ) errorOccured($request, ContextManager::get("i18n")("e_noFUp"));
+    if($fileToUpload['error'] > 0 ) errorOccured($request, ContextManager::get("i18n")("e_upErr"));
 }
 
 function uploadFile($request, $pathTo, $expectedFilename) {
     $uploadResult = move_uploaded_file($request->files[$expectedFilename]['tmp_name'], $pathTo);
-    if(!$uploadResult) errorOccured($request, $i18n("e_upErr"));
+    if(!$uploadResult) errorOccured($request, ContextManager::get("i18n")("e_upErr"));
 }
 
 function prepareAndTestUploadedFileCompliance($request, $expectedFilename) {
@@ -60,6 +60,6 @@ function prepareAndTestUploadedFileCompliance($request, $expectedFilename) {
     //check if JSON compliant
     json_decode($decompressed);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        errorOccured($request, $i18n("e_ucJSON"));
+        errorOccured($request, ContextManager::get("i18n")("e_ucJSON"));
     }
 }

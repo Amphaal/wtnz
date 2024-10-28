@@ -30,7 +30,7 @@ function getQueryString($request, $request_uri = null) {
 }
 
 function goToLocation($request, $rq) {
-    header("Location: " . getLocation($request, $rq));
+    ContextManager::get("header", "Location: " . getLocation($request, $rq));
 }
 
 function getLocation($request, $rq, $abs = null) {

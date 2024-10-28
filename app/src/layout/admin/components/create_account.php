@@ -1,5 +1,5 @@
 <div id="accountCreation">
-    <h1><?= $i18n("e_log_createAccount")?></h1>
+    <h1><?= ContextManager::get("i18n")("e_log_createAccount")?></h1>
     <?php mayDisplayPopup($acr); ?>
     <form class="loginRack" method="POST" autocomplete="off" action="<?= $request->server['request_uri'] ?>">
         <?= renderMagnifikInput($request, array(
@@ -22,8 +22,8 @@
         <input
             class="hype"
             type="submit" 
-            value="✓ <?= $i18n("validate")?>"
-            title="<?= $i18n("e_log_createAccount")?>"
+            value="✓ <?= ContextManager::get("i18n")("validate")?>"
+            title="<?= ContextManager::get("i18n")("e_log_createAccount")?>"
         />
     </form>
 </div>

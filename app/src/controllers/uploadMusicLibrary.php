@@ -12,7 +12,12 @@ function processUploadedMusicLibrary($request, $qs_user, $expectedFilename) {
     $pathTo = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
 
     //check for duplicates
-    if(isUselessUpload($request, $pathTo, $expectedFilename)) exit($i18n("fiNu"));
+    if(isUselessUpload($request, $pathTo, $expectedFilename)) {
+        ContextManager::get("exit",
+            ContextManager::get("i18n")("fiNu")
+        );
+        return;
+    }
 
     //archive current file if necessary
     //archivePreviousUpload($request, $qs_user, $pathTo);
@@ -25,11 +30,14 @@ function processUploadedMusicLibrary($request, $qs_user, $expectedFilename) {
     $dg->generateUnifiedFile();
 
     //specific redirect for headless client
-    if(isset($request->post['headless'])) exit('Bon appétit!');
+    if(isset($request->post['headless'])) {
+        ContextManager::get("exit", 'Bon appétit!');
+        return;
+    }
     
     //redirect to users library...
-    header("Location: " . dirname($request->server['request_uri']));
-    exit();
+    ContextManager::get("header", "Location: " . dirname($request->server['request_uri']));
+    ContextManager::get("exit");
 }
 
 function archivePreviousUpload($request, $qs_user, $pathTo) {
@@ -41,8 +49,8 @@ function archivePreviousUpload($request, $qs_user, $pathTo) {
     $copyDestination = getInternalUserFolder($qs_user) . $archive_dir . "/" . basename($pathTo);
     
     //archive...
-    if (!mkdir(dirname($copyDestination))) errorOccured($request, $i18n("e_cad"));
-    if (!copy($pathTo, $copyDestination)) errorOccured($request, $i18n("e_cufad"));
+    if (!mkdir(dirname($copyDestination))) errorOccured($request, ContextManager::get("i18n")("e_cad"));
+    if (!copy($pathTo, $copyDestination)) errorOccured($request, ContextManager::get("i18n")("e_cufad"));
 }
 
 ///
@@ -60,12 +68,12 @@ function routerMiddleware_UploadMusicLibrary($request, $qs_user, $wantsExplicitA
 
     /** if called from API, always expect POST and FILES to be filled */
     if($isAPICall) {
-        errorOccured($request, $i18n("missingArgs"));
+        errorOccured($request, ContextManager::get("i18n")("missingArgs"));
     }
 
     // redirect to upload UI if no library for the user OR wanting explicitely this UI
     $expectedLibrary = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
     if(!file_exists($expectedLibrary) || $wantsExplicitAccess) {
-        return $injectAndDisplayIntoAdminLayout($request, "layout/admin/components/upload.php", get_defined_vars());
+        return ContextManager::get("injectAndDisplayIntoAdminLayout")($request, "layout/admin/components/upload.php", get_defined_vars());
     }
 }

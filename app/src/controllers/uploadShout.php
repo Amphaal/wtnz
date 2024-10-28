@@ -11,21 +11,24 @@ function uploadShout($request, $qs_user) {
     uploadFile($request, $whereToUpload, constant("SHOUT_UPLOAD_FILE_NAME"));
 
     //
-    exit($i18n("shouted"));
+    ContextManager::get("exit",
+        ContextManager::get("i18n")("shouted")
+    );
 }
 
 function routerInterceptor_uploadShout($request, $qs_user) {
     //
     $isAPICall = isset($request->post['headless']);
     if(!$isAPICall) {
-        http_response_code(500);
-        die('expects API call');
+        ContextManager::get("http_response_code", 500);
+        ContextManager::get("exit", 'expects API call');
+        return;
     }
 
     //check prerequisites
     if(!empty($request->post) && !empty($request->files)) {
         return uploadShout($request, $qs_user);  
     } else {
-        errorOccured($request, $i18n("missingArgs"));
+        errorOccured($request, ContextManager::get("i18n")("missingArgs"));
     }
 }

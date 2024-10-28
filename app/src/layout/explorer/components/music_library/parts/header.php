@@ -9,7 +9,7 @@
         </span>
         <div id='banner'>
             <div id='banner-desc'>
-                <?= $i18n('libraryOfHead', $qs_user)?>
+                <?= ContextManager::get("i18n")('libraryOfHead', $qs_user)?>
             </div>
             <?php include $documentRoot . "/layout/explorer/components/music_library/parts/menu.php" ?>
             <?php include $documentRoot . "/layout/explorer/components/music_library/parts/searchBand.php" ?>

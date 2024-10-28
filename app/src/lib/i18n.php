@@ -56,8 +56,8 @@ class I18nSingleton {
     }
 };
 
-function generatei18n() {
-    return function ($key, ...$args) {
+function generatei18n(string &$documentRoot, &$request) {
+    return function ($key, ...$args) use (&$documentRoot, &$request) {
         return sprintf(
             I18nSingleton::getInstance($documentRoot, $request)->getDictionary()[$key], 
             ...$args

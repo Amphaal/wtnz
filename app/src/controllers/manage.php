@@ -90,9 +90,9 @@ function home($request) {
 
     //title
     $title = $iul ? "e_log_manage" : "e_log_home";
-    setTitle($i18n($title));
+    setTitle(ContextManager::get("i18n")($title));
 
-    $injectAndDisplayIntoAdminLayout("layout/admin/components/home.php", get_defined_vars());
+    ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/home.php", get_defined_vars());
 }  
 
 
@@ -111,7 +111,7 @@ function accountCreation($request) {
         }
     } 
 
-    $injectAndDisplayIntoAdminLayout("layout/admin/components/create_account.php", get_defined_vars());
+    ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/create_account.php", get_defined_vars());
 }
 
 function disconnect($sessionFile, $request) {
@@ -122,7 +122,7 @@ function disconnect($sessionFile, $request) {
     if(isXMLHttpRequest($request)) {
         goToLocation($request, "Home");
     } else { 
-        header('location: '. $request->header['referer']);
+        ContextManager::get("header", 'location: '. $request->header['referer']);
     }
 
 }
@@ -156,20 +156,20 @@ function tryCreatingUser($request, $rules) {
         //fields filed
         foreach($rules as $field => $f_rules) {
             if(empty($field)) {
-                $ret["description"] = $i18n("crea_miss_p_u", $i18n($field));
+                $ret["description"] = ContextManager::get("i18n")("crea_miss_p_u", ContextManager::get("i18n")($field));
                 continue;
             }
         }
 
         // is user already logged
         if (isUserLogged()) {
-            $ret["description"] = $i18n("err_nocreate_onlog");
+            $ret["description"] = ContextManager::get("i18n")("err_nocreate_onlog");
             continue;
         }
         
         //check user asked to create exists
         if (checkUserExists($request, $user, true)) {
-            $ret["description"] = $i18n("user_already_exist", $user);
+            $ret["description"] = ContextManager::get("i18n")("user_already_exist", $user);
             continue;
         }
         
@@ -177,7 +177,7 @@ function tryCreatingUser($request, $rules) {
         $isUNOk = null;
         preg_match('/^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/', $user, $isUNOk);
         if (count($isUNOk) == 0) {
-            $ret["description"] = $i18n("username_invalid", $user);
+            $ret["description"] = ContextManager::get("i18n")("username_invalid", $user);
             continue;
         }
 
@@ -189,7 +189,7 @@ function tryCreatingUser($request, $rules) {
             $max = $f_rules['max'];
 
             if($len < $min || $len > $max) {
-                $ret["description"] = $i18n("field_nc_pattern", $i18n($field), 
+                $ret["description"] = ContextManager::get("i18n")("field_nc_pattern", ContextManager::get("i18n")($field), 
                                         $min, $max);
                 continue;
             }
@@ -229,18 +229,18 @@ function connectAs($user, $passwd) {
     $ret = array("isError" => true, "description" => null);
     
     if(empty($user)) {
-        $ret["description"] = $i18n("e_log_nouser");
+        $ret["description"] = ContextManager::get("i18n")("e_log_nouser");
     }
     elseif(empty($passwd))  {
-        $ret["description"] = $i18n("e_nopass");
+        $ret["description"] = ContextManager::get("i18n")("e_nopass");
     }
     if(isset($session["loggedAs"]) && $session["loggedAs"] == $user) {
         $ret["isError"] = false;
-        $ret["description"] = $i18n("e_log_identical");
+        $ret["description"] = ContextManager::get("i18n")("e_log_identical");
     } elseif(UserDb::from($user) == null) {
-        $ret["description"] = $i18n("e_unsu", $user);
+        $ret["description"] = ContextManager::get("i18n")("e_unsu", $user);
     } elseif($passwd != UserDb::from($user)["password"]) {
-        $ret["description"] = $i18n("e_pmm");
+        $ret["description"] = ContextManager::get("i18n")("e_pmm");
     } else {
         $ret["isError"] = false;
         $session["loggedAs"] = $user;

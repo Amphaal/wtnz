@@ -29,7 +29,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     if(array_key_exists('placeholder', $params)) {
         
         $trad = $toPh(
-            $i18n($params["placeholder"])
+            ContextManager::get("i18n")($params["placeholder"])
         );
         
         array_push($newContainer, $trad);
@@ -46,7 +46,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     //rules helper
     if($rules && $rules[$inputName]) {
         array_push($newInput, 'pattern="' .  _renHpat($rules[$inputName]) . "\"");
-        $content = $i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
+        $content = ContextManager::get("i18n")("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
         array_push($newInput, $toPh($content));
     }
 

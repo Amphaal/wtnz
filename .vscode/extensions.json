@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "ahmadalli.vscode-nginx-conf"
+        "ahmadalli.vscode-nginx-conf",
+        "bmewburn.vscode-intelephense-client"
     ]
 }

@@ -4,27 +4,33 @@ function routerInterceptor_Download($request, $qs_action) {
 
     $out = function() {
         ob_end_clean(); 
-        die;
+        ContextManager::get("exit");
     };
 
     //if xmlHttpRequest, cancel...
-    if(isXMLHttpRequest($request)) $out();
+    if(isXMLHttpRequest($request)) {
+        $out();
+        return;
+    }
     
     //target server folder
     $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $qs_action;
 
     //check if files exists, take latest released version (desc order files) 
     $latestInFolder = getLatestDownloadableFile($initialPath);
-    if(!$latestInFolder) $out();
+    if(!$latestInFolder) {
+        $out();
+        return;
+    }
 
     //dest file
     $filepath = $initialPath . "/" . $latestInFolder;
     
     //apply headers
-    header('Content-Type: application/octet-stream');
-    header("Content-Transfer-Encoding: Binary"); 
-    header("Content-Length: ".filesize($filepath));
-    header('Content-Disposition: attachment; filename="'.$latestInFolder."\"");
+    ContextManager::get("header", 'Content-Type: application/octet-stream');
+    ContextManager::get("header", "Content-Transfer-Encoding: Binary"); 
+    ContextManager::get("header", "Content-Length: ".filesize($filepath));
+    ContextManager::get("header", 'Content-Disposition: attachment; filename="'.$latestInFolder."\"");
     
     //return file
     ob_clean(); flush();

@@ -28,8 +28,8 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function generateAdminLayoutInjector() {
-    return function ($inside_part, $included_vars_array) {
+function generateAdminLayoutInjector($documentRoot) {
+    return function ($inside_part, $included_vars_array) use($documentRoot) {
 
         foreach($included_vars_array as $varname => $value) {
             $$varname = $value;
@@ -46,6 +46,6 @@ function generateAdminLayoutInjector() {
         }
     
         //
-        exit;
+        ContextManager::get("exit");
     };
 }

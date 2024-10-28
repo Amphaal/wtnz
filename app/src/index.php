@@ -80,7 +80,7 @@ function init_app($sessionFile, $request) {
 
                     // if action provided, but unknown, redirect to admin home
                     if(!empty($qs_action)) {
-                        home();
+                        home($request);
                     } else {
                         // else, show music library
                         routerInterceptor_MusicLibrary($request, $qs_user);
@@ -94,8 +94,8 @@ function init_app($sessionFile, $request) {
         case NULL: {
             // get users so we can display them
             $users = UserDb::all();
-            setTitle($i18n("welcome"));
-            $injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
+            setTitle(ContextManager::get("i18n")("welcome"));
+            ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/welcome.php", get_defined_vars());
         }
 
         default: {
@@ -105,5 +105,5 @@ function init_app($sessionFile, $request) {
     }
 
     // will default to 404 not found
-    http_response_code(404);
+    ContextManager::get("http_response_code", 404);
 }

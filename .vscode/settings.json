@@ -3,5 +3,5 @@
     "javascript.preferences.importModuleSpecifierEnding": "js",
     "search.exclude": {
         "app/public/ext/js/**": true
-    }
+    },
 }
