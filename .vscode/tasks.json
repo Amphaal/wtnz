@@ -20,23 +20,5 @@
         "cwd": "${workspaceFolder}/soundsuite_debug"
       }
     },
-    {
-      "label": "Get SoundSentry Source code",
-      "type": "shell",
-      "command": "git",
-      "args": ["clone", "https://github.com/Amphaal/SoundSentry"],
-      "options": {
-        "cwd": "${workspaceFolder}/soundsuite_debug"
-      }
-    },
-    {
-      "label": "Update SoundSentry Source code",
-      "type": "shell",
-      "command": "git",
-      "args": ["pull"],
-      "options": {
-        "cwd": "${workspaceFolder}/soundsuite_debug/SoundSentry",
-      },
-    }
   ]
 }

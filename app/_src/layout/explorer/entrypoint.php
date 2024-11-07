@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= I18nSingleton::getInstance()->getLang() ?>">
+<html lang="<?= ContextManager::get("i18nS")->getLang() ?>">
     <head>
         <?php include $documentRoot . "/layout/_any/metadata.php" ?>
 
@@ -11,26 +11,13 @@
         <script type="text/javascript" src="/public/ext/js/hammer.min.js"></script>
         <script type="text/javascript" src="/public/ext/js/mixitup.min.js"></script>
         <?php /** 1b. internal JS libs + PHP-to-JS variables */ ?>
-        <?php include $documentRoot . "/layout/explorer/js/vars.php" ?>
-        <?php include $documentRoot . "/layout/admin/compiled.js.php" ?>
-        <script>
-            <?php
-                echoFilesOfFolder($documentRoot . "/public/ext/js/polyfills");
-                echoFilesOfFolder($documentRoot . "/layout/explorer/js/misc");
-                echoFilesOfFolder($documentRoot . "/layout/explorer/js/app");
-                echoFilesOfFolder($documentRoot . "/layout/explorer/js/app/panels");
-            ?>
-        </script>
+        <script type="text/javascript" src="/incl/admin/compiled.js.php"></script>
+        <script type="text/javascript" src="/incl/explorer/compiled.js.php"></script>
 
         <?php /** 2aa All-purposes CSS */ ?>
-        <?php include $documentRoot . "/layout/admin/compiled.css.php"; ?>
-        <style>
-            <?php echoFilesOfFolder($documentRoot . "/layout/explorer/css"); ?>
-        </style>
-        <?php /** 2b. Profile specific CSS */ ?>
-        <style>
-            <?= cbacToCss($qs_user, UserDb::fromProtected($qs_user)["customColors"]) ?>
-        </style>
+        <link rel="stylesheet" href="/incl/admin/compiled.css.php">
+        <link rel="stylesheet" href="/incl/explorer/compiled.css.php">
+
     </head>
     <body>
         <?php include $documentRoot . "/layout/explorer/components/loader.php" ?>

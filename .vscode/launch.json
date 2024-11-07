@@ -5,26 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "sourceMaps": true,
-            "preLaunchTask": "Update SoundSentry Source code",
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}/soundsuite_debug/SoundSentry/dist",
-            "remoteRoot": "/home/node/app/dist",
-            "name": "1. Debug SoundSentry",
-            "port": 9229,
-            "request": "attach",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "presentation": {
-                "hidden": true,
-                "group": "",
-                "order": 1
-            }
-        },
-        {
-            "name": "2. Debug SoundVitrine",
+            "name": "Debug SoundVitrine",
             "type": "chrome",
             "request": "launch",
             "postDebugTask": "Shutdown debug stack",
@@ -35,16 +16,29 @@
                 "group": "",
                 "order": 2
             }
+        },
+        {
+            "name": "Track Stack",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "docker compose -f docker-compose.debug.yml logs -f",
+            "cwd": "${workspaceFolder}/soundsuite_debug",
+            "presentation": {
+                "hidden": true,
+                "group": "",
+                "order": 1
+            }
         }
     ],
     "compounds": [
         {
             "name": "Debug Full stack",
             "configurations": [
-                "1. Debug SoundSentry",
-                "2. Debug SoundVitrine",
+                "Debug SoundVitrine",
+                "Track Stack"
             ],
-            "preLaunchTask": "Run debug stack"
+            "preLaunchTask": "Run debug stack",
+            "stopAll": true
         }
     ]
 }

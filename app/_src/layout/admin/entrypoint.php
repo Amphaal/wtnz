@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="<?= I18nSingleton::getInstance()->getLang() ?>">
+<html lang="<?= ContextManager::get("i18nS")->getLang() ?>">
     <head>
         <?php include $documentRoot . "/layout/_any/metadata.php" ?>
         <?php include $documentRoot . "/layout/admin/compiled.js-ext.php" ?>
-        <?php include $documentRoot . "/layout/admin/compiled.css.php" ?>
-        <?php include $documentRoot . "/layout/admin/compiled.js.php" ?>
+        <script type="text/javascript" src="/incl/admin/compiled.js.php"></script>
+        <link rel="stylesheet" href="/incl/admin/compiled.css.php">
     </head>
     <body>
         <div id="mainFrame">

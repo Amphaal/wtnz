@@ -6,13 +6,13 @@ services:
     container_name: swoole
     hostname: swoole
     restart: on-failure:2
-    build: ./custom_images/swoole
+    build: ./custom_images/php
     networks:
     - web-fronts
     # user: "1001:1001" # same as user using FTP
     volumes:
       - ../_data:/var/www/_data:rw
-      - ../app/src:/var/www/app:ro
+      - ../app/_src:/var/www/_src:ro
       - ../app/server.php:/var/www/server.php:ro
 
   # [NGINX Proxy]
@@ -27,8 +27,11 @@ services:
       - web-fronts
     volumes:
       - ../_data:/usr/share/nginx/html/extra_soundvitrine/_data:rw
-      - ../app/src:/usr/share/nginx/html/extra_soundvitrine/app:ro
-      #
+      - ../app/public:/usr/share/nginx/html/extra_soundvitrine/public:ro
+      - type: bind
+        source: ../app/public.nginx.conf
+        target: /usr/share/nginx/html/extra_soundvitrine/public.nginx.conf
+        read_only: true
       - type: bind
         source: ./nginx.conf
         target: /etc/nginx/nginx.conf

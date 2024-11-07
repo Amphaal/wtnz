@@ -28,7 +28,7 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function generateAdminLayoutInjector($documentRoot) {
+function generateAdminLayoutInjector(&$documentRoot) {
     return function ($inside_part, $included_vars_array) use($documentRoot) {
 
         foreach($included_vars_array as $varname => $value) {
@@ -40,7 +40,7 @@ function generateAdminLayoutInjector($documentRoot) {
         unset($value);
     
         if(isXMLHttpRequest($request)) {
-            include $inside_part;
+            include "/caca" . $inside_part;
         } else {
             include $documentRoot . "/layout/admin/entrypoint.php";
         }

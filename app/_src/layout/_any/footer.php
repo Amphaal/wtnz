@@ -11,7 +11,7 @@
     <div id="langs">
         <?php 
         
-        $curLang = I18nSingleton::getInstance()->getLang();
+        $curLang = ContextManager::get("i18nS")->getLang();
         
         foreach(getFilesInFolder('public/images/flags') as $file) { 
             $bn =  basename($file, ".svg");

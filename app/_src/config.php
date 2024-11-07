@@ -33,6 +33,9 @@ define("COMPANION_APP_DOWNLOADS_FOLDER", $documentRoot . "/../_downloads\/");
 /** internal folder path of user's data */
 define("USER_DB_FILE_PATH", $documentRoot . "/../_data/users.json");
 
+/** Directory where session files will be stored */
+define('SESSION_DIR', $documentRoot . '/../_sessions\/');
+
 /** */
 define("COMPANION_APP_GITHUB_LATEST_RELEASE_URL", "https://github.com/Amphaal/SoundBuddy/releases/latest");
 

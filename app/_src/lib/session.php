@@ -1,8 +1,5 @@
 <?php 
 
-// Directory where session files will be stored
-define('SESSION_DIR', __DIR__ . '../_sessions');
-
 // Session handling function
 function handleSession($request, $response) {
     // Create session directory if it doesn't exist

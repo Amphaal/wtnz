@@ -46,7 +46,10 @@ class _AbstractUsersDatabase {
     }
 
     private function _updateDbRaw($new_db_raw) {
-        @mkdir(dirname($this->_db_path)); // create the containing directory
+        $dirToCreate = dirname($this->_db_path);
+        if (!is_dir($dirToCreate)) {
+            mkdir($dirToCreate); // create the containing directory
+        }
         file_put_contents($this->_db_path, $new_db_raw); // write the new file
     }
 

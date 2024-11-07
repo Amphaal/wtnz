@@ -12,7 +12,7 @@ ini_set('display_startup_errors', 1);
 //
 //
 
-$documentRoot = __DIR__ . '/app';
+$documentRoot = __DIR__ . '/_src';
 include $documentRoot . '/lib/session.php'; 
 include $documentRoot . '/lib/context_manager.php'; 
 
@@ -31,7 +31,7 @@ $server->set([
 $server->on('WorkerStart', function($serv, $workerId) use ($documentRoot)
 {
     // Files which won't be reloaded
-    var_dump(get_included_files());
+    # var_dump(get_included_files());
 
     // Include files from here so they can be reloaded...
     include $documentRoot . '/index.php'; // Include your standard PHP script
@@ -57,13 +57,14 @@ $server->on("request", function ($request, $response) use ($documentRoot) {
      * At the start of every new request, setup global
      * request variables using Swoole server methods.
      */
+    ContextManager::set("i18nS", I18nSingleton::getInstance($documentRoot, $request));
     ContextManager::set("i18n", generatei18n($documentRoot, $request));
     ContextManager::set("injectAndDisplayIntoAdminLayout", generateAdminLayoutInjector($documentRoot));
 
     //
 
     ContextManager::set("exit", function (&$response, $msg = null) {
-        $response->exit($msg);
+        $response->end($msg);
     });
     ContextManager::set("header", function (&$response, string &$header) {
         $parts = explode(": ", $header);
