@@ -1,6 +1,6 @@
 <?php 
 
-include $documentRoot . "/lib/data-generator/slugifier.php";
+include $sourcePhpRoot . "/lib/data-generator/slugifier.php";
 
 class DataGenerator {
 

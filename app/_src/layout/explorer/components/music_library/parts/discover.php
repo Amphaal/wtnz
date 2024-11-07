@@ -6,6 +6,6 @@
             <div data-sl='<?= ContextManager::get("i18n")("artists")?>' id='artistUI'></div>
             <div data-sl='Albums' id='albumUI'></div>
         </div>
-        <?php include $documentRoot . "/layout/explorer/components/music_library/parts/albumInfos.php" ?>
+        <?php include $sourcePhpRoot . "/layout/explorer/components/music_library/parts/albumInfos.php" ?>
     </div>
 </div>

@@ -5,7 +5,7 @@ function echoFilesOfFolder($path_to_dir) {
     foreach(getFilesInFolder($path_to_dir) as $file) { 
         echo file_get_contents($file);
     }
-    echo("\n");
+    echo "\n";
 }
 
 /** list alls files within a folder (not recursive) */
@@ -28,9 +28,8 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function generateAdminLayoutInjector(&$documentRoot) {
-    return function ($inside_part, $included_vars_array) use($documentRoot) {
-
+function generateAdminLayoutInjector(&$sourcePhpRoot, &$publicFilesRoot) {
+    return function ($inside_part, $included_vars_array) use($sourcePhpRoot, $publicFilesRoot) {
         foreach($included_vars_array as $varname => $value) {
             $$varname = $value;
         }
@@ -40,9 +39,9 @@ function generateAdminLayoutInjector(&$documentRoot) {
         unset($value);
     
         if(isXMLHttpRequest($request)) {
-            include "/caca" . $inside_part;
+            include $inside_part;
         } else {
-            include $documentRoot . "/layout/admin/entrypoint.php";
+            include $sourcePhpRoot . "/layout/admin/entrypoint.php";
         }
     
         //

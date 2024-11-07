@@ -1,6 +1,6 @@
 <?php
 
-include $documentRoot . "/lib/users-management/db.php";
+include $sourcePhpRoot . "/lib/users-management/db.php";
 
 /** */
 function checkUserSpecificFolders($request) {

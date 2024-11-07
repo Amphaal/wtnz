@@ -13,6 +13,7 @@ services:
     volumes:
       - ../_data:/var/www/_data:rw
       - ../app/_src:/var/www/_src:ro
+      - ../app/public:/var/www/public:ro
       - ../app/server.php:/var/www/server.php:ro
 
   # [NGINX Proxy]

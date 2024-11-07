@@ -1,4 +1,4 @@
 <?php
-    echoFilesOfFolder($documentRoot . "/layout/admin/css"); 
+    echoFilesOfFolder($sourcePhpRoot . "/layout/admin/css"); 
     echo cbacToCss();
 ?>

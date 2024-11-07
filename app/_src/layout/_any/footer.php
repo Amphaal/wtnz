@@ -13,7 +13,7 @@
         
         $curLang = ContextManager::get("i18nS")->getLang();
         
-        foreach(getFilesInFolder('public/images/flags') as $file) { 
+        foreach(getFilesInFolder($publicFilesRoot . '/images/flags') as $file) { 
             $bn =  basename($file, ".svg");
             $isCurrentLang = $bn == $curLang;
         ?>

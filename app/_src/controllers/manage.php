@@ -1,6 +1,6 @@
 <?php 
 
-include $documentRoot . "/lib/data-generator/data_generator.php";
+include $sourcePhpRoot . "/lib/data-generator/data_generator.php";
 
 function routerInterceptor_Manage($qs_action, $sessionFile, $request) {
     switch($qs_action) {

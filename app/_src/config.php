@@ -28,13 +28,13 @@ define("WEB_APP_ROOT", "/");
 define("DEFAULT_BACKGROUND_COLORS", array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
 
 /** TODO */
-define("COMPANION_APP_DOWNLOADS_FOLDER", $documentRoot . "/../_downloads\/");
+define("COMPANION_APP_DOWNLOADS_FOLDER", $sourcePhpRoot . "/../_downloads\/");
 
 /** internal folder path of user's data */
-define("USER_DB_FILE_PATH", $documentRoot . "/../_data/users.json");
+define("USER_DB_FILE_PATH", $sourcePhpRoot . "/../_data/users.json");
 
 /** Directory where session files will be stored */
-define('SESSION_DIR', $documentRoot . '/../_sessions\/');
+define('SESSION_DIR', $sourcePhpRoot . '/../_sessions');
 
 /** */
 define("COMPANION_APP_GITHUB_LATEST_RELEASE_URL", "https://github.com/Amphaal/SoundBuddy/releases/latest");
@@ -59,7 +59,7 @@ function getProfilePicFilename($ext) {
 
 /** internal folder path of user's data */
 function getInternalUserFolder($user) {
-    return $documentRoot . "/../_data/users/" . $user . "/";
+    return $sourcePhpRoot . "/../_data/users/" . $user . "/";
 }
 
 /** web server exposed user's data */

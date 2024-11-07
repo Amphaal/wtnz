@@ -20,8 +20,8 @@
 <div id="accountManagement">
     <?php if($iul) {?>
         <div id='EditorWrapper'>
-            <?php include $documentRoot . "/layout/admin/components/parts/bbEditor.php" ?>
-            <?php include $documentRoot . "/layout/admin/components/parts/ppEditor.php" ?>
+            <?php include $sourcePhpRoot . "/layout/admin/components/parts/bbEditor.php" ?>
+            <?php include $sourcePhpRoot . "/layout/admin/components/parts/ppEditor.php" ?>
         </div>
         <div><?= ContextManager::get("i18n")("welcome_back",  getCurrentUserLogged()) ?></div>
     <?php } ?>
@@ -39,7 +39,7 @@
                 <span><?= ContextManager::get("i18n")("log_disconnect")?></span>
             </button>
         <?php } else { ?>
-            <?php include $documentRoot . "/layout/admin/components/login.php" ?>
+            <?php include $sourcePhpRoot . "/layout/admin/components/login.php" ?>
             <hr/>
             <?php /* TODO */ ?>
             <button class="hype" <?php _btnLink($request, "/manage/create")?>>
@@ -48,7 +48,7 @@
             </button>
         <?php } ?>
     </div>
-    <?php if($iul) include $documentRoot . "/layout/admin/components/parts/downloadButtons.php" ?>
+    <?php if($iul) include $sourcePhpRoot . "/layout/admin/components/parts/downloadButtons.php" ?>
 </div>
 <?php 
     if($iul) {

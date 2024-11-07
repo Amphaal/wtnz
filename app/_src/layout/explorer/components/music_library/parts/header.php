@@ -11,11 +11,11 @@
             <div id='banner-desc'>
                 <?= ContextManager::get("i18n")('libraryOfHead', $qs_user)?>
             </div>
-            <?php include $documentRoot . "/layout/explorer/components/music_library/parts/menu.php" ?>
-            <?php include $documentRoot . "/layout/explorer/components/music_library/parts/searchBand.php" ?>
+            <?php include $sourcePhpRoot . "/layout/explorer/components/music_library/parts/menu.php" ?>
+            <?php include $sourcePhpRoot . "/layout/explorer/components/music_library/parts/searchBand.php" ?>
         </div>
-        <?php include $documentRoot . "/layout/explorer/components/connect_btn.php" ?>
+        <?php include $sourcePhpRoot . "/layout/explorer/components/connect_btn.php" ?>
     </div>
-    <?php include $documentRoot . "/layout/explorer/components/music_library/parts/profile.php" ?>
+    <?php include $sourcePhpRoot . "/layout/explorer/components/music_library/parts/profile.php" ?>
     <?= _wAnim($qs_user)?>
 </header>

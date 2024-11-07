@@ -21,6 +21,6 @@ function routerInterceptor_MusicLibrary($request, $qs_user) {
     setTitle(ContextManager::get("i18n")('libraryOf', $qs_user));
     $initialRLoaderUrl = getLocation($request, "Home", true);
 
-    include $documentRoot . "/layout/explorer/entrypoint.php";
+    include $sourcePhpRoot . "/layout/explorer/entrypoint.php";
     ContextManager::get("exit");
 }

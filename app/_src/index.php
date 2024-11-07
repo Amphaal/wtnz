@@ -1,25 +1,25 @@
 <?php
 
-include $documentRoot . "/config.php";
+include $sourcePhpRoot . "/config.php";
 
-include $documentRoot . "/lib/i18n.php";
-include $documentRoot . "/lib/users-management/users_management.php";
-include $documentRoot . "/lib/web_title.php";
-include $documentRoot . "/lib/web_user-agent.php";
-include $documentRoot . "/lib/css_compiler.php";
-include $documentRoot . "/lib/string_extensions.php";
-include $documentRoot . "/lib/error_handling.php";
-include $documentRoot . "/lib/templating.php";
-include $documentRoot . "/lib/templating.shards.php";
-include $documentRoot . "/lib/file_uploading.php";
-include $documentRoot . "/lib/http.php";
-include $documentRoot . "/lib/magnifik_input.php";
+include $sourcePhpRoot . "/lib/i18n.php";
+include $sourcePhpRoot . "/lib/users-management/users_management.php";
+include $sourcePhpRoot . "/lib/web_title.php";
+include $sourcePhpRoot . "/lib/web_user-agent.php";
+include $sourcePhpRoot . "/lib/css_compiler.php";
+include $sourcePhpRoot . "/lib/string_extensions.php";
+include $sourcePhpRoot . "/lib/error_handling.php";
+include $sourcePhpRoot . "/lib/templating.php";
+include $sourcePhpRoot . "/lib/templating.shards.php";
+include $sourcePhpRoot . "/lib/file_uploading.php";
+include $sourcePhpRoot . "/lib/http.php";
+include $sourcePhpRoot . "/lib/magnifik_input.php";
 
-include $documentRoot . "/controllers/uploadMusicLibrary.php";
-include $documentRoot . "/controllers/uploadShout.php";
-include $documentRoot . "/controllers/manage.php";
-include $documentRoot . "/controllers/downloadApp.php";
-include $documentRoot . "/controllers/musicLibrary.php";
+include $sourcePhpRoot . "/controllers/uploadMusicLibrary.php";
+include $sourcePhpRoot . "/controllers/uploadShout.php";
+include $sourcePhpRoot . "/controllers/manage.php";
+include $sourcePhpRoot . "/controllers/downloadApp.php";
+include $sourcePhpRoot . "/controllers/musicLibrary.php";
 
 // handles users sessions, start
 // session_start();

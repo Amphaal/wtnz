@@ -12,9 +12,10 @@ ini_set('display_startup_errors', 1);
 //
 //
 
-$documentRoot = __DIR__ . '/_src';
-include $documentRoot . '/lib/session.php'; 
-include $documentRoot . '/lib/context_manager.php'; 
+$sourcePhpRoot = __DIR__ . '/_src';
+$publicFilesRoot = __DIR__ . '/public';
+include $sourcePhpRoot . '/lib/session.php'; 
+include $sourcePhpRoot . '/lib/context_manager.php'; 
 
 //
 //
@@ -28,17 +29,17 @@ $server->set([
 ]);
 
 //
-$server->on('WorkerStart', function($serv, $workerId) use ($documentRoot)
+$server->on('WorkerStart', function($serv, $workerId) use ($sourcePhpRoot, $publicFilesRoot)
 {
     // Files which won't be reloaded
     # var_dump(get_included_files());
 
     // Include files from here so they can be reloaded...
-    include $documentRoot . '/index.php'; // Include your standard PHP script
+    include $sourcePhpRoot . '/index.php'; // Include your standard PHP script
 });
 
 //
-$server->on("request", function ($request, $response) use ($documentRoot) {
+$server->on("request", function ($request, $response) use ($sourcePhpRoot, $publicFilesRoot) {
     // Use the session handler function
     [$sessionFile, $saveSession] = handleSession($request, $response);
 
@@ -47,7 +48,7 @@ $server->on("request", function ($request, $response) use ($documentRoot) {
         //
         $saveSession();
         
-        $output = ob_get_clean() + !empty($msg) ? $msg : "";
+        $output = ob_get_clean() . !empty($msg) ? $msg : "";
 
         // Respond with the output of the PHP script
         $response->end($output);
@@ -57,9 +58,9 @@ $server->on("request", function ($request, $response) use ($documentRoot) {
      * At the start of every new request, setup global
      * request variables using Swoole server methods.
      */
-    ContextManager::set("i18nS", I18nSingleton::getInstance($documentRoot, $request));
-    ContextManager::set("i18n", generatei18n($documentRoot, $request));
-    ContextManager::set("injectAndDisplayIntoAdminLayout", generateAdminLayoutInjector($documentRoot));
+    ContextManager::set("i18nS", I18nSingleton::getInstance($sourcePhpRoot, $request));
+    ContextManager::set("i18n", generatei18n($sourcePhpRoot, $request));
+    ContextManager::set("injectAndDisplayIntoAdminLayout", generateAdminLayoutInjector($sourcePhpRoot, $publicFilesRoot));
 
     //
 
