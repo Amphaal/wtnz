@@ -16,6 +16,7 @@ $sourcePhpRoot = __DIR__ . '/_src';
 $publicFilesRoot = __DIR__ . '/public';
 include $sourcePhpRoot . '/lib/session.php'; 
 include $sourcePhpRoot . '/lib/context_manager.php'; 
+set_include_path($sourcePhpRoot);
 
 //
 //
@@ -48,7 +49,7 @@ $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publ
         //
         $saveSession();
         
-        $output = ob_get_clean() . !empty($msg) ? $msg : "";
+        $output = ob_get_clean() . (!empty($msg) ? $msg : "");
 
         // Respond with the output of the PHP script
         $response->end($output);
@@ -64,15 +65,27 @@ $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publ
 
     //
 
-    ContextManager::set("exit", function (&$response, $msg = null) {
+    ContextManager::set("exit", function ($msg = null) use ($response) {
         $response->end($msg);
     });
-    ContextManager::set("header", function (&$response, string &$header) {
+    ContextManager::set("header", function (string $header) use ($response) {
         $parts = explode(": ", $header);
         $response->header($parts[0], $parts[1]);
     });
-    ContextManager::set("http_response_code", function (&$response, string &$code) {
+    ContextManager::set("http_response_code", function (string $code) use ($response) {
         $response->status($code);
+    });
+
+    ContextManager::set("title", constant("APP_NAME"));
+    ContextManager::set("set_title", function ($superbus = null) {
+        //
+        $title = ContextManager::get("title", null);
+
+        //
+        if($superbus) {
+            $title .=  " - " . $superbus;
+            ContextManager::set("title", $title);
+        }
     });
 
     // // Method 2: Using print_r

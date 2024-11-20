@@ -7,6 +7,9 @@ services:
     hostname: swoole
     restart: on-failure:2
     build: ./custom_images/php
+    environment:
+      AUTORELOAD_PROGRAMS: "swoole"
+      AUTORELOAD_ANY_FILES: 1
     networks:
     - web-fronts
     # user: "1001:1001" # same as user using FTP

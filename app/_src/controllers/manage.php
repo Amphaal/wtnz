@@ -90,7 +90,7 @@ function home($request) {
 
     //title
     $title = $iul ? "e_log_manage" : "e_log_home";
-    setTitle(ContextManager::get("i18n")($title));
+    ContextManager::get("set_title")(ContextManager::get("i18n")($title));
 
     ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/home.php", get_defined_vars());
 }  
@@ -122,7 +122,7 @@ function disconnect($sessionFile, $request) {
     if(isXMLHttpRequest($request)) {
         goToLocation($request, "Home");
     } else { 
-        ContextManager::get("header", 'location: '. $request->header['referer']);
+        ContextManager::get("header")('location: '. $request->header['referer']);
     }
 
 }

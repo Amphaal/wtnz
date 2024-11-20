@@ -27,10 +27,10 @@ function routerInterceptor_Download($request, $qs_action) {
     $filepath = $initialPath . "/" . $latestInFolder;
     
     //apply headers
-    ContextManager::get("header", 'Content-Type: application/octet-stream');
-    ContextManager::get("header", "Content-Transfer-Encoding: Binary"); 
-    ContextManager::get("header", "Content-Length: ".filesize($filepath));
-    ContextManager::get("header", 'Content-Disposition: attachment; filename="'.$latestInFolder."\"");
+    ContextManager::get("header")('Content-Type: application/octet-stream');
+    ContextManager::get("header")("Content-Transfer-Encoding: Binary"); 
+    ContextManager::get("header")("Content-Length: ".filesize($filepath));
+    ContextManager::get("header")('Content-Disposition: attachment; filename="'.$latestInFolder."\"");
     
     //return file
     ob_clean(); flush();

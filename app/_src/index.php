@@ -4,7 +4,6 @@ include $sourcePhpRoot . "/config.php";
 
 include $sourcePhpRoot . "/lib/i18n.php";
 include $sourcePhpRoot . "/lib/users-management/users_management.php";
-include $sourcePhpRoot . "/lib/web_title.php";
 include $sourcePhpRoot . "/lib/web_user-agent.php";
 include $sourcePhpRoot . "/lib/css_compiler.php";
 include $sourcePhpRoot . "/lib/string_extensions.php";
@@ -34,7 +33,7 @@ function init_app($sessionFile, $request) {
 
     // 1st part of URL
     $qs_domain = array_shift($qs);
-    
+
     //
     switch($qs_domain) {
         // should be handled by proxy (database files)
@@ -94,7 +93,7 @@ function init_app($sessionFile, $request) {
         case NULL: {
             // get users so we can display them
             $users = UserDb::all();
-            setTitle(ContextManager::get("i18n")("welcome"));
+            ContextManager::get("set_title")(ContextManager::get("i18n")("welcome"));
             ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/welcome.php", get_defined_vars());
         }
 
@@ -105,5 +104,5 @@ function init_app($sessionFile, $request) {
     }
 
     // will default to 404 not found
-    ContextManager::get("http_response_code", 404);
+    ContextManager::get("http_response_code")(404);
 }

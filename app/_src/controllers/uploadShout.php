@@ -20,8 +20,8 @@ function routerInterceptor_uploadShout($request, $qs_user) {
     //
     $isAPICall = isset($request->post['headless']);
     if(!$isAPICall) {
-        ContextManager::get("http_response_code", 500);
-        ContextManager::get("exit", 'expects API call');
+        ContextManager::get("http_response_code")(500);
+        ContextManager::get("exit")('expects API call');
         return;
     }
 

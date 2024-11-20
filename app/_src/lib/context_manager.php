@@ -28,10 +28,8 @@ class ContextManager
              * ID and check if our key exists, looping through the
              * coroutine tree if we are deep inside sub coroutines.
              */
-            if(isset(Co::getContext($cid)[$key]))
-            {
-                return Co::getContext($cid)[$key];
-            }
+            $d = Co::getContext($cid)[$key];
+            if(isset($d)) return $d;
 
             // We may be inside a child coroutine, let's check the parent ID for a context
             $cid = Co::getPcid($cid);

@@ -31,12 +31,12 @@ function processUploadedMusicLibrary($request, $qs_user, $expectedFilename) {
 
     //specific redirect for headless client
     if(isset($request->post['headless'])) {
-        ContextManager::get("exit", 'Bon appétit!');
+        ContextManager::get("exit")('Bon appétit!');
         return;
     }
     
     //redirect to users library...
-    ContextManager::get("header", "Location: " . dirname($request->server['request_uri']));
+    ContextManager::get("header")("Location: " . dirname($request->server['request_uri']));
     ContextManager::get("exit");
 }
 

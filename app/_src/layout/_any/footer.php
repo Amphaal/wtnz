@@ -23,7 +23,7 @@
             class="<?php if(!$isCurrentLang) { echo "clickable unselected"; }?>" 
             onclick="changeLang(event)"
         >
-            <img src="<?= constant("WEB_APP_ROOT") . $file; ?>" />
+            <img src="<?= constant("WEB_APP_ROOT") . 'public/' . str_replace($publicFilesRoot.'/', '', $file); ?>" />
         </label>
         <?php } ?>
     </div>

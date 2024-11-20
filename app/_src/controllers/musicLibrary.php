@@ -18,7 +18,7 @@ function routerInterceptor_MusicLibrary($request, $qs_user) {
     $isLogged = isUserLogged();
 
     //addons
-    setTitle(ContextManager::get("i18n")('libraryOf', $qs_user));
+    ContextManager::get("set_title")(ContextManager::get("i18n")('libraryOf', $qs_user));
     $initialRLoaderUrl = getLocation($request, "Home", true);
 
     include $sourcePhpRoot . "/layout/explorer/entrypoint.php";

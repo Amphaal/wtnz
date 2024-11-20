@@ -41,7 +41,7 @@ function generateAdminLayoutInjector(&$sourcePhpRoot, &$publicFilesRoot) {
         if(isXMLHttpRequest($request)) {
             include $inside_part;
         } else {
-            include $sourcePhpRoot . "/layout/admin/entrypoint.php";
+            include "layout/admin/entrypoint.php";
         }
     
         //
