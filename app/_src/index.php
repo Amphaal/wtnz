@@ -89,6 +89,11 @@ function init_app($sessionFile, $request) {
         }
         break;
 
+        case "public_php": {
+            include "public_php/" . implode("/", $qs);
+        }
+        break;
+
         // means root "/"
         case NULL: {
             // get users so we can display them
