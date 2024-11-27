@@ -16,7 +16,8 @@
                 "hidden": true,
                 "group": "",
                 "order": 2
-            }
+            },
+            "cascadeTerminateToConfigurations": ["Track stack logs"]
         },
         {
             "name": "Track stack logs",
@@ -34,7 +35,8 @@
                 "pattern": "swoole entered RUNNING state",  
                 "name": "Launch Chrome",
                 "killOnServerStop": false
-            }
+            },
+            "cascadeTerminateToConfigurations": ["Launch Chrome"]
         }
     ],
     "compounds": [

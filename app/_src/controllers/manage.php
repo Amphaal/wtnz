@@ -177,7 +177,7 @@ function tryCreatingUser(string $sourcePhpRoot, mixed &$session, $request, $rule
         }
         
         //check user asked to create exists
-        if (checkUserExists($request, $user, true)) {
+        if (checkUserExists($sourcePhpRoot, $request, $user, true)) {
             $ret["description"] = ContextManager::get("i18n")("user_already_exist", $user);
             continue;
         }

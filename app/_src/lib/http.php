@@ -61,7 +61,7 @@ function getLocation($request, $rq, $abs = null) {
         
         //
         case "MyLibrary": {
-            $r .= "u/" . getCurrentUserLogged();
+            $r .= "u/" . getCurrentUserLogged($session);
         }
         break;
     }

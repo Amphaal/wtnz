@@ -20,7 +20,7 @@ class _AbstractUsersDatabase {
     }
 
     // get database
-    public static function get($sourcePhpRoot) {
+    public static function get($sourcePhpRoot): _AbstractUsersDatabase {
         //
         if(is_null(self::$_instance)) {
             self::refresh($sourcePhpRoot);
@@ -108,7 +108,7 @@ class UserDb {
     }
 
     public static function update(string $sourcePhpRoot, $new_data, $targetUser = null) {
-        if($targetUser == null) $targetUser = getCurrentUserLogged($sourcePhpRoot);
+        if($targetUser == null) $targetUser = getCurrentUserLogged($session);
         if(!$targetUser) return;
         
         $allUsers = self::all($sourcePhpRoot);
@@ -119,7 +119,7 @@ class UserDb {
     
         //apply
         $allUsers[$targetUser] = $new_data;
-        _AbstractUsersDatabase::get($sourcePhpRoot)->updateDb($allUsers);
+        _AbstractUsersDatabase::get($sourcePhpRoot)->updateDb($allUsers, $sourcePhpRoot);
     }
     
     /** list all users */
@@ -136,11 +136,11 @@ class UserDb {
         return $requested;
     }
 
-    public static function mine(string $sourcePhpRoot) {
+    public static function mine(string $sourcePhpRoot, mixed &$session) {
        if(isUserLogged($sourcePhpRoot)) {
             return self::from(
                 $sourcePhpRoot,
-                getCurrentUserLogged($sourcePhpRoot)
+                getCurrentUserLogged($session)
             );
         }
     }
@@ -155,9 +155,9 @@ class UserDb {
         );
     }
 
-    public static function mineProtected(string $sourcePhpRoot) {
+    public static function mineProtected(string $sourcePhpRoot, mixed &$session) {
         return self::_stripPrivate(
-            self::mine($sourcePhpRoot)
+            self::mine($sourcePhpRoot, $session)
         );
     }
     

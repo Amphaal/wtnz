@@ -23,11 +23,15 @@ function handleSession(string $sourcePhpRoot, $request, $response) : array {
     $sessionFile = $sessionDir . "/session_$sessionId.json";
 
     // Load session data from file if it exists, otherwise create an empty session
-    $session = file_exists($sessionFile) ? json_decode(file_get_contents($sessionFile), true) : [];
+    $session = file_exists($sessionFile) 
+        ? json_decode(file_get_contents($sessionFile), true) 
+        : [];
 
     // Return session ID and session data
-    return [$sessionFile, $session, function () use ($sessionFile, &$session) {
-        // save session
-        file_put_contents($sessionFile, json_encode($session));
-    }];
+    return [$sessionFile, $session];
+}
+
+// save session
+function saveSession(string $sessionFile, mixed &$session) {
+    file_put_contents($sessionFile, json_encode($session));
 }

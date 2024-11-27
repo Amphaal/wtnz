@@ -54,7 +54,7 @@
     if($iul) {
         echo "<style>";
 
-        echo cbacToCss(getCurrentUserLogged(), UserDb::mineProtected()["customColors"]);
+        echo cbacToCss(getCurrentUserLogged($session), UserDb::mineProtected($session)["customColors"]);
     
         echo "</style>";
     }

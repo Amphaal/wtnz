@@ -7,7 +7,7 @@ class I18nHandler {
     private $_lang = null;
     private $_dict = null;
 
-    private static function _dictFromLang($sourcePhpRoot, $lang) {
+    private static function _dictFromLang(string $sourcePhpRoot, string $lang) {
         $trFile = $sourcePhpRoot . "/translations/" . $lang . ".php";
         return include($trFile);
     }
@@ -39,11 +39,10 @@ class I18nHandler {
 
     public function __construct(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
         $this->_lang = self::_deduceUsedLanguage($session, $request);
-        self::defineSessionLang($session, $this->_lang);
         $this->_dict = self::_dictFromLang($sourcePhpRoot, $this->_lang);
     }
 
-    public static function defineSessionLang(mixed &$session, string &$lang) {
+    public static function defineSessionLang(mixed &$session, string $lang) {
         $session['lang'] = $lang;
     }
 
@@ -52,9 +51,9 @@ class I18nHandler {
 class I18nSingleton {
     private static $_instance = null;
 
-    public static function getInstance(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
+    public static function getInstance(string &$sourcePhpRoot, mixed &$session, mixed &$request, bool $force = false) {
 
-        if(is_null(self::$_instance)) {
+        if($force || isset(self::$_instance)) {
             self::$_instance = new I18nHandler($sourcePhpRoot, $session, $request);
         }
 

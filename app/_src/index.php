@@ -60,6 +60,7 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
             return;
         }
     } else {
+        //        
         switch($qs_domain) {
             // should be handled by proxy (database files)
             // case 'data' : {}
@@ -111,7 +112,7 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
                 if (!empty($qs_user)) $qs_user = strtolower($qs_user); // always lower
 
                 // 
-                checkUserExists($sourcePhpRoot, $request, $qs_user); 
+                checkUserExists($sourcePhpRoot, $request, $qs_user, false); 
 
                 // 3rd part of URL
                 $qs_action = array_shift($qs);

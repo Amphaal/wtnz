@@ -22,7 +22,7 @@ function _mayCreateUserDirectory($request, $directory) {
     }
 }
 
-function checkUserExists(string $sourcePhpRoot, $request, $user, $non_fatal_check = false) {
+function checkUserExists(string $sourcePhpRoot, $request, $user, bool $non_fatal_check) {
     $do_exist = UserDb::from($sourcePhpRoot, $user) != null && file_exists(getInternalUserFolder($sourcePhpRoot, $user));
     if(!$do_exist && !$non_fatal_check) errorOccured($request, ContextManager::get("i18n")("e_unsu", $user));
     return $do_exist;

@@ -1,5 +1,5 @@
 <div id="bBandEditor" title="<?= ContextManager::get("i18n")("updateBBand")?>">
-    <?= _wAnim(getCurrentUserLogged())?>
+    <?= _wAnim(getCurrentUserLogged($session))?>
     <div class="colorPicker">
         <div class="controls">
             <input class="cancel" type="button" value="✕" title="<?= ContextManager::get("i18n")("cancel")?>"/>

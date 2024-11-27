@@ -42,29 +42,13 @@ $server->on('WorkerStart', function($serv, $workerId) use ($sourcePhpRoot, $publ
 //
 $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publicFilesRoot) {
     // Use the session handler function
-    [$sessionFile, $session, $saveSession] = handleSession($sourcePhpRoot, $request, $response);
-
-    //
-    $exit = function ($msg = null) use (&$saveSession, &$response) {
-        //
-        $saveSession();
-        
-        $output = ob_get_clean();
-        
-        //
-        if(isset($msg)) {
-            $output .= $msg;
-        };
-
-        // Respond with the output of the PHP script
-        $response->end($output);
-    };
+    [$sessionFile, $session] = handleSession($sourcePhpRoot, $request, $response);
 
     /*
      * At the start of every new request, setup global
      * request variables using Swoole server methods.
      */
-    ContextManager::set("i18nS", I18nSingleton::getInstance($sourcePhpRoot, $session, $request));
+    ContextManager::set("i18nS", I18nSingleton::getInstance($sourcePhpRoot, $session, $request, true));
     ContextManager::set("i18n", generatei18n($sourcePhpRoot, $session, $request));
     ContextManager::set("injectAndDisplayIntoAdminLayout", generateAdminLayoutInjector($sourcePhpRoot, $publicFilesRoot));
 
@@ -100,8 +84,17 @@ $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publ
     // // Capture the output of the standard PHP script
     ob_start();
         init_app($sourcePhpRoot, $sessionFile, $session, $request);
+    $output = ob_get_clean();
 
-    $exit();
+    //
+    //
+    //
+
+    //
+    saveSession($sessionFile, $session);
+
+    // Respond with the output of the PHP script
+    $response->end($output);
 });
 
 // Start the Swoole server
