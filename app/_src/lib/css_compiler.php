@@ -2,7 +2,7 @@
 
 function cbacToCss($target = null, $colours = null) {
     if(!$target || !$colours) {
-        $colours = constant("DEFAULT_BACKGROUND_COLORS");
+        $colours = DEFAULT_BACKGROUND_COLORS;
         $target = "";
     } else {
         $target = '[data-owner="' . $target . "\"]";

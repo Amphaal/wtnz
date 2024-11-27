@@ -1,36 +1,36 @@
 <?php
 
-include $sourcePhpRoot . "/config.php";
+include SOURCE_PHP_ROOT . "/config.php";
 
-include $sourcePhpRoot . "/lib/i18n.php";
-include $sourcePhpRoot . "/lib/users-management/users_management.php";
-include $sourcePhpRoot . "/lib/web_user-agent.php";
-include $sourcePhpRoot . "/lib/css_compiler.php";
-include $sourcePhpRoot . "/lib/string_extensions.php";
-include $sourcePhpRoot . "/lib/error_handling.php";
-include $sourcePhpRoot . "/lib/templating.php";
-include $sourcePhpRoot . "/lib/templating.shards.php";
-include $sourcePhpRoot . "/lib/file_uploading.php";
-include $sourcePhpRoot . "/lib/http.php";
-include $sourcePhpRoot . "/lib/magnifik_input.php";
+include SOURCE_PHP_ROOT . "/lib/i18n.php";
+include SOURCE_PHP_ROOT . "/lib/users-management/users_management.php";
+include SOURCE_PHP_ROOT . "/lib/web_user-agent.php";
+include SOURCE_PHP_ROOT . "/lib/css_compiler.php";
+include SOURCE_PHP_ROOT . "/lib/string_extensions.php";
+include SOURCE_PHP_ROOT . "/lib/error_handling.php";
+include SOURCE_PHP_ROOT . "/lib/templating.php";
+include SOURCE_PHP_ROOT . "/lib/templating.shards.php";
+include SOURCE_PHP_ROOT . "/lib/file_uploading.php";
+include SOURCE_PHP_ROOT . "/lib/http.php";
+include SOURCE_PHP_ROOT . "/lib/magnifik_input.php";
 
-include $sourcePhpRoot . "/controllers/uploadMusicLibrary.php";
-include $sourcePhpRoot . "/controllers/uploadShout.php";
-include $sourcePhpRoot . "/controllers/manage.php";
-include $sourcePhpRoot . "/controllers/downloadApp.php";
-include $sourcePhpRoot . "/controllers/musicLibrary.php";
+include SOURCE_PHP_ROOT . "/controllers/uploadMusicLibrary.php";
+include SOURCE_PHP_ROOT . "/controllers/uploadShout.php";
+include SOURCE_PHP_ROOT . "/controllers/manage.php";
+include SOURCE_PHP_ROOT . "/controllers/downloadApp.php";
+include SOURCE_PHP_ROOT . "/controllers/musicLibrary.php";
 
 
 // handles users sessions, start
 // session_start();
 
-function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, mixed &$request) {
+function init_app() {
     // 
-    checkUserSpecificFolders($sourcePhpRoot, $request); // generate folders if non existing
-    sanitizePOST($request); // cleanup POST
+    checkUserSpecificFolders(); // generate folders if non existing
+    sanitizePOST(); // cleanup POST
 
     // get URI elements
-    $qs = getQueryString($request);
+    $qs = getQueryString();
 
     // 1st part of URL
     $qs_domain = array_shift($qs);
@@ -41,12 +41,12 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
         $wantedPublicPhpResource = "public_php/" . implode("/", $qs);
 
         //
-        if (file_exists($sourcePhpRoot . '/' . $wantedPublicPhpResource)) {
+        if (file_exists(SOURCE_PHP_ROOT . '/' . $wantedPublicPhpResource)) {
             //
-            $ctMap = array(
+            $ctMap = [
                 '.css.' => 'text/css',
                 '.js.' => 'text/javascript'
-            );
+            ];
         
             //
             foreach ($ctMap as $ext => $contentType) {
@@ -70,18 +70,19 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
 
             case 'manage': {
                 $qs_action = array_shift($qs); // 2nd part of URL
-                return routerInterceptor_Manage($qs_action, $sessionFile, $session, $sourcePhpRoot, $request);
+                return routerInterceptor_Manage($qs_action);
             }
             break;
 
             case 'download': {
                 $qs_action = array_shift($qs); // 2nd part of URL
-                return routerInterceptor_Download($sourcePhpRoot, $request, $qs_action);
+                return routerInterceptor_Download($qs_action);
             }
             break;
 
             case 'changeLang': {
                 // only POST allowed
+                $request = ContextManager::get("REQUEST");
                 if (!isset($request->post)) {
                     ContextManager::get("http_response_code")(405);
                     return;
@@ -97,7 +98,7 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
                 }
 
                 //
-                I18nHandler::defineSessionLang($session, $lang);
+                Session::setLang($lang);
 
                 //
                 ContextManager::get("http_response_code")(303); # https://fr.wikipedia.org/wiki/Post-redirect-get
@@ -112,7 +113,7 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
                 if (!empty($qs_user)) $qs_user = strtolower($qs_user); // always lower
 
                 // 
-                checkUserExists($sourcePhpRoot, $request, $qs_user, false); 
+                checkUserExists($qs_user, false); 
 
                 // 3rd part of URL
                 $qs_action = array_shift($qs);
@@ -120,21 +121,21 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
                 //
                 switch($qs_action) {
                     case 'uploadShout': {
-                        return routerInterceptor_uploadShout($sourcePhpRoot, $request, $qs_user);
+                        return routerInterceptor_uploadShout($qs_user);
                     }
                     break;
 
                     case 'uploadMusicLibrary':
                     default: {
                         // if user has no library
-                        routerMiddleware_UploadMusicLibrary($sourcePhpRoot, $request, $qs_user, $qs_action == 'uploadMusicLibrary');
+                        routerMiddleware_UploadMusicLibrary($qs_user, $qs_action == 'uploadMusicLibrary');
 
                         // if action provided, but unknown, redirect to admin home
                         if(!empty($qs_action)) {
-                            home($sourcePhpRoot, $session, $request);
+                            home();
                         } else {
                             // else, show music library
-                            routerInterceptor_MusicLibrary($sourcePhpRoot, $session, $request, $qs_user);
+                            routerInterceptor_MusicLibrary($qs_user);
                         }
 
                         return;
@@ -146,9 +147,9 @@ function init_app(string $sourcePhpRoot, string $sessionFile, mixed &$session, m
             // means root "/"
             case NULL: {
                 // get users so we can display them
-                $users = UserDb::all($sourcePhpRoot);
-                ContextManager::get("set_title")(ContextManager::get("i18n")("welcome"));
-                ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/welcome.php", get_defined_vars());
+                $users = UserDb::all();
+                ContextManager::get("set_title")(i18n("welcome"));
+                injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
                 return;
             }
         }

@@ -1,18 +1,18 @@
 <?php 
 
-include $sourcePhpRoot . "/lib/data-generator/slugifier.php";
+include SOURCE_PHP_ROOT . "/lib/data-generator/slugifier.php";
 
 class DataGenerator {
 
-    public function __construct(string $sourcePhpRoot, $username, &$lib = null) {  
+    public function __construct($username, &$lib = null) {  
 
         $this->_username = $username;
-        $this->_iTargetPath = getInternalUserFolder($sourcePhpRoot, $username) . "/";
+        $this->_iTargetPath = getInternalUserFolder($username) . "/";
 
         if($lib != null) {
             $this->_lib = $lib;
         } else {
-            $file_content = file_get_contents($this->_iTargetPath . constant("MUSIC_LIB_PROFILE_FILE_NAME"));
+            $file_content = file_get_contents($this->_iTargetPath . MUSIC_LIB_PROFILE_FILE_NAME);
             $this->_lib = json_decode($file_content, true);
         }
     }
@@ -30,7 +30,7 @@ class DataGenerator {
 
     public function generateUnifiedFile($prettyPrint = false) {
         $this->_generateData();
-        $package = array();
+        $package = [];
         foreach(self::$_outputTargets as $target) {
             $package[$target] = $this->_cache["_".$target];
         }
@@ -54,15 +54,15 @@ class DataGenerator {
     private $_iTargetPath;
     private $_lib;
     private $_username;
-    private $_cache = array();
+    private $_cache = [];
 
-    private static $_outputTargets = array(
+    private static $_outputTargets = [
         "albgl", "albgc",
         "arbgl", "arbgc",
         "glul",
         "abal",
         "slug"
-    );
+    ];
 
     private function _generateData() {
         foreach(self::$_outputTargets as $target) {
@@ -123,14 +123,14 @@ class DataGenerator {
             $id = $idFactory($currentVal);
             
             if(!array_key_exists($genre, $total)) {
-                $total[$genre] = array();
+                $total[$genre] = [];
             }
             
             array_push($total[$genre], $id);
     
             return $total;
     
-        }, array());
+        }, []);
 
         $data = array_map("array_unique", $data);
         $data = array_map("array_values", $data);
@@ -190,10 +190,10 @@ class DataGenerator {
 
             //if first occurence artist
             if(!array_key_exists($artist, $total)) {
-                $total[$artist] = array(
+                $total[$artist] = [
                     "Genres" => [],
                     "Albums" => []
-                );
+                ];
             }
 
             //add genre
@@ -201,19 +201,19 @@ class DataGenerator {
 
             //if first occurence album
             if (!array_key_exists($album, $total[$artist]["Albums"])) {
-                $total[$artist]["Albums"][$album] = array(
+                $total[$artist]["Albums"][$album] = [
                     "Year" => $year,
                     "Genre" => $genre,
-                    "Tracks" => array(),
+                    "Tracks" => [],
                     "DateAdded" => $dateAdded
-                );
+                ];
             }
             //add track
             $total[$artist]["Albums"][$album]["Tracks"][$this->_getMixedTrackNoFactory($currentVal)] = $trackName;
                     
             return $total;
 
-        }, array());
+        }, []);
         
         //uniques GENRES! 
         foreach($data as $key => $value)
@@ -235,13 +235,13 @@ class DataGenerator {
             $albumId = $this->_getAlbumIdFactory($currentVal);
 
             if(!array_key_exists($albumId, $total)) {
-                $total[$albumId] = array(
+                $total[$albumId] = [
                     "Album" => $this->_getAlbumFactory($currentVal),
                     "Artist" => $this->_getAlbumArtistFactory($currentVal),
                     "Year" => $this->_getYearFactory($currentVal),
                     "DateAdded" => $da,
                     "Genre" => $this->_getGenreFactory($currentVal)
-                );
+                ];
             } else {
                 $old_da = $total[$albumId]["DateAdded"];
                 if ($da > $old_da) $total[$albumId]['DateAdded'] = $da;
@@ -249,13 +249,13 @@ class DataGenerator {
 
             return $total;
 
-        }, array());
+        }, []);
     }
 
     private function _slug() {
         $slgfr = new Slugifier;
         $data = $this->abal();
-        $total = array();
+        $total = [];
         foreach($data as $key => $value) {
             $total[$key] = $slgfr($key);
         }
@@ -265,7 +265,7 @@ class DataGenerator {
             return strlen($a) - strlen($b) ?: strcmp($a, $b);
         });
 
-        array_walk($total, function(&$a, $b) { $a = array($a, $b); });
+        array_walk($total, function(&$a, $b) { $a = [$a, $b]; });
 
         return array_values($total);
     }

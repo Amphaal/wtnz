@@ -1,23 +1,23 @@
 <?php 
 
-include $sourcePhpRoot . "/lib/data-generator/data_generator.php";
+include SOURCE_PHP_ROOT . "/lib/data-generator/data_generator.php";
 
-function routerInterceptor_Manage(string $qs_action, string $sessionFile, mixed &$session, string $sourcePhpRoot, $request) {
+function routerInterceptor_Manage(string $qs_action) {
     switch($qs_action) {
         case "create":
-            return accountCreation($sourcePhpRoot, $session, $request);
+            return accountCreation();
         case "disconnect":
-            return disconnect($sessionFile, $request);
+            return disconnect();
         case "pp":
-            return ProfilePic($sourcePhpRoot, $session, $request);
+            return ProfilePic();
         case "bb":
-            return BackgroundBand($sourcePhpRoot, $session);
+            return BackgroundBand();
         default;
-            return home($sourcePhpRoot, $session, $request);
+            return home();
     }
 }
 
-function BackgroundBand(string $sourcePhpRoot, mixed &$session) {
+function BackgroundBand() {
     //
     $newColors = file_get_contents('php://input');
     if(!$newColors) return;
@@ -25,13 +25,12 @@ function BackgroundBand(string $sourcePhpRoot, mixed &$session) {
     //
     $newColors = json_decode($newColors);
     
-    if(!isUserLogged($session)) return;
+    if(!isUserLogged()) return;
 
     //
-    UserDb::update(
-        $sourcePhpRoot,
-        array("customColors" => $newColors)
-    );
+    UserDb::update([
+        "customColors" => $newColors
+    ]);
 
     //
     echo "OK";
@@ -39,30 +38,31 @@ function BackgroundBand(string $sourcePhpRoot, mixed &$session) {
 }
 
 
-function ProfilePic(string $sourcePhpRoot, mixed &$session, $request) {
+function ProfilePic() {
     //upload
-    if($request->files && isUserLogged($session)) {
+    $uploadedFiles = ContextManager::get("REQUEST")->files;
+    if($uploadedFiles && isUserLogged()) {
  
         //prepare...
-        $currentUser = getCurrentUserLogged($session);
+        $currentUser = Session::getLoggedUser();
         $expectedFilename = "file";
-        $ext = pathinfo($request->files[$expectedFilename]['name'], PATHINFO_EXTENSION);
-        testUploadedFile($request, $expectedFilename);
+        $ext = pathinfo($uploadedFiles[$expectedFilename]['name'], PATHINFO_EXTENSION);
+        testUploadedFile($expectedFilename);
 
         //upload...
         $ppname = getProfilePicFilename($ext);
-        $internalDest = getInternalUserFolder($sourcePhpRoot, $currentUser) . $ppname;
-        uploadFile($request, $internalDest, $expectedFilename);
+        $internalDest = getInternalUserFolder($currentUser) . $ppname;
+        uploadFile($internalDest, $expectedFilename);
 
         //remove previous if different ext...
-        $currentpicFN = getProfilePicture($sourcePhpRoot, $currentUser);
+        $currentpicFN = getProfilePicture($currentUser);
         if($currentpicFN && $currentpicFN != $ppname) {
-            $currentpicFN = getInternalUserFolder($sourcePhpRoot, $currentUser) . $currentpicFN;
+            $currentpicFN = getInternalUserFolder($currentUser) . $currentpicFN;
             @unlink($currentpicFN);
         }
 
         //update DB
-        setMyProfilePicture($sourcePhpRoot, $ppname);
+        setMyProfilePicture($ppname);
 
         //return
         ob_clean(); flush();
@@ -71,92 +71,97 @@ function ProfilePic(string $sourcePhpRoot, mixed &$session, $request) {
     }
 }
 
-function home(string $sourcePhpRoot, mixed &$session, $request) {
+function home() {
 
     $login_result = null;
-    login($sourcePhpRoot, $request, $login_result);
+    login($login_result);
 
     //prepare
-    $iul = isUserLogged($session);
-    $mylib_loc = getLocation($request, "MyLibrary");
+    $iul = isUserLogged();
+    $mylib_loc = getLocation("MyLibrary");
     $is_not_my_lib = true;
-    $dd_folders = array();
+    $dd_folders = [];
     
     //if user is logged...
     if($iul) {
 
-        $is_not_my_lib = (getLocation($request, "ThisLibrary") != $mylib_loc);
+        $is_not_my_lib = (getLocation("ThisLibrary") != $mylib_loc);
 
         //downloads...
-        $curUser = getCurrentUserLogged($session);
-        $pp = getProfilePicture($sourcePhpRoot, $curUser);
+        $curUser = Session::getLoggedUser();
+        $pp = getProfilePicture($curUser);
         $pp_path = null;
         if($pp) $pp_path = getPublicUserFolderOf($curUser) . $pp;
 
-        $dd_folders = array_keys(availableDownloads($sourcePhpRoot));
+        $dd_folders = array_keys(availableDownloads());
 
     }
 
     //title
     $title = $iul ? "e_log_manage" : "e_log_home";
-    ContextManager::get("set_title")(ContextManager::get("i18n")($title));
+    ContextManager::get("set_title")(i18n($title));
 
-    ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/home.php", get_defined_vars());
+    injectAndDisplayIntoAdminLayout("layout/admin/components/home.php", get_defined_vars());
 }  
 
 
 
-function accountCreation(string $sourcePhpRoot, mixed &$session, $request) {
+function accountCreation() {
     $rules = [
         "username" => ["min" => 6, "max" => 20],
         "password" => ["min" => 8, "max" => 20],
     ];
     
     $acr = null;
-    if($request->post){
-        $acr = tryCreatingUser($sourcePhpRoot, $session, $request, $rules);
+    if(ContextManager::get("REQUEST")->post){
+        $acr = tryCreatingUser($rules);
         if(!$acr["isError"]) {
-            login($sourcePhpRoot, $session, $request);
+            login();
         }
     }
 
-    ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/create_account.php", get_defined_vars());
+    injectAndDisplayIntoAdminLayout("layout/admin/components/create_account.php", get_defined_vars());
 }
 
-function disconnect($sessionFile, $request) {
-    unlink($sessionFile);
+function disconnect() {
+    unlink(ContextManager::get("SESSION_FILE"));
     // session_unset();
     // session_destroy();
 
-    if(isXMLHttpRequest($request)) {
-        goToLocation($request, "Home");
+    if(isXMLHttpRequest()) {
+        goToLocation("Home");
     } else { 
-        ContextManager::get("header")('location: '. $request->header['referer']);
+        ContextManager::get("header")('location: '. ContextManager::get("REQUEST")->header['referer']);
     }
 
 }
 
-function login(string $sourcePhpRoot, mixed &$session, $request, &$login_result = null) {
+function login(&$login_result = null) {
+    //
+    $post = ContextManager::get("REQUEST")->post;
 
-    if($request->post) {
-        $login_result = connectAs($sourcePhpRoot, $session, $request->post['username'], $request->post['password']);
+    //
+    if($post) {
+        //
+        $login_result = connectAs($post['username'], $post['password']);
         
+        //
         if(!$login_result['isError']) {
-            if(isXMLHttpRequest($request)) {
-                goToLocation($request, "Home");
+            if(isXMLHttpRequest()) {
+                goToLocation("Home");
             } else { 
-                goToLocation($request, "MyLibrary");
+                goToLocation("MyLibrary");
             }
         }
     }
 }
 
-function tryCreatingUser(string $sourcePhpRoot, mixed &$session, $request, $rules) {
+function tryCreatingUser($rules) {
+    $ret = ["description" => null];
 
-    $ret = array("description" => null);
-
-    $user = $request->post['username'];
-    $passwd = $request->post['password'];
+    $post = ContextManager::get("REQUEST")->post;
+    $user = $post['username'];
+    $passwd = $post['password'];
     $end_checks = false;
 
     //checks...
@@ -165,20 +170,20 @@ function tryCreatingUser(string $sourcePhpRoot, mixed &$session, $request, $rule
         //fields filed
         foreach($rules as $field => $f_rules) {
             if(empty($field)) {
-                $ret["description"] = ContextManager::get("i18n")("crea_miss_p_u", ContextManager::get("i18n")($field));
+                $ret["description"] = i18n("crea_miss_p_u", i18n($field));
                 continue;
             }
         }
 
         // is user already logged
-        if (isUserLogged($session)) {
-            $ret["description"] = ContextManager::get("i18n")("err_nocreate_onlog");
+        if (isUserLogged()) {
+            $ret["description"] = i18n("err_nocreate_onlog");
             continue;
         }
         
         //check user asked to create exists
-        if (checkUserExists($sourcePhpRoot, $request, $user, true)) {
-            $ret["description"] = ContextManager::get("i18n")("user_already_exist", $user);
+        if (checkUserExists($user, true)) {
+            $ret["description"] = i18n("user_already_exist", $user);
             continue;
         }
         
@@ -186,19 +191,19 @@ function tryCreatingUser(string $sourcePhpRoot, mixed &$session, $request, $rule
         $isUNOk = null;
         preg_match('/^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/', $user, $isUNOk);
         if (count($isUNOk) == 0) {
-            $ret["description"] = ContextManager::get("i18n")("username_invalid", $user);
+            $ret["description"] = i18n("username_invalid", $user);
             continue;
         }
 
         //check if min/max length on fields
         foreach($rules as $field => $f_rules) {
 
-            $len = strlen($request->post[$field]);
+            $len = strlen($post[$field]);
             $min = $f_rules['min'];
             $max = $f_rules['max'];
 
             if($len < $min || $len > $max) {
-                $ret["description"] = ContextManager::get("i18n")("field_nc_pattern", ContextManager::get("i18n")($field), 
+                $ret["description"] = i18n("field_nc_pattern", i18n($field), 
                                         $min, $max);
                 continue;
             }
@@ -213,48 +218,58 @@ function tryCreatingUser(string $sourcePhpRoot, mixed &$session, $request, $rule
     if($ret["isError"]) return $ret;
 
     //else create account
-    UserDb::update($sourcePhpRoot,
-    array(
+    UserDb::update([
         "password" => $passwd,
-        "email" => $request->post['email'],
+        "email" => $post['email'],
         "customColors" => randomizeBannerColors()
-    ), $user);
+    ], $user);
 
+    //
     return $ret;
-
 }
 
 function randomizeBannerColors() {
+    //
     $getRandColorHex = function() {
+        //
         $getRandColorGroup = function() {
             return str_pad(strtoupper(dechex(rand(0, 255))), 2, "0", STR_PAD_LEFT);
         };
+
+        //
         return "#" . $getRandColorGroup() . $getRandColorGroup() . $getRandColorGroup();
     };
-    return array($getRandColorHex(), $getRandColorHex(), $getRandColorHex(), $getRandColorHex());
+
+    //
+    return [
+        $getRandColorHex(), 
+        $getRandColorHex(), 
+        $getRandColorHex(), 
+        $getRandColorHex()
+    ];
 }
 
 
-function connectAs(string $sourcePhpRoot, mixed &$session, $user, $passwd) {
-    $ret = array("isError" => true, "description" => null);
-    
+function connectAs($user, $passwd) {
+    $ret = ["isError" => true, "description" => null];
+
     if(empty($user)) {
-        $ret["description"] = ContextManager::get("i18n")("e_log_nouser");
+        $ret["description"] = i18n("e_log_nouser");
     }
     elseif(empty($passwd))  {
-        $ret["description"] = ContextManager::get("i18n")("e_nopass");
+        $ret["description"] = i18n("e_nopass");
     }
-    if(isset($session["loggedAs"]) && $session["loggedAs"] == $user) {
+    elseif(Session::getLoggedUser() == $user) {
         $ret["isError"] = false;
-        $ret["description"] = ContextManager::get("i18n")("e_log_identical");
-    } elseif(UserDb::from($sourcePhpRoot, $user) == null) {
-        $ret["description"] = ContextManager::get("i18n")("e_unsu", $user);
-    } elseif($passwd != UserDb::from($sourcePhpRoot, $user)["password"]) {
-        $ret["description"] = ContextManager::get("i18n")("e_pmm");
+        $ret["description"] = i18n("e_log_identical");
+    } elseif(UserDb::from($user) == null) {
+        $ret["description"] = i18n("e_unsu", $user);
+    } elseif($passwd != UserDb::from($user)["password"]) {
+        $ret["description"] = i18n("e_pmm");
     } else {
         $ret["isError"] = false;
-        $session["loggedAs"] = $user;
+        Session::setLoggedUser($user);
     }
     
     return $ret;
-} 
+}

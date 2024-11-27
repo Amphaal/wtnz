@@ -12,7 +12,7 @@ Or maybe are-you a music enthusiast :
 - You are a Metadata nazi, probably using MusicBrainz Picard to keep things in order.
 - You like to share your beautiful music tastes to people you meet.
 
-BINGO, <?= constant("APP_NAME") ?> is for you. 
+BINGO, <?= APP_NAME ?> is for you. 
 
 Get started by creating an account, or simply navigate through our users accounts to discover new exciting music.
 Use the companion app to upload your library and stream in real time what you are playing on iTunes ! Cool, isn't it ? 

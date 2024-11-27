@@ -7,20 +7,17 @@ class I18nHandler {
     private $_lang = null;
     private $_dict = null;
 
-    private static function _dictFromLang(string $sourcePhpRoot, string $lang) {
-        $trFile = $sourcePhpRoot . "/translations/" . $lang . ".php";
+    private static function _dictFromLang(string $lang) {
+        $trFile = SOURCE_PHP_ROOT . "/translations/" . $lang . ".php";
         return include($trFile);
     }
 
-    private static function _deduceUsedLanguage(mixed &$session, mixed &$request) {
+    private static function _deduceUsedLanguage() {
         //
-        $session_lang = $session['lang'] ?? null;
-        
-        //
-        $cli_lang = Locale::getPrimaryLanguage($request->header['accept-language']) ?? null;
-
-        //
-        $requested_lang = $session_lang ?? $cli_lang;
+        $requested_lang = 
+            Session::getLang()
+            ?? Locale::getPrimaryLanguage(ContextManager::get("REQUEST")->header['accept-language']) 
+            ?? null;
 
         if(in_array($requested_lang, self::$_handled_langs, true)) {
             return $requested_lang;
@@ -37,35 +34,28 @@ class I18nHandler {
         return $this->_dict;
     }
 
-    public function __construct(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
-        $this->_lang = self::_deduceUsedLanguage($session, $request);
-        $this->_dict = self::_dictFromLang($sourcePhpRoot, $this->_lang);
+    public function __construct() {
+        $this->_lang = self::_deduceUsedLanguage();
+        $this->_dict = self::_dictFromLang($this->_lang);
     }
-
-    public static function defineSessionLang(mixed &$session, string $lang) {
-        $session['lang'] = $lang;
-    }
-
 };
 
 class I18nSingleton {
     private static $_instance = null;
 
-    public static function getInstance(string &$sourcePhpRoot, mixed &$session, mixed &$request, bool $force = false) {
+    public static function getInstance(bool $force = false): I18nHandler {
 
         if($force || isset(self::$_instance)) {
-            self::$_instance = new I18nHandler($sourcePhpRoot, $session, $request);
+            self::$_instance = new I18nHandler();
         }
 
         return self::$_instance;
     }
 };
 
-function generatei18n(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
-    return function ($key, ...$args) use (&$sourcePhpRoot, $session, &$request) {
-        return sprintf(
-            I18nSingleton::getInstance($sourcePhpRoot, $session, $request)->getDictionary()[$key], 
-            ...$args
-        );
-    };
-}
+function i18n ($key, ...$args) {
+    return sprintf(
+        I18nSingleton::getInstance()->getDictionary()[$key], 
+        ...$args
+    );
+};

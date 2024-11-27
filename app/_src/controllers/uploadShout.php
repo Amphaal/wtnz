@@ -1,23 +1,24 @@
 <?php
 
-function uploadShout(string $sourcePhpRoot, $request, $qs_user) {
+function uploadShout($qs_user) {
     // preliminary tests
-    checkPOSTedUserPassword($sourcePhpRoot, $request, $qs_user);
-    testUploadedFile($request, constant("SHOUT_UPLOAD_FILE_NAME"));
-    prepareAndTestUploadedFileCompliance($request, constant("SHOUT_UPLOAD_FILE_NAME"));
+    checkPOSTedUserPassword($qs_user);
+    testUploadedFile(SHOUT_UPLOAD_FILE_NAME);
+    prepareAndTestUploadedFileCompliance(SHOUT_UPLOAD_FILE_NAME);
     
     // uploading file
-    $whereToUpload = getInternalUserFolder($sourcePhpRoot, $qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
-    uploadFile($request, $whereToUpload, constant("SHOUT_UPLOAD_FILE_NAME"));
+    $whereToUpload = getInternalUserFolder($qs_user) . SHOUT_PROFILE_FILE_NAME;
+    uploadFile($whereToUpload, SHOUT_UPLOAD_FILE_NAME);
 
     //
     ContextManager::get("exit",
-        ContextManager::get("i18n")("shouted")
+        i18n("shouted")
     );
 }
 
-function routerInterceptor_uploadShout(string $sourcePhpRoot, $request, $qs_user) {
+function routerInterceptor_uploadShout($qs_user) {
     //
+    $request = ContextManager::get("REQUEST");
     $isAPICall = isset($request->post['headless']);
     if(!$isAPICall) {
         ContextManager::get("http_response_code")(500);
@@ -27,8 +28,8 @@ function routerInterceptor_uploadShout(string $sourcePhpRoot, $request, $qs_user
 
     //check prerequisites
     if(!empty($request->post) && !empty($request->files)) {
-        return uploadShout($sourcePhpRoot, $request, $qs_user);  
+        return uploadShout($qs_user);  
     } else {
-        errorOccured($request, ContextManager::get("i18n")("missingArgs"));
+        errorOccured(i18n("missingArgs"));
     }
 }

@@ -1,6 +1,6 @@
 <?php 
 
-return array(
+return [
     'uploadWithCompanionApp' => "Envoi via l'application compagnon",
     'or' => 'ou',
     'project_shorthand_descr' => 'Partagez votre librarie iTunes %s et diffusez ce que vous écoutez en live !',
@@ -15,7 +15,7 @@ return array(
     "year" => "Année",
     "dateAddition" => "Date d'Ajout",
     "tracks" => "Pistes",
-    "thisis" => "Ici, c'est " . constant("APP_NAME") . ".",
+    "thisis" => "Ici, c'est " . APP_NAME . ".",
     "listenTTA" => "Ecouter l'album",
     "nowPlaying" => "Joué en ce moment...",
     "devLinkedin" => "Profil LinkedIn du developpeur",
@@ -82,4 +82,4 @@ return array(
     "cancel" => "Annuler",
     "validate" => "Valider",
     "back" => "Retour"
-);
+];

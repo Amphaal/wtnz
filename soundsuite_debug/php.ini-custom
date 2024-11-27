@@ -701,8 +701,8 @@ auto_globals_jit = On
 
 ; Whether PHP will read the POST data.
 ; This option is enabled by default.
-; Most likely, you won't want to disable this option globally. It causes $request->post
-; and $request->files to always be empty; the only way you will be able to read the
+; Most likely, you won't want to disable this option globally. It causes ContextManager::get("REQUEST")->post
+; and ContextManager::get("REQUEST")->files to always be empty; the only way you will be able to read the
 ; POST data will be through the php://input stream wrapper. This can be useful
 ; to proxy requests or to process the POST data in a memory efficient fashion.
 ; https://php.net/enable-post-data-reading

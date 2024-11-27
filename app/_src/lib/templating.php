@@ -14,7 +14,7 @@ function getFilesInFolder($path_to) {
     $maybeFiles = scandir($path_to); 
 
     // removes ., ..
-    $maybeFiles = array_diff($maybeFiles, array('..', '.'));
+    $maybeFiles = array_diff($maybeFiles, ['..', '.']);
     $files = [];
 
     foreach($maybeFiles as $maybeFile) {
@@ -28,23 +28,21 @@ function getFilesInFolder($path_to) {
 }
 
 /** */
-function generateAdminLayoutInjector(&$sourcePhpRoot, &$publicFilesRoot) {
-    return function ($inside_part, $included_vars_array) use($sourcePhpRoot, $publicFilesRoot) {
-        foreach($included_vars_array as $varname => $value) {
-            $$varname = $value;
-        }
-    
-        unset($included_vars_array);
-        unset($varname);
-        unset($value);
-    
-        if(isXMLHttpRequest($request)) {
-            include $inside_part;
-        } else {
-            include "layout/admin/entrypoint.php";
-        }
-    
-        //
-        ContextManager::get("exit");
-    };
+function injectAndDisplayIntoAdminLayout(string $inside_part, array $included_vars_array) {
+    foreach($included_vars_array as $varname => $value) {
+        $$varname = $value;
+    }
+
+    unset($included_vars_array);
+    unset($varname);
+    unset($value);
+
+    if(isXMLHttpRequest()) {
+        include $inside_part;
+    } else {
+        include "layout/admin/entrypoint.php";
+    }
+
+    //
+    ContextManager::get("exit");
 }

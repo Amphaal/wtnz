@@ -4,4 +4,5 @@
     "search.exclude": {
         "app/public/ext/js/**": true
     },
+    "intelephense.environment.phpVersion": "8.2.0",
 }

@@ -1,8 +1,8 @@
 <?php 
-    echoFilesOfFolder($sourcePhpRoot . "/public/ext/js/polyfills");
+    echoFilesOfFolder(SOURCE_PHP_ROOT . "/public/ext/js/polyfills");
 
-    include $sourcePhpRoot . "/layout/explorer/js/vars.php";
-    echoFilesOfFolder($sourcePhpRoot . "/layout/explorer/js/misc");
-    echoFilesOfFolder($sourcePhpRoot . "/layout/explorer/js/app");
-    echoFilesOfFolder($sourcePhpRoot . "/layout/explorer/js/app/panels");
+    include SOURCE_PHP_ROOT . "/layout/explorer/js/vars.php";
+    echoFilesOfFolder(SOURCE_PHP_ROOT . "/layout/explorer/js/misc");
+    echoFilesOfFolder(SOURCE_PHP_ROOT . "/layout/explorer/js/app");
+    echoFilesOfFolder(SOURCE_PHP_ROOT . "/layout/explorer/js/app/panels");
 ?>

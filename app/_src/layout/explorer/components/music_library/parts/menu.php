@@ -1,5 +1,5 @@
 <div id='banner-side'>
-    <label class="clickable" title="<?= ContextManager::get("i18n")("users_profile", $qs_user)?>">
+    <label class="clickable" title="<?= i18n("users_profile", $qs_user)?>">
         <input id='showProfile' type='checkbox' onchange="toggleProfile(event)" autocomplete="off">
         <?php if($expectedProfilePic) {?>
         <img class='profilepic' src="<?= $expectedProfilePic ?>">
@@ -7,13 +7,13 @@
         <i class="fas fa-user"></i>
         <?php } ?>
     </label> 
-    <label class="clickable" title="<?= ContextManager::get("i18n")("feed")?>">
+    <label class="clickable" title="<?= i18n("feed")?>">
         <input id='showFeed' type='checkbox' onchange="toggleFeed(event)" autocomplete="off">
         <i class="fas fa-newspaper"></i>
     </label>
-    <label class="clickable" title="<?= ContextManager::get("i18n")("stats")?>">
+    <label class="clickable" title="<?= i18n("stats")?>">
         <input id='showStats' type='checkbox' onchange="toggleStats(event)" autocomplete="off">
         <i class="fas fa-chart-pie"></i>
     </label>
-    <?php include $sourcePhpRoot . "/layout/explorer/components/connect_btn.php" ?>
+    <?php include SOURCE_PHP_ROOT . "/layout/explorer/components/connect_btn.php" ?>
 </div>

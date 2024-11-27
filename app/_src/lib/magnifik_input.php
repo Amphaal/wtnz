@@ -1,9 +1,9 @@
 <?php
 
 /** */
-function renderMagnifikInput($request, $params, $rules = null) {
-    $newInput = array();
-    $newContainer = array();
+function renderMagnifikInput($params, $rules = null) {
+    $newInput = [];
+    $newContainer = [];
     $descr = "";
 
     $toPh = function($val) { return 'placeholder="' . $val . "\"";};
@@ -13,7 +13,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     if(!array_key_exists('type', $params)) $params['type'] = "text";
 
     //autoset name depending on type
-    if(in_array($params['type'], array("password", "email"))) {
+    if(in_array($params['type'], ["password", "email"])) {
         $params["name"] = $params["type"];
     }
 
@@ -29,7 +29,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     if(array_key_exists('placeholder', $params)) {
         
         $trad = $toPh(
-            ContextManager::get("i18n")($params["placeholder"])
+            i18n($params["placeholder"])
         );
         
         array_push($newContainer, $trad);
@@ -37,7 +37,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     }
 
     //value helper
-    $prem = _PRem($request, $inputName);
+    $prem = _PRem($inputName);
     if($prem) {
         $prem = $toVal($prem);
         array_push($newInput, $prem);
@@ -46,7 +46,7 @@ function renderMagnifikInput($request, $params, $rules = null) {
     //rules helper
     if($rules && $rules[$inputName]) {
         array_push($newInput, 'pattern="' .  _renHpat($rules[$inputName]) . "\"");
-        $content = ContextManager::get("i18n")("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
+        $content = i18n("e_log_rule", $rules[$inputName]["min"], $rules[$inputName]["max"]);
         array_push($newInput, $toPh($content));
     }
 
@@ -68,6 +68,7 @@ function _renHpat($rules) {
 }
 
 //POST remember
-function _PRem($request, $post_val) {
-    return isset($request->post[$post_val]) ? $request->post[$post_val] : "";
+function _PRem($post_val) {
+    $post = ContextManager::get("REQUEST")->post;
+    return isset($post[$post_val]) ? $post[$post_val] : "";
 }

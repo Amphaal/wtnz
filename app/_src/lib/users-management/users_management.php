@@ -1,45 +1,47 @@
 <?php
 
-include $sourcePhpRoot . "/lib/users-management/db.php";
+include SOURCE_PHP_ROOT . "/lib/users-management/db.php";
 
 /** */
-function checkUserSpecificFolders(string $sourcePhpRoot, $request) {
+function checkUserSpecificFolders() {
     //for each user
-    foreach(UserDb::all($sourcePhpRoot) as $user => $confData) {
-        $path = getInternalUserFolder($sourcePhpRoot, $user);
-        _mayCreateUserDirectory($request, $path);
+    foreach(UserDb::all() as $user => $confData) {
+        $path = getInternalUserFolder($user);
+        _mayCreateUserDirectory($path);
     }
 }  
 
-function _mayCreateUserDirectory($request, $directory) {
+function _mayCreateUserDirectory($directory) {
     $shouldWrite = !file_exists($directory);
     if (!$shouldWrite) return null;
 
     $result = mkdir($directory, 0777, true);
     if (!$result) 
     {
-        errorOccured($request, ContextManager::get("i18n")("e_wdu", $directory));
+        errorOccured(i18n("e_wdu", $directory));
     }
 }
 
-function checkUserExists(string $sourcePhpRoot, $request, $user, bool $non_fatal_check) {
-    $do_exist = UserDb::from($sourcePhpRoot, $user) != null && file_exists(getInternalUserFolder($sourcePhpRoot, $user));
-    if(!$do_exist && !$non_fatal_check) errorOccured($request, ContextManager::get("i18n")("e_unsu", $user));
+function checkUserExists($user, bool $non_fatal_check) {
+    $do_exist = UserDb::from($user) != null && file_exists(getInternalUserFolder($user));
+    if(!$do_exist && !$non_fatal_check) errorOccured(i18n("e_unsu", $user));
     return $do_exist;
 }
 
-function checkPOSTedUserPassword(string $sourcePhpRoot, $request, $of_user) {
-    $passwd = isset($request->post['password']) ? $request->post['password'] : NULL;
-    if(empty($passwd)) errorOccured($request, ContextManager::get("i18n")("e_nopass"));
-    if($passwd != UserDb::from($sourcePhpRoot, $of_user)["password"]) errorOccured($request, ContextManager::get("i18n")("e_pmm"));
+function checkPOSTedUserPassword($of_user) {
+    $passwd = ContextManager::get("REQUEST")->post['password'];
+    if(empty($passwd)) errorOccured(i18n("e_nopass"));
+    if($passwd != UserDb::from($of_user)["password"]) errorOccured(i18n("e_pmm"));
 }
 
-function setMyProfilePicture(string $sourcePhpRoot, $ppFilename) {
-    UserDb::update($sourcePhpRoot, array("profilePic" => $ppFilename));
+function setMyProfilePicture($ppFilename) {
+    UserDb::update([
+        "profilePic" => $ppFilename
+    ]);
 }
 
-function getProfilePicture(string $sourcePhpRoot, $user) {
-    $config = UserDb::from($sourcePhpRoot, $user);
+function getProfilePicture($user) {
+    $config = UserDb::from($user);
     if(!$config) return;
     if(!array_key_exists("profilePic", $config)) return;
 
@@ -48,13 +50,12 @@ function getProfilePicture(string $sourcePhpRoot, $user) {
 }
 
 //
-//connectivity
+// connectivity
 //
 
-function getCurrentUserLogged(mixed &$session) {
-    return empty($session["loggedAs"]) ? "" : $session["loggedAs"];
-}
-
-function isUserLogged(mixed &$session) {
-    return !empty(getCurrentUserLogged($session));
+/**
+ * @return bool
+ */
+function isUserLogged() {
+    return !empty(Session::getLoggedUser());
 }

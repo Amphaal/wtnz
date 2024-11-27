@@ -1,9 +1,9 @@
-<div id="bBandEditor" title="<?= ContextManager::get("i18n")("updateBBand")?>">
-    <?= _wAnim(getCurrentUserLogged($session))?>
+<div id="bBandEditor" title="<?= i18n("updateBBand")?>">
+    <?= _wAnim(Session::getLoggedUser())?>
     <div class="colorPicker">
         <div class="controls">
-            <input class="cancel" type="button" value="✕" title="<?= ContextManager::get("i18n")("cancel")?>"/>
-            <input class="validate" type="button" value="✓" title="<?= ContextManager::get("i18n")("validate")?>"/>
+            <input class="cancel" type="button" value="✕" title="<?= i18n("cancel")?>"/>
+            <input class="validate" type="button" value="✓" title="<?= i18n("validate")?>"/>
         </div>
         <div class="colors">
             <input id="color1" type="color" title="" />

@@ -15,15 +15,15 @@ class _AbstractUsersDatabase {
     private static $_instance = null;
 
     // refreshes database instance
-    public static function refresh(string $sourcePhpRoot) {
-        self::$_instance = new self($sourcePhpRoot);
+    public static function refresh() {
+        self::$_instance = new self();
     }
 
     // get database
-    public static function get($sourcePhpRoot): _AbstractUsersDatabase {
+    public static function get(): _AbstractUsersDatabase {
         //
         if(is_null(self::$_instance)) {
-            self::refresh($sourcePhpRoot);
+            self::refresh();
         }
 
         //
@@ -40,8 +40,8 @@ class _AbstractUsersDatabase {
     // where to search for database file (local filesystem URI)
     protected $_db_path;
     
-    private function __construct(string $sourcePhpRoot) {
-        $this->_db_path = getUserDbFilePath($sourcePhpRoot);
+    private function __construct() {
+        $this->_db_path = getUserDbFilePath();
         $this->_db = $this->_obtainDatabaseAsObject();
     }
 
@@ -61,9 +61,9 @@ class _AbstractUsersDatabase {
         $this->_updateDbRaw($db_as_json);
     }
 
-    public function updateDb($new_db, string $sourcePhpRoot) {
+    public function updateDb($new_db) {
         $this->_updateDb($new_db);
-        self::refresh($sourcePhpRoot);
+        self::refresh();
     }
 
     private function _createDefaultDatabase() {
@@ -97,50 +97,49 @@ class _AbstractUsersDatabase {
 //
 class UserDb {
     
-    private static $_private_fields = array(
+    private static $_private_fields = [
         "password" => null, 
         "email" => null
-    );
+    ];
 
     private static function _stripPrivate($data) {
         if(!$data) return $data;
         return array_diff_key($data, self::$_private_fields);
     }
 
-    public static function update(string $sourcePhpRoot, $new_data, $targetUser = null) {
-        if($targetUser == null) $targetUser = getCurrentUserLogged($session);
+    public static function update($new_data, $targetUser = null) {
+        if($targetUser == null) $targetUser = Session::getLoggedUser();
         if(!$targetUser) return;
         
-        $allUsers = self::all($sourcePhpRoot);
+        $allUsers = self::all();
     
         //from base data
-        $base = array_key_exists($targetUser, $allUsers) ? $allUsers[$targetUser] : array();
+        $base = array_key_exists($targetUser, $allUsers) ? $allUsers[$targetUser] : [];
         $new_data = array_merge($base, $new_data); //merge
     
         //apply
         $allUsers[$targetUser] = $new_data;
-        _AbstractUsersDatabase::get($sourcePhpRoot)->updateDb($allUsers, $sourcePhpRoot);
+        _AbstractUsersDatabase::get()->updateDb($allUsers);
     }
     
     /** list all users */
-    public static function all(string $sourcePhpRoot) {
-        return _AbstractUsersDatabase::get($sourcePhpRoot)->_db ?? [];
+    public static function all() {
+        return _AbstractUsersDatabase::get()->_db ?? [];
     }
 
-    public static function from(string $sourcePhpRoot, $user) {
-        $requested = self::all($sourcePhpRoot)[$user] ?? null;
+    public static function from($user) {
+        $requested = self::all()[$user] ?? null;
         if($requested) {
             if(!array_key_exists("customColors", $requested)) 
-                $requested["customColors"] = constant("DEFAULT_BACKGROUND_COLORS");
+                $requested["customColors"] = DEFAULT_BACKGROUND_COLORS;
         }
         return $requested;
     }
 
-    public static function mine(string $sourcePhpRoot, mixed &$session) {
-       if(isUserLogged($sourcePhpRoot)) {
+    public static function mine() {
+       if(isUserLogged()) {
             return self::from(
-                $sourcePhpRoot,
-                getCurrentUserLogged($session)
+                Session::getLoggedUser()
             );
         }
     }
@@ -149,15 +148,15 @@ class UserDb {
     ///
     ///
 
-    public static function fromProtected(string $sourcePhpRoot, $user) {
+    public static function fromProtected($user) {
         return self::_stripPrivate(
-            self::from($sourcePhpRoot, $user)
+            self::from($user)
         );
     }
 
-    public static function mineProtected(string $sourcePhpRoot, mixed &$session) {
+    public static function mineProtected() {
         return self::_stripPrivate(
-            self::mine($sourcePhpRoot, $session)
+            self::mine()
         );
     }
     
