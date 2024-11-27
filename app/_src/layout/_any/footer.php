@@ -14,17 +14,17 @@
         $curLang = ContextManager::get("i18nS")->getLang();
         
         foreach(getFilesInFolder($publicFilesRoot . '/images/flags') as $file) { 
-            $bn =  basename($file, ".svg");
+            $bn = basename($file, ".svg");
             $isCurrentLang = $bn == $curLang;
         ?>
-        <label 
-            <?php if(!$isCurrentLang) {?> title="<?= ContextManager::get("i18n")("switch_lang");?>" <?php } ?>
-            data-lang="<?= $bn; ?>" 
-            class="<?php if(!$isCurrentLang) { echo "clickable unselected"; }?>" 
-            onclick="changeLang(event)"
-        >
-            <img src="<?= constant("WEB_APP_ROOT") . 'public/' . str_replace($publicFilesRoot.'/', '', $file); ?>" />
-        </label>
+            <label 
+                <?php if(!$isCurrentLang) {?> title="<?= ContextManager::get("i18n")("switch_lang");?>" <?php } ?>
+                data-lang="<?= $bn; ?>" 
+                class="<?php if(!$isCurrentLang) { echo "clickable unselected"; }?>" 
+                onclick="changeLang(event)"
+            >
+                <img src="<?= constant("WEB_APP_ROOT") . 'public/' . str_replace($publicFilesRoot.'/', '', $file); ?>" />
+            </label>
         <?php } ?>
     </div>
 </footer>

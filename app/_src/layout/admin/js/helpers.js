@@ -151,22 +151,45 @@ function debounce(callback, delay){
 }
 
 
-function ezPOST(data) {
+/**
+ *
+ * @param {string} action equivalent of <form>'s "action" field (https://www.w3schools.com/tags/att_form_action.asp)
+ * @param {object} data data to pass as arguments to the action. any "redirectTo" field will be overriden
+ */
+function POSTWithRedirectPayload(action, data) {
+    //
     let form = document.createElement("form");
     form.setAttribute("method", "POST");
+    form.setAttribute("action", action);
     
-    Object.keys(data).map(function(key) {
+    /**
+     * 
+     * @param {string} key 
+     * @returns 
+     */
+    const generateInputFromData = (key) => {
         let iElem = document.createElement('input');
         iElem.setAttribute("type", "hidden");
         iElem.setAttribute("name", key);
         iElem.setAttribute("value", data[key]);
         return iElem;
-    }).forEach(function (item) { form.appendChild(item); });
+    }
+
+    data.redirectTo = window.location.pathname;
+
+    //
+    Object.keys(data)
+        .map(generateInputFromData)
+        .forEach((inputElem) => form.appendChild(inputElem));
     
+    //
     document.body.appendChild(form);
+
+    //
     form.submit();
 }
 
+/** */
 function IsJsonString(str) {
     try {
         JSON.parse(str);
@@ -267,7 +290,7 @@ function _XMLHttpPromise(method, url, POSTParams) {
 
 function changeLang(event) {
     let newLang = event.currentTarget.getAttribute("data-lang");
-    ezPOST({
+    POSTWithRedirectPayload("/changeLang", {
         set_lang : newLang
     });
 }

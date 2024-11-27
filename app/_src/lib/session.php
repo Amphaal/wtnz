@@ -1,7 +1,9 @@
 <?php 
 
-// Session handling function
-function handleSession($request, $response) {
+/**
+ * Session handling function
+ */
+function handleSession($request, $response) : array {
     // Create session directory if it doesn't exist
     if (!is_dir(SESSION_DIR)) {
         mkdir(SESSION_DIR, 0777, true);
@@ -22,7 +24,7 @@ function handleSession($request, $response) {
     $session = file_exists($sessionFile) ? json_decode(file_get_contents($sessionFile), true) : [];
 
     // Return session ID and session data
-    return [$sessionFile, function () use ($sessionFile, &$session) {
+    return [$sessionFile, $session, function () use ($sessionFile, &$session) {
         file_put_contents($sessionFile, json_encode($session));
     }];
 }

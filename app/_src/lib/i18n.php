@@ -12,19 +12,21 @@ class I18nHandler {
         return include($trFile);
     }
 
-    private static function _deduceUsedLanguage($request) {
-        
-        $cli_lang = Locale::getPrimaryLanguage($request->header['accept-language']) ?? null;
-        $post_lang = $request->post['set_lang'] ?? null;
-        if($post_lang) unset($request->post['set_lang']);
+    private static function _deduceUsedLanguage(mixed &$session, mixed &$request) {
+        //
         $session_lang = $session['lang'] ?? null;
-        $requested_lang = $post_lang ?? $session_lang ?? $cli_lang ?? self::$_default_lang;
+        
+        //
+        $cli_lang = Locale::getPrimaryLanguage($request->header['accept-language']) ?? null;
 
-        if(!in_array($requested_lang, self::$_handled_langs, true)) {
-            $requested_lang = self::$_default_lang;
+        //
+        $requested_lang = $session_lang ?? $cli_lang;
+
+        if(in_array($requested_lang, self::$_handled_langs, true)) {
+            return $requested_lang;
         }
      
-        return $requested_lang;
+        return self::$_default_lang;
     }
 
     public function getLang() {
@@ -35,10 +37,14 @@ class I18nHandler {
         return $this->_dict;
     }
 
-    public function __construct($sourcePhpRoot, $request) {
-        $this->_lang = self::_deduceUsedLanguage($request);
-        $session['lang'] = $this->_lang;
+    public function __construct(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
+        $this->_lang = self::_deduceUsedLanguage($session, $request);
+        self::defineSessionLang($session, $this->_lang);
         $this->_dict = self::_dictFromLang($sourcePhpRoot, $this->_lang);
+    }
+
+    public static function defineSessionLang(mixed &$session, string &$lang) {
+        $session['lang'] = $lang;
     }
 
 };
@@ -46,20 +52,20 @@ class I18nHandler {
 class I18nSingleton {
     private static $_instance = null;
 
-    public static function getInstance($sourcePhpRoot, $request) {
+    public static function getInstance(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
 
         if(is_null(self::$_instance)) {
-            self::$_instance = new I18nHandler($sourcePhpRoot, $request);
+            self::$_instance = new I18nHandler($sourcePhpRoot, $session, $request);
         }
 
         return self::$_instance;
     }
 };
 
-function generatei18n(string &$sourcePhpRoot, &$request) {
-    return function ($key, ...$args) use (&$sourcePhpRoot, &$request) {
+function generatei18n(string &$sourcePhpRoot, mixed &$session, mixed &$request) {
+    return function ($key, ...$args) use (&$sourcePhpRoot, $session, &$request) {
         return sprintf(
-            I18nSingleton::getInstance($sourcePhpRoot, $request)->getDictionary()[$key], 
+            I18nSingleton::getInstance($sourcePhpRoot, $session, $request)->getDictionary()[$key], 
             ...$args
         );
     };

@@ -20,10 +20,11 @@ include $sourcePhpRoot . "/controllers/manage.php";
 include $sourcePhpRoot . "/controllers/downloadApp.php";
 include $sourcePhpRoot . "/controllers/musicLibrary.php";
 
+
 // handles users sessions, start
 // session_start();
 
-function init_app($sessionFile, $request) {
+function init_app(string &$sourcePhpRoot, string &$sessionFile, mixed &$session, mixed &$request) {
     // 
     checkUserSpecificFolders($request); // generate folders if non existing
     sanitizePOST($request); // cleanup POST
@@ -51,6 +52,32 @@ function init_app($sessionFile, $request) {
         case 'download': {
             $qs_action = array_shift($qs); // 2nd part of URL
             return routerInterceptor_Download($request, $qs_action);
+        }
+        break;
+
+        case 'changeLang': {
+            // only POST allowed
+            if (!isset($request->post)) {
+                ContextManager::get("http_response_code")(405);
+                return;
+            }
+            
+            //
+            $lang = $request->post['set_lang'];
+            $redirectTo = $request->post['redirectTo'];
+            if (!(isset($lang) && isset($redirectTo))) {
+                ContextManager::get("http_response_code")(500);
+                echo "missing either lang or redirectTo in payload";
+                return;
+            }
+
+            //
+            I18nHandler::defineSessionLang($session, $lang);
+
+            //
+            ContextManager::get("http_response_code")(303); # https://fr.wikipedia.org/wiki/Post-redirect-get
+            ContextManager::get("header")('Location: ' . $redirectTo);
+            return;
         }
         break;
 
@@ -84,13 +111,36 @@ function init_app($sessionFile, $request) {
                         // else, show music library
                         routerInterceptor_MusicLibrary($request, $qs_user);
                     }
+
+                    return;
                 }
             }
         }
         break;
 
         case "public_php": {
-            include "public_php/" . implode("/", $qs);
+            //
+            $wantedPublicPhpResource = "public_php/" . implode("/", $qs);
+
+            //
+            if (file_exists($sourcePhpRoot . '/' . $wantedPublicPhpResource)) {
+                //
+                $ctMap = array(
+                    '.css.' => 'text/css',
+                    '.js.' => 'text/javascript'
+                );
+            
+                //
+                foreach ($ctMap as $ext => $contentType) {
+                    if (!str_contains($wantedPublicPhpResource, $ext)) continue;
+                    ContextManager::get("header")('Content-Type: ' . $contentType);
+                    break;
+                }
+
+                //
+                include $wantedPublicPhpResource;
+                return;
+            }
         }
         break;
 
@@ -100,6 +150,7 @@ function init_app($sessionFile, $request) {
             $users = UserDb::all();
             ContextManager::get("set_title")(ContextManager::get("i18n")("welcome"));
             ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/welcome.php", get_defined_vars());
+            return;
         }
 
         default: {

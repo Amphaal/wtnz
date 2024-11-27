@@ -109,7 +109,7 @@ function accountCreation($request) {
         if(!$acr["isError"]) {
             login($request);
         }
-    } 
+    }
 
     ContextManager::get("injectAndDisplayIntoAdminLayout")("layout/admin/components/create_account.php", get_defined_vars());
 }
