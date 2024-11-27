@@ -27,15 +27,6 @@ define("WEB_APP_ROOT", "/");
 /** since theses colors can be customized by user */
 define("DEFAULT_BACKGROUND_COLORS", array("#EE7752", "#E73C7E", "#23A6D5", "#23D5AB"));
 
-/** TODO */
-define("COMPANION_APP_DOWNLOADS_FOLDER", $sourcePhpRoot . "/../_downloads\/");
-
-/** internal folder path of user's data */
-define("USER_DB_FILE_PATH", $sourcePhpRoot . "/../_data/users.json");
-
-/** Directory where session files will be stored */
-define('SESSION_DIR', $sourcePhpRoot . '/../_sessions');
-
 /** */
 define("COMPANION_APP_GITHUB_LATEST_RELEASE_URL", "https://github.com/Amphaal/SoundBuddy/releases/latest");
 
@@ -57,11 +48,6 @@ function getProfilePicFilename($ext) {
     return "pp.".$ext;
 }
 
-/** internal folder path of user's data */
-function getInternalUserFolder($user) {
-    return $sourcePhpRoot . "/../_data/users/" . $user . "/";
-}
-
 /** web server exposed user's data */
 function getPublicUserFolder() {
     return constant("WEB_APP_ROOT") . "data/users/";
@@ -71,4 +57,30 @@ function getPublicUserFolder() {
 /** web server exposed user's data */
 function getPublicUserFolderOf($user) {
     return getPublicUserFolder() . $user . "/";
+}
+
+//
+//
+//
+
+/** */
+function getCompanionAppDownloadFolder(string $sourcePhpRoot) {
+    return $sourcePhpRoot . "/../_data/downloads\/";
+}
+
+/** internal folder path of user's data */
+function getUserDbFilePath (string $sourcePhpRoot) {
+    return $sourcePhpRoot . "/../_data/users/users.json";
+}
+
+/** Directory where session files will be stored */
+function getSessionStorageDir(string $sourcePhpRoot) {
+    return $sourcePhpRoot . '/../_data/sessions';
+}
+
+/**
+ * internal folder path of user's data
+ */
+function getInternalUserFolder(string $sourcePhpRoot, string $user) {
+    return $sourcePhpRoot . "/../_data/users/" . $user . "/";
 }

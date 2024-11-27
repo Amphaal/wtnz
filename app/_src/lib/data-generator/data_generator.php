@@ -4,10 +4,10 @@ include $sourcePhpRoot . "/lib/data-generator/slugifier.php";
 
 class DataGenerator {
 
-    public function __construct($username, &$lib = null) {  
+    public function __construct(string $sourcePhpRoot, $username, &$lib = null) {  
 
         $this->_username = $username;
-        $this->_iTargetPath = getInternalUserFolder($username) . "/";
+        $this->_iTargetPath = getInternalUserFolder($sourcePhpRoot, $username) . "/";
 
         if($lib != null) {
             $this->_lib = $lib;

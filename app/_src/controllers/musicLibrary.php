@@ -1,9 +1,9 @@
 <?php 
 
-function routerInterceptor_MusicLibrary($request, $qs_user) {
+function routerInterceptor_MusicLibrary(string $sourcePhpRoot, mixed &$session, $request, $qs_user) {
 
-    $expectedLibrary = getInternalUserFolder($qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
-    $profilePicture = getProfilePicture($qs_user);
+    $expectedLibrary = getInternalUserFolder($sourcePhpRoot, $qs_user) . constant("MUSIC_LIB_PROFILE_FILE_NAME");
+    $profilePicture = getProfilePicture($sourcePhpRoot, $qs_user);
     
     $expectedProfilePic = NULL;
     if ($profilePicture) {
@@ -15,7 +15,7 @@ function routerInterceptor_MusicLibrary($request, $qs_user) {
 
     //Client variables
     $latestUpdate = filemtime($expectedLibrary);
-    $isLogged = isUserLogged();
+    $isLogged = isUserLogged($session);
 
     //addons
     ContextManager::get("set_title")(ContextManager::get("i18n")('libraryOf', $qs_user));

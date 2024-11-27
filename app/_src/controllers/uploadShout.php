@@ -1,13 +1,13 @@
 <?php
 
-function uploadShout($request, $qs_user) {
+function uploadShout(string $sourcePhpRoot, $request, $qs_user) {
     // preliminary tests
-    checkPOSTedUserPassword($request, $qs_user);
+    checkPOSTedUserPassword($sourcePhpRoot, $request, $qs_user);
     testUploadedFile($request, constant("SHOUT_UPLOAD_FILE_NAME"));
     prepareAndTestUploadedFileCompliance($request, constant("SHOUT_UPLOAD_FILE_NAME"));
     
     // uploading file
-    $whereToUpload = getInternalUserFolder($qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
+    $whereToUpload = getInternalUserFolder($sourcePhpRoot, $qs_user) . constant("SHOUT_PROFILE_FILE_NAME");
     uploadFile($request, $whereToUpload, constant("SHOUT_UPLOAD_FILE_NAME"));
 
     //
@@ -16,7 +16,7 @@ function uploadShout($request, $qs_user) {
     );
 }
 
-function routerInterceptor_uploadShout($request, $qs_user) {
+function routerInterceptor_uploadShout(string $sourcePhpRoot, $request, $qs_user) {
     //
     $isAPICall = isset($request->post['headless']);
     if(!$isAPICall) {
@@ -27,7 +27,7 @@ function routerInterceptor_uploadShout($request, $qs_user) {
 
     //check prerequisites
     if(!empty($request->post) && !empty($request->files)) {
-        return uploadShout($request, $qs_user);  
+        return uploadShout($sourcePhpRoot, $request, $qs_user);  
     } else {
         errorOccured($request, ContextManager::get("i18n")("missingArgs"));
     }

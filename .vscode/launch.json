@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug SoundVitrine",
+            "name": "Launch Chrome",
             "type": "chrome",
             "request": "launch",
             "postDebugTask": "Shutdown debug stack",
             "url": "http://127.0.0.1",
+
             "webRoot": "${workspaceFolder}",
             "presentation": {
                 "hidden": true,
@@ -18,7 +19,7 @@
             }
         },
         {
-            "name": "Track Stack",
+            "name": "Track stack logs",
             "type": "node-terminal",
             "request": "launch",
             "command": "docker compose -f docker-compose.debug.yml logs -f",
@@ -27,6 +28,12 @@
                 "hidden": true,
                 "group": "",
                 "order": 1
+            },
+            "serverReadyAction": {
+                "action": "startDebugging",
+                "pattern": "swoole entered RUNNING state",  
+                "name": "Launch Chrome",
+                "killOnServerStop": false
             }
         }
     ],
@@ -34,8 +41,7 @@
         {
             "name": "Debug Full stack",
             "configurations": [
-                "Debug SoundVitrine",
-                "Track Stack"
+                "Track stack logs"
             ],
             "preLaunchTask": "Run debug stack",
             "stopAll": true

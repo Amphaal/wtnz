@@ -1,6 +1,6 @@
 <?php 
 
-function routerInterceptor_Download($request, $qs_action) {
+function routerInterceptor_Download($sourcePhpRoot, $request, $qs_action) {
 
     $out = function() {
         ob_end_clean(); 
@@ -14,7 +14,7 @@ function routerInterceptor_Download($request, $qs_action) {
     }
     
     //target server folder
-    $initialPath = constant("COMPANION_APP_DOWNLOADS_FOLDER") . $qs_action;
+    $initialPath = getCompanionAppDownloadFolder($sourcePhpRoot) . $qs_action;
 
     //check if files exists, take latest released version (desc order files) 
     $latestInFolder = getLatestDownloadableFile($initialPath);
@@ -78,9 +78,9 @@ function getFilesFromDirectory($searchFolder) {
 
 }
 
-function availableDownloads() {
+function availableDownloads(string $sourcePhpRoot) {
     $ret = array();
-    $df = constant("COMPANION_APP_DOWNLOADS_FOLDER");
+    $df = getCompanionAppDownloadFolder($sourcePhpRoot);
 
     $subdirs = getSubDirectoriesFromDirectory($df);
     

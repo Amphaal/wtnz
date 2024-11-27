@@ -15,15 +15,15 @@ class _AbstractUsersDatabase {
     private static $_instance = null;
 
     // refreshes database instance
-    public static function refresh() {
-        self::$_instance = new self();
+    public static function refresh(string $sourcePhpRoot) {
+        self::$_instance = new self($sourcePhpRoot);
     }
 
     // get database
-    public static function get() {
+    public static function get($sourcePhpRoot) {
         //
         if(is_null(self::$_instance)) {
-            self::refresh();
+            self::refresh($sourcePhpRoot);
         }
 
         //
@@ -40,8 +40,8 @@ class _AbstractUsersDatabase {
     // where to search for database file (local filesystem URI)
     protected $_db_path;
     
-    private function __construct() {
-        $this->_db_path = constant("USER_DB_FILE_PATH");
+    private function __construct(string $sourcePhpRoot) {
+        $this->_db_path = getUserDbFilePath($sourcePhpRoot);
         $this->_db = $this->_obtainDatabaseAsObject();
     }
 
@@ -61,9 +61,9 @@ class _AbstractUsersDatabase {
         $this->_updateDbRaw($db_as_json);
     }
 
-    public function updateDb($new_db) {
+    public function updateDb($new_db, string $sourcePhpRoot) {
         $this->_updateDb($new_db);
-        self::refresh();
+        self::refresh($sourcePhpRoot);
     }
 
     private function _createDefaultDatabase() {
@@ -107,11 +107,11 @@ class UserDb {
         return array_diff_key($data, self::$_private_fields);
     }
 
-    public static function update($new_data, $targetUser = null) {
-        if($targetUser == null) $targetUser = getCurrentUserLogged();
+    public static function update(string $sourcePhpRoot, $new_data, $targetUser = null) {
+        if($targetUser == null) $targetUser = getCurrentUserLogged($sourcePhpRoot);
         if(!$targetUser) return;
         
-        $allUsers = self::all();
+        $allUsers = self::all($sourcePhpRoot);
     
         //from base data
         $base = array_key_exists($targetUser, $allUsers) ? $allUsers[$targetUser] : array();
@@ -119,16 +119,16 @@ class UserDb {
     
         //apply
         $allUsers[$targetUser] = $new_data;
-        _AbstractUsersDatabase::get()->updateDb($allUsers);
+        _AbstractUsersDatabase::get($sourcePhpRoot)->updateDb($allUsers);
     }
     
     /** list all users */
-    public static function all() {
-        return _AbstractUsersDatabase::get()->_db ?? [];
+    public static function all(string $sourcePhpRoot) {
+        return _AbstractUsersDatabase::get($sourcePhpRoot)->_db ?? [];
     }
 
-    public static function from($user) {
-        $requested = self::all()[$user] ?? null;
+    public static function from(string $sourcePhpRoot, $user) {
+        $requested = self::all($sourcePhpRoot)[$user] ?? null;
         if($requested) {
             if(!array_key_exists("customColors", $requested)) 
                 $requested["customColors"] = constant("DEFAULT_BACKGROUND_COLORS");
@@ -136,9 +136,12 @@ class UserDb {
         return $requested;
     }
 
-    public static function mine() {
-       if(isUserLogged()) {
-            return self::from(getCurrentUserLogged());
+    public static function mine(string $sourcePhpRoot) {
+       if(isUserLogged($sourcePhpRoot)) {
+            return self::from(
+                $sourcePhpRoot,
+                getCurrentUserLogged($sourcePhpRoot)
+            );
         }
     }
 
@@ -146,12 +149,16 @@ class UserDb {
     ///
     ///
 
-    public static function fromProtected($user) {
-        return self::_stripPrivate(self::from($user));
+    public static function fromProtected(string $sourcePhpRoot, $user) {
+        return self::_stripPrivate(
+            self::from($sourcePhpRoot, $user)
+        );
     }
 
-    public static function mineProtected() {
-        return self::_stripPrivate(self::mine());
+    public static function mineProtected(string $sourcePhpRoot) {
+        return self::_stripPrivate(
+            self::mine($sourcePhpRoot)
+        );
     }
     
 };

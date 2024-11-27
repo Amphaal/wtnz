@@ -42,14 +42,19 @@ $server->on('WorkerStart', function($serv, $workerId) use ($sourcePhpRoot, $publ
 //
 $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publicFilesRoot) {
     // Use the session handler function
-    [$sessionFile, $session, $saveSession] = handleSession($request, $response);
+    [$sessionFile, $session, $saveSession] = handleSession($sourcePhpRoot, $request, $response);
 
     //
     $exit = function ($msg = null) use (&$saveSession, &$response) {
         //
         $saveSession();
         
-        $output = ob_get_clean() . (!empty($msg) ? $msg : "");
+        $output = ob_get_clean();
+        
+        //
+        if(isset($msg)) {
+            $output .= $msg;
+        };
 
         // Respond with the output of the PHP script
         $response->end($output);
@@ -65,7 +70,7 @@ $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publ
 
     //
 
-    ContextManager::set("exit", function ($msg = null) use ($response) {
+    ContextManager::set("exit", function (mixed $msg = null) use ($response) {
         $response->end($msg);
     });
     ContextManager::set("header", function (string $header) use ($response) {
@@ -95,6 +100,7 @@ $server->on("request", function ($request, $response) use ($sourcePhpRoot, $publ
     // // Capture the output of the standard PHP script
     ob_start();
         init_app($sourcePhpRoot, $sessionFile, $session, $request);
+
     $exit();
 });
 
