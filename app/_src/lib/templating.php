@@ -27,8 +27,7 @@ function getFilesInFolder($path_to) {
     return $files;
 }
 
-/** */
-function injectAndDisplayIntoAdminLayout(string $inside_part, array $included_vars_array) {
+function _injectAndDisplayIntoLayout(string $inside_part, array $included_vars_array, string $layout) {
     foreach($included_vars_array as $varname => $value) {
         $$varname = $value;
     }
@@ -40,9 +39,14 @@ function injectAndDisplayIntoAdminLayout(string $inside_part, array $included_va
     if(isXMLHttpRequest()) {
         include $inside_part;
     } else {
-        include "layout/admin/entrypoint.php";
+        include $layout;
     }
 
     //
-    ContextManager::get("exit");
+    ContextManager::get("exit")();
+}
+
+/** */
+function injectAndDisplayIntoAdminLayout(string $inside_part, array $included_vars_array) {
+    _injectAndDisplayIntoLayout($inside_part, $included_vars_array,  "layout/admin/entrypoint.php");
 }

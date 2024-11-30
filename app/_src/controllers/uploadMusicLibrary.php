@@ -13,10 +13,7 @@ function processUploadedMusicLibrary($qs_user, $expectedFilename) {
 
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) {
-        ContextManager::get("exit",
-            i18n("fiNu")
-        );
-        return;
+        return ContextManager::get("exit")(i18n("fiNu"));
     }
 
     //archive current file if necessary
@@ -38,7 +35,7 @@ function processUploadedMusicLibrary($qs_user, $expectedFilename) {
     
     //redirect to users library...
     ContextManager::get("header")("Location: " . dirname($request->server['request_uri']));
-    ContextManager::get("exit");
+    ContextManager::get("exit")();
 }
 
 function archivePreviousUpload($qs_user, $pathTo) {
@@ -76,6 +73,6 @@ function routerMiddleware_UploadMusicLibrary($qs_user, $wantsExplicitAccess) {
     // redirect to upload UI if no library for the user OR wanting explicitely this UI
     $expectedLibrary = getInternalUserFolder($qs_user) . MUSIC_LIB_PROFILE_FILE_NAME;
     if(!file_exists($expectedLibrary) || $wantsExplicitAccess) {
-        return injectAndDisplayIntoAdminLayout("layout/admin/components/upload.php", get_defined_vars());
+        injectAndDisplayIntoAdminLayout("layout/admin/components/upload.php", get_defined_vars());
     }
 }

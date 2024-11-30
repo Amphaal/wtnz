@@ -4,7 +4,7 @@ function routerInterceptor_Download($qs_action) {
 
     $out = function() {
         ob_end_clean(); 
-        ContextManager::get("exit");
+        ContextManager::get("exit")();
     };
 
     //if xmlHttpRequest, cancel...

@@ -11,9 +11,7 @@ function uploadShout($qs_user) {
     uploadFile($whereToUpload, SHOUT_UPLOAD_FILE_NAME);
 
     //
-    ContextManager::get("exit",
-        i18n("shouted")
-    );
+    ContextManager::get("exit")(i18n("shouted"));
 }
 
 function routerInterceptor_uploadShout($qs_user) {

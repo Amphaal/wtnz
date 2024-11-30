@@ -11,23 +11,14 @@ class _AbstractUsersDatabase {
     // SINGLETON //
     ///////////////
 
-    // database instance
-    private static $_instance = null;
-
     // refreshes database instance
     public static function refresh() {
-        self::$_instance = new self();
+        ContextManager::set("aud", new self());
     }
 
     // get database
-    public static function get(): _AbstractUsersDatabase {
-        //
-        if(is_null(self::$_instance)) {
-            self::refresh();
-        }
-
-        //
-        return self::$_instance;
+    public static function get(): self {
+        return ContextManager::get("aud");
     }  
 
     ///////////////////

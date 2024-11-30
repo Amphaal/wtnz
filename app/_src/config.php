@@ -66,22 +66,22 @@ function getPublicUserFolderOf($user) {
 
 /** */
 function getCompanionAppDownloadFolder() {
-    return SOURCE_PHP_ROOT . "/../_data/downloads\/";
+    return DATA_FILES_ROOT . "/downloads\/";
 }
 
 /** internal folder path of user's data */
 function getUserDbFilePath () {
-    return SOURCE_PHP_ROOT . "/../_data/users/users.json";
+    return DATA_FILES_ROOT . "/users/users.json";
 }
 
 /** Directory where session files will be stored */
 function getSessionStorageDir() {
-    return SOURCE_PHP_ROOT . '/../_data/sessions';
+    return DATA_FILES_ROOT . '/sessions';
 }
 
 /**
  * internal folder path of user's data
  */
 function getInternalUserFolder(string $user) {
-    return SOURCE_PHP_ROOT . "/../_data/users/" . $user . "/";
+    return DATA_FILES_ROOT . "/users\/" . $user . "/";
 }

@@ -1,36 +1,37 @@
 <script>
-        'use strict';
+'use strict';
 
-        var clientURLUnified = <?= json_encode($clientURLUnified)?>;
-        var clientURLShout = <?= json_encode($clientURLShout)?>;
-        var libraryUser = <?= json_encode($qs_user)?>;
-        
-        var sioURL = <?= json_encode(getShoutServiceWebsocketRootHost())?>;
-        var initialRLoaderUrl = <?= json_encode($initialRLoaderUrl)?>;
+var clientURLUnified = <?= json_encode($clientURLUnified)?>;
+var clientURLShout = <?= json_encode($clientURLShout)?>;
+var libraryUser = <?= json_encode($qs_user)?>;
 
-        var _discoverFilter = {
-                genreUI : null,
-                artistUI : null,
-                albumUI : null
-        };
-        var _discoverMixers = {};
+var sioURL = <?= json_encode(getShoutServiceWebsocketRootHost())?>;
+var initialRLoaderUrl = <?= json_encode($initialRLoaderUrl)?>;
 
-        var defFiltStorageKey = "_discoverSorter";
-        var _discoverSorter = localStorage.getItem(defFiltStorageKey) || "count:desc";
-        var _defaultSorters = {
-                count : "desc", 
-                order : "asc"
-        };
-        var _sortersIconAdapter = {
-                order : "alpha",
-                count : "amount",
-                asc : "up",
-                desc : "down" 
-        };
+var _discoverFilter = {
+        genreUI : null,
+        artistUI : null,
+        albumUI : null
+};
+var _discoverMixers = {};
 
-        var _appDataFeeds = {};
-        var _currentShout = {};
-        var _currentShoutDWorth = false;
+var defFiltStorageKey = "_discoverSorter";
+var _discoverSorter = localStorage.getItem(defFiltStorageKey) || "count:desc";
+var _defaultSorters = {
+        count : "desc", 
+        order : "asc"
+};
+var _sortersIconAdapter = {
+        order : "alpha",
+        count : "amount",
+        asc : "up",
+        desc : "down" 
+};
 
-        var _rLoader = null;
+var _appDataFeeds = {};
+var _currentShout = {};
+var _currentShoutDWorth = false;
+
+var _rLoader = null;
+
 </script>

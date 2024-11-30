@@ -8,7 +8,6 @@
             "name": "Launch Chrome",
             "type": "chrome",
             "request": "launch",
-            "postDebugTask": "Shutdown debug stack",
             "url": "http://127.0.0.1",
 
             "webRoot": "${workspaceFolder}",
@@ -46,6 +45,7 @@
                 "Track stack logs"
             ],
             "preLaunchTask": "Run debug stack",
+            "postDebugTask": "Shutdown debug stack",
             "stopAll": true
         }
     ]

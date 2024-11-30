@@ -38,24 +38,30 @@ class I18nHandler {
         $this->_lang = self::_deduceUsedLanguage();
         $this->_dict = self::_dictFromLang($this->_lang);
     }
-};
 
-class I18nSingleton {
-    private static $_instance = null;
 
-    public static function getInstance(bool $force = false): I18nHandler {
+    ///////////////
+    // SINGLETON //
+    ///////////////
 
-        if($force || isset(self::$_instance)) {
-            self::$_instance = new I18nHandler();
-        }
-
-        return self::$_instance;
+    //
+    public static function refresh() {
+        ContextManager::set("i18h", new self());
     }
+
+    //
+    public static function get(): self {
+        return ContextManager::get("i18h");
+    }  
+
+    ///////////////////
+    // END SINGLETON //
+    ///////////////////
 };
 
 function i18n ($key, ...$args) {
     return sprintf(
-        I18nSingleton::getInstance()->getDictionary()[$key], 
+        I18nHandler::get()->getDictionary()[$key], 
         ...$args
     );
 };

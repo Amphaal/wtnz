@@ -14,13 +14,16 @@ function routerInterceptor_MusicLibrary($qs_user) {
     $clientURLShout = getPublicUserFolderOf($qs_user) . SHOUT_PROFILE_FILE_NAME;
 
     //Client variables
-    $latestUpdate = filemtime($expectedLibrary);
+    // if (file_exists($expectedLibrary)) {
+    //     $latestUpdate = filemtime($expectedLibrary);
+    // }
+    
     $isLogged = isUserLogged();
 
     //addons
     ContextManager::get("set_title")(i18n('libraryOf', $qs_user));
     $initialRLoaderUrl = getLocation("Home", true);
 
+    include SOURCE_PHP_ROOT . "/layout/explorer/js/vars.php";
     include SOURCE_PHP_ROOT . "/layout/explorer/entrypoint.php";
-    ContextManager::get("exit");
 }

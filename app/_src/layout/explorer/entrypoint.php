@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= I18nSingleton::getInstance()->getLang() ?>">
+<html lang="<?= I18nHandler::get()->getLang() ?>">
     <head>
         <?php include SOURCE_PHP_ROOT . "/layout/_any/metadata.php" ?>
 

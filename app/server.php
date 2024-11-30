@@ -12,6 +12,7 @@ ini_set('display_startup_errors', 1);
 //
 define("SOURCE_PHP_ROOT", __DIR__ . '/_src');
 define("PUBLIC_FILES_ROOT", __DIR__ . '/public');
+define("DATA_FILES_ROOT", __DIR__ . '/_data');
 
 //
 include SOURCE_PHP_ROOT . '/lib/session.php'; 
@@ -47,14 +48,27 @@ $server->on("request", function ($request, $response) {
     // Use the session handler function
     Session::start($response);
 
-    /* enforce singleton initialization */
-    I18nSingleton::getInstance(true);
+    /* enforce singletons initializations */
+    I18nHandler::refresh();
+    _AbstractUsersDatabase::refresh();
 
     //
+    ContextManager::set("exit", function (mixed $overridedOutput = null) use ($response) {
+        //
+        Session::persist();
+        
+        //
+        if (isset($overridedOutput)) {
+            ob_clean();
+        } else {
+            $overridedOutput = ob_get_clean();
+        }
 
-    ContextManager::set("exit", function (mixed $msg = null) use ($response) {
-        $response->end($msg);
+        //
+        $response->end($overridedOutput);
     });
+
+
     ContextManager::set("header", function (string $header) use ($response) {
         $parts = explode(": ", $header);
         $response->header($parts[0], $parts[1]);
@@ -82,17 +96,7 @@ $server->on("request", function ($request, $response) {
     // // Capture the output of the standard PHP script
     ob_start();
         init_app();
-    $output = ob_get_clean();
-
-    //
-    //
-    //
-
-    //
-    Session::persist();
-
-    // Respond with the output of the PHP script
-    $response->end($output);
+    ContextManager::get("exit")();
 });
 
 // Start the Swoole server
