@@ -51,13 +51,13 @@ function ProfilePic() {
 
         //upload...
         $ppname = getProfilePicFilename($ext);
-        $internalDest = getInternalUserFolder($currentUser) . $ppname;
+        $internalDest = getInternalUserFolder($currentUser) . '/' . $ppname;
         uploadFile($internalDest, $expectedFilename);
 
         //remove previous if different ext...
         $currentpicFN = getProfilePicture($currentUser);
         if($currentpicFN && $currentpicFN != $ppname) {
-            $currentpicFN = getInternalUserFolder($currentUser) . $currentpicFN;
+            $currentpicFN = getInternalUserFolder($currentUser) . '/' . $currentpicFN;
             @unlink($currentpicFN);
         }
 
@@ -66,7 +66,7 @@ function ProfilePic() {
 
         //return
         ob_clean(); flush();
-        echo getPublicUserFolderOf($currentUser) . $ppname;
+        echo getPublicUserFolderOf($currentUser) . '/' . $ppname;
         return;  
     }
 }
@@ -91,7 +91,7 @@ function home() {
         $curUser = Session::getLoggedUser();
         $pp = getProfilePicture($curUser);
         $pp_path = null;
-        if($pp) $pp_path = getPublicUserFolderOf($curUser) . $pp;
+        if($pp) $pp_path = getPublicUserFolderOf($curUser) . '/' . $pp;
 
         $dd_folders = array_keys(availableDownloads());
 

@@ -1,53 +1,52 @@
 # version: "3.7"
 
+x-soundvitrine-state-location: &soundvitrine-state-location caca
+
 services:
-  # [Swoole]
-  swoole:
-    container_name: swoole
-    hostname: swoole
+  # [Swoole HTTP + WebSocket]
+  soundvitrine:
     restart: on-failure:2
-    build: ./custom_images/php
+    build: ./custom_images/swoole
     environment:
+      # debug env specific
       AUTORELOAD_PROGRAMS: "swoole"
       AUTORELOAD_ANY_FILES: 1
+      #
+      SOUNDVITRINE_EXPOSED_HOST: localhost
+      SOUNDVITRINE_EXPOSED_SCHEME: http
     networks:
     - web-fronts
     # user: "1001:1001" # same as user using FTP
     volumes:
-      - ../_data:/var/www/_data:rw
+      #
+      - ../_state:/var/www/_state:rw
+      #
       - ../app/_src:/var/www/_src:ro
       - ../app/public:/var/www/public:ro
-      - ../app/server.php:/var/www/server.php:ro
+      - ../app/server.php:/var/www/server.php:ro # must be "/var/www/server.php"
 
   # [NGINX Proxy]
   nginx-proxy:
-    container_name: nginx-proxy
-    hostname: nginx-proxy
     image: nginx:alpine
     restart: on-failure:2
     depends_on:
-      - swoole
+      - soundvitrine
     networks:
       - web-fronts
+    environment:
+      SOUNDVITRINE_HOST: soundvitrine
     volumes:
-      - ../_data:/usr/share/nginx/html/extra_soundvitrine/_data:rw
-      - ../app/public:/usr/share/nginx/html/extra_soundvitrine/public:ro
-      - type: bind
-        source: ../app/public.nginx.conf
-        target: /usr/share/nginx/html/extra_soundvitrine/public.nginx.conf
-        read_only: true
-      - type: bind
-        source: ./nginx.conf
-        target: /etc/nginx/nginx.conf
-        read_only: true
-      - ./conf.d:/etc/nginx/conf.d:ro
+      # file serving
+      - ../_state/users:/usr/share/nginx/html/soundvitrine/users:ro
+      - ../app/public:/usr/share/nginx/html/soundvitrine/public:ro
+      - ./app/nginx.conf.template:/etc/nginx/templates/soundvitrine.conf.template:ro # https://hub.docker.com/_/nginx
     # https://github.com/nginx-proxy/nginx-proxy/issues/133#issuecomment-754094932
     # allows right logging of IP and forwarding of X-Forwarded-For [Requester IP], for reverse-proxy scenarii
     # without "mode:host", requester IP resolves to inadequate IPs
     ports:
       - target: 80
         published: 80
-        mode: host
+        mode: host # see above
 
 #
 networks:

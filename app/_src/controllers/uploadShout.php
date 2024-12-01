@@ -7,7 +7,7 @@ function uploadShout($qs_user) {
     prepareAndTestUploadedFileCompliance(SHOUT_UPLOAD_FILE_NAME);
     
     // uploading file
-    $whereToUpload = getInternalUserFolder($qs_user) . SHOUT_PROFILE_FILE_NAME;
+    $whereToUpload = getInternalUserFolder($qs_user) . '/' . SHOUT_PROFILE_FILE_NAME;
     uploadFile($whereToUpload, SHOUT_UPLOAD_FILE_NAME);
 
     //

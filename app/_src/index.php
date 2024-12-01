@@ -1,7 +1,5 @@
 <?php
 
-include SOURCE_PHP_ROOT . "/config.php";
-
 include SOURCE_PHP_ROOT . "/lib/i18n.php";
 include SOURCE_PHP_ROOT . "/lib/users-management/users_management.php";
 include SOURCE_PHP_ROOT . "/lib/web_user-agent.php";
@@ -20,10 +18,6 @@ include SOURCE_PHP_ROOT . "/controllers/manage.php";
 include SOURCE_PHP_ROOT . "/controllers/downloadApp.php";
 include SOURCE_PHP_ROOT . "/controllers/musicLibrary.php";
 
-
-// handles users sessions, start
-// session_start();
-
 function init_app() {
     // 
     checkUserSpecificFolders(); // generate folders if non existing
@@ -35,123 +29,129 @@ function init_app() {
     // 1st part of URL
     $qs_domain = array_shift($qs);
 
-    //
-    if($qs_domain == "public_php") {
-        //
-        $wantedPublicPhpResource = "public_php/" . implode("/", $qs);
+    //        
+    switch($qs_domain) {
+        // should be handled by nginx proxy, then forwarded to WS Swoole instance
+        // case WEBSOCKET_QUERY_STUB: {}
 
-        //
-        if (file_exists(SOURCE_PHP_ROOT . '/' . $wantedPublicPhpResource)) {
-            //
-            $ctMap = [
-                '.css.' => 'text/css',
-                '.js.' => 'text/javascript'
-            ];
-        
-            //
-            foreach ($ctMap as $ext => $contentType) {
-                if (!str_contains($wantedPublicPhpResource, $ext)) continue;
-                ContextManager::get("header")('Content-Type: ' . $contentType);
-                break;
-            }
+        case URI_RESOURCES_QUERY_ROOT: {
+            $qs_action = array_shift($qs); // 2nd part of URL
+            switch ($qs_action) {
+                // should be handled by proxy (database files)
+                // case URI_RESOURCES_QUERY_REPO_CHUNK : {}
 
-            //
-            include $wantedPublicPhpResource;
-            return;
-        }
-    } else {
-        //        
-        switch($qs_domain) {
-            // should be handled by proxy (database files)
-            // case 'data' : {}
+                case PUBLIC_PHP_FOLDER_NAME: {
+                    //
+                    $wantedPublicPhpResource = PUBLIC_PHP_FOLDER_NAME . "/" . implode("/", $qs);
 
-            // should be handled by proxy (WebServices)
-            // case 'sentry': {}
-
-            case 'manage': {
-                $qs_action = array_shift($qs); // 2nd part of URL
-                return routerInterceptor_Manage($qs_action);
-            }
-            break;
-
-            case 'download': {
-                $qs_action = array_shift($qs); // 2nd part of URL
-                return routerInterceptor_Download($qs_action);
-            }
-            break;
-
-            case 'changeLang': {
-                // only POST allowed
-                $request = ContextManager::get("REQUEST");
-                if (!isset($request->post)) {
-                    ContextManager::get("http_response_code")(405);
-                    return;
-                }
-                
-                //
-                $lang = $request->post['set_lang'];
-                $redirectTo = $request->post['redirectTo'];
-                if (!(isset($lang) && isset($redirectTo))) {
-                    ContextManager::get("http_response_code")(500);
-                    echo "missing either lang or redirectTo in payload";
-                    return;
-                }
-
-                //
-                Session::setLang($lang);
-
-                //
-                ContextManager::get("http_response_code")(303); # https://fr.wikipedia.org/wiki/Post-redirect-get
-                ContextManager::get("header")('Location: ' . $redirectTo);
-                return;
-            }
-            break;
-
-            case 'u': {
-                // 2cnd part of URL
-                $qs_user =  array_shift($qs);
-                if (!empty($qs_user)) $qs_user = strtolower($qs_user); // always lower
-
-                // 
-                checkUserExists($qs_user, false); 
-
-                // 3rd part of URL
-                $qs_action = array_shift($qs);
-
-                //
-                switch($qs_action) {
-                    case 'uploadShout': {
-                        return routerInterceptor_uploadShout($qs_user);
-                    }
-                    break;
-
-                    case 'uploadMusicLibrary':
-                    default: {
-                        // if user has no library
-                        routerMiddleware_UploadMusicLibrary($qs_user, $qs_action == 'uploadMusicLibrary');
-
-                        // if action provided, but unknown, redirect to admin home
-                        if(!empty($qs_action)) {
-                            home();
-                        } else {
-                            // else, show music library
-                            routerInterceptor_MusicLibrary($qs_user);
+                    //
+                    if (file_exists(SOURCE_PHP_ROOT . '/' . $wantedPublicPhpResource)) {
+                        //
+                        $ctMap = [
+                            '.css.' => 'text/css',
+                            '.js.' => 'text/javascript'
+                        ];
+                    
+                        //
+                        foreach ($ctMap as $ext => $contentType) {
+                            if (!str_contains($wantedPublicPhpResource, $ext)) continue;
+                            ContextManager::get("header")('Content-Type: ' . $contentType);
+                            break;
                         }
 
+                        //
+                        include $wantedPublicPhpResource;
                         return;
                     }
                 }
+                break;
             }
-            break;
+        }
+        break;
 
-            // means root "/"
-            case NULL: {
-                // get users so we can display them
-                $users = UserDb::all();
-                ContextManager::get("set_title")(i18n("welcome"));
-                injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
+        case 'manage': {
+            $qs_action = array_shift($qs); // 2nd part of URL
+            return routerInterceptor_Manage($qs_action);
+        }
+        break;
+
+        case 'download': {
+            $qs_action = array_shift($qs); // 2nd part of URL
+            return routerInterceptor_Download($qs_action);
+        }
+        break;
+
+        case 'changeLang': {
+            // only POST allowed
+            $request = ContextManager::get("REQUEST");
+            if (!isset($request->post)) {
+                ContextManager::get("http_response_code")(405);
                 return;
             }
+            
+            //
+            $lang = $request->post['set_lang'];
+            $redirectTo = $request->post['redirectTo'];
+            if (!(isset($lang) && isset($redirectTo))) {
+                ContextManager::get("http_response_code")(500);
+                echo "missing either lang or redirectTo in payload";
+                return;
+            }
+
+            //
+            Session::setLang($lang);
+
+            //
+            ContextManager::get("http_response_code")(303); # https://fr.wikipedia.org/wiki/Post-redirect-get
+            ContextManager::get("header")('Location: ' . $redirectTo);
+            return;
+        }
+        break;
+
+        case 'u': {
+            // 2cnd part of URL
+            $qs_user =  array_shift($qs);
+            if (!empty($qs_user)) $qs_user = strtolower($qs_user); // always lower
+
+            // 
+            checkUserExists($qs_user, false); 
+
+            // 3rd part of URL
+            $qs_action = array_shift($qs);
+
+            //
+            switch($qs_action) {
+                case 'uploadShout': {
+                    return routerInterceptor_uploadShout($qs_user);
+                }
+                break;
+
+                case 'uploadMusicLibrary':
+                default: {
+                    // if user has no library
+                    routerMiddleware_UploadMusicLibrary($qs_user, $qs_action == 'uploadMusicLibrary');
+
+                    // if action provided, but unknown, redirect to admin home
+                    if(!empty($qs_action)) {
+                        home();
+                    } else {
+                        // else, show music library
+                        routerInterceptor_MusicLibrary($qs_user);
+                    }
+
+                    return;
+                }
+            }
+        }
+        break;
+
+        // means root "/"
+        case NULL: {
+            // get users so we can display them
+            $users = UserDb::all();
+            ContextManager::get("set_title")(i18n("welcome"));
+            injectAndDisplayIntoAdminLayout("layout/admin/components/welcome.php", get_defined_vars());
+            return;
         }
     }
 

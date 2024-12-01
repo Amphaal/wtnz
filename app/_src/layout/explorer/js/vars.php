@@ -5,7 +5,7 @@ var clientURLUnified = <?= json_encode($clientURLUnified)?>;
 var clientURLShout = <?= json_encode($clientURLShout)?>;
 var libraryUser = <?= json_encode($qs_user)?>;
 
-var sioURL = <?= json_encode(getShoutServiceWebsocketRootHost())?>;
+var sioURL = <?= json_encode(getWebSocketServiceUrl())?>;
 var initialRLoaderUrl = <?= json_encode($initialRLoaderUrl)?>;
 
 var _discoverFilter = {

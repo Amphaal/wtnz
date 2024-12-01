@@ -34,7 +34,7 @@ function goToLocation($rq) {
 }
 
 function getLocation($rq, $abs = null) {
-    $r = $abs ? getWebAppRootFullpath() : WEB_APP_ROOT;
+    $r = $abs ? getWebAppRootFullPath() : WEB_APP_ROOT;
 
     switch($rq) {
         //

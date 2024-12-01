@@ -12,92 +12,16 @@ ini_set('display_startup_errors', 1);
 //
 define("SOURCE_PHP_ROOT", __DIR__ . '/_src');
 define("PUBLIC_FILES_ROOT", __DIR__ . '/public');
-define("DATA_FILES_ROOT", __DIR__ . '/_data');
-
-//
-include SOURCE_PHP_ROOT . '/lib/session.php'; 
-include SOURCE_PHP_ROOT . '/lib/context_manager.php'; 
+define("STATE_FILES_ROOT", __DIR__ . '/_state');
+define("SERVICES_SCRIPT_ROOT", SOURCE_PHP_ROOT . '/services');
 
 //
 set_include_path(SOURCE_PHP_ROOT);
 
 //
-//
-//
-
-Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL); // Enable all coroutine hooks before starting a server
-$server = new Swoole\Http\Server("0.0.0.0", 9501); // Create a Swoole HTTP server on 0.0.0.0:9501
-$server->set([
-    'enable_coroutine' => true,
-]);
+Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL); // Enable all coroutine hooks before starting any server
 
 //
-$server->on('WorkerStart', function($serv, $workerId) {
-    // Files which won't be reloaded
-    # var_dump(get_included_files());
-
-    // Include files from here so they can be reloaded...
-    include SOURCE_PHP_ROOT . '/index.php'; // Include your standard PHP script
-});
-
-//
-$server->on("request", function ($request, $response) {
-    //
-    ContextManager::set("REQUEST", $request);
-
-    // Use the session handler function
-    Session::start($response);
-
-    /* enforce singletons initializations */
-    I18nHandler::refresh();
-    _AbstractUsersDatabase::refresh();
-
-    //
-    ContextManager::set("exit", function (mixed $overridedOutput = null) use ($response) {
-        //
-        Session::persist();
-        
-        //
-        if (isset($overridedOutput)) {
-            ob_clean();
-        } else {
-            $overridedOutput = ob_get_clean();
-        }
-
-        //
-        $response->end($overridedOutput);
-    });
-
-
-    ContextManager::set("header", function (string $header) use ($response) {
-        $parts = explode(": ", $header);
-        $response->header($parts[0], $parts[1]);
-    });
-    ContextManager::set("http_response_code", function (string $code) use ($response) {
-        $response->status($code);
-    });
-
-    ContextManager::set("title", APP_NAME); // default title
-    ContextManager::set("set_title", function ($superbus = null) {
-        //
-        $title = ContextManager::get("title", null);
-
-        //
-        if($superbus) {
-            $title .=  " - " . $superbus;
-            ContextManager::set("title", $title);
-        }
-    });
-
-    // // Method 2: Using print_r
-    // $dump = print_r(true);
-    // $response->end("<pre>$dump</pre>");
-
-    // // Capture the output of the standard PHP script
-    ob_start();
-        init_app();
-    ContextManager::get("exit")();
-});
-
-// Start the Swoole server
-$server->start();
+include SERVICES_SCRIPT_ROOT . '/_config.php'; 
+include SERVICES_SCRIPT_ROOT . '/www.php'; 
+include SERVICES_SCRIPT_ROOT . '/ws.php';

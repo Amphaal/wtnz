@@ -40,7 +40,7 @@
                     <?php 
                     $hasProfilePicture = $data["profilePic"] ?? NULL;
                     if($hasProfilePicture != null) {
-                        $expectedProfilePic = getPublicUserFolderOf($username) . $hasProfilePicture;
+                        $expectedProfilePic = getPublicUserFolderOf($username) . '/' . $hasProfilePicture;
                         ?>
                         <img  style="max-height: 1.5em; max-width: 1.5em" src="<?= $expectedProfilePic ?>">
                     <?php } else {?>

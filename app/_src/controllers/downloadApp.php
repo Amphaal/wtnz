@@ -14,7 +14,7 @@ function routerInterceptor_Download($qs_action) {
     }
     
     //target server folder
-    $initialPath = getCompanionAppDownloadFolder() . $qs_action;
+    $initialPath = getCompanionAppDownloadFolder() . '/' . $qs_action;
 
     //check if files exists, take latest released version (desc order files) 
     $latestInFolder = getLatestDownloadableFile($initialPath);

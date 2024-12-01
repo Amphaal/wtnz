@@ -2,16 +2,16 @@
 
 function routerInterceptor_MusicLibrary($qs_user) {
 
-    $expectedLibrary = getInternalUserFolder($qs_user) . MUSIC_LIB_PROFILE_FILE_NAME;
+    $expectedLibrary = getInternalUserFolder($qs_user) . '/' . MUSIC_LIB_PROFILE_FILE_NAME;
     $profilePicture = getProfilePicture($qs_user);
     
     $expectedProfilePic = NULL;
     if ($profilePicture) {
-        $expectedProfilePic = getPublicUserFolderOf($qs_user) . $profilePicture;
+        $expectedProfilePic = getPublicUserFolderOf($qs_user) . '/' . $profilePicture;
     }
 
-    $clientURLUnified = getPublicUserFolderOf($qs_user) . COMPILED_MUSIC_LIB_PROFILE_FILE_NAME;
-    $clientURLShout = getPublicUserFolderOf($qs_user) . SHOUT_PROFILE_FILE_NAME;
+    $clientURLUnified = getPublicUserFolderOf($qs_user) . '/' . COMPILED_MUSIC_LIB_PROFILE_FILE_NAME;
+    $clientURLShout = getPublicUserFolderOf($qs_user) . '/' . SHOUT_PROFILE_FILE_NAME;
 
     //Client variables
     // if (file_exists($expectedLibrary)) {

@@ -9,7 +9,7 @@ function uploadMusicLibrary($qs_user) {
 
 function processUploadedMusicLibrary($qs_user, $expectedFilename) {
 
-    $pathTo = getInternalUserFolder($qs_user) . MUSIC_LIB_PROFILE_FILE_NAME;
+    $pathTo = getInternalUserFolder($qs_user) . '/' . MUSIC_LIB_PROFILE_FILE_NAME;
 
     //check for duplicates
     if(isUselessUpload($pathTo, $expectedFilename)) {
@@ -44,7 +44,7 @@ function archivePreviousUpload($qs_user, $pathTo) {
 
     //copy save
     $archive_dir = filemtime($pathTo).'_'.rand(0,999);
-    $copyDestination = getInternalUserFolder($qs_user) . $archive_dir . "/" . basename($pathTo);
+    $copyDestination = getInternalUserFolder($qs_user) . "/" . $archive_dir . "/" . basename($pathTo);
     
     //archive...
     if (!mkdir(dirname($copyDestination))) errorOccured(i18n("e_cad"));
@@ -71,7 +71,7 @@ function routerMiddleware_UploadMusicLibrary($qs_user, $wantsExplicitAccess) {
     }
 
     // redirect to upload UI if no library for the user OR wanting explicitely this UI
-    $expectedLibrary = getInternalUserFolder($qs_user) . MUSIC_LIB_PROFILE_FILE_NAME;
+    $expectedLibrary = getInternalUserFolder($qs_user) . '/' . MUSIC_LIB_PROFILE_FILE_NAME;
     if(!file_exists($expectedLibrary) || $wantsExplicitAccess) {
         injectAndDisplayIntoAdminLayout("layout/admin/components/upload.php", get_defined_vars());
     }
