@@ -9,8 +9,6 @@
             "type": "chrome",
             "request": "launch",
             "url": "http://127.0.0.1",
-
-            "webRoot": "${workspaceFolder}",
             "presentation": {
                 "hidden": true,
                 "group": "",
@@ -23,7 +21,7 @@
             "type": "node-terminal",
             "request": "launch",
             "command": "docker compose -f docker-compose.debug.yml logs -f",
-            "cwd": "${workspaceFolder}/soundsuite_debug",
+            "postDebugTask": "Shutdown debug stack",
             "presentation": {
                 "hidden": true,
                 "group": "",
@@ -45,7 +43,6 @@
                 "Track stack logs"
             ],
             "preLaunchTask": "Run debug stack",
-            "postDebugTask": "Shutdown debug stack",
             "stopAll": true
         }
     ]

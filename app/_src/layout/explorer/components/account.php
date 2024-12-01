@@ -2,7 +2,7 @@
     <?php include SOURCE_PHP_ROOT . "/layout/explorer/components/connect_btn.php" ?>
     <div id="connectContainer">
         <div class="logoContainer">
-            <img src="/public/images/ico.png" width="50%"/>
+            <img src="<?= getPublicWebRoot() ?>/images/ico.png" width="50%"/>
             <span class='logo'>
                 <div class='content'>
                     <span class='upper'>Sound</span>

@@ -1,7 +1,7 @@
 <?php 
 
 $app_description = i18n("app_descr");
-$app_icon_href = "/public/images/ico.png";
+$app_icon_href = getPublicWebRoot() . "/images/ico.png";
 $app_title = ContextManager::get("title");
 
 ?>

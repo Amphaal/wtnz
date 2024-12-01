@@ -4,5 +4,10 @@
     "search.exclude": {
         "app/public/ext/js/**": true
     },
+    "php.suggest.basic": false,
     "intelephense.environment.phpVersion": "8.2.0",
+    "intelephense.environment.includePaths": [
+        "./vendor/swoole/ide-helper/src",
+        "./vendor"
+    ]
 }

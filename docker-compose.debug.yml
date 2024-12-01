@@ -1,7 +1,3 @@
-# version: "3.7"
-
-x-soundvitrine-state-location: &soundvitrine-state-location caca
-
 services:
   # [Swoole HTTP + WebSocket]
   soundvitrine:
@@ -19,15 +15,15 @@ services:
     # user: "1001:1001" # same as user using FTP
     volumes:
       #
-      - ../_state:/var/www/_state:rw
+      - ./_state:/var/www/_state:rw
       #
-      - ../app/_src:/var/www/_src:ro
-      - ../app/public:/var/www/public:ro
-      - ../app/server.php:/var/www/server.php:ro # must be "/var/www/server.php"
+      - ./app/_src:/var/www/_src:ro
+      - ./app/public:/var/www/public:ro
+      - ./app/server.php:/var/www/server.php:ro # must be "/var/www/server.php"
 
   # [NGINX Proxy]
   nginx-proxy:
-    image: nginx:alpine
+    image: nginx:latest
     restart: on-failure:2
     depends_on:
       - soundvitrine
@@ -37,9 +33,9 @@ services:
       SOUNDVITRINE_HOST: soundvitrine
     volumes:
       # file serving
-      - ../_state/users:/usr/share/nginx/html/soundvitrine/users:ro
-      - ../app/public:/usr/share/nginx/html/soundvitrine/public:ro
-      - ./app/nginx.conf.template:/etc/nginx/templates/soundvitrine.conf.template:ro # https://hub.docker.com/_/nginx
+      - ./_state/users:/usr/share/nginx/html/soundvitrine/users:ro
+      - ./app/public:/usr/share/nginx/html/soundvitrine/public:ro
+      - ./app/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro # https://hub.docker.com/_/nginx, must replace default.conf
     # https://github.com/nginx-proxy/nginx-proxy/issues/133#issuecomment-754094932
     # allows right logging of IP and forwarding of X-Forwarded-For [Requester IP], for reverse-proxy scenarii
     # without "mode:host", requester IP resolves to inadequate IPs

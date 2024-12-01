@@ -24,6 +24,8 @@ define("SHOUT_PROFILE_FILE_NAME", 'shout.json');
 /** hostname that gets exposed to the outside world */
 define("EXPOSED_HOST", getenv("SOUNDVITRINE_EXPOSED_HOST") ?? gethostname());
 define("EXPOSED_SCHEME", getenv("SOUNDVITRINE_EXPOSED_SCHEME") ?? 'https');
+define("SERVICE_WWW_PORT", 80);
+define("SERVICE_WEBSOCKET_PORT", 8080);
 
 /** where, on the current web server, is exposed the root of the app */
 /** MUST END WITH A '/' !!! */
@@ -65,9 +67,22 @@ function getProfilePicFilename(string $ext) {
     return "pp.".$ext;
 }
 
+function _getResourcesWebRoot() {
+    return WEB_APP_ROOT . URI_RESOURCES_QUERY_ROOT;
+}
+
+/** aka PUBLIC_RES_ROOT */
+function getPublicWebRoot() {
+    return _getResourcesWebRoot() . "/public";
+}
+
+function getPublicPhpWebRoot() {
+    return _getResourcesWebRoot() . "/" . PUBLIC_PHP_FOLDER_NAME;
+}
+
 /** web server exposed user's data */
 function getPublicUserFolderOf(string $user) {
-    return WEB_APP_ROOT . URI_RESOURCES_QUERY_ROOT . "/" . URI_RESOURCES_QUERY_REPO_CHUNK . "\/users\/" . $user;
+    return _getResourcesWebRoot() . "/" . URI_RESOURCES_QUERY_REPO_CHUNK . "\/users\/" . $user;
 }
 
 //

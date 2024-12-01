@@ -13,7 +13,7 @@ jobs:
         server: ftp.ivy.community
         username: budadmin
         protocol: ftps
-        server-dir: ./extra_soundvitrine/app/
+        server-dir: ./soundvitrine/app/
         local-dir: ./app/
         password: ${{ secrets.ftp_password }}
         exclude: |

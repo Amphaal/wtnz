@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "ahmadalli.vscode-nginx-conf",
-        "bmewburn.vscode-intelephense-client"
+        "bmewburn.vscode-intelephense-client",
+        "devsense.composer-php-vscode"
     ]
 }

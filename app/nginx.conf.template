@@ -10,11 +10,15 @@ upstream public.${SOUNDVITRINE_HOST} {
     server 127.0.0.1;
 }
 
+upstream app {
+    server ${SOUNDVITRINE_HOST};
+}
+
 # SoundVitrine front app (https://github.com/Amphaal/SoundVitrine)
 # info: "server" directive declaration order is important if trying to reach unamed (like 127.0.0.1 instead of "localhost")
 server {
     #
-    server_name localhost;
+    server_name "${SOUNDVITRINE_SERVER_NAME}"; # let to "" if debugging
     listen 80;
     http2 on;
 
@@ -37,12 +41,12 @@ server {
 
     #
     location / {
-        # proxy_set_header X-Forwarded-Host $host:$server_port;
-        # proxy_set_header X-Forwarded-Server $host;
-        # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $host:$server_port;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
         #
-        set $access "http://${SOUNDVITRINE_HOST}";
+        set $access "http://app";
         proxy_pass $access;
     }
 
@@ -58,7 +62,7 @@ server {
         # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
         #
-        set $access "http://${SOUNDVITRINE_HOST}:8080";
+        set $access "http://app:8080";
         proxy_pass $access;
     }
 }
@@ -69,7 +73,7 @@ server {
 
 server {
     server_name public.${SOUNDVITRINE_HOST};
-    root /usr/share/nginx/html/extra_soundvitrine/public;
+    root /usr/share/nginx/html/${SOUNDVITRINE_HOST}/public;
 
     #
     location ~ \.(gif|ico|jpg|png|svg|js|css|htm|html|mp3|mp4|wav|ogg|avi|ttf|eot|woff|woff2)$ {
@@ -85,7 +89,7 @@ server {
 
 server {
     server_name repo.${SOUNDVITRINE_HOST};
-    root /usr/share/nginx/html/extra_soundvitrine/users;
+    root /usr/share/nginx/html/${SOUNDVITRINE_HOST}/users;
 
     #
     location ~ \.json$ {

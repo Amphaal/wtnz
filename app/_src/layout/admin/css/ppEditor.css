@@ -63,7 +63,7 @@
 }
 
 #ProfilePicEditor.uploading::after {
-    background-image : url(/public/images/loader.svg);
+    background-image : url(${PUBLIC_RES_ROOT}/images/loader.svg);
     background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;

@@ -1,6 +1,6 @@
 @font-face {
     font-family: bebasNeueFont;
-    src: url(/public/fonts/BebasNeue-Regular.otf);
+    src: url(${PUBLIC_RES_ROOT}/fonts/BebasNeue-Regular.otf);
     font-display: swap;
 }
 

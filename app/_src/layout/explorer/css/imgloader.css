@@ -28,7 +28,7 @@
 }
 
 .imgLoader.searchingCover::before {
-    background-image : url(/public/images/loader.svg);
+    background-image : url(${PUBLIC_RES_ROOT}/images/loader.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;

@@ -1,10 +1,23 @@
 <?php
 
 /** does an echo of each files contained in $path_to_dir folder (not recursive) */
-function echoFilesOfFolder($path_to_dir) {
-    foreach(getFilesInFolder($path_to_dir) as $file) { 
-        echo file_get_contents($file);
+function echoFilesOfFolder(string $path_to_dir, bool $doTemplateReplace = false) {
+    # do not put if into foreach (unoptimized)
+    if ($doTemplateReplace) {
+        foreach(getFilesInFolder($path_to_dir) as $file) { 
+            echo str_replace(
+                "\${PUBLIC_RES_ROOT}", 
+                getPublicWebRoot(), 
+                file_get_contents($file)
+            );
+        }
+    } else {
+        foreach(getFilesInFolder($path_to_dir) as $file) { 
+            echo file_get_contents($file);
+        }
     }
+
+    //
     echo "\n";
 }
 

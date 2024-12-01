@@ -1,0 +1,8 @@
+{
+    "name": "amphaal/soundvitrine",
+    "version": "1.0",
+    "description": "",
+    "require-dev": {
+        "swoole/ide-helper": "^5.1"
+    }
+}

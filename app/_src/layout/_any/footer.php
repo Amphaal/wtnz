@@ -4,8 +4,8 @@
         <span>&nbsp;-&nbsp;</span>
         <span style="color:black">0.8.4 Beta</span>
         <span>&nbsp;-&nbsp;</span>
-        <a href='https://www.linkedin.com/in/guillaumevara/' title="<?= i18n("devLinkedin")?>" target="_blank" rel="noopener">
-            <img src='/public/images/linkedin.png' alt="<?= i18n("devLinkedin")?>"/>
+        <a href="https://www.linkedin.com/in/guillaumevara/" title="<?= i18n("devLinkedin")?>" target="_blank" rel="noopener">
+            <img src="<?= getPublicWebRoot() ?>/images/linkedin.png" alt="<?= i18n("devLinkedin")?>"/>
         </a>
     </div>
     <div id="langs">
@@ -23,7 +23,7 @@
                 class="<?php if(!$isCurrentLang) { echo "clickable unselected"; }?>" 
                 onclick="changeLang(event)"
             >
-                <img src="<?= WEB_APP_ROOT . 'public/' . str_replace(PUBLIC_FILES_ROOT . '/', '', $file); ?>" />
+                <img src="<?= getPublicWebRoot() . '/' . str_replace(PUBLIC_FILES_ROOT . '/', '', $file); ?>" />
             </label>
         <?php } ?>
     </div>

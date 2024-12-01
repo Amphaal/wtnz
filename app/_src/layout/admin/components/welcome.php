@@ -26,16 +26,16 @@
     }    
 </style>
 <div style="display:flex; align-items:center; flex-direction: column; width: 100wv">
-    <img src="/public/images/ico.png" width="50%"/>
+    <img src="<?= getPublicWebRoot() ?>/images/ico.png" width="50%"/>
     <h1 style="margin-bottom: 0; text-align: center"><?= i18n("thisis")?></h1>
     <div style="font-size: .75em; color: #3b3b3b; text-align: center">
-        <?= i18n("project_shorthand_descr", '<img src="/public/images/itunes.png" width="24px" style="margin: 0 .2em; vertical-align: bottom;" />')?>
+        <?= i18n("project_shorthand_descr", '<img src="' . getPublicWebRoot() . '/images/itunes.png" width="24px" style="margin: 0 .2em; vertical-align: bottom;" />')?>
     </div>
     <?php if (!empty($users)) { ?>
     <br/>
     <div id="intro-users-descr">
         <?php foreach($users as $username => $data) { ?>
-            <a href="/u/<?= $username ?>">
+            <a href="<?= WEB_APP_ROOT ?>u/<?= $username ?>">
                 <div class="user">
                     <?php 
                     $hasProfilePicture = $data["profilePic"] ?? NULL;
@@ -54,7 +54,7 @@
     </div>
     <?php } ?>
     <div style="margin-top: 1em; display: flex; justify-content: center;">
-        <a href="/manage/create">
+        <a href="<?= WEB_APP_ROOT ?>manage/create">
             <div class="manage_button" style="background-color: #23df0d54; box-shadow: 0px 0px 20px 0px white; color: #245724; border: 1px solid #76cd8c;">
                 <i class="fa-solid fa-plus"></i>
                 <span><?= i18n("log_createAccount") ?></span>

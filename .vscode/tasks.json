@@ -3,22 +3,20 @@
 	"tasks": [
     {
       "label": "Shutdown debug stack",
-      "type": "shell",
       "command": "docker",
       "args": ["compose", "-f", "docker-compose.debug.yml", "down", "-v"],
-      "options": {
-        "cwd": "${workspaceFolder}/soundsuite_debug"
-      },
+      "problemMatcher": []
     },
     {
       "label": "Run debug stack",
-      "type": "shell",
       "command": "docker",
-      // "dependsOn": "shutdown debug stack",
       "args": ["compose", "-f", "docker-compose.debug.yml", "up", "-d", "--wait"],
-      "options": {
-        "cwd": "${workspaceFolder}/soundsuite_debug"
-      }
+      "problemMatcher": []
     },
+    {
+      "label": "Install Swoole helper",
+      "command": "composer require swoole/ide-helper --dev",
+      "problemMatcher": []
+    }
   ]
 }
