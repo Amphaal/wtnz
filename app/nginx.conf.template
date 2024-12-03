@@ -17,21 +17,24 @@ upstream app {
 # SoundVitrine front app (https://github.com/Amphaal/SoundVitrine)
 # info: "server" directive declaration order is important if trying to reach unamed (like 127.0.0.1 instead of "localhost")
 server {
+    # use Docker internal DNS + variable binding
+    # (https://stackoverflow.com/a/54719226/3021058)
+    # allows NGINX to not crash at startup if upstream is not available
+    resolver 127.0.0.11 valid=30s;
+
     #
-    server_name "${SOUNDVITRINE_SERVER_NAME}"; # let to "" if debugging
+    server_name "${SOUNDVITRINE_EXPOSED_HOST}"; # let to "" if debugging
     listen 80;
     http2 on;
 
     #
-    location ^~ /repo/users/ {
-        set $access "http://repo.${SOUNDVITRINE_HOST}/";
-        proxy_pass $access;
+    location ^~ /resources/repo/users/ {
+        proxy_pass http://repo.${SOUNDVITRINE_HOST}/;
     }
-    
+
     #
-    location ^~ /public/ {
-        set $access "http://public.${SOUNDVITRINE_HOST}/";
-        proxy_pass $access;
+    location ^~ /resources/public/ {
+        proxy_pass http://public.${SOUNDVITRINE_HOST}/;
     }
 
     # already handled by webserver, no use
@@ -41,13 +44,11 @@ server {
 
     #
     location / {
-        proxy_set_header X-Forwarded-Host $host:$server_port;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # proxy_set_header X-Forwarded-Host $host:$server_port;
+        # proxy_set_header X-Forwarded-Server $host;
+        # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-        #
-        set $access "http://app";
-        proxy_pass $access;
+        proxy_pass "http://app/";
     }
 
     # WebSocket service
@@ -61,9 +62,7 @@ server {
         # proxy_set_header X-Forwarded-Server $host;
         # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-        #
-        set $access "http://app:8080";
-        proxy_pass $access;
+        proxy_pass "http://app/";
     }
 }
 

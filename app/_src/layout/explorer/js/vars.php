@@ -2,6 +2,8 @@
 'use strict';
 
 var PUBLIC_RES_ROOT = <?= json_encode(getPublicWebRoot()) ?>;
+var WEB_APP_ROOT = <? json_encode(WEB_APP_ROOT) ?>;
+
 var clientURLUnified = <?= json_encode($clientURLUnified)?>;
 var clientURLShout = <?= json_encode($clientURLShout)?>;
 var libraryUser = <?= json_encode($qs_user)?>;

@@ -25,11 +25,10 @@ define("SHOUT_PROFILE_FILE_NAME", 'shout.json');
 define("EXPOSED_HOST", getenv("SOUNDVITRINE_EXPOSED_HOST") ?? gethostname());
 define("EXPOSED_SCHEME", getenv("SOUNDVITRINE_EXPOSED_SCHEME") ?? 'https');
 define("SERVICE_WWW_PORT", 80);
-define("SERVICE_WEBSOCKET_PORT", 8080);
 
 /** where, on the current web server, is exposed the root of the app */
 /** MUST END WITH A '/' !!! */
-define("WEB_APP_ROOT", getenv("SOUNDVITRINE_WEB_APP_ROOT") ?? "/");
+define("WEB_APP_ROOT", getenv("SOUNDVITRINE_WEB_APP_ROOT") ?: "/");
 
     /** */
     define("URI_RESOURCES_QUERY_ROOT", "resources");

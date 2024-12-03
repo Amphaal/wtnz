@@ -290,7 +290,7 @@ function _XMLHttpPromise(method, url, POSTParams) {
 
 function changeLang(event) {
     let newLang = event.currentTarget.getAttribute("data-lang");
-    POSTWithRedirectPayload("/changeLang", {
+    POSTWithRedirectPayload(WEB_APP_ROOT + "changeLang", {
         set_lang : newLang
     });
 }

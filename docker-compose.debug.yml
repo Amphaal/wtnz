@@ -1,4 +1,27 @@
 services:
+  # [NGINX Proxy]
+  nginx-proxy:
+    image: nginx:latest
+    restart: on-failure:2
+    networks:
+      - web-fronts
+    environment:
+      SOUNDVITRINE_HOST: soundvitrine
+      SOUNDVITRINE_EXPOSED_HOST: ""
+    working_dir: /usr/share/nginx/html
+    volumes:
+      # file serving
+      - ./_state/users:/usr/share/nginx/html/soundvitrine/users:ro
+      - ./app/public:/usr/share/nginx/html/soundvitrine/public:ro
+      - ./app/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro # https://hub.docker.com/_/nginx, must replace default.conf
+    # https://github.com/nginx-proxy/nginx-proxy/issues/133#issuecomment-754094932
+    # allows right logging of IP and forwarding of X-Forwarded-For [Requester IP], for reverse-proxy scenarii
+    # without "mode:host", requester IP resolves to inadequate IPs
+    ports:
+      - target: 80
+        published: 80
+        mode: host # see above
+
   # [Swoole HTTP + WebSocket]
   soundvitrine:
     restart: on-failure:2
@@ -12,7 +35,6 @@ services:
       SOUNDVITRINE_EXPOSED_SCHEME: http
     networks:
     - web-fronts
-    # user: "1001:1001" # same as user using FTP
     volumes:
       #
       - ./_state:/var/www/_state:rw
@@ -20,29 +42,6 @@ services:
       - ./app/_src:/var/www/_src:ro
       - ./app/public:/var/www/public:ro
       - ./app/server.php:/var/www/server.php:ro # must be "/var/www/server.php"
-
-  # [NGINX Proxy]
-  nginx-proxy:
-    image: nginx:latest
-    restart: on-failure:2
-    depends_on:
-      - soundvitrine
-    networks:
-      - web-fronts
-    environment:
-      SOUNDVITRINE_HOST: soundvitrine
-    volumes:
-      # file serving
-      - ./_state/users:/usr/share/nginx/html/soundvitrine/users:ro
-      - ./app/public:/usr/share/nginx/html/soundvitrine/public:ro
-      - ./app/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro # https://hub.docker.com/_/nginx, must replace default.conf
-    # https://github.com/nginx-proxy/nginx-proxy/issues/133#issuecomment-754094932
-    # allows right logging of IP and forwarding of X-Forwarded-For [Requester IP], for reverse-proxy scenarii
-    # without "mode:host", requester IP resolves to inadequate IPs
-    ports:
-      - target: 80
-        published: 80
-        mode: host # see above
 
 #
 networks:

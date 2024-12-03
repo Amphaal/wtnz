@@ -1,29 +1,13 @@
 <?php
 
-use Swoole\Http\Server;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 
-//
 include SOURCE_PHP_ROOT . '/lib/session.php'; 
 include SOURCE_PHP_ROOT . '/lib/context_manager.php'; 
 
-$wwwServer = new Swoole\Http\Server("0.0.0.0", SERVICE_WWW_PORT); // Create a Swoole HTTP server on 0.0.0.0:9501
-$wwwServer->set([
-    'enable_coroutine' => true,
-]);
-
 //
-$wwwServer->on('WorkerStart', function(Server $serv, $workerId) {
-    // Files which won't be reloaded
-    # var_dump(get_included_files());
-
-    // Include files from here so they can be reloaded...
-    include SOURCE_PHP_ROOT . '/index.php'; // Include your standard PHP script
-});
-
-//
-$wwwServer->on("request", function (Request $request, Response $response) {
+function wwwService(Request $request, Response $response) {
     //
     ContextManager::set("REQUEST", $request);
 
@@ -79,7 +63,4 @@ $wwwServer->on("request", function (Request $request, Response $response) {
     ob_start();
         init_app();
     ContextManager::get("exit")();
-});
-
-// Start the Swoole server
-$wwwServer->start();
+};

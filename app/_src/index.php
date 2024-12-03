@@ -81,6 +81,14 @@ function init_app() {
         }
         break;
 
+        case 'info': {
+            if (EXPOSED_HOST == "localhost") {
+                ContextManager::get("header")('Content-Type: application/json');
+                var_dump(get_defined_constants());
+                return;
+            }
+        }
+
         case 'changeLang': {
             // only POST allowed
             $request = ContextManager::get("REQUEST");

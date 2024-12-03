@@ -4,89 +4,81 @@ use Swoole\WebSocket\Server;
 use Swoole\Http\Request;
 use Swoole\WebSocket\Frame;
 
-$websocketServer = new Server("0.0.0.0", SERVICE_WEBSOCKET_PORT);
-
 // Store connections with metadata
-$connections = [];
+$connectionsData = [];
 
-// Handle new WebSocket connections
-$websocketServer->on('Open', function (Server $websocketServer, Request $request) use (&$connections) {
-    $fd = $request->fd;
-    echo "Connection opened: {$fd}\n";
+//
+function setupWebSocket(Swoole\WebSocket\Server &$server) {
+    // $port->on('Handshake', function (Request $request, Response $response) {
+        
+    // });
+    
+    // Handle new WebSocket connections
+    $server->on('Open', function (Server $server, Request $request) use (&$connectionsData) {
+        $fd = $request->fd;
+        echo "Connection opened: {$fd}\n";
 
-    // Initialize connection metadata
-    $connections[$fd] = [
-        'last_heartbeat' => time(),
-    ];
-});
+        // Initialize connection metadata
+        $connectionsData[$fd] = [
+            'last_heartbeat' => time(),
+        ];
+    });
 
-// Handle incoming WebSocket messages
-$websocketServer->on('Message', function (Server $websocketServer, Frame $frame) use (&$connections) {
-    $fd = $frame->fd;
-    $data = $frame->data;
+    // Handle incoming WebSocket messages
+    $server->on('Message', function (Server $server, Frame $frame) use (&$connectionsData) {
+        $fd = $frame->fd;
+        $data = $frame->data;
 
-    echo "Message received from {$fd}: {$data}\n";
+        echo "Message received from {$fd}: {$data}\n";
 
-    // Update heartbeat on message
-    $connections[$fd]['last_heartbeat'] = time();
+        // Update heartbeat on message
+        $connectionsData[$fd]['last_heartbeat'] = time();
 
-    // Echo the message back
-    $websocketServer->push($fd, "Server: {$data}");
-});
+        // Echo the message back
+        $server->push($fd, "Server: {$data}");
+    });
 
-// Handle WebSocket disconnection
-$websocketServer->on('Close', function (Server $websocketServer, $fd) use (&$connections) {
-    echo "Connection closed: {$fd}\n";
-
-    // Cleanup connection metadata
-    if (isset($connections[$fd])) {
-        unset($connections[$fd]);
-    }
-});
-
-// Periodic heartbeat check
-Swoole\Timer::tick(5000, function () use ($websocketServer, &$connections) {
-    $currentTime = time();
-
-    foreach ($connections as $fd => $meta) {
-        // Check if the connection is stale
-        if ($currentTime - $meta['last_heartbeat'] > 10) {
-            echo "Connection {$fd} is stale. Closing...\n";
-            $websocketServer->close($fd);
-        } else {
-            // Send a ping message to check the connection
-            $websocketServer->push($fd, json_encode(['type' => 'ping']));
+    // Handle WebSocket disconnection
+    $server->on('Close', function (Server $server, $fd) use (&$connectionsData) {
+        // Cleanup connection metadata
+        if (isset($connectionsData[$fd])) {
+            echo "Connection closed: {$fd}\n";
+            unset($connectionsData[$fd]);
         }
-    }
-});
+    });
+
+    // Periodic heartbeat check
+    Swoole\Timer::tick(5000, function () use (&$server, &$connectionsData) {
+        $currentTime = time();
+
+        foreach ($connectionsData as $fd => $meta) {
+            // Check if the connection is stale
+            if ($currentTime - $meta['last_heartbeat'] > 10) {
+                echo "Connection {$fd} is stale. Closing...\n";
+                $server->close($fd);
+            } else {
+                // Send a ping message to check the connection
+                $server->push($fd, json_encode(['type' => 'ping']));
+            }
+        }
+    });
+}
 
 // Graceful shutdown handling
-$shuttingDown = false;
-function handleShutdown(Server $websocketServer, &$connections) {
-    if ($shuttingDown) return;
-    $shuttingDown = true;
+ContextManager::set("shuttingDown", false);
+function ws_handleShutdown(Server $server, &$connectionsData) {
+    //
+    if (ContextManager::get("shuttingDown") === true) return;
+    ContextManager::set("shuttingDown", true);
 
     echo "Shutting down server...\n";
 
-    foreach ($connections as $fd => $meta) {
-        if ($websocketServer->exist($fd)) {
+    foreach ($connectionsData as $fd => $meta) {
+        if ($server->exist($fd)) {
             echo "Closing connection {$fd}...\n";
-            $websocketServer->close($fd);
+            $server->close($fd);
         }
     }
 
     echo "All connections closed. Server shutdown complete.\n";
-    exit(0); // Exit the script
 }
-
-// Bind to termination signals
-Swoole\Process::signal(SIGTERM, function () use ($websocketServer, &$connections) {
-    handleShutdown($websocketServer, $connections);
-});
-
-Swoole\Process::signal(SIGINT, function () use ($websocketServer, &$connections) {
-    handleShutdown($websocketServer, $connections);
-});
-
-// Start the WebSocket server
-$websocketServer->start();

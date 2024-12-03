@@ -58,7 +58,7 @@ class PPEditor {
 
     _uploadPP(data) {
         // TODO
-        return _XMLHttpPromise("POST", "/manage/pp", data);
+        return _XMLHttpPromise("POST", WEB_APP_ROOT + "manage/pp", data);
     }
 
     _addUploadAnimation() {

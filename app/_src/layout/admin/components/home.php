@@ -34,7 +34,7 @@
                 </button>
             <?php }?>
             <?php /* TODO */ ?>
-            <button class="hype" <?php _btnLink("/manage/disconnect", false, true)?>>
+            <button class="hype" <?php _btnLink(WEB_APP_ROOT . "manage/disconnect", false, true)?>>
                 <i class="fas fa-power-off"></i>
                 <span><?= i18n("log_disconnect")?></span>
             </button>
@@ -42,7 +42,7 @@
             <?php include SOURCE_PHP_ROOT . "/layout/admin/components/login.php" ?>
             <hr/>
             <?php /* TODO */ ?>
-            <button class="hype" <?php _btnLink("/manage/create")?>>
+            <button class="hype" <?php _btnLink(WEB_APP_ROOT . "manage/create")?>>
                 <i class="fas fa-user-circle"></i>
                 <span><?= i18n("log_createAccount")?></span>
             </button>

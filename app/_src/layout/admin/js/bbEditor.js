@@ -29,7 +29,7 @@ class BBEditor {
     saveColors(colors) {
         this._currentColors = colors;
         // TODO
-        _XMLHttpPromise("POST", "/manage/bb", JSON.stringify(colors));
+        _XMLHttpPromise("POST", WEB_APP_ROOT + "manage/bb", JSON.stringify(colors));
     }
 
     setColors(colors) {
